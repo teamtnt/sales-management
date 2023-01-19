@@ -6,6 +6,11 @@ use Illuminate\Support\ServiceProvider;
 
 class SalesManagementServiceProvider extends ServiceProvider
 {
-    public function boot() {}
-    public function register() {}
+    public function boot()
+    {
+    }
+
+    public function register()
+    {
+    }
 }
