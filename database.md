@@ -22,6 +22,11 @@
 - updated_at [datetime]
 - created_at [datetime]
 
+## company_contact
+- id
+- company_id
+- contact_id
+
 ## task_lists
 - id
 - name [string]
@@ -70,6 +75,8 @@
 - id [primary]
 - lead_id [int]
 - note [text]
+- satus [string]
+- remind_on [datetime|nullable]
 - updated_at [datetime]
 - created_at [datetime]
 
