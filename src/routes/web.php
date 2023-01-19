@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 
-Route::get('/sales', function () {
-    dd('hello world from sales-management');
-});
+Route::get('/sales', [ContactsController::class, 'index'])->name('contacts.index');

@@ -10,6 +10,7 @@ class SalesManagementServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerRoutes();
+        $this->loadViewsFrom(__DIR__.'/resources/views/', 'sales-management');
     }
 
     public function register()
