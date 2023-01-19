@@ -3,6 +3,7 @@
 namespace Teamtnt\SalesManagement;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class SalesManagementServiceProvider extends ServiceProvider
 {
