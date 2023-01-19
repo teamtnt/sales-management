@@ -58,7 +58,7 @@
 - updated_at [datetime]
 - created_at [datetime]
 
-## pipeline
+## pipelines
 - id [primary]
 - name
 - stages [json]
