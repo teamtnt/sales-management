@@ -11,10 +11,19 @@ class SalesManagementServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'sales-management');
+
+        if ($this->app->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__.'/../config/sales-management.php' => config_path('sales-management.php'),
+            ], 'config');
+
+        }
     }
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/sales-management.php', 'sales-management');
     }
 
     protected function registerRoutes()
