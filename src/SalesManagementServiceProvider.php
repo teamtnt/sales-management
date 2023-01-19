@@ -2,24 +2,10 @@
 
 namespace Teamtnt\SalesManagement;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Teamtnt\SalesManagement\Commands\SalesManagementCommand;
+use Illuminate\Support\ServiceProvider;
 
-class SalesManagementServiceProvider extends PackageServiceProvider
+class SalesManagementServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
-    {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('sales-management')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_sales-management_table')
-            ->hasCommand(SalesManagementCommand::class);
-    }
+    public function boot() {}
+    public function register() {}
 }
