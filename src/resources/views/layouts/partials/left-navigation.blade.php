@@ -1,7 +1,7 @@
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-content js-simplebar">
         @if( config('sales-management.logoPath'))
-        <a class="sidebar-brand" href="/">
+        <a class="sidebar-brand" href="{{ config('sales-management.logoLink') }}">
             <img width="100%" src="{{ config('sales-management.logoPath') }}" alt="Sales Management">
         </a>
         @endif

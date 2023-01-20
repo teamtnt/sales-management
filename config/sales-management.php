@@ -2,5 +2,6 @@
 
 // config for Teamtnt/SalesManagement
 return [
-    'logoPath' => ''
+    'logoPath' => '',
+    'logoLink' => '/'
 ];
