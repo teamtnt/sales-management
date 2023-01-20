@@ -27,7 +27,7 @@
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">{{ __("Companies")}}</span>
                 </a>
             </li>
-            
+
             <li class="sidebar-item ">
                 <a class="sidebar-link" href="">
                     <i class="align-middle" data-feather="thumbs-up"></i> <span class="align-middle">{{ __("Task List")}}</span>
