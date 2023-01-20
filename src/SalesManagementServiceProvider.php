@@ -16,9 +16,14 @@ class SalesManagementServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../config/sales-management.php' => config_path('sales-management.php'),
-            ], 'config');
+            ], 'sales-management-config');
 
+            // Publish assets
+            $this->publishes([
+                __DIR__.'/resources/assets' => public_path('sales-management'),
+            ], 'sales-management-assets');
         }
+
     }
 
     public function register()
