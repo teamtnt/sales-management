@@ -41,6 +41,12 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="sales-management-views"
 ```
 
+Publishing assets
+
+```bash
+php artisan vendor:publish --tag="sales-management-assets"
+```
+
 ## Usage
 
 ```php
