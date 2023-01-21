@@ -65,6 +65,10 @@ Development build:
 npm run dev
 ```
 
+For local development to have hot reloading create a symlink
+
+`ln -s ../vendor/teamtnt/sales-management/public public/sales-management`
+
 ## Usage
 
 ```php

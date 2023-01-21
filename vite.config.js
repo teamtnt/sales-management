@@ -6,7 +6,6 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 export default defineConfig({
     plugins: [laravel({
         input: ['src/resources/scss/light.scss', 'src/resources/js/app.js',],
-        buildDirectory: 'sales-management',
         refresh: true
     }), vue({
         template: {
