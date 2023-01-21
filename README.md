@@ -47,6 +47,24 @@ Publishing assets
 php artisan vendor:publish --tag="sales-management-assets"
 ```
 
+## Building Assets
+
+We use Vite to build assets. First install all dependencies. 
+
+```js
+npm install
+```
+If there is no **public** folder in project root run first production build which will build needed folders:
+
+```js
+npm run build
+```
+
+Development build:
+```js
+npm run dev
+```
+
 ## Usage
 
 ```php

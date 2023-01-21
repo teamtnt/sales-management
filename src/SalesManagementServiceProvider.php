@@ -20,7 +20,7 @@ class SalesManagementServiceProvider extends ServiceProvider
 
             // Publish assets
             $this->publishes([
-                __DIR__.'/resources/assets' => public_path('sales-management'),
+                __DIR__.'/../public' => public_path('/'),
             ], 'sales-management-assets');
         }
 
