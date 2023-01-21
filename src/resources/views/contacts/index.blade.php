@@ -1,5 +1,7 @@
 @extends('sales-management::layouts.app')
 
+@section('title', 'Sales')
+
 @section('content')
     <h1>Showing all Contats</h1>
 
@@ -8,4 +10,8 @@
     @empty
         <p> 'No contacts yet' </p>
     @endforelse
+
+    <div class="my-4">
+        <hello-world />
+    </div>
 @stop

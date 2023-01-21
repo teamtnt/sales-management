@@ -9,14 +9,15 @@
 
     <title>@yield('title') | Sales Management</title>
 
-    <link rel="canonical" href="https://appstack.bootlab.io/pages-blank.html"/>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Choose your prefered color scheme -->
-    <link href="{{ asset('/sales-management/dist/css/light.css') }}" rel="stylesheet">
-    <!-- <link href="css/dark.css" rel="stylesheet"> -->
+    <!-- CSS styles -->
+    {{
+        Vite::useBuildDirectory('sales-management')
+            ->useManifestFilename('manifest.json')
+            ->withEntryPoints(['src/resources/scss/light.scss'])
+    }}
 
     <style>
         .btn.loading {
@@ -84,8 +85,14 @@
         @include('sales-management::layouts.partials.footer')
     </div>
 </div>
-<script src="{{ '/sales-management/dist/js/app.js' }}"></script>
 
+<!-- Scripts -->
+
+{{
+        Vite::useBuildDirectory('sales-management')
+        ->useManifestFilename('manifest.json')
+        ->withEntryPoints(['src/resources/js/app.js'])
+}}
 @stack('scripts')
 </body>
 
