@@ -13,11 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CSS styles -->
-    {{
-        Vite::useBuildDirectory('sales-management')
-            ->useManifestFilename('manifest.json')
-            ->withEntryPoints(['src/resources/scss/light.scss'])
-    }}
+    @vite('src/resources/scss/light.scss', 'sales-management')
 
     <style>
         .btn.loading {
@@ -87,12 +83,8 @@
 </div>
 
 <!-- Scripts -->
+@vite('src/resources/js/app.js', 'sales-management')
 
-{{
-        Vite::useBuildDirectory('sales-management')
-        ->useManifestFilename('manifest.json')
-        ->withEntryPoints(['src/resources/js/app.js'])
-}}
 @stack('scripts')
 </body>
 
