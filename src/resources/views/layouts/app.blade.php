@@ -15,8 +15,7 @@
     <!-- CSS styles -->
     {{
         Illuminate\Support\Facades\Vite::useHotFile(public_path('sales-management/hot'))
-        ->useBuildDirectory('sales-management')
-        ->useManifestFilename('manifest.json')
+        ->useBuildDirectory('sales-management/build')
         ->withEntryPoints(['src/resources/scss/light.scss'])
 
     }}
@@ -91,8 +90,7 @@
 <!-- Scripts -->
 {{
         Illuminate\Support\Facades\Vite::useHotFile(public_path('sales-management/hot'))
-        ->useBuildDirectory('sales-management')
-        ->useManifestFilename('manifest.json')
+        ->useBuildDirectory('sales-management/build')
         ->withEntryPoints(['src/resources/js/app.js'])
 
 }}
