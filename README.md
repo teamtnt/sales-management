@@ -69,6 +69,14 @@ For local development to have hot reloading create a symlink
 
 `ln -s ../vendor/teamtnt/sales-management/public public/sales-management`
 
+Add to composer.json
+```
+    "repositories": [{
+        "type": "path",
+        "url": "../sales-management"
+    }],
+```
+
 ## Usage
 
 ```php
