@@ -11,6 +11,7 @@ class SalesManagementServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'sales-management');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         if ($this->app->runningInConsole()) {
 

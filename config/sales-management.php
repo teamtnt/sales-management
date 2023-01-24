@@ -3,5 +3,6 @@
 // config for Teamtnt/SalesManagement
 return [
     'logoPath' => '',
-    'logoLink' => '/'
+    'logoLink' => '/',
+    'tablePrefix' => 'tnt_'
 ];
