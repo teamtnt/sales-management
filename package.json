@@ -18,6 +18,7 @@
   "homepage": "https://github.com/teamtnt/sales-management#readme",
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "laravel-datatables-vite": "^0.5.0",
     "laravel-vite-plugin": "^0.7.3",
     "mitt": "^3.0.0",
     "sass": "^1.57.1",
@@ -30,7 +31,11 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
+    "datatables.net-bs5": "^1.13.1",
+    "datatables.net-buttons-bs5": "^2.3.3",
+    "datatables.net-select-bs5": "^1.5.0",
     "feather-icons": "^4.29.0",
+    "jquery": "^3.6.3",
     "lodash": "^4.17.21",
     "simplebar": "^6.2.0",
     "vue-i18n": "^9.2.2"

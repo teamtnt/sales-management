@@ -36,6 +36,9 @@ if (document.querySelector("#app") !== null) {
     app.mount("#app");
 }
 
+// Datatables
+import 'laravel-datatables-vite';
+
 // Modules
 import './modules/sidebar';
 import './modules/feather';
