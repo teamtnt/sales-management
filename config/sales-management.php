@@ -4,5 +4,5 @@
 return [
     'logoPath' => '',
     'logoLink' => '/',
-    'tablePrefix' => 'tnt_'
+    'tablePrefix' => 'sales_management_'
 ];
