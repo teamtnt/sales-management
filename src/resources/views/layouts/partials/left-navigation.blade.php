@@ -2,7 +2,7 @@
     <div class="sidebar-content js-simplebar">
         @if( config('sales-management.logoPath'))
         <a class="sidebar-brand" href="{{ config('sales-management.logoLink') }}">
-            <img width="100%" src="{{ config('sales-management.logoPath') }}" alt="Sales Management">
+            <img style="width: 100%" src="{{ config('sales-management.logoPath') }}" alt="Sales Management">
         </a>
         @endif
         <ul class="sidebar-nav">
