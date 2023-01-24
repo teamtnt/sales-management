@@ -30,6 +30,7 @@
     "@popperjs/core": "^2.11.6",
     "axios": "^1.2.3",
     "bootstrap": "^5.2.3",
+    "feather-icons": "^4.29.0",
     "lodash": "^4.17.21",
     "simplebar": "^6.2.0",
     "vue-i18n": "^9.2.2"

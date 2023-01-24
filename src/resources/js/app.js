@@ -38,4 +38,5 @@ if (document.querySelector("#app") !== null) {
 
 // Modules
 import './modules/sidebar';
+import './modules/feather';
 
