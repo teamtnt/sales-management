@@ -43,6 +43,18 @@
 - created_at [datetime]
 - updated_at [datetime]
 
+## lists
+- id
+- name [int]
+- description [string]
+- created_at [datetime]
+- updated_at [datetime]
+
+## list_contacts
+- id
+- list_id
+- contact_id
+
 ## deals
 - id [primary]
 - name [string]

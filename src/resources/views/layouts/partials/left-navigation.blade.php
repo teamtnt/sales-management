@@ -22,6 +22,12 @@
                 </a>
             </li>
 
+            <li class="sidebar-item {{ (Route::currentRouteName() == "lists.index") ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('lists.index') }}">
+                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">{{ __("Lists")}}</span>
+                </a>
+            </li>
+
             <li class="sidebar-item">
                 <a class="sidebar-link" href="">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">{{ __("Companies")}}</span>
