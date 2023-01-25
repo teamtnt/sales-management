@@ -15,7 +15,7 @@
     <!-- CSS styles -->
     {{
         Illuminate\Support\Facades\Vite::useHotFile(public_path('sales-management/hot'))
-        ->useBuildDirectory('sales-management/build')
+        ->useBuildDirectory('sales-management')
         ->withEntryPoints(['src/resources/scss/light.scss'])
 
     }}
@@ -90,7 +90,7 @@
 <!-- Scripts -->
 {{
         Illuminate\Support\Facades\Vite::useHotFile(public_path('sales-management/hot'))
-        ->useBuildDirectory('sales-management/build')
+        ->useBuildDirectory('sales-management')
         ->withEntryPoints(['src/resources/js/app.js'])
 
 }}

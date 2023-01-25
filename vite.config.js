@@ -4,11 +4,17 @@ import vue from '@vitejs/plugin-vue';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export default defineConfig({
+    build: {
+        outDir: "public/sales-management",
+    },
     plugins: [
         splitVendorChunkPlugin(),
         laravel({
-        input: ['src/resources/scss/light.scss', 'src/resources/js/app.js',],
-        refresh: true
+            publicDirectory: "public",
+            buildDirectory: "sales-management", // ako ovog nema, onda na npm run build woff2 fajlovi od fontawsomea gledaju u krivi dir
+            hotFile: "public/sales-management/hot",
+            input: ['src/resources/scss/light.scss', 'src/resources/js/app.js',],
+            refresh: true
     }), vue({
         template: {
             transformAssetUrls: {

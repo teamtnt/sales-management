@@ -67,7 +67,7 @@ npm run dev
 
 For local development to have hot reloading create a symlink
 
-`ln -s ../vendor/teamtnt/sales-management/public public/sales-management`
+`ln -s ../vendor/teamtnt/sales-management/public/sales-management public/sales-management`
 
 Add to composer.json
 ```
