@@ -46,14 +46,13 @@ class ContactDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
+            ->dom('lfrtip')
             ->setTableId('contact-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('lfrtip')
+            ->addTableClass('table-striped')
             ->orderBy(1)
-
             ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
-
     }
 
     /**

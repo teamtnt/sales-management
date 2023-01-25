@@ -1,5 +1,9 @@
 import './bootstrap';
 
+// jQuery
+import $ from 'jquery';
+window.jQuery = window.$ = $
+
 // Vue 3
 import { createApp } from 'vue/dist/vue.esm-bundler.js';
 import { createI18n } from 'vue-i18n'
@@ -37,7 +41,10 @@ if (document.querySelector("#app") !== null) {
 }
 
 // Datatables
-import 'laravel-datatables-vite';
+import DataTable from 'datatables.net-bs5';
+import 'datatables.net-buttons-bs5';
+import 'datatables.net-select-bs5';
+window.DataTable = DataTable;
 
 // Modules
 import './modules/sidebar';

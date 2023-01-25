@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        {!! $dataTable->table(['class' => 'table table-striped ']) !!}
+                        {!! $dataTable->table() !!}
                     </div>
                 </div>
             </div>
@@ -22,7 +22,5 @@
 @stop
 
 @push('scripts')
-
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
-
+    {!! $dataTable->scripts(attributes: ['type' => 'module']) !!}
 @endpush
