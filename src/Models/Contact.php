@@ -9,7 +9,7 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $table = 'sales_management_contacts';
+    protected $table;
 
     /**
      * The attributes that are mass assignable.
@@ -24,4 +24,11 @@ class Contact extends Model
         'email',
         'salutation'
     ];
+
+
+    public function __construct(array $attributes = [])
+    {
+        $this->table = config('sales-management.tablePrefix').'contacts';
+        parent::__construct($attributes);
+    }
 }
