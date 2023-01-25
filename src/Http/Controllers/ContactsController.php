@@ -23,6 +23,7 @@ class ContactsController extends Controller {
 
     public function edit(Contact $contact)
     {
+        dd($contact);
         return view('sales-management::contacts.edit', compact('contact'));
     }
 
