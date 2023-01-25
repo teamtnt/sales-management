@@ -4,9 +4,9 @@
     {{ Form::label('firstname', __('First name'), ['class' => 'form-label']) }}
             {{ Form::text('firstname', null, ['class' => 'form-control', 'placeholder' => __('Your first name')]) }}
             {{--    ($errors->has('firstname') ? ' is-invalid' : '')--}}
-            {{--    @error('firstname')--}}
-            {{--        <small class="invalid-feedback">{{ $message }}</small>--}}
-            {{--    @enderror--}}
+                @error('firstname')
+                    <small class="invalid-feedback">{{ $message }}</small>
+                @enderror
 </div>
     </div>
     <div class="col-md-6">

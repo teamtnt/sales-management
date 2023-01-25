@@ -4,5 +4,6 @@
 return [
     'logoPath' => '',
     'logoLink' => '/',
-    'tablePrefix' => 'sales_management_'
+    'tablePrefix' => 'sales_management_',
+    'middleware' => ['web']
 ];
