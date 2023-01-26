@@ -34,8 +34,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item ">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item {{ (Route::currentRouteName() == "tasklist.index") ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('tasklist.index') }}">
                     <i class="align-middle" data-feather="thumbs-up"></i> <span class="align-middle">{{ __("Task List")}}</span>
                 </a>
             </li>
