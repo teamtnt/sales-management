@@ -50,7 +50,7 @@
                     <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">{{ __("Deals")}}</span>
                 </a>
             </li>
-            <li class="sidebar-item {{ (request()->is('elements*')) ? 'active' : '' }}">
+            <li class="sidebar-item {{ (request()->is('automation*')) ? 'active' : '' }}">
                 <a data-bs-target="#elements" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="play-circle"></i> <span
                         class="align-middle">{{__("Automation")}}</span>
@@ -61,8 +61,8 @@
                     <li class="sidebar-item {{ (request()->is('element/actions')) ? 'active' : '' }}">
                         <a class="sidebar-link" href="#">{{__("Messages")}}</a>
                     </li>
-                    <li class="sidebar-item {{ (request()->is('element/conditions')) ? 'active' : '' }}">
-                        <a class="sidebar-link" href="#">{{__("Workflow")}}</a>
+                    <li class="sidebar-item {{ (request()->is('automation/workflow/new')) ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('automation.workflow.index') }}">{{__("Workflow")}}</a>
                     </li>
                 </ul>
             </li>
