@@ -9,14 +9,14 @@
             <li class="sidebar-header">
                 {{__("Sales Management")}}
             </li>
-            <li class="sidebar-item {{ (Route::currentRouteName() == "dashboard") ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span
                         class="align-middle">{{ __("Dashboard")}}</span>
                 </a>
             </li>
 
-            <li class="sidebar-item {{ (Route::currentRouteName() == "contacts.index") ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->is('contacts*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('contacts.index') }}">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">{{ __("Contacts")}}</span>
                 </a>
@@ -28,8 +28,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item {{ request()->is('companies*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('companies.index') }}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">{{ __("Companies")}}</span>
                 </a>
             </li>

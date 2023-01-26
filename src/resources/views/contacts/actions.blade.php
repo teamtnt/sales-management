@@ -3,7 +3,7 @@
     <form action="{{ route('contacts.destroy', $id) }}" method="POST">
         {{ method_field('DELETE') }}
         {{ csrf_field() }}
-        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to remove this item?')"> Delete</button>
+        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to remove this contact?')"> Delete</button>
     </form>
 </div>
 

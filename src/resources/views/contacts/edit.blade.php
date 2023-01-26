@@ -3,6 +3,7 @@
 @section('title', 'Contacts')
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
+    <li class="breadcrumb-item">{{ __('Contacts') }}</li>
     <li class="breadcrumb-item active">{{ __('Edit Contact') }}</li>
 @endsection
 
@@ -21,7 +22,7 @@
 
                         @include('sales-management::contacts.fields')
 
-                        <div class="mb-3">
+                        <div class="my-3">
                             <button type="submit" class="btn btn-primary me-2"
                                     id="notyf-show">{{__("Update Contact")}}</button>
                              <a href="{{ route('contacts.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>

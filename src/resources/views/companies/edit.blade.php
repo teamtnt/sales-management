@@ -1,15 +1,15 @@
 @extends('sales-management::layouts.app')
 
-@section('title', 'Contacts')
+@section('title', 'Companies')
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
-    <li class="breadcrumb-item">{{ __('Contacts') }}</li>
-    <li class="breadcrumb-item active">{{ __('New Contact') }}</li>
+    <li class="breadcrumb-item">{{ __('Companies') }}</li>
+    <li class="breadcrumb-item active">{{ __('Edit Company') }}</li>
 @endsection
 
 @section('content')
     <div class="container-fluid p-0">
-        <h1 class="h3 mb-3">{{ __('Add New Contact') }}</h1>
+        <h1 class="h3 mb-3">{{ __('Edit Company') }}</h1>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-8">
                 <div class="card">
@@ -18,14 +18,14 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill contacts details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'contacts.store']) }}
+                        {{ Form::model($company, ['method' => 'PUT', 'route' => ['companies.update', $company->id]]) }}
 
-                        @include('sales-management::contacts.fields')
+                        @include('sales-management::companies.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-primary me-2"
-                                    id="notyf-show">{{__("Create Contact")}}</button>
-                             <a href="{{ route('contacts.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                                    id="notyf-show">{{__("Update Company")}}</button>
+                             <a href="{{ route('companies.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>
@@ -34,3 +34,4 @@
         </div>
     </div>
 @stop
+
