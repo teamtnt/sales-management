@@ -5,7 +5,7 @@ namespace Teamtnt\SalesManagement\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ContactListContacts extends Model
+class ContactListContact extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,9 @@ class ContactListContacts extends Model
      * @var array
      */
     protected $fillable = [
-
+        'id',
+        'contact_list_id',
+        'contact_id'
     ];
 
 

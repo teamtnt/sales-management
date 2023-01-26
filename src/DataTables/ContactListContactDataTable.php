@@ -2,6 +2,7 @@
 
 namespace Teamtnt\SalesManagement\DataTables;
 
+use Teamtnt\SalesManagement\Models\Contact;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
@@ -12,9 +13,8 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Facades\DB;
 
-class ContactListDataTable extends DataTable
+class ContactListContactDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -25,27 +25,24 @@ class ContactListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'sales-management::contact-list.actions')
-            ->setRowId('id');
+            ->addColumn('action', 'sales-management::contact-list-contacts.actions');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param ContactList $model
+     * @param Contact $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(ContactList $model): QueryBuilder
+    public function query(ContactListContact $model): QueryBuilder
     {
-        $id = $model->getTable().'.id';
-        $joinTable = (new ContactListContact)->getTable();
-        $joinColumn = $joinTable.'.contact_list_id';
-        $count = $joinTable.'.contact_list_id';
-        $groupBy = $model->getTable().'.id';
+        $modelTable = $model->getTable();
+        $id = $modelTable.'.contact_id';
+        $joinTable = (new Contact())->getTable();
+        $joinColumn = $joinTable.'.id';
 
-        return $model->select([$id, 'name', 'description', DB::raw("COUNT($count) as count")])
-            ->join($joinTable, $joinColumn, $id)
-            ->groupBy([$groupBy]);
+        return $model->select([$modelTable.'.id as contact_list_contact_id', $joinTable.'.*'])
+            ->join($joinTable, $joinColumn, $id);
     }
 
     /**
@@ -57,7 +54,7 @@ class ContactListDataTable extends DataTable
     {
         return $this->builder()
             ->dom('lfrtip')
-            ->setTableId('contact-list-table')
+            ->setTableId('contact-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
@@ -74,11 +71,13 @@ class ContactListDataTable extends DataTable
     {
         return [
 
-            Column::make('id'),
-            Column::make('name')->title(__('Name')),
-            Column::make('description')->title(__('Description')),
-            Column::make('count')->title(__('Count')),
-            Column::computed('action')->title(__('Action'))
+            Column::make('contact_list_contact_id')->title('ID'),
+            Column::make('firstname')->title(__('First name')),
+            Column::make('lastname')->title(__('Last name')),
+            Column::make('job_title')->title(__('Job title')),
+            Column::make('email')->title('Email'),
+            Column::make('phone')->title(__('Phone')),
+            Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
@@ -93,6 +92,6 @@ class ContactListDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ContactList_' . date('YmdHis');
+        return 'Contact_' . date('YmdHis');
     }
 }

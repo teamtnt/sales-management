@@ -31,6 +31,7 @@ Route::delete('/companies/{company:id}/destroy', [CompanyController::class, 'des
 Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index');
 Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
 Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
+Route::delete('/lists/contact/{contactListContact:id}/destroy', [ContactListController::class, 'contactDestroy'])->name('lists.contact.destroy');
 
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 
