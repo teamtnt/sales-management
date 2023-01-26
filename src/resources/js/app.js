@@ -25,11 +25,13 @@ i18n.global.locale = document.documentElement.lang.substring(0, 2);
 
 // Components
 import HelloWorld from './components/HelloWorld.vue';
+import WorkFlow from './components/workflow/WorkFlow.vue';
 
 const emitter = mitt();
 const app = createApp({
     components: {
-        HelloWorld
+        HelloWorld,
+        WorkFlow
     }
 })
 

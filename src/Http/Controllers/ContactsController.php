@@ -7,16 +7,27 @@ use Teamtnt\SalesManagement\Models\Contact;
 
 class ContactsController extends Controller {
 
+    /**
+     * @param ContactDataTable $contactDataTable
+     * @return mixed
+     */
     public function index(ContactDataTable $contactDataTable)
     {
         return $contactDataTable->render('sales-management::contacts.index');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         return view('sales-management::contacts.create');
     }
 
+    /**
+     * @param ContactRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(ContactRequest $request)
     {
         Contact::create($request->validated());
@@ -26,11 +37,20 @@ class ContactsController extends Controller {
         return redirect()->route('contacts.index');
     }
 
+    /**
+     * @param Contact $contact
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit(Contact $contact)
     {
         return view('sales-management::contacts.edit', compact('contact'));
     }
 
+    /**
+     * @param ContactRequest $request
+     * @param Contact $contact
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(ContactRequest $request, Contact $contact)
     {
 
@@ -42,6 +62,10 @@ class ContactsController extends Controller {
 
     }
 
+    /**
+     * @param Contact $contact
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Contact $contact)
     {
         $contact->delete();
@@ -51,10 +75,16 @@ class ContactsController extends Controller {
         return redirect()->route('contacts.index');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function importCSV() {
         return view('sales-management::contacts.import-csv');
     }
 
+    /**
+     * @return void
+     */
     public function importCSVStore() {
         dd("sada sprema konatke u bazu a ako je i neka lista odabrana, spremit ce ih i u listu odmah");
     }
