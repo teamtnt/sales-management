@@ -2,8 +2,8 @@
 
 @section('title', 'Contacts')
 @section('breadcrumb')
-    <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
-    <li class="breadcrumb-item">{{ __('Contacts') }}</li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('contacts.index') }}">{{ __('Contacts') }}</a></li>
     <li class="breadcrumb-item active">{{ __('Import CSV') }}</li>
 @endsection
 
