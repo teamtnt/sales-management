@@ -10,14 +10,11 @@
             <div class="card illustration flex-fill">
                 <div class="card-body p-0 d-flex flex-fill">
                     <div class="row g-0 w-100">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="illustration-text p-3 m-1">
                                 <h4 class="illustration-text">Welcome Back, Chris!</h4>
-                                <p class="mb-0">AppStack Dashboard</p>
+                                <p class="mb-0">Sales-Management Dashboard</p>
                             </div>
-                        </div>
-                        <div class="col-6 align-self-end text-end">
-                            <img src="/sales-management/img/illustrations/customer-support.png" alt="Customer Support" class="img-fluid illustration-img">
                         </div>
                     </div>
                 </div>
@@ -28,7 +25,7 @@
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">$ 24.300</h3>
+                            <h3 class="mb-2">24.300</h3>
                             <p class="mb-2">{{ __("Total Contacts") }}</p>
                             <div class="mb-0">
                                 <span class="badge badge-soft-success me-2"> +5.35% </span>
@@ -37,7 +34,7 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-success"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <i class="align-middle text-success" data-feather="user"></i>
                             </div>
                         </div>
                     </div>
@@ -58,7 +55,7 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag align-middle text-danger"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                <i class="align-middle" data-feather="home"></i>
                             </div>
                         </div>
                     </div>
@@ -79,7 +76,7 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign align-middle text-info"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <i class="align-middle text-success" data-feather="check-square"></i>
                             </div>
                         </div>
                     </div>

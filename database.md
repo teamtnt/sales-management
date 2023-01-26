@@ -59,6 +59,7 @@
 - id [primary]
 - name [string]
 - description [string]
+- worth [number]
 - updated_at [datetime]
 - created_at [datetime]
 
