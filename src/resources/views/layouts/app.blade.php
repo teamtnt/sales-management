@@ -96,6 +96,6 @@
 }}
 
 @stack('scripts')
+<x-sales-management::notification/>
 </body>
-
 </html>

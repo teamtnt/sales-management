@@ -26,7 +26,8 @@ export default defineConfig({
             // '@': '/src/resources/js'
             '~bootstrap': 'bootstrap',
             '~@fortawesome': '@fortawesome',
-            '~simplebar': 'simplebar'
+            '~simplebar': 'simplebar',
+            '~notyf': 'notyf'
         }
     }
 });
