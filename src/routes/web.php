@@ -6,6 +6,7 @@ use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
+use Teamtnt\SalesManagement\Http\Controllers\ContactListController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -27,7 +28,10 @@ Route::get('/companies/{company:id}/edit', [CompanyController::class, 'edit'])->
 Route::put('/companies/{company:id}/update', [CompanyController::class, 'update'])->name('companies.update');
 Route::delete('/companies/{company:id}/destroy', [CompanyController::class, 'destroy'])->name('companies.destroy');
 
-Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index');
+Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
+Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
+
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 
 Route::get('/pipelines', [ContactsController::class, 'index'])->name('pipelines.index');
