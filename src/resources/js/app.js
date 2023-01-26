@@ -49,4 +49,5 @@ window.DataTable = DataTable;
 // Modules
 import './modules/sidebar';
 import './modules/feather';
+import './modules/notyf';
 
