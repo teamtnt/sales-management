@@ -8,6 +8,8 @@ use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
+Route::get('/contacts/import/csv', [ContactsController::class, 'importCSV'])->name('contacts.import.csv');
+Route::post('/contacts/import/csv', [ContactsController::class, 'importCSVStore'])->name('contacts.import.csv.store');
 Route::get('/contacts/create', [ContactsController::class, 'create'])->name('contacts.create');
 Route::post('/contacts/store', [ContactsController::class, 'store'])->name('contacts.store');
 Route::get('/contacts/{contact:id}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');

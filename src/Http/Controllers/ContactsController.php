@@ -51,5 +51,13 @@ class ContactsController extends Controller {
         return redirect()->route('contacts.index');
     }
 
+    public function importCSV() {
+        return view('sales-management::contacts.import-csv');
+    }
+
+    public function importCSVStore() {
+        dd("sada sprema konatke u bazu a ako je i neka lista odabrana, spremit ce ih i u listu odmah");
+    }
+
 }
 

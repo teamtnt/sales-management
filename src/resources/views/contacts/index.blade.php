@@ -14,9 +14,7 @@
                 <div class="card">
                      <div class="card-header d-flex flex-column flex-md-row justify-content-between">
                         <div>
-                            <a class="btn btn-info me-2" href="">
-                                <i class="align-middle me-2 fas fa-fw fa-users"></i> {{__("Import Contacts")}}</a>
-                             <a class="btn btn-info" href="">
+                             <a class="btn btn-info" href="{{ route('contacts.import.csv') }}">
                                 <i class="align-middle me-2 fas fa-fw fa-file-excel"></i> {{__("Import from CSV")}}</a>
                         </div>
                         <div class="mt-2">
