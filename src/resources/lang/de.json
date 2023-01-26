@@ -1,3 +1,11 @@
 {
-    "Good day": "Guten Tag"
+    "Good day": "Guten Tag",
+    "Dashboard": "Dashboard",
+    "All Lists": "All Lists",
+    "List": "List",
+    "Edit": "Edit",
+    "Delete": "Delete",
+    "Name": "Name",
+    "Description": "Description",
+    "Count": "Count"
 }

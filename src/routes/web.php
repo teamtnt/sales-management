@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Teamtnt\SalesManagement\Http\Controllers\ContactListController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
@@ -16,7 +17,13 @@ Route::get('/contacts/{contact:id}/edit', [ContactsController::class, 'edit'])->
 Route::put('/contacts/{contact:id}/update', [ContactsController::class, 'update'])->name('contacts.update');
 Route::delete('/contacts/{contact:id}/destroy', [ContactsController::class, 'destroy'])->name('contacts.destroy');
 
-Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index');
+Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
+Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
+
+
+
+
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 
 Route::get('/pipelines', [ContactsController::class, 'index'])->name('pipelines.index');
