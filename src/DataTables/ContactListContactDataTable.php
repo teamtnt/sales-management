@@ -42,7 +42,8 @@ class ContactListContactDataTable extends DataTable
         $joinColumn = $joinTable.'.id';
 
         return $model->select([$modelTable.'.id as contact_list_contact_id', $joinTable.'.*'])
-            ->join($joinTable, $joinColumn, $id);
+            ->join($joinTable, $joinColumn, $id)
+            ->where($modelTable.'.contact_list_id', '=', $this->contactListId);
     }
 
     /**
