@@ -40,7 +40,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ (Route::currentRouteName() == "pipelines.index") ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->is('pipelines*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('pipelines.index') }}">
                     <i class="align-middle" data-feather="list"></i> <span class="align-middle">{{ __("Pipelines")}}</span>
                 </a>

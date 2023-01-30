@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Teamtnt\SalesManagement\Http\Controllers\CompanyController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
+use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
 
@@ -27,11 +28,18 @@ Route::get('/companies/{company:id}/edit', [CompanyController::class, 'edit'])->
 Route::put('/companies/{company:id}/update', [CompanyController::class, 'update'])->name('companies.update');
 Route::delete('/companies/{company:id}/destroy', [CompanyController::class, 'destroy'])->name('companies.destroy');
 
+// Pipelines
+Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');
+Route::get('/pipelines/create', [PipelineController::class, 'create'])->name('pipelines.create');
+Route::post('/pipelines/store', [PipelineController::class, 'store'])->name('pipelines.store');
+Route::get('/pipelines/{pipeline:id}/edit', [PipelineController::class, 'edit'])->name('pipelines.edit');
+Route::put('/pipelines/{pipeline:id}/update', [PipelineController::class, 'update'])->name('pipelines.update');
+Route::delete('/pipelines/{pipeline:id}/destroy', [PipelineController::class, 'destroy'])->name('pipelines.destroy');
+
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tasklist.primjer1');
 Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');
 
-Route::get('/pipelines', [ContactsController::class, 'index'])->name('pipelines.index');
 Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
 Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');

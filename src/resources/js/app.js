@@ -24,14 +24,14 @@ const i18n = createI18n({
 i18n.global.locale = document.documentElement.lang.substring(0, 2);
 
 // Components
-import HelloWorld from './components/HelloWorld.vue';
-import WorkFlow from './components/workflow/WorkFlow.vue';
+import WorkFlow from './components/Workflow/WorkFlow.vue';
+import PipelineStageRepeater from "./components/PipelineStageRepeater/PipelineStageRepeater.vue";
 
 const emitter = mitt();
 const app = createApp({
     components: {
-        HelloWorld,
-        WorkFlow
+        WorkFlow,
+        PipelineStageRepeater
     }
 })
 
