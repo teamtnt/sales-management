@@ -24,6 +24,6 @@ class Pipeline extends Model
 
     public function pipelineStages()
     {
-        return $this->hasMany(PipelineStage::class);
+        return $this->hasMany(PipelineStage::class, 'pipeline_id');
     }
 }

@@ -24,8 +24,11 @@ class PipelineRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => 'required|string',
-            'description' => 'nullable|string'
+            'name'                          => 'required|string',
+            'description'                   => 'nullable|string',
+            'pipeline_stages.*.name'        => 'nullable|string',
+            'pipeline_stages.*.description' => 'nullable|string',
+            'pipeline_stages.*.color'       => 'nullable|string',
         ];
     }
 }

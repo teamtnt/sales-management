@@ -24,7 +24,9 @@
         <h5>Add Pipeline Stages</h5>
     </div>
     <div class="mb-3">
-        <pipeline-stage-repeater></pipeline-stage-repeater>
+        <pipeline-stage-repeater
+            :stages="{{ json_encode($pipeline->pipelineStages ?? []) }}">
+        </pipeline-stage-repeater>
     </div>
 </div>
 

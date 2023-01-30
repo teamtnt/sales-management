@@ -38,17 +38,17 @@ class PipelineController extends Controller
 
         $pipeline = Pipeline::create($pipelineRequest->validated());
 
-//TODO: WIP
-        if ($pipelineRequest->get('pipeline_stages')) {
+        if ($pipelineRequest->has('pipeline_stages')) {
 
-            $pipelineStages = $pipelineRequest->pipeline_stages;
+            $pipelineStages = $pipelineRequest->get('pipeline_stages');
 
-            foreach ($pipelineStages as $stage) {
-                PipelineStage::create(array_merge($pipelineRequest->validated(), [
-                    'pipeline_id' => $pipeline->id,
-                ]));
+            foreach ($pipelineStages as $pipelineStage) {
+                $pipeline->pipelineStages()->create([
+                    'name' => $pipelineStage['name'],
+                    'description' => $pipelineStage['description'],
+                    'color' => $pipelineStage['color'],
+                ]);
             }
-
         }
 
         request()->session()->flash('message', __('Pipeline successfully created!'));
@@ -70,9 +70,35 @@ class PipelineController extends Controller
      * @param Pipeline $pipeline
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(PipelineRequest $request, Pipeline $pipeline)
+    public function update(PipelineRequest $pipelineRequest, Pipeline $pipeline)
     {
-        $pipeline->update($request->validated());
+        $pipeline->update($pipelineRequest->validated());
+
+        if ($pipelineRequest->has('pipeline_stages')) {
+
+            $pipelineStages = $pipelineRequest->get('pipeline_stages');
+
+            $pipelineStagesExistingIds = $pipeline->pipelineStages->pluck('id')->toArray();
+            $pipelineStagesNewIds = array_column($pipelineStages, 'id');
+
+            $pipelineStagesIdsToDelete = array_diff($pipelineStagesExistingIds, $pipelineStagesNewIds);
+
+            if (!empty($pipelineStagesIdsToDelete)) {
+                $pipeline->pipelineStages()->whereIn('id', $pipelineStagesIdsToDelete)->delete();
+            }
+
+            foreach ($pipelineStages as $pipelineStage) {
+                $pipeline->pipelineStages()->updateOrCreate(
+                    ['id' => $pipelineStage['id']],
+                    [
+                        'name' => $pipelineStage['name'],
+                        'description' => $pipelineStage['description'],
+                        'color' => $pipelineStage['color'],
+                    ]
+                );
+            }
+
+        }
 
         request()->session()->flash('message', __('Pipeline successfully updated!'));
 
@@ -86,6 +112,8 @@ class PipelineController extends Controller
     public function destroy(Pipeline $pipeline)
     {
         $pipeline->delete();
+
+        $pipeline->pipelineStages()->where('pipeline_id', $pipeline->id)->delete();
 
         request()->session()->flash('message', __('Pipeline successfully deleted!'));
 
