@@ -8,4 +8,11 @@ class TaskListController extends Controller {
         return view('sales-management::tasklist.index' );
     }
 
+    public function primjer1() {
+        return view('sales-management::tasklist.primjer1');
+    }
+
+    public function primjer2() {
+        return view('sales-management::tasklist.primjer2');
+    }
 }
