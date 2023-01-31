@@ -59,7 +59,8 @@
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach(range(1, 100) as $contact)
-                                    <div class="card mb-3 p-2 bg-light cursor-grab border">
+                                    <div class="card mb-3 p-2 bg-light cursor-grab border"
+                                         data-lead-id="{{ $lead->id }}">
                                         ime.prezine@mail.com <br>
                                         098 1234 567
                                     </div>
