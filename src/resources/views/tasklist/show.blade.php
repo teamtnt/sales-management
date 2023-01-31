@@ -11,11 +11,11 @@
             <div class="col-12 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Contacts</h5>
+                        <h5 class="card-title">Leads</h5>
                     </div>
                     <div class="card-body">
 
-                        <div id="contacts">
+                        <div id="leads">
                             @foreach($task->getLeads() as $lead)
                                 <div class="card mb-3 p-2 bg-light cursor-grab border">
                                     {{ $lead->email }} <br>
@@ -80,7 +80,7 @@
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
             let stages = [];
-            stages.push(document.querySelector('#contacts'));
+            stages.push(document.querySelector('#leads'));
 
             document.querySelectorAll("[id^='stage-']").forEach(function (element) {
                 stages.push(element)
