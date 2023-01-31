@@ -7,7 +7,7 @@
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
 
-        <div class="row">
+        <div class="row" id="pipeline" data-pipeline-id="{{$task->pipeline->id}}">
             <div class="col-12 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-header">
@@ -17,7 +17,7 @@
 
                         <div id="leads">
                             @foreach($task->getLeads() as $lead)
-                                <div class="card mb-3 p-2 bg-light cursor-grab border">
+                                <div class="card mb-3 p-2 bg-light cursor-grab border" data-lead-id="{{ $lead->id }}">
                                     {{ $lead->email }} <br>
                                     {{ $lead->phone }}
                                 </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-body">
 
-                            <div id="stage-{{$stage->id}}">
+                            <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach(range(1, 100) as $contact)
                                     <div class="card mb-3 p-2 bg-light cursor-grab border">
@@ -79,6 +79,8 @@
 
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
+            const pipelineId = document.querySelector("#pipeline").dataset.pipelineId;
+
             let stages = [];
             stages.push(document.querySelector('#leads'));
 
@@ -91,7 +93,11 @@
             }).on('drop', function (el, target, source, sibling) {
                 //todo
                 //moramo izvuc lead_id, pipeline_id, source_stage_id, target_stage_id i napraviti ajax request na server s time
-                console.log("sada je drop", el, target, source, sibling)
+                console.log("lead_id", el.dataset.leadId);
+                console.log("pipeline_id", pipelineId);
+                console.log("source_stage_id", source.dataset.stageId);
+                console.log("target_stage_id", target.dataset.stageId);
+
             }).on('over', function (el, container) {
                 //console.log("sada je over", el, container)
             }).on('out', function (el, container) {
