@@ -10,7 +10,8 @@ class TaskListController extends Controller
 
     public function index()
     {
-        return view('sales-management::tasklist.index');
+        $tasks = Task::all();
+        return view('sales-management::tasklist.index', compact('tasks'));
     }
 
     public function create()

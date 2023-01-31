@@ -17,17 +17,13 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <td><a href="/task/primjer1">Nazvati sve autoskole i ponuditi partner program</a></td>
-                    <td>sales</td>
-                    <td>Tome Perica</td>
-                </tr>
-                <tr>
-                    <td><a href="/task/primjer2">Provjeriti imaju li partneri backlink</a></td>
-                    <td>backlink checker</td>
-                    <td>Nenad Ticaric</td>
-                </tr>
-                <tr></tr>
+                @foreach($tasks as $task)
+                    <tr>
+                        <td><a href="/task/primjer1">{{ $task->name }}</a></td>
+                        <td>{{ $task->pipeline->name }}</td>
+                        <td>Tome Perica</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

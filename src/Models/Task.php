@@ -22,4 +22,9 @@ class Task extends Model
         $this->table = config('sales-management.tablePrefix').'tasks';
         parent::__construct($attributes);
     }
+
+    public function pipeline()
+    {
+        return $this->belongsTo(Pipeline::class);
+    }
 }
