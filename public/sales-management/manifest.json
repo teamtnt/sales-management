@@ -12,22 +12,22 @@
     "src": "src/resources/js/app.css"
   },
   "src/resources/scss/light.scss": {
-    "file": "assets/light-0c6d8e01.css",
+    "file": "assets/light-02449126.css",
     "src": "src/resources/scss/light.scss",
     "isEntry": true
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-7d17352a.js",
+    "file": "assets/app-27419416.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor-3484e11a.js"
+      "_vendor-33728d78.js"
     ],
     "css": [
       "assets/app-c86cbb83.css"
     ]
   },
-  "_vendor-3484e11a.js": {
-    "file": "assets/vendor-3484e11a.js"
+  "_vendor-33728d78.js": {
+    "file": "assets/vendor-33728d78.js"
   }
 }

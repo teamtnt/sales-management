@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-body">
 
-                            <div id="tasks-upcoming">
+                            <div id="stage-{{$stage->id}}">
 
                                 @foreach(range(1, 100) as $contact)
                                     <div class="card mb-3 p-2 bg-light cursor-grab border">
@@ -74,3 +74,28 @@
 
     </div>
 @stop
+
+@push('scripts')
+
+    <script type="module">
+        document.addEventListener("DOMContentLoaded", function () {
+            let stages = [];
+            stages.push(document.querySelector('#contacts'));
+
+            document.querySelectorAll("[id^='stage-']").forEach(function (element) {
+                stages.push(element)
+            })
+
+            dragula(stages).on('drag', function (el) {
+                //console.log("sada je drag", el)
+            }).on('drop', function (el, target, source, sibling) {
+                console.log("sada je drop", el, target, source, sibling)
+            }).on('over', function (el, container) {
+                //console.log("sada je over", el, container)
+            }).on('out', function (el, container) {
+                //console.log("sada je out", el, container)
+            });
+        });
+    </script>
+
+@endpush

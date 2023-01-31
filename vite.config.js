@@ -1,9 +1,12 @@
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import {defineConfig, splitVendorChunkPlugin} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export default defineConfig({
+    define: {
+        "global": 'window',
+    },
     build: {
         outDir: "public/sales-management",
     },
@@ -15,13 +18,13 @@ export default defineConfig({
             hotFile: "public/sales-management/hot",
             input: ['src/resources/scss/light.scss', 'src/resources/js/app.js',],
             refresh: true
-    }), vue({
-        template: {
-            transformAssetUrls: {
-                base: null, includeAbsolute: false,
+        }), vue({
+            template: {
+                transformAssetUrls: {
+                    base: null, includeAbsolute: false,
+                },
             },
-        },
-    }), VueI18nPlugin({ /* options */}),], resolve: {
+        }), VueI18nPlugin({ /* options */}),], resolve: {
         alias: {
             // '@': '/src/resources/js'
             '~bootstrap': 'bootstrap',

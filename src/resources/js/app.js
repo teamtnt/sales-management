@@ -2,13 +2,17 @@ import './bootstrap';
 
 // jQuery
 import $ from 'jquery';
+
 window.jQuery = window.$ = $
 
 // Vue 3
-import { createApp } from 'vue/dist/vue.esm-bundler.js';
-import { createI18n } from 'vue-i18n'
+import {createApp} from 'vue/dist/vue.esm-bundler.js';
+import {createI18n} from 'vue-i18n'
 import mitt from 'mitt';
 
+import dragula from 'dragula';
+
+window.dragula = dragula
 // Translations
 import translations from '../lang/de.json';
 
@@ -46,6 +50,7 @@ if (document.querySelector("#app") !== null) {
 import DataTable from 'datatables.net-bs5';
 import 'datatables.net-buttons-bs5';
 import 'datatables.net-select-bs5';
+
 window.DataTable = DataTable;
 
 // Modules
