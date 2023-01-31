@@ -16,7 +16,7 @@
                     <div class="card-header d-flex flex-column flex-md-row justify-content-between">
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'contacts.import.csv.store']) }}
+                        {!! Form::model(null, ['route' => ['contacts.import.csv.store'], 'method' => 'POST',  'enctype'=>'multipart/form-data']) !!}
                         <input type="file" name="csv">
 
                         <label for="">Import to list</label>
