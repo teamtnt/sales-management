@@ -2,13 +2,12 @@
 
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
-use App\Models\ArticleLagerLocation;
-use App\Models\ArticleQuantityLocationChangelog;
-use App\Models\InitialStockSetup;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\ContactDataTable;
 use Teamtnt\SalesManagement\Http\Requests\ContactRequest;
 use Teamtnt\SalesManagement\Models\Contact;
+use Maatwebsite\Excel\Facades\Excel;
+use Teamtnt\SalesManagement\Imports\ContactsImport;
 
 class ContactsController extends Controller
 {
@@ -91,45 +90,10 @@ class ContactsController extends Controller
 
     public function importCSVStore(Request $request)
     {
-        $parseRow = function ($row) {
-            list($salutation, $firstname, $lastname, $jobTitle, $email, $phone, $companyName, $vat, $url, $companyEmail, $address, $postal, $city, $county) = $row;
-            Contact::insert([
-                'salutation' => trim($salutation),
-                'firstname' => trim($firstname),
-                'lastname' => trim($lastname),
-                'job_title' => trim($jobTitle),
-                'email' => trim($email),
-                'phone' => trim($phone)
-            ]);
-
-        };
-
-        $this->readCSV($request->file('csv'), $skipFirstRow = true, $parseRow);
-
+        Excel::import(new ContactsImport, $request->csv);
         request()->session()->flash('message', __('Contact successfully imported!'));
 
         return redirect()->route('contacts.index');
-
     }
-
-    public function readCSV($file, $skipFirstRow = true, $callback = null)
-    {
-        $handle = fopen($file, "r");
-        $firstRow = true;
-
-        if ($handle) {
-            while (($line = fgets($handle)) !== false) {
-                if ($firstRow) {
-                    $firstRow = false;
-                    continue;
-                }
-                $lineArray = str_getcsv($line);
-                $callback($lineArray);
-            }
-
-            fclose($handle);
-        }
-    }
-
 }
 
