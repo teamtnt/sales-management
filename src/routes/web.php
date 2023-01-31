@@ -37,7 +37,11 @@ Route::put('/pipelines/{pipeline:id}/update', [PipelineController::class, 'updat
 Route::delete('/pipelines/{pipeline:id}/destroy', [PipelineController::class, 'destroy'])->name('pipelines.destroy');
 
 Route::get('/lists', [ListController::class, 'index'])->name('lists.index');
+
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
+Route::get('/task/create', [TaskListController::class, 'create'])->name('tasklist.create');
+Route::post('/task/store', [TaskListController::class, 'store'])->name('tasklist.store');
+
 Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tasklist.primjer1');
 Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');
 

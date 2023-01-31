@@ -11,7 +11,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             {{ Form::label('description', __('Pipeline description'), ['class' => 'form-label']) }}
-            {{ Form::text('description', null, ['class' => 'form-control '.($errors->has('lastname') ? ' is-invalid' : '') , 'placeholder' => __('Enter pipeline description')]) }}
+            {{ Form::text('description', null, ['class' => 'form-control '.($errors->has('description') ? ' is-invalid' : '') , 'placeholder' => __('Enter pipeline description')]) }}
             @error('description')
             <small class="invalid-feedback">{{ $message }}</small>
             @enderror

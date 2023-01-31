@@ -17,7 +17,7 @@ class CompanyDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query  Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
@@ -29,7 +29,7 @@ class CompanyDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param Company $model
+     * @param  Company  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Company $model): QueryBuilder
@@ -87,6 +87,6 @@ class CompanyDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Contact_' . date('YmdHis');
+        return 'Contact_'.date('YmdHis');
     }
 }

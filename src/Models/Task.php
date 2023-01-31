@@ -5,7 +5,7 @@ namespace Teamtnt\SalesManagement\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pipeline extends Model
+class Task extends Model
 {
     use HasFactory;
 
@@ -14,21 +14,12 @@ class Pipeline extends Model
     protected $fillable = [
         'name',
         'description',
+        'pipeline_id',
     ];
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'pipelines';
+        $this->table = config('sales-management.tablePrefix').'tasks';
         parent::__construct($attributes);
-    }
-
-    public function pipelineStages()
-    {
-        return $this->hasMany(PipelineStage::class, 'pipeline_id');
-    }
-
-    public static function getPipelineTexts()
-    {
-        return Pipeline::get()->pluck('name', 'id')->toArray();
     }
 }
