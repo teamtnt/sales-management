@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string("name")->nullable();
             $table->string("description")->nullable();
             $table->integer("pipeline_id");
+            $table->integer("contact_list_id")->nullable();
             $table->timestamps();
         });
     }
