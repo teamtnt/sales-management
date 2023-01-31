@@ -28,6 +28,11 @@ class TaskListController extends Controller
         return redirect()->route('tasklist.index');
     }
 
+    public function show(Task $task)
+    {
+        return view('sales-management::tasklist.show', compact('task'));
+    }
+
     public function primjer1()
     {
         return view('sales-management::tasklist.primjer1');

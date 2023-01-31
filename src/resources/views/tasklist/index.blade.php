@@ -19,7 +19,7 @@
                 <tbody>
                 @foreach($tasks as $task)
                     <tr>
-                        <td><a href="/task/primjer1">{{ $task->name }}</a></td>
+                        <td><a href="{{ route('tasklist.show', $task) }}">{{ $task->name }}</a></td>
                         <td>{{ $task->pipeline->name }}</td>
                         <td>Tome Perica</td>
                     </tr>

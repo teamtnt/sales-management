@@ -27,6 +27,11 @@ class Pipeline extends Model
         return $this->hasMany(PipelineStage::class, 'pipeline_id');
     }
 
+    public function stages()
+    {
+        return $this->hasMany(PipelineStage::class, 'pipeline_id');
+    }
+
     public static function getPipelineTexts()
     {
         return Pipeline::get()->pluck('name', 'id')->toArray();
