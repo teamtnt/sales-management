@@ -89,6 +89,8 @@
             dragula(stages).on('drag', function (el) {
                 //console.log("sada je drag", el)
             }).on('drop', function (el, target, source, sibling) {
+                //todo
+                //moramo izvuc lead_id, pipeline_id, source_stage_id, target_stage_id i napraviti ajax request na server s time
                 console.log("sada je drop", el, target, source, sibling)
             }).on('over', function (el, container) {
                 //console.log("sada je over", el, container)
