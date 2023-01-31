@@ -16,10 +16,10 @@
                     <div class="card-body">
 
                         <div id="contacts">
-                            @foreach(range(1, 100) as $contact)
+                            @foreach($task->getLeads() as $lead)
                                 <div class="card mb-3 p-2 bg-light cursor-grab border">
-                                    ime.prezine@mail.com <br>
-                                    098 1234 567
+                                    {{ $lead->email }} <br>
+                                    {{ $lead->phone }}
                                 </div>
                             @endforeach
                         </div>

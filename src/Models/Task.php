@@ -27,4 +27,9 @@ class Task extends Model
     {
         return $this->belongsTo(Pipeline::class);
     }
+
+    public function getLeads()
+    {
+        return Contact::limit(100)->get();
+    }
 }
