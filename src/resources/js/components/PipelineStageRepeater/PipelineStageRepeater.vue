@@ -3,7 +3,24 @@
         <div class="d-flex flex-column bg-light mb-3 rounded-3" v-for="(pipelineStage, index) in pipelineStages"
              :key="index">
             <div class="row p-3">
-                <h6>#{{ index + 1 }} - {{ pipelineStage.name }}</h6>
+                <div class="d-flex justify-content-between">
+                    <h6>#{{ index + 1 }} - {{ pipelineStage.name }}</h6>
+                    <div>
+                        <button class="btn text-danger btn-lg border-0 p-0"
+                                @click.prevent="removeStage(pipelineStage)"
+                                title="Remove Stage"
+                                v-show="index || (!index && pipelineStages.length > 1)">
+                            <i class="align-middle fas fa-fw fa-minus-circle"></i>
+                        </button>
+                        <button class="btn text-info btn-lg border-0 p-0"
+                                title="Add New Stage"
+                                @click.prevent="addStage"
+                                v-show="index === pipelineStages.length - 1">
+                            <i class="align-middle ms-2 fas fa-fw fa-plus-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="col-md-4">
                     <div class="mb-3">
                         <label for="stage_name" class="form-label">Stage name</label>
@@ -32,12 +49,6 @@
                     </div>
                 </div>
                 <input type="hidden" :name="`pipeline_stages[${index}][id]`" :value="pipelineStage.id">
-                <div>
-                    <button @click.prevent="removeStage(pipelineStage)"
-                            v-show="index || (!index && pipelineStages.length > 1)">Remove Stage</button>
-                    <button @click.prevent="addStage"
-                            v-show="index === pipelineStages.length - 1">Add new stage</button>
-                </div>
             </div>
         </div>
     </TransitionGroup>
