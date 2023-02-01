@@ -4,9 +4,6 @@ import vue from '@vitejs/plugin-vue';
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export default defineConfig({
-    define: {
-        "global": 'window',
-    },
     build: {
         outDir: "public/sales-management",
     },
@@ -30,7 +27,8 @@ export default defineConfig({
             '~bootstrap': 'bootstrap',
             '~@fortawesome': '@fortawesome',
             '~simplebar': 'simplebar',
-            '~notyf': 'notyf'
+            '~notyf': 'notyf',
+            '~dragula': 'dragula'
         }
     }
 });

@@ -10,9 +10,6 @@ import {createApp} from 'vue/dist/vue.esm-bundler.js';
 import {createI18n} from 'vue-i18n'
 import mitt from 'mitt';
 
-import dragula from 'dragula';
-
-window.dragula = dragula
 // Translations
 import translations from '../lang/de.json';
 
@@ -57,4 +54,5 @@ window.DataTable = DataTable;
 import './modules/sidebar';
 import './modules/feather';
 import './modules/notyf';
+import './modules/dragula';
 
