@@ -24,7 +24,7 @@
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
-                                    id="notyf-show">{{__("Create Comapny")}}</button>
+                                    id="notyf-show">{{__("Create Company")}}</button>
                              <a href="{{ route('companies.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                          </div>
                         {{ Form::close() }}
