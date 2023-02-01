@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("description")->nullable();
             $table->string("color", 20)->nullable();
             $table->json('properties')->nullable();
+            $table->timestamps();
         });
     }
 

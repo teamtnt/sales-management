@@ -23,9 +23,9 @@
                         @include('sales-management::contacts.fields')
 
                         <div class="my-3">
-                            <button type="submit" class="btn btn-primary me-2"
+                            <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Update Contact")}}</button>
-                             <a href="{{ route('contacts.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                             <a href="{{ route('contacts.index') }}" class="btn btn-info">{{__("Back")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>

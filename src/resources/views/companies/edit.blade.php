@@ -23,9 +23,9 @@
                         @include('sales-management::companies.fields')
 
                         <div class="my-3">
-                            <button type="submit" class="btn btn-primary me-2"
+                            <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Update Company")}}</button>
-                             <a href="{{ route('companies.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                             <a href="{{ route('companies.index') }}" class="btn btn-info">{{__("Back")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>

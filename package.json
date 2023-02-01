@@ -34,6 +34,7 @@
     "datatables.net-bs5": "^1.13.1",
     "datatables.net-buttons-bs5": "^2.3.3",
     "datatables.net-select-bs5": "^1.5.0",
+    "dragula": "^3.7.3",
     "feather-icons": "^4.29.0",
     "jquery": "^3.6.3",
     "notyf": "^3.10.0",

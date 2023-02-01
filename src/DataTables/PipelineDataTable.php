@@ -2,37 +2,34 @@
 
 namespace Teamtnt\SalesManagement\DataTables;
 
-use Teamtnt\SalesManagement\Models\Company;
+use Teamtnt\SalesManagement\Models\Pipeline;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CompanyDataTable extends DataTable
+class PipelineDataTable extends DataTable
 {
     /**
      * Build DataTable class.
      *
-     * @param  QueryBuilder  $query  Results from query() method.
+     * @param QueryBuilder $query Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'sales-management::companies.actions');
+            ->addColumn('action', 'sales-management::pipelines.actions');
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param  Company  $model
+     * @param Pipeline $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Company $model): QueryBuilder
+    public function query(Pipeline $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -46,7 +43,7 @@ class CompanyDataTable extends DataTable
     {
         return $this->builder()
             ->dom('lfrtip')
-            ->setTableId('contact-table')
+            ->setTableId('pipeline-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
@@ -65,13 +62,8 @@ class CompanyDataTable extends DataTable
 
             Column::make('id')->title('ID'),
             Column::make('name')->title(__('Name')),
-            Column::make('vat')->title(__('VAT')),
-            Column::make('url')->title(__('Url')),
-            Column::make('email')->title('Email'),
-            Column::make('address')->title(__('Address')),
-            Column::make('postal')->title(__('ZIP')),
-            Column::make('city')->title(__('City')),
-            Column::make('country')->title(__('Country')),
+            Column::make('description')->title(__('Description')),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -87,6 +79,6 @@ class CompanyDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Contact_'.date('YmdHis');
+        return 'Pipeline_' . date('YmdHis');
     }
 }
