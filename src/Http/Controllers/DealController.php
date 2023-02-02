@@ -5,9 +5,7 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\DealDataTable;
 use Teamtnt\SalesManagement\Http\Requests\DealRequest;
-use Teamtnt\SalesManagement\Http\Requests\DealStageRequest;
 use Teamtnt\SalesManagement\Models\Deal;
-use Teamtnt\SalesManagement\Models\DealStage;
 
 class DealController extends Controller
 {
