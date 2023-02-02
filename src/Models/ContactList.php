@@ -28,4 +28,9 @@ class ContactList extends Model
         $this->table = config('sales-management.tablePrefix').'contact_lists';
         parent::__construct($attributes);
     }
+
+    public function contacts()
+    {
+        return $this->belongsToMany(Contact::class, config('sales-management.tablePrefix').'contact_list_contacts', 'contact_list_id', 'contact_id');
+    }
 }
