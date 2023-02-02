@@ -46,6 +46,7 @@ Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->n
 
 
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
+Route::post('/stage/chage', [TaskListController::class, 'stageChange'])->name('stage.change');
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');

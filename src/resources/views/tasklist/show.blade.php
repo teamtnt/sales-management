@@ -18,7 +18,7 @@
                         <div id="leads">
                             @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
                                 <div class="card mb-3 p-2 bg-light cursor-grab border" data-lead-id="{{ $lead->id }}">
-                                    {{ $lead->contact->firstname }} {{ $lead->contact->firstname }}<br>
+                                    {{ $lead->contact->firstname }} {{ $lead->contact->lastname }}<br>
                                     {{ $lead->contact->email }} <br>
                                     {{ $lead->contact->phone }}
                                 </div>
@@ -62,8 +62,9 @@
                                 @foreach($task->getLeadsOnStage($task->pipeline_id, $stage->id, 100) as $lead)
                                     <div class="card mb-3 p-2 bg-light cursor-grab border"
                                          data-lead-id="{{ $lead->id }}">
-                                        ime.prezine@mail.com <br>
-                                        098 1234 567
+                                        {{ $lead->contact->firstname }} {{ $lead->contact->lastname }}<br>
+                                        {{ $lead->contact->email }} <br>
+                                        {{ $lead->contact->phone }}
                                     </div>
                                 @endforeach
 
@@ -95,13 +96,12 @@
             })
 
             dragula(stages).on('drop', function (el, target, source, sibling) {
-                //todo
-                //moramo izvuc lead_id, pipeline_id, source_stage_id, target_stage_id i napraviti ajax request na server s time
-                console.log("lead_id", el.dataset.leadId);
-                console.log("pipeline_id", pipelineId);
-                console.log("source_stage_id", source.dataset.stageId);
-                console.log("target_stage_id", target.dataset.stageId);
-
+                axios.post('{{ route('stage.change') }}', {
+                    lead_id: el.dataset.leadId,
+                    pipeline_id: pipelineId,
+                    source_stage_id: source.dataset.stageId,
+                    target_stage_id: target.dataset.stageId
+                })
             })
         });
     </script>

@@ -10,6 +10,7 @@ class Lead extends Model
     use HasFactory;
 
     protected $table;
+    public $timestamps = false;
 
     public function __construct(array $attributes = [])
     {
