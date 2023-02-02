@@ -1,0 +1,24 @@
+<?php
+
+namespace Teamtnt\SalesManagement\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Lead extends Model
+{
+    use HasFactory;
+
+    protected $table;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->table = config('sales-management.tablePrefix').'leads';
+        parent::__construct($attributes);
+    }
+
+    public function contact()
+    {
+        return $this->belongsTo(Contact::class);
+    }
+}

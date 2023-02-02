@@ -3,7 +3,9 @@
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
 use Teamtnt\SalesManagement\Http\Requests\TaskRequest;
+use Teamtnt\SalesManagement\Models\Contact;
 use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Lead;
 
 class TaskListController extends Controller
 {
@@ -21,7 +23,10 @@ class TaskListController extends Controller
 
     public function store(TaskRequest $taskRequest)
     {
-        Task::create($taskRequest->validated());
+
+        $task = Task::create($taskRequest->validated());
+
+        $this->createLeadsFromAllContacts($task->id, $task->pipeline_id);
 
         request()->session()->flash('message', __('Task successfully created!'));
 
@@ -33,13 +38,16 @@ class TaskListController extends Controller
         return view('sales-management::tasklist.show', compact('task'));
     }
 
-    public function primjer1()
+    public function createLeadsFromAllContacts($task_id, $pipeline_id)
     {
-        return view('sales-management::tasklist.primjer1');
-    }
+        $leadsTableName = (new Lead)->getTable();
 
-    public function primjer2()
-    {
-        return view('sales-management::tasklist.primjer2');
+        $select = Contact::select(["id", \DB::raw("{$task_id} as task_id"), \DB::raw("{$pipeline_id} as pipeline_id"), \DB::raw("0 as pipeline_stage_id")]);
+        $bindings = $select->getBindings();
+
+        $insertQuery = "INSERT into {$leadsTableName} (contact_id, task_id, pipeline_id, pipeline_stage_id) "
+            .$select->toSql();
+
+        \DB::insert($insertQuery, $bindings);
     }
 }

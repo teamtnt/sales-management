@@ -7,19 +7,20 @@
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
 
-        <div class="row" id="pipeline" data-pipeline-id="{{$task->pipeline->id}}">
+        <div class="row" id="pipeline" data-pipeline-id="{{$task->pipeline_id}}">
             <div class="col-12 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Leads</h5>
+                        <h5 class="card-title">{{ __("Leads") }}</h5>
                     </div>
                     <div class="card-body">
 
                         <div id="leads">
-                            @foreach($task->getLeads() as $lead)
+                            @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
                                 <div class="card mb-3 p-2 bg-light cursor-grab border" data-lead-id="{{ $lead->id }}">
-                                    {{ $lead->email }} <br>
-                                    {{ $lead->phone }}
+                                    {{ $lead->contact->firstname }} {{ $lead->contact->firstname }}<br>
+                                    {{ $lead->contact->email }} <br>
+                                    {{ $lead->contact->phone }}
                                 </div>
                             @endforeach
                         </div>
@@ -58,13 +59,17 @@
 
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
-                                @foreach(range(1, 100) as $contact)
+                                @foreach($task->getLeadsOnStage($task->pipeline_id, $stage->id, 100) as $lead)
                                     <div class="card mb-3 p-2 bg-light cursor-grab border"
                                          data-lead-id="{{ $lead->id }}">
                                         ime.prezine@mail.com <br>
                                         098 1234 567
                                     </div>
                                 @endforeach
+
+                                <div class="card mb-3 p-2 bg-light cursor-grab border">
+                                    drag some lead here
+                                </div>
                             </div>
 
                         </div>

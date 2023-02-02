@@ -28,8 +28,22 @@ class Task extends Model
         return $this->belongsTo(Pipeline::class);
     }
 
-    public function getLeads()
+    public function getLeadsOnStage($pipelineId, $stageId, $limit = null)
     {
-        return Contact::limit(100)->get();
+        return $this->leads()
+            ->where('pipeline_id', $pipelineId)
+            ->where('pipeline_stage_id', $stageId)
+            ->with('contact')->limit($limit)->get();
+
+    }
+
+    public function getLeads($limit)
+    {
+        return $this->leads()->with('contact')->limit(100)->get();
+    }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
     }
 }
