@@ -63,6 +63,7 @@ class DealDataTable extends DataTable
             Column::make('id')->title('ID'),
             Column::make('name')->title(__('Name')),
             Column::make('description')->title(__('Description')),
+            Column::make('worth')->title(__('Worth')),
 
             Column::computed('action')
                 ->exportable(false)

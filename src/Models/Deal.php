@@ -14,6 +14,7 @@ class Deal extends Model
     protected $fillable = [
         'name',
         'description',
+        'worth',
     ];
 
     public function __construct(array $attributes = [])
