@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Teamtnt\SalesManagement\Http\Controllers\CompanyController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
+use Teamtnt\SalesManagement\Http\Controllers\DealController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
@@ -29,11 +30,20 @@ Route::get('/companies/{company:id}/edit', [CompanyController::class, 'edit'])->
 Route::put('/companies/{company:id}/update', [CompanyController::class, 'update'])->name('companies.update');
 Route::delete('/companies/{company:id}/destroy', [CompanyController::class, 'destroy'])->name('companies.destroy');
 
-
+// Contact lists
 Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index');
 Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
 Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
 Route::delete('/lists/contact/{contactListContact:id}/destroy', [ContactListController::class, 'contactDestroy'])->name('lists.contact.destroy');
+
+// Deals
+Route::get('/deals', [DealController::class, 'index'])->name('deals.index');
+Route::get('/deals/create', [DealController::class, 'create'])->name('deals.create');
+Route::post('/deals/store', [DealController::class, 'store'])->name('deals.store');
+Route::get('/deals/{deal:id}/edit', [DealController::class, 'edit'])->name('deals.edit');
+Route::put('/deals/{deal:id}/update', [DealController::class, 'update'])->name('deals.update');
+Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->name('deals.destroy');
+
 
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 

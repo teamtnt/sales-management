@@ -49,10 +49,10 @@
                         class="align-middle">{{ __("Pipelines")}}</span>
                 </a>
             </li>
-            <li class="sidebar-item ">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item {{ request()->is('deals*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('deals.index') }}">
                     <i class="align-middle" data-feather="check-square"></i> <span
-                        class="align-middle">{{ __("Deals")}}</span>
+                            class="align-middle">{{ __("Deals")}}</span>
                 </a>
             </li>
             <li class="sidebar-item {{ (request()->is('automation*')) ? 'active' : '' }}">
