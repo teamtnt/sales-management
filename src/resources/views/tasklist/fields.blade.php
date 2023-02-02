@@ -28,3 +28,13 @@
     </div>
 
 </div>
+<div class="row">
+    <div class="mb-3">
+        {{ Form::label('contact_list_id', __('Contact List'), ['class' => 'form-label']) }}
+        {{ Form::select('contact_list_id', \Teamtnt\SalesManagement\Models\ContactList::getContactListTexts(), null, ['class' => 'form-control ' .($errors->has('contact_list_id') ? ' is-invalid' : ''), 'placeholder' => 'Select a contactlist...']) }}
+        @error('contact_list_id')
+        <small class="invalid-feedback">{{ $message }}</small>
+        @enderror
+    </div>
+
+</div>

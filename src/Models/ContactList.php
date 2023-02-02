@@ -33,4 +33,9 @@ class ContactList extends Model
     {
         return $this->belongsToMany(Contact::class, config('sales-management.tablePrefix').'contact_list_contacts', 'contact_list_id', 'contact_id');
     }
+
+    public static function getContactListTexts()
+    {
+        return ContactList::get()->pluck('name', 'id')->toArray();
+    }
 }
