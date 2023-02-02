@@ -26,6 +26,7 @@ class DealRequest extends FormRequest
         return [
             'name'                          => 'required|string',
             'description'                   => 'nullable|string',
+            'worth'                         => 'required|integer',
         ];
     }
 }
