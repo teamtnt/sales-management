@@ -44,7 +44,7 @@ class ContactListDataTable extends DataTable
         $groupBy = $model->getTable().'.id';
 
         return $model->select([$id, 'name', 'description', DB::raw("COUNT($count) as count")])
-            ->join($joinTable, $joinColumn, $id)
+            ->leftJoin($joinTable, $joinColumn, $id)
             ->groupBy([$groupBy]);
     }
 
