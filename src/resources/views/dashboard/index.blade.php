@@ -25,10 +25,10 @@
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">24.300</h3>
+                            <h3 class="mb-2">{{ $contactsCount }}</h3>
                             <p class="mb-2">{{ __("Total Contacts") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-success me-2"> +5.35% </span>
+                                <span class="badge badge-soft-success me-2"> {{ $contactsCountLastWeek }} </span>
                                 <span class="text-muted">Since last week</span>
                             </div>
                         </div>
@@ -46,10 +46,10 @@
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">43</h3>
+                            <h3 class="mb-2">{{ $companiesCount }}</h3>
                             <p class="mb-2">{{ __("Total Companies") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-danger me-2"> -4.25% </span>
+                                <span class="badge badge-soft-danger me-2"> {{ $companiesCountLastWeek }} </span>
                                 <span class="text-muted">Since last week</span>
                             </div>
                         </div>
@@ -67,10 +67,10 @@
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">$ 18.700</h3>
+                            <h3 class="mb-2">{{ $dealsCount }}</h3>
                             <p class="mb-2">{{ __("Deals Closed") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-success me-2"> +8.65% </span>
+                                <span class="badge badge-soft-success me-2">{{ $dealsCountLastWeek }}</span>
                                 <span class="text-muted">Since last week</span>
                             </div>
                         </div>
@@ -91,7 +91,11 @@
                     <div class="card-actions float-end">
                         <div class="dropdown position-relative">
                             <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="19" cy="12" r="1"></circle>
+                                    <circle cx="5" cy="12" r="1"></circle>
+                                </svg>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end">
@@ -104,7 +108,15 @@
                     <h5 class="card-title mb-0">Sales / Revenue</h5>
                 </div>
                 <div class="card-body d-flex w-100">
-                    <div class="align-self-center chart chart-lg"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                    <div class="align-self-center chart chart-lg">
+                        <div class="chartjs-size-monitor">
+                            <div class="chartjs-size-monitor-expand">
+                                <div class=""></div>
+                            </div>
+                            <div class="chartjs-size-monitor-shrink">
+                                <div class=""></div>
+                            </div>
+                        </div>
                         <canvas id="chartjs-dashboard-bar" style="display: block; height: 350px; width: 749px;" width="1498" height="700" class="chartjs-render-monitor"></canvas>
                     </div>
                 </div>
