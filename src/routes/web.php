@@ -5,6 +5,7 @@ use Teamtnt\SalesManagement\Http\Controllers\CompanyController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\DealController;
+use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
@@ -43,6 +44,14 @@ Route::post('/deals/store', [DealController::class, 'store'])->name('deals.store
 Route::get('/deals/{deal:id}/edit', [DealController::class, 'edit'])->name('deals.edit');
 Route::put('/deals/{deal:id}/update', [DealController::class, 'update'])->name('deals.update');
 Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->name('deals.destroy');
+
+// Messages
+Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+Route::get('/messages/create', [MessagesController::class, 'create'])->name('messages.create');
+Route::post('/messages/store', [MessagesController::class, 'store'])->name('messages.store');
+Route::get('/messages/{message:id}/edit', [MessagesController::class, 'edit'])->name('messages.edit');
+Route::put('/messages/{message:id}/update', [MessagesController::class, 'update'])->name('messages.update');
+Route::delete('/messages/{message:id}/destroy', [MessagesController::class, 'destroy'])->name('messages.destroy');
 
 
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');

@@ -13,8 +13,9 @@ return new class extends Migration {
             $table->id();
             $table->string("from_email");
             $table->string("from_name")->nullable();
-            $table->string("subject")->nullable();
+            $table->string("subject");
             $table->text("body")->nullable();
+            $table->timestamps();
         });
     }
 

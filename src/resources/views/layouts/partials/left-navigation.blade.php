@@ -61,10 +61,10 @@
                         class="align-middle">{{__("Automation")}}</span>
                 </a>
                 <ul id="elements"
-                    class="sidebar-dropdown list-unstyled collapse {{ (request()->is('element*')) ? 'show' : '' }}"
+                    class="sidebar-dropdown list-unstyled collapse {{ (request()->is('element*') || request()->is('messages*')) ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ (request()->is('element/actions')) ? 'active' : '' }}">
-                        <a class="sidebar-link" href="#">{{__("Messages")}}</a>
+                    <li class="sidebar-item {{ (request()->is('messages*')) ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('messages.index') }}">{{__("Messages")}}</a>
                     </li>
                     <li class="sidebar-item {{ (request()->is('automation/workflow/new')) ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('automation.workflow.index') }}">{{__("Workflow")}}</a>
