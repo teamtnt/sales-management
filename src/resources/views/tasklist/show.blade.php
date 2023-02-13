@@ -17,7 +17,7 @@
 
                         <div id="leads">
                             @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
-                                <x-sales-management::lead-card :lead="$lead" />
+                                <x-sales-management::lead-card :lead="$lead"/>
                             @endforeach
                         </div>
                     </div>
@@ -42,9 +42,7 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <a class="dropdown-item" href="#">{{__("Create New List")}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +54,7 @@
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach($task->getLeadsOnStage($task->pipeline_id, $stage->id, 100) as $lead)
-                                    <x-sales-management::lead-card :lead="$lead" />
+                                    <x-sales-management::lead-card :lead="$lead"/>
                                 @endforeach
 
                                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
