@@ -124,5 +124,6 @@ class ContactsController extends Controller
 
         return redirect()->route('contacts.index');
     }
+
 }
 

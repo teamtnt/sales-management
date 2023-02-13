@@ -1,12 +1,15 @@
 <?php
+
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\ContactListContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListDataTable;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 
-class ContactListController extends Controller {
+class ContactListController extends Controller
+{
 
     public function index(ContactListDataTable $contactListDataTable)
     {
@@ -36,6 +39,27 @@ class ContactListController extends Controller {
         request()->session()->flash('message', __('Contact successfully deleted!'));
 
         return redirect()->route('lists.edit', $contactListId);
+    }
+
+    public function createListFromPipelineStage($taskId, $pipelineStageId)
+    {
+        return view('sales-management::contact-list.create-list-from-stage', compact('taskId', 'pipelineStageId'));
+    }
+
+    public function createListFromPipelineStageStore(Request $request)
+    {
+        $taskId = request()->get('task_id');;
+        $stageId = request()->get('stage_id');
+
+        $contactList = new ContactList;
+        $contactList->name = $request->get('new_list', "New list from $taskId stage $stageId");
+        $contactList->save();
+
+        createListFromPipelineStage($contactList->id, $taskId, $stageId);
+
+        request()->session()->flash('message', __('List has been successfully created!'));
+
+        return redirect()->route('tasklist.show', $taskId);
     }
 
 }

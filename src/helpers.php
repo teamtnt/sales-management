@@ -1,6 +1,7 @@
 <?php
 
 use Teamtnt\SalesManagement\Models\Contact;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\ContactTemp;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 
@@ -24,6 +25,21 @@ if (!function_exists('importContactsToContactList')) {
     {
         $select = Contact::select(["id", \DB::raw("{$contactListId} as contact_list_id")])
             ->where('batch_id', $batchId);
+
+        $bindings = $select->getBindings();
+
+        $insertQuery = "INSERT into ".(new ContactListContact)->getTable()." (contact_id, contact_list_id) ".$select->toSql();
+
+        \DB::insert($insertQuery, $bindings);
+    }
+}
+
+if (!function_exists('createListFromPipelineStage')) {
+    function createListFromPipelineStage($contactListId, $taskId, $stageId)
+    {
+        $select = Lead::select(["contact_id", \DB::raw("{$contactListId} as contact_list_id")])
+            ->where('task_id', $taskId)
+            ->where('pipeline_stage_id', $stageId);
 
         $bindings = $select->getBindings();
 

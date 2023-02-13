@@ -42,7 +42,8 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#">{{__("Create New List")}}</a>
+                                        <a class="dropdown-item"
+                                           href="{{ route('lists.create.from.stage', [$task->id, $stage->id]) }}">{{__("Create New List")}}</a>
                                     </div>
                                 </div>
                             </div>
