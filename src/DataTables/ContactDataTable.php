@@ -50,6 +50,7 @@ class ContactDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
+            ->pageLength(100)
             ->orderBy(1)
             ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
     }

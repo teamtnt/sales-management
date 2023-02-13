@@ -90,6 +90,16 @@ class ContactsController extends Controller
 
     public function importCSVStore(Request $request)
     {
+        if($request->get('new_list')) {
+            // use this name for creating new list then import
+            dd($request->get('new_list'));
+        }
+
+        if($request->get('list')) {
+            // get current list name and import
+            dd($request->get('list'));
+        }
+
         Excel::import(new ContactsImport, $request->csv);
         request()->session()->flash('message', __('Contact successfully imported!'));
 
