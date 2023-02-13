@@ -34,7 +34,10 @@
         "psr-4": {
             "Teamtnt\\SalesManagement\\": "src",
             "Teamtnt\\SalesManagement\\Database\\Factories\\": "database/factories"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

@@ -5,9 +5,14 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\ContactDataTable;
 use Teamtnt\SalesManagement\Http\Requests\ContactRequest;
+use Teamtnt\SalesManagement\Http\Requests\CSVImportRequest;
 use Teamtnt\SalesManagement\Models\Contact;
+use Teamtnt\SalesManagement\Models\ContactList;
+use Teamtnt\SalesManagement\Models\Batch;
+use Teamtnt\SalesManagement\Models\ContactTemp;
 use Maatwebsite\Excel\Facades\Excel;
 use Teamtnt\SalesManagement\Imports\ContactsImport;
+use DB;
 
 class ContactsController extends Controller
 {
@@ -88,19 +93,34 @@ class ContactsController extends Controller
         return view('sales-management::contacts.import-csv');
     }
 
-    public function importCSVStore(Request $request)
+    public function importCSVStore(CSVImportRequest $request)
     {
-        if($request->get('new_list')) {
-            // use this name for creating new list then import
-            dd($request->get('new_list'));
+        //Create database table from ContactTemp model
+        DB::statement("CREATE TEMPORARY TABLE ".(new ContactTemp)->getTable()." SELECT * FROM ".(new Contact)->getTable()." LIMIT 0");
+        Excel::import(new ContactsImport, $request->csv);
+
+        $batch = new Batch();
+        if (auth()->check()) {
+            $batch->uploader_id = auth()->id();
+        }
+        $batch->save();
+
+        importTempContactsIntoContacts($batch->id);
+
+        if ($request->get('new_list')) {
+            $contactList = new ContactList;
+            $contactList->name = $request->get('new_list');
+            $contactList->save();
+
+            importContactsToContactList($contactList->id, $batch->id);
         }
 
-        if($request->get('list')) {
+        if ($request->get('list')) {
             // get current list name and import
             dd($request->get('list'));
         }
 
-        Excel::import(new ContactsImport, $request->csv);
+
         request()->session()->flash('message', __('Contact successfully imported!'));
 
         return redirect()->route('contacts.index');

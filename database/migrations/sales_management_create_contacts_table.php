@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create(config('sales-management.tablePrefix').'contacts', function (Blueprint $table) {
@@ -16,7 +15,14 @@ return new class extends Migration
             $table->string("job_title")->nullable();
             $table->string("email")->index()->nullable();
             $table->string("phone")->nullable();
+            $table->integer("batch_id")->nullable();
 
+            $table->timestamps();
+        });
+
+        Schema::create(config('sales-management.tablePrefix').'batches', function (Blueprint $table) {
+            $table->id();
+            $table->integer("uploader_id")->nullable();
             $table->timestamps();
         });
     }

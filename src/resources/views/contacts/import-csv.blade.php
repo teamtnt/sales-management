@@ -17,10 +17,13 @@
                         {!! Form::model(null, ['route' => ['contacts.import.csv.store'], 'method' => 'POST',  'enctype'=>'multipart/form-data']) !!}
                         <div class="row mb-3">
                             <div class="col-md-5">
-                                <div class="mb-3">
+                                <div class="mb-3 {{($errors->has('csv') ? ' is-invalid' : '')}}">
                                     <label for="formFile" class="form-label">Upload CSV</label>
                                     <input class="form-control" type="file" id="formFile" name="csv">
                                 </div>
+                                @error('csv')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
@@ -28,29 +31,32 @@
                                 <div class="mb-3">
                                     <label for="list" class="form-label">Import to list</label>
                                     <select class="form-select" aria-label="Default select example" id="list">
-                                      <option selected>{{ __('Default') }}</option>
-                                      <option value="1">One</option>
-                                      <option value="2">Two</option>
-                                      <option value="3">Three</option>
+                                        <option selected>{{ __('Default') }}</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="d-inline-flex align-items-center w-100 h-100 mt-1">
-                                     <div class="page-separator d-flex justify-content-center my-1 w-100">
-                                         <span class="page-separator__text">Or</span>
-                                     </div>
+                                    <div class="page-separator d-flex justify-content-center my-1 w-100">
+                                        <span class="page-separator__text">Or</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="new_list" class="form-label">Create as new list</label>
-                                   <input type="text" class="form-control" id="new_list" name="new_list" placeholder="Enter name for new imported list">
+                                    {{ Form::label('new_list', __('Create as new list'), ['class' => 'form-label']) }}
+                                    {{ Form::text('new_list', null, ['class' => 'form-control '.($errors->has('new_list') ? ' is-invalid' : '') , 'placeholder' => __('Enter list name')]) }}
+                                    @error('new_list')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary me-2" >{{__("Import CSV")}}</button>
+                            <button type="submit" class="btn btn-primary me-2">{{__("Import CSV")}}</button>
                             <a href="{{ route('contacts.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}

@@ -2,7 +2,7 @@
 
 namespace Teamtnt\SalesManagement\Imports;
 
-use Teamtnt\SalesManagement\Models\Contact;
+use Teamtnt\SalesManagement\Models\ContactTemp;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
@@ -16,7 +16,7 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
      */
     public function model(array $row)
     {
-        return new Contact([
+        return new ContactTemp([
             'salutation' => trim($row[0]),
             'firstname' => trim($row[1]),
             'lastname' => trim($row[2]),
