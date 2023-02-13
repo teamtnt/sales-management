@@ -68,8 +68,8 @@
                                     </div>
                                 @endforeach
 
-                                <div class="card mb-3 p-2 bg-light cursor-grab border">
-                                    drag some lead here
+                                <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
+                                    <span style="font-size: 10px;"><i>Drag / drop area</i></span>
                                 </div>
                             </div>
 

@@ -36,3 +36,8 @@
   border-top-left-radius: $border-radius-sm !important;
   border-bottom-left-radius: $border-radius-sm !important;
 }
+
+.border-dashed {
+    border: 1px dashed #d1d5db;
+    border-radius: 0.25rem;
+}
