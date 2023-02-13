@@ -29,13 +29,11 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="list" class="form-label">Import to list</label>
-                                    <select class="form-select" aria-label="Default select example" id="list">
-                                        <option selected>{{ __('Default') }}</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                    {{ Form::label('contact_list_id', __('Contact List'), ['class' => 'form-label']) }}
+                                    {{ Form::select('contact_list_id', \Teamtnt\SalesManagement\Models\ContactList::getContactListTexts(), null, ['class' => 'form-control ' .($errors->has('contact_list_id') ? ' is-invalid' : ''), 'placeholder' => 'Select a contactlist...']) }}
+                                    @error('contact_list_id')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-1">

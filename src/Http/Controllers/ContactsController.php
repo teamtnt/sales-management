@@ -115,9 +115,8 @@ class ContactsController extends Controller
             importContactsToContactList($contactList->id, $batch->id);
         }
 
-        if ($request->get('list')) {
-            // get current list name and import
-            dd($request->get('list'));
+        if ($request->get('contact_list_id')) {
+            importContactsToContactList($request->get('contact_list_id'), $batch->id);
         }
 
 
