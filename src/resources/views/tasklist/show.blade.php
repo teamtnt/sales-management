@@ -17,11 +17,7 @@
 
                         <div id="leads">
                             @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
-                                <div class="card mb-3 p-2 bg-light cursor-grab border" data-lead-id="{{ $lead->id }}">
-                                    {{ $lead->contact->firstname }} {{ $lead->contact->lastname }}<br>
-                                    {{ $lead->contact->email }} <br>
-                                    {{ $lead->contact->phone }}
-                                </div>
+                                <x-sales-management::lead-card :lead="$lead" />
                             @endforeach
                         </div>
                     </div>
@@ -60,12 +56,7 @@
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach($task->getLeadsOnStage($task->pipeline_id, $stage->id, 100) as $lead)
-                                    <div class="card mb-3 p-2 bg-light cursor-grab border"
-                                         data-lead-id="{{ $lead->id }}">
-                                        {{ $lead->contact->firstname }} {{ $lead->contact->lastname }}<br>
-                                        {{ $lead->contact->email }} <br>
-                                        {{ $lead->contact->phone }}
-                                    </div>
+                                    <x-sales-management::lead-card :lead="$lead" />
                                 @endforeach
 
                                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
@@ -95,14 +86,23 @@
                 stages.push(element)
             })
 
-            dragula(stages).on('drop', function (el, target, source, sibling) {
-                axios.post('{{ route('stage.change') }}', {
-                    lead_id: el.dataset.leadId,
-                    pipeline_id: pipelineId,
-                    source_stage_id: source.dataset.stageId,
-                    target_stage_id: target.dataset.stageId
+            dragula(stages)
+                .on('drag', function (el) {
+                    el.className = el.className.replace('bg-light', 'bg-gray-400');
                 })
-            })
+                .on('drop', function (el, target, source, sibling) {
+                    el.className = el.className.replace('bg-gray-400', 'bg-light');
+
+                    axios.post('{{ route('stage.change') }}', {
+                        lead_id: el.dataset.leadId,
+                        pipeline_id: pipelineId,
+                        source_stage_id: source.dataset.stageId,
+                        target_stage_id: target.dataset.stageId
+                    })
+                })
+                .on('over', function (el, container) {
+                    el.className = el.className.replace('bg-gray-400', 'bg-light');
+                })
         });
     </script>
 

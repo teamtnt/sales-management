@@ -97,7 +97,9 @@ $theme-colors: (
     "warning": $warning,
     "danger": $danger,
     "light": $light,
-    "dark": $dark
+    "dark": $dark,
+    "teal": $teal,
+    "gray-400": $gray-400
 ) !default;
 
 // Available as CSS variables (located in our _root.scss file)
