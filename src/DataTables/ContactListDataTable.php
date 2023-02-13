@@ -4,7 +4,6 @@ namespace Teamtnt\SalesManagement\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Teamtnt\SalesManagement\Models\ContactList;
-use Teamtnt\SalesManagement\Models\ContactListContact;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -19,12 +18,15 @@ class ContactListDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query  Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn('count', function (ContactList $contactList) {
+                return $contactList->contacts()->count();
+            })
             ->addColumn('action', 'sales-management::contact-list.actions')
             ->setRowId('id');
     }
@@ -32,20 +34,12 @@ class ContactListDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param ContactList $model
+     * @param  ContactList  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(ContactList $model): QueryBuilder
     {
-        $id = $model->getTable().'.id';
-        $joinTable = (new ContactListContact)->getTable();
-        $joinColumn = $joinTable.'.contact_list_id';
-        $count = $joinTable.'.contact_list_id';
-        $groupBy = $model->getTable().'.id';
-
-        return $model->select([$id, 'name', 'description', DB::raw("COUNT($count) as count")])
-            ->leftJoin($joinTable, $joinColumn, $id)
-            ->groupBy([$groupBy]);
+        return $model->newQuery()->with('contacts');
     }
 
     /**
@@ -93,6 +87,6 @@ class ContactListDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'ContactList_' . date('YmdHis');
+        return 'ContactList_'.date('YmdHis');
     }
 }
