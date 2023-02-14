@@ -18,14 +18,14 @@
     </div>
     <div class="col-md-4">
         <div class="mb-3">
-            {{ Form::label('url', __('Company webiste'), ['class' => 'form-label']) }}
+            {{ Form::label('url', __('Company website'), ['class' => 'form-label']) }}
             {{ Form::text('url', null, ['class' => 'form-control '.($errors->has('url') ? ' is-invalid' : ''), 'placeholder' => __('Enter Company webiste')]) }}
             @error('url')
             <small class="invalid-feedback">{{ $message }}</small>
             @enderror
         </div>
     </div>
-     <div class="col-md-4">
+    <div class="col-md-4">
         <div class="mb-3">
             {{ Form::label('email', __('Company email'), ['class' => 'form-label']) }}
             {{ Form::text('email', null, ['class' => 'form-control '.($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => __('Enter Company email')]) }}

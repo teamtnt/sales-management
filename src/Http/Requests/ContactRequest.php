@@ -24,12 +24,20 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname'  => 'required|string',
-            'lastname'   => 'required|string',
-            'job_title'  => 'nullable|string',
-            'email'      => 'required_if:phone,=,null|nullable|email',
-            'phone'      => 'required_if:email,=,null|nullable|string',
-            'salutation' => 'nullable|string'
+            'firstname'     => 'required|string',
+            'lastname'      => 'required|string',
+            'job_title'     => 'nullable|string',
+            'email'         => 'required_if:phone,=,null|nullable|email',
+            'phone'         => 'required_if:email,=,null|nullable|string',
+            'salutation'    => 'nullable|string',
+            'company_name'  => 'nullable|string',
+            'vat'           => 'nullable|string',
+            'url'           => 'nullable|string',
+            'company_email' => 'nullable|string',
+            'address'       => 'nullable|string',
+            'postal'        => 'nullable|string',
+            'city'          => 'nullable|string',
+            'country'       => 'nullable|string',
         ];
     }
 }
