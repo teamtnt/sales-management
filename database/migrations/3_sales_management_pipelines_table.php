@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create(config('sales-management.tablePrefix').'pipelines', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
-            $table->string("description")->nullable();
+            $table->text("description")->nullable();
             $table->timestamps();
         });
 
@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger("pipeline_id");
             $table->string("name")->nullable();
-            $table->string("description")->nullable();
+            $table->text("description")->nullable();
             $table->string("color", 20)->nullable();
             $table->json('properties')->nullable();
             $table->timestamps();
