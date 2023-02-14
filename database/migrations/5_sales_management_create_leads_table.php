@@ -7,14 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-
-
         Schema::create(config('sales-management.tablePrefix').'leads', function (Blueprint $table) {
             $table->id();
-            $table->integer("task_id")->index();
-            $table->integer("contact_id")->index();
-            $table->integer("pipeline_id")->index();
-            $table->integer("pipeline_stage_id")->index();
+            $table->unsignedBigInteger("task_id")->index();
+            $table->unsignedBigInteger("contact_id")->index();
+            $table->unsignedBigInteger("pipeline_id")->index();
+            $table->unsignedBigInteger("pipeline_stage_id")->index();
+
+            $table->foreign('contact_id')
+                ->references('id')
+                ->on(config('sales-management.tablePrefix').'contacts')
+                ->cascadeOnDelete();
         });
     }
 

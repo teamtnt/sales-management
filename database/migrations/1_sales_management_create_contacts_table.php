@@ -15,8 +15,15 @@ return new class extends Migration {
             $table->string("job_title")->nullable();
             $table->string("email")->index()->nullable();
             $table->string("phone")->nullable();
+            $table->string("company_name")->nullable();
+            $table->string("vat")->nullable();
+            $table->string("url")->nullable();
+            $table->string("company_email")->index()->nullable();
+            $table->string("address")->nullable();
+            $table->string("postal", 20)->nullable();
+            $table->string("city", 20)->nullable();
+            $table->string("country", 3)->nullable();
             $table->integer("batch_id")->nullable();
-
             $table->timestamps();
         });
 

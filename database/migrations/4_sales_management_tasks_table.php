@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->string("name")->nullable();
             $table->string("description")->nullable();
-            $table->integer("pipeline_id");
-            $table->integer("contact_list_id")->nullable();
+            $table->unsignedBigInteger("pipeline_id");
+            $table->unsignedBigInteger("contact_list_id")->nullable();
             $table->integer("status")->default(0);
             $table->timestamps();
         });
