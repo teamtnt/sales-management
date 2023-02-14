@@ -22,9 +22,17 @@ class ContactTemp extends Model
         'lastname',
         'phone',
         'email',
-        'salutation'
+        'job_title',
+        'salutation',
+        'company_name',
+        'vat',
+        'url',
+        'company_email',
+        'address',
+        'postal',
+        'city',
+        'country',
     ];
-
 
     public function __construct(array $attributes = [])
     {

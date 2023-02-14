@@ -63,13 +63,11 @@ class ContactsController extends Controller
      */
     public function update(ContactRequest $request, Contact $contact)
     {
-
         $contact->update($request->validated());
 
         request()->session()->flash('message', __('Contact successfully updated!'));
 
         return redirect()->route('contacts.index');
-
     }
 
     /**
@@ -118,7 +116,6 @@ class ContactsController extends Controller
         if ($request->get('contact_list_id')) {
             importContactsToContactList($request->get('contact_list_id'), $batch->id);
         }
-
 
         request()->session()->flash('message', __('Contact successfully imported!'));
 

@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->string("company_email")->index()->nullable();
             $table->string("address")->nullable();
             $table->string("postal", 20)->nullable();
-            $table->string("city", 20)->nullable();
-            $table->string("country", 3)->nullable();
+            $table->string("city")->nullable();
+            $table->string("country")->nullable();
             $table->integer("batch_id")->nullable();
             $table->timestamps();
         });

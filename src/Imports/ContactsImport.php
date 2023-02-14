@@ -17,12 +17,20 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
     public function model(array $row)
     {
         return new ContactTemp([
-            'salutation' => trim($row[0]),
-            'firstname' => trim($row[1]),
-            'lastname' => trim($row[2]),
-            'job_title' => trim($row[3]),
-            'email' => trim($row[4]),
-            'phone' => trim($row[5])
+            'salutation'    => trim($row[0]),
+            'firstname'     => trim($row[1]),
+            'lastname'      => trim($row[2]),
+            'job_title'     => trim($row[3]),
+            'email'         => trim($row[4]),
+            'phone'         => trim($row[5]),
+            'company_name'  => trim($row[6]),
+            'vat'           => trim($row[7]),
+            'url'           => trim($row[8]),
+            'company_email' => trim($row[9]),
+            'address'       => trim($row[10]),
+            'postal'        => trim($row[11]),
+            'city'          => trim($row[12]),
+            'country'       => trim($row[13]),
         ]);
     }
 
