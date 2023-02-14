@@ -9,17 +9,170 @@ const onDragStart = (event, nodeType) => {
 </script>
 
 <template>
-    <aside>
-        <div class="description">You can drag these nodes to the pane.</div>
-
-        <div class="nodes d-flex gap-2">
-            <div class="vue-flow__node-input" :draggable="true" @dragstart="onDragStart($event, 'condition')">
-                Ovo ce biti condition i trebalo bi na lijevoj strani imat nest u obliku dijamanta, a na desnoj opis
+    <aside class="bg-light h-100 shadow-lg">
+        <h5 class="sidebar-heading py-3">
+            <span class="d-flex align-items-center justify-content-center fw-lighter">
+                <svg width="20" height="20"
+                     viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round"
+                     stroke-linejoin="round"
+                     class="feather feather-move align-middle me-2"><polyline
+                    points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline
+                    points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                </svg>You can drag these nodes to the pane</span>
+        </h5>
+        <div class="d-flex flex-column gap-2">
+            <div class="bg-white shadow-sm px-3 py-2">
+                <h6 class="mb-0">
+                    <span class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-git-pull-request align-middle me-2">
+                            <circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle>
+                            <path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
+                        Conditions</span></h6>
+            </div>
+            <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'condition')">
+                    <span class="condition-box pe-2 justify-content-end">
+                        <span class="condition-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-refresh-cw align-middle"><polyline
+                                points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path
+                                d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
+                        Stage Changed</span>
+                </div>
             </div>
 
-            <div class="vue-flow__node-default" :draggable="true" @dragstart="onDragStart($event, 'action')">
-                Ovo ce biti action i trebalo bi na lijevoj strani imat kocku a na desnoj opis akcije
+            <div class="bg-white shadow-sm px-3 py-2">
+                <h6 class="mb-0">
+                    <span class="d-flex align-items-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather feather-repeat align-middle me-2"><polyline
+                            points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline
+                            points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        Actions</span></h6>
+            </div>
+            <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'action')">
+                    <span class="action-box pe-2 justify-content-end">
+                        <span class="action-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-mail align-middle"><path
+                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline
+                                points="22,6 12,13 2,6"></polyline></svg>
+                        </span>
+                        Send Message
+                    </span>
+                </div>
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'action')">
+                    <span class="action-box px-3 justify-content-center">
+                        <span class="action-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-clock align-middle">
+                                <circle cx="12" cy="12" r="10"></circle><polyline
+                                points="12 6 12 12 16 14"></polyline></svg>
+                        </span>
+                        Wait
+                    </span>
+                </div>
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'action')">
+                    <span class="action-box ps-2 justify-content-center">
+                        <span class="action-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-tag align-middle"><path
+                                d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line
+                                x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                        </span>
+                        Add Tag
+                    </span>
+                </div>
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'action')">
+                    <span class="action-box ps-2 justify-content-center">
+                        <span class="action-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-list align-middle">
+                                <line x1="8" y1="6" x2="21" y2="6"></line><line
+                                x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line
+                                x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line
+                                x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        </span>
+                        Move To List
+                    </span>
+                </div>
             </div>
         </div>
     </aside>
 </template>
+
+<style lang="scss">
+    .sidebar-heading {
+        margin-bottom: 0;
+        text-transform: uppercase;
+        background: #a2999e;
+        color: white;
+    }
+
+    .vue-flow__node-input {
+        position: relative;
+        border: 0;
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    .condition-box {
+        display: flex;
+        align-items: center;
+
+        &__icon {
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            color: white;
+            background-color: #4E68D0;
+            transform: translate(-40%, 0%) rotate(45deg);
+            transform-origin: center;
+        }
+    }
+
+    .action-box {
+        display: flex;
+        align-items: center;
+
+        &__icon {
+            position: absolute;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            color: white;
+            background-color: #00BD9D;
+            transform: translate(-30%, 0%);
+            transform-origin: center;
+        }
+    }
+</style>

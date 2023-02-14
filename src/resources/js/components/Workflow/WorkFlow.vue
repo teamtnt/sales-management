@@ -1,19 +1,27 @@
 <script setup>
-import { VueFlow, useVueFlow } from '@vue-flow/core'
+import { Panel, VueFlow, useVueFlow } from '@vue-flow/core'
+import { Background } from '@vue-flow/background'
 import { nextTick, watch } from 'vue'
 import Sidebar from './Sidebar.vue'
+
+const props = defineProps({
+    panelTitle: {
+        type: String,
+        default: "Workflow"
+    }
+})
 
 let id = 0
 const getId = () => `dndnode_${id++}`
 
 const { findNode, onConnect, nodes, edges, addEdges, addNodes, viewport, project, vueFlowRef } = useVueFlow({
     nodes: [
-        {
-            id: '1',
-            type: 'input',
-            label: 'input node',
-            position: { x: 250, y: 25 },
-        },
+        // {
+        //     id: '1',
+        //     type: 'input',
+        //     label: 'input node',
+        //     position: { x: 250, y: 25 },
+        // },
     ],
 })
 
@@ -64,8 +72,15 @@ const onDrop = (event) => {
 </script>
 
 <template>
-    <div class="dndflow" @drop="onDrop" style="width: 100%; height: 50%;">
+    <div class="row w-100 h-100 mx-0" @drop="onDrop">
+        <div class="col-md-10 pe-0">
+            <VueFlow @dragover="onDragOver">
+                <Background />
+                <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
+            </VueFlow>
+        </div>
+      <div class="col-md-2 px-0">
         <Sidebar />
-        <VueFlow @dragover="onDragOver" />
+      </div>
     </div>
 </template>

@@ -1,6 +1,9 @@
 @extends('sales-management::layouts.app')
 
+@section('title', 'Workflow')
+
+@section('add-css-class', 'overflow-hidden px-0 py-0')
+
 @section('content')
-    <h1 class="h3 mb-3">{{ __("Workflows") }}</h1>
-    <work-flow></work-flow>
+    <work-flow panel-title="{{ __("Workflow") }}"></work-flow>
 @stop

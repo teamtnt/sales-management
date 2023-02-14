@@ -68,17 +68,19 @@
     <div class="main">
         @include('sales-management::layouts.partials.header-navigation')
 
-        <main class="content">
-            <div class="container-fluid p-0">
-                <div class="page-breadcrumb">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            @yield('breadcrumb')
-                        </ol>
-                    </nav>
-                    @yield('title_extra')
+        <main class="content @yield('add-css-class')">
+            @hasSection('breadcrumb')
+                <div class="container-fluid p-0">
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                @yield('breadcrumb')
+                            </ol>
+                        </nav>
+                        @yield('title_extra')
+                    </div>
                 </div>
-            </div>
+            @endif
 
             @yield('content')
         </main>
