@@ -17,7 +17,6 @@ class PipelineStage extends Model
         'description',
         'color',
         'properties'
-
     ];
 
     public function __construct(array $attributes = [])
