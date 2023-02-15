@@ -6,7 +6,7 @@ import Sidebar from './Sidebar.vue'
 
 import ConditionNode from './ConditionNode.vue'
 import ActionNode from "./ActionNode.vue";
-import { bottom } from "@popperjs/core";
+import {bottom} from "@popperjs/core";
 
 const nodeTypes = {
     condition: markRaw(ConditionNode),
@@ -102,6 +102,22 @@ const onDrop = (event) => {
         )
     })
 }
+
+const saveWorkflow = function () {
+    //ovdje cemo poslat na server
+    axios.post('/workflow/save', {
+        elements: elements.value
+    })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    console.log(elements.value);
+    alert("Workflow saved");
+}
 </script>
 
 <template>
@@ -111,8 +127,8 @@ const onDrop = (event) => {
                 <Background/>
                 <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
                 <Panel :position="PanelPosition.BottomRight">
-                    <button class="btn btn-success me-2">{{ $t("Save") }}</button>
-                    <button class="btn btn-danger">{{  $t("Cancel") }}</button>
+                    <button class="btn btn-success me-2" @click="saveWorkflow">{{ $t("Save") }}</button>
+                    <button class="btn btn-danger">{{ $t("Cancel") }}</button>
                 </Panel>
             </VueFlow>
         </div>
