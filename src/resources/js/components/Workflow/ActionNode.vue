@@ -18,6 +18,6 @@ const props = defineProps({
             </span>
             {{ props.label }}
         </span>
-        <div data-handleid="54__handle-bottom" data-nodeid="{{ props.id }}"></div>
+        <div :data-handleid="`54__handle-${props.sourcePosition}`" :data-nodeid="props.id"></div>
     </div>
 </template>
