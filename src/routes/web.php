@@ -77,11 +77,21 @@ Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tas
 //Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
 Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
 
-// Workflows
-Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
-Route::get('/workflows/create', [WorkflowController::class, 'create'])->name('workflows.create');
-Route::post('/workflows/store', [WorkflowController::class, 'store'])->name('workflows.store');
-Route::get('/workflows/{workflow:id}/show', [WorkflowController::class, 'show'])->name('workflows.show');
-Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
-Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
-Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
+Route::group(['prefix' => 'automation'], function () {
+    // Messages
+    Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
+    Route::get('/messages/create', [MessagesController::class, 'create'])->name('messages.create');
+    Route::post('/messages/store', [MessagesController::class, 'store'])->name('messages.store');
+    Route::get('/messages/{message:id}/edit', [MessagesController::class, 'edit'])->name('messages.edit');
+    Route::put('/messages/{message:id}/update', [MessagesController::class, 'update'])->name('messages.update');
+    Route::delete('/messages/{message:id}/destroy', [MessagesController::class, 'destroy'])->name('messages.destroy');
+
+    // Workflows
+    Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
+    Route::get('/workflows/create', [WorkflowController::class, 'create'])->name('workflows.create');
+    Route::post('/workflows/store', [WorkflowController::class, 'store'])->name('workflows.store');
+    Route::get('/workflows/{workflow:id}/show', [WorkflowController::class, 'show'])->name('workflows.show');
+    Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
+    Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
+    Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
+});

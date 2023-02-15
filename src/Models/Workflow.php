@@ -12,6 +12,8 @@ class Workflow extends Model
     protected $fillable = [
         'name',
         'description',
+        'elements',
+        'status',
     ];
 
 }

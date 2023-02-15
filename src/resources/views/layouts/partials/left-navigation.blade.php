@@ -54,12 +54,12 @@
                             class="align-middle">{{__("Automation")}}</span>
                 </a>
                 <ul id="elements"
-                    class="sidebar-dropdown list-unstyled collapse {{ (request()->is('element*') || request()->is('messages*')) ? 'show' : '' }}"
+                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('automation*') ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ (request()->is('messages*')) ? 'active' : '' }}">
+                    <li class="sidebar-item {{ (request()->is('automation/messages*')) ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('messages.index') }}">{{__("Messages")}}</a>
                     </li>
-                    <li class="sidebar-item {{ (request()->is('workflows*')) ? 'active' : '' }}">
+                    <li class="sidebar-item {{ (request()->is('automation/workflows*')) ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('workflows.index') }}">{{__("Workflow")}}</a>
                     </li>
                 </ul>
