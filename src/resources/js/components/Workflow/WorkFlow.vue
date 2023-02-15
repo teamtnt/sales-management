@@ -1,5 +1,5 @@
 <script setup>
-import {Panel, PanelPosition, VueFlow, useVueFlow} from '@vue-flow/core'
+import {Panel, PanelPosition, Position, VueFlow, useVueFlow} from '@vue-flow/core'
 import {Background} from '@vue-flow/background'
 import {nextTick, watch, ref, markRaw} from 'vue'
 import Sidebar from './Sidebar.vue'
@@ -19,18 +19,18 @@ const props = defineProps({
         default: "Workflow"
     }
 })
-
 const elements = ref([
     // Nodes
     // An input node, specified by using `type: 'input'`
-    {id: '1', type: 'condition', label: 'Node 1', class: 'condition-node', position: {x: 350, y: 100}},
+    {id: '1', type: 'condition', label: 'Stage Changed', position: {x: 350, y: 100}},
 
     // Default nodes, you can omit `type: 'default'`
-    {id: '2', type: 'action', label: 'Node 2', position: {x: 100, y: 200},},
-    {id: '3', type: 'action', label: 'Node 3', position: {x: 400, y: 200}},
+    {id: '2', type: 'action', label: 'Send Message', position: {x: 100, y: 200},},
+    {id: '3', type: 'action', sourcePosition: Position.Right, label: 'Send Message', position: {x: 400, y: 200}},
+    {id: '54', type: 'default', label: 'Send Message', position: {x: 600, y: 200}},
 
     // An output node, specified by using `type: 'output'`
-    {id: '4', type: 'condition', label: 'Node 4', position: {x: 400, y: 300}},
+    {id: '4', type: 'condition', sourcePosition: Position.Right, label: 'Stage Changed', position: {x: 400, y: 300}},
 
     // Edges
     // Most basic edge, only consists of an id, source-id and target-id
@@ -123,7 +123,8 @@ const saveWorkflow = function () {
 <template>
     <div class="row w-100 h-100 mx-0" @drop="onDrop">
         <div class="col-lg-7 col-xl-8 col-xxl-9 pe-0">
-            <VueFlow @dragover="onDragOver" v-model="elements" :node-types="nodeTypes">
+            <VueFlow @dragover="onDragOver" v-model="elements"
+                     :node-types="nodeTypes">
                 <Background/>
                 <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
                 <Panel :position="PanelPosition.BottomRight">
