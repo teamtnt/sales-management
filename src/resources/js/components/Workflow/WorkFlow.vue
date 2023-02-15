@@ -1,11 +1,12 @@
 <script setup>
-import {Panel, VueFlow, useVueFlow} from '@vue-flow/core'
+import {Panel, PanelPosition, VueFlow, useVueFlow} from '@vue-flow/core'
 import {Background} from '@vue-flow/background'
 import {nextTick, watch, ref, markRaw} from 'vue'
 import Sidebar from './Sidebar.vue'
 
 import ConditionNode from './ConditionNode.vue'
 import ActionNode from "./ActionNode.vue";
+import { bottom } from "@popperjs/core";
 
 const nodeTypes = {
     condition: markRaw(ConditionNode),
@@ -105,13 +106,17 @@ const onDrop = (event) => {
 
 <template>
     <div class="row w-100 h-100 mx-0" @drop="onDrop">
-        <div class="col-md-10 pe-0">
+        <div class="col-lg-7 col-xl-8 col-xxl-9 pe-0">
             <VueFlow @dragover="onDragOver" v-model="elements" :node-types="nodeTypes">
                 <Background/>
                 <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
+                <Panel :position="PanelPosition.BottomRight">
+                    <button class="btn btn-success me-2">{{ $t("Save") }}</button>
+                    <button class="btn btn-danger">{{  $t("Cancel") }}</button>
+                </Panel>
             </VueFlow>
         </div>
-        <div class="col-md-2 px-0">
+        <div class="col-lg-5 col-xl-4 col-xxl-3 px-0">
             <Sidebar/>
         </div>
     </div>

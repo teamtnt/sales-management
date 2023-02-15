@@ -8,5 +8,7 @@
     "Remove": "Remove",
     "Name": "Name",
     "Description": "Description",
-    "Count": "Count"
+    "Count": "Count",
+    "Save": "Speichern",
+    "Cancel": "Stornieren"
 }

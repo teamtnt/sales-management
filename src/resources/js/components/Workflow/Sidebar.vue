@@ -10,8 +10,8 @@ const onDragStart = (event, nodeType) => {
 
 <template>
     <aside class="bg-light h-100 shadow-lg">
-        <h5 class="sidebar-heading py-3">
-            <span class="d-flex align-items-center justify-content-center fw-lighter">
+        <h5 class="sidebar-heading py-3 px-2">
+            <span class="d-flex align-items-center justify-content-center fw-lighter text-center">
                 <svg width="20" height="20"
                      viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2"
