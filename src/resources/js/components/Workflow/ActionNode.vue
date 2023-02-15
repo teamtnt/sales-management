@@ -2,12 +2,15 @@
 const props = defineProps({
     id: String,
     label: String,
-    type: String,
-    sourcePosition: String
+    type: String
 })
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
+
+        <div :data-handleid="`${id}__handle-top`" :data-nodeid="id" data-handlepos="top"
+             :class="`vue-flow__handle nodrag vue-flow__handle-top vue-flow__handle-${id}__handle-top target connectable`"></div>
+
         <span class="action-box pe-2 justify-content-end">
             <span class="action-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -18,6 +21,8 @@ const props = defineProps({
             </span>
             {{ props.label }}
         </span>
-        <div :data-handleid="`54__handle-${props.sourcePosition}`" :data-nodeid="props.id"></div>
+
+        <div :data-handleid="`${id}__handle-bottom`" :data-nodeid="id" data-handlepos="bottom"
+             :class="`vue-flow__handle nodrag vue-flow__handle-bottom vue-flow__handle-${id}__handle-bottom source connectable`"></div>
     </div>
 </template>

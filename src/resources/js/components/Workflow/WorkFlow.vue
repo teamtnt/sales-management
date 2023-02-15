@@ -26,12 +26,9 @@ const elements = ref([
 
     // Default nodes, you can omit `type: 'default'`
     {id: '2', type: 'action', label: 'Send Message', position: {x: 100, y: 200},},
-    {id: '3', type: 'action', sourcePosition: Position.Right, label: 'Send Message', position: {x: 400, y: 200}},
+    {id: '3', type: 'action', label: 'Send Message', position: {x: 400, y: 200}},
     {id: '54', type: 'default', label: 'Send Message', position: {x: 600, y: 200}},
-
-    // An output node, specified by using `type: 'output'`
-    {id: '4', type: 'condition', sourcePosition: Position.Right, label: 'Stage Changed', position: {x: 400, y: 300}},
-
+ 
     // Edges
     // Most basic edge, only consists of an id, source-id and target-id
     {id: 'e1-3', source: '1', target: '3'},
