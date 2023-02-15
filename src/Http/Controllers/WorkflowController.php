@@ -81,4 +81,9 @@ class WorkflowController extends Controller
     {
         return view('sales-management::workflows.show', compact('workflow'));
     }
+
+    public function newWorkflow()
+    {
+        return view('sales-management::workflow.new');
+    }
 }

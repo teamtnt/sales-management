@@ -75,7 +75,7 @@ Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tas
 Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');
 
 //Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
-//Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
+Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
 
 // Workflows
 Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
