@@ -55,7 +55,6 @@ Route::get('/messages/{message:id}/edit', [MessagesController::class, 'edit'])->
 Route::put('/messages/{message:id}/update', [MessagesController::class, 'update'])->name('messages.update');
 Route::delete('/messages/{message:id}/destroy', [MessagesController::class, 'destroy'])->name('messages.destroy');
 
-
 Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 Route::post('/stage/chage', [TaskListController::class, 'stageChange'])->name('stage.change');
 
@@ -75,5 +74,14 @@ Route::get('/task/{task}', [TaskListController::class, 'show'])->name('tasklist.
 Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tasklist.primjer1');
 Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');
 
-Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
-Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
+//Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
+//Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
+
+// Workflows
+Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
+Route::get('/workflows/create', [WorkflowController::class, 'create'])->name('workflows.create');
+Route::post('/workflows/store', [WorkflowController::class, 'store'])->name('workflows.store');
+Route::get('/workflows/{workflow:id}/show', [WorkflowController::class, 'show'])->name('workflows.show');
+Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
+Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
+Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
