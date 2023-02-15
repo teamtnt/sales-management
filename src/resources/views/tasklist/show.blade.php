@@ -1,22 +1,24 @@
 @extends('sales-management::layouts.app')
 
+@section('title', $task->name)
+
+@section('add-css-class', 'overflow-auto')
+
 @section('content')
-
     <div class="container-fluid p-0">
-
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
 
-        <div class="row" id="pipeline" data-pipeline-id="{{$task->pipeline_id}}">
-            <div class="col-12 col-lg-6 col-xl-3">
+        <div class="row" style="flex-wrap: unset;" id="pipeline" data-pipeline-id="{{$task->pipeline_id}}">
+            <div class="task-card">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">{{ __("Leads") }}</h5>
+                        <h5 class="card-title overf">{{ __("Leads") }}</h5>
                     </div>
                     <div class="card-body">
 
                         <div id="leads">
-                            @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
+                            @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 10) as $lead)
                                 <x-sales-management::lead-card :lead="$lead"/>
                             @endforeach
                         </div>
@@ -24,7 +26,7 @@
                 </div>
             </div>
             @foreach($task->pipeline->stages as $stage)
-                <div class="col-12 col-lg-6 col-xl-3">
+                <div class="task-card">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-actions float-end">
