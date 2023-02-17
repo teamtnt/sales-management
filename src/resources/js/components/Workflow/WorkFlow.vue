@@ -4,13 +4,18 @@ import {Background} from '@vue-flow/background'
 import {nextTick, watch, ref, markRaw} from 'vue'
 import Sidebar from './Sidebar.vue'
 
-import ConditionNode from './ConditionNode.vue'
-import ActionNode from "./ActionNode.vue";
-import {bottom} from "@popperjs/core";
+import StageChangedNode from "./Nodes/StageChanged.vue";
+import SendMessageNode from "./Nodes/SendMessage.vue";
+import WaitNode from "./Nodes/Wait.vue";
+import AddTagNode from "./Nodes/AddTag.vue";
+import MoveToList from "./Nodes/MoveToList.vue";
 
 const nodeTypes = {
-    condition: markRaw(ConditionNode),
-    action: markRaw(ActionNode)
+    stageChanged: markRaw(StageChangedNode),
+    sendMessage: markRaw(SendMessageNode),
+    wait: markRaw(WaitNode),
+    addTag: markRaw(AddTagNode),
+    moveToList: markRaw(MoveToList),
 }
 
 const props = defineProps({
@@ -22,20 +27,17 @@ const props = defineProps({
 const elements = ref([
     // Nodes
     // An input node, specified by using `type: 'input'`
-    {id: '1', type: 'condition', label: 'Stage Changed', position: {x: 350, y: 100}},
+    {id: '1', type: 'stageChanged', label: 'Stage Changed', position: {x: 350, y: 100}},
 
-    // Default nodes, you can omit `type: 'default'`
-    {id: '2', type: 'action', label: 'Send Message', position: {x: 100, y: 200},},
-    {id: '3', type: 'action', label: 'Send Message', position: {x: 400, y: 200}},
-    {id: '54', type: 'default', label: 'Send Message', position: {x: 600, y: 200}},
- 
-    // Edges
-    // Most basic edge, only consists of an id, source-id and target-id
-    {id: 'e1-3', source: '1', target: '3'},
-    {id: 'e1-3', source: '3', target: '4'},
-
+    {id: '2', type: 'wait', label: 'Wait', position: {x: 350, y: 180}},
+    {id: '3', type: 'sendMessage', label: 'Send Message', position: {x: 350, y: 260}},
+    {id: '4', type: 'addTag', label: 'Add Tag', position: {x: 350, y: 340}},
+    {id: '5', type: 'moveToList', label: 'Move to list', position: {x: 350, y: 420}},
     // An animated edge
-    {id: 'e1-2', source: '1', target: '2', animated: true},
+    {id: 'e1-2', source: '1', target: '2'},
+    {id: 'e2-3', source: '2', target: '3'},
+    {id: 'e3-4', source: '3', target: '4'},
+    {id: 'e4-5', source: '4', target: '5'},
 ])
 
 let id = 0

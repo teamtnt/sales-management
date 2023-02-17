@@ -1,6 +1,6 @@
 <script setup>
-const onDragStart = (event, nodeType) => {
-    console.log(event)
+const onDragStart = (event, nodeType, label) => {
+    console.log(nodeType)
     if (event.dataTransfer) {
         event.dataTransfer.setData('application/vueflow', nodeType)
         event.dataTransfer.effectAllowed = 'move'
@@ -37,7 +37,7 @@ const onDragStart = (event, nodeType) => {
             </div>
             <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'condition')">
+                     @dragstart="onDragStart($event, 'stageChanged')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -62,7 +62,7 @@ const onDragStart = (event, nodeType) => {
             </div>
             <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'action')">
+                     @dragstart="onDragStart($event, 'sendMessage')">
                     <span class="action-box pe-2 justify-content-end">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -75,7 +75,7 @@ const onDragStart = (event, nodeType) => {
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'action')">
+                     @dragstart="onDragStart($event, 'wait')">
                     <span class="action-box px-3 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -88,7 +88,7 @@ const onDragStart = (event, nodeType) => {
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'action')">
+                     @dragstart="onDragStart($event, 'addTag')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -101,7 +101,7 @@ const onDragStart = (event, nodeType) => {
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'action')">
+                     @dragstart="onDragStart($event, 'moveToList')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -121,58 +121,58 @@ const onDragStart = (event, nodeType) => {
 </template>
 
 <style lang="scss">
-    .sidebar-heading {
-        margin-bottom: 0;
-        text-transform: uppercase;
-        background: #a2999e;
+.sidebar-heading {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    background: #a2999e;
+    color: white;
+}
+
+.vue-flow__node-input {
+    position: relative;
+    border: 0;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.condition-box {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+        position: absolute;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
         color: white;
+        background-color: #4E68D0;
+        transform: translate(-40%, 0%) rotate(45deg);
+        transform-origin: center;
     }
+}
 
-    .vue-flow__node-input {
-        position: relative;
-        border: 0;
-        cursor: grab;
+.action-box {
+    display: flex;
+    align-items: center;
 
-        &:active {
-            cursor: grabbing;
-        }
-    }
-
-    .condition-box {
+    &__icon {
+        position: absolute;
+        left: 0;
         display: flex;
         align-items: center;
-
-        &__icon {
-            position: absolute;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 28px;
-            height: 28px;
-            color: white;
-            background-color: #4E68D0;
-            transform: translate(-40%, 0%) rotate(45deg);
-            transform-origin: center;
-        }
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        color: white;
+        background-color: #00BD9D;
+        transform: translate(-30%, 0%);
+        transform-origin: center;
     }
-
-    .action-box {
-        display: flex;
-        align-items: center;
-
-        &__icon {
-            position: absolute;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            color: white;
-            background-color: #00BD9D;
-            transform: translate(-30%, 0%);
-            transform-origin: center;
-        }
-    }
+}
 </style>
