@@ -24,8 +24,8 @@ const props = defineProps({
             Send Message
         </span>
 
-        <Handle id="source" type="source" :position="Position.Top"/>
+        <Handle id="source" type="source" :position="Position.Bottom"/>
 
-        <Handle id="target" type="target" :position="Position.Bottom"/>
+        <Handle id="target" type="target" :position="Position.Top"/>
     </div>
 </template>

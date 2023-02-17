@@ -1,6 +1,5 @@
 <script setup>
 const onDragStart = (event, nodeType, label) => {
-    console.log(nodeType)
     if (event.dataTransfer) {
         event.dataTransfer.setData('application/vueflow', nodeType)
         event.dataTransfer.effectAllowed = 'move'

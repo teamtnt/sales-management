@@ -26,8 +26,8 @@ const props = defineProps({
             Move To List
         </span>
 
-        <Handle id="source" type="source" :position="Position.Top"/>
+        <Handle id="source" type="source" :position="Position.Bottom"/>
 
-        <Handle id="target" type="target" :position="Position.Bottom"/>
+        <Handle id="target" type="target" :position="Position.Top"/>
     </div>
 </template>

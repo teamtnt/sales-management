@@ -24,8 +24,8 @@ const props = defineProps({
             Wait
         </span>
 
-        <Handle id="source" type="source" :position="Position.Top"/>
-
-        <Handle id="target" type="target" :position="Position.Bottom"/>
+        <Handle type="target" :position="Position.Top"/>
+        <Handle type="source" :position="Position.Bottom"/>
+        
     </div>
 </template>
