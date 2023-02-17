@@ -12,14 +12,14 @@
             <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span
-                        class="align-middle">{{ __("Dashboard")}}</span>
+                            class="align-middle">{{ __("Dashboard")}}</span>
                 </a>
             </li>
 
             <li class="sidebar-item {{ request()->is('contacts*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('contacts.index') }}">
                     <i class="align-middle" data-feather="user"></i> <span
-                        class="align-middle">{{ __("Contacts")}}</span>
+                            class="align-middle">{{ __("Contacts")}}</span>
                 </a>
             </li>
 
@@ -29,24 +29,17 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ request()->is('companies*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('companies.index') }}">
-                    <i class="align-middle" data-feather="home"></i> <span
-                        class="align-middle">{{ __("Companies")}}</span>
-                </a>
-            </li>
-
             <li class="sidebar-item {{ request()->is('task*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('tasklist.index') }}">
                     <i class="align-middle" data-feather="thumbs-up"></i> <span
-                        class="align-middle">{{ __("Task List")}}</span>
+                            class="align-middle">{{ __("Task List")}}</span>
                 </a>
             </li>
 
             <li class="sidebar-item {{ request()->is('pipelines*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('pipelines.index') }}">
                     <i class="align-middle" data-feather="list"></i> <span
-                        class="align-middle">{{ __("Pipelines")}}</span>
+                            class="align-middle">{{ __("Pipelines")}}</span>
                 </a>
             </li>
             <li class="sidebar-item {{ request()->is('deals*') ? 'active' : '' }}">
@@ -58,16 +51,16 @@
             <li class="sidebar-item {{ (request()->is('automation*')) ? 'active' : '' }}">
                 <a data-bs-target="#elements" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle" data-feather="play-circle"></i> <span
-                        class="align-middle">{{__("Automation")}}</span>
+                            class="align-middle">{{__("Automation")}}</span>
                 </a>
                 <ul id="elements"
-                    class="sidebar-dropdown list-unstyled collapse {{ (request()->is('element*') || request()->is('messages*')) ? 'show' : '' }}"
+                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('automation*') ? 'show' : '' }}"
                     data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ (request()->is('messages*')) ? 'active' : '' }}">
+                    <li class="sidebar-item {{ (request()->is('automation/messages*')) ? 'active' : '' }}">
                         <a class="sidebar-link" href="{{ route('messages.index') }}">{{__("Messages")}}</a>
                     </li>
-                    <li class="sidebar-item {{ (request()->is('automation/workflow/new')) ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('automation.workflow.index') }}">{{__("Workflow")}}</a>
+                    <li class="sidebar-item {{ (request()->is('automation/workflows*')) ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('workflows.index') }}">{{__("Workflow")}}</a>
                     </li>
                 </ul>
             </li>
