@@ -25,7 +25,7 @@ class TaskListDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('assignee', function (Task $task) {
-                return $task->assignees->implode('email', ',');
+                return $task->assignees->implode('email', ', ');
             })
             ->addColumn('action', 'sales-management::tasklist.actions')
             ->setRowId('id');
