@@ -8,6 +8,7 @@ import StageChangedNode from "./Nodes/StageChanged.vue";
 import SendMessageNode from "./Nodes/SendMessage.vue";
 import WaitNode from "./Nodes/Wait.vue";
 import AddTagNode from "./Nodes/AddTag.vue";
+import MessageOpened from "./Nodes/MessageOpened.vue";
 import MoveToList from "./Nodes/MoveToList.vue";
 
 const nodeTypes = {
@@ -16,6 +17,7 @@ const nodeTypes = {
     wait: markRaw(WaitNode),
     addTag: markRaw(AddTagNode),
     moveToList: markRaw(MoveToList),
+    messageOpened: markRaw(MessageOpened),
 }
 
 const props = defineProps({
