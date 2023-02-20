@@ -93,6 +93,7 @@ class ContactsController extends Controller
 
     public function importCSVStore(CSVImportRequest $request)
     {
+        ini_set('max_execution_time', 0);
         //Create database table from ContactTemp model
         DB::statement("CREATE TEMPORARY TABLE ".(new ContactTemp)->getTable()." SELECT * FROM ".(new Contact)->getTable()." LIMIT 0");
         Excel::import(new ContactsImport, $request->csv);
