@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Models\Workflow;
+use Teamtnt\SalesManagement\Models\Task;
 
 class WorkflowController extends Controller
 {
@@ -15,39 +16,41 @@ class WorkflowController extends Controller
      * @param  WorkflowDataTable  $workflowDataTable
      * @return mixed
      */
-    public function index(WorkflowDataTable $workflowDataTable)
+    public function index(Task $task, WorkflowDataTable $workflowDataTable)
     {
-        return $workflowDataTable->render('sales-management::workflows.index');
+        return $workflowDataTable
+            ->with('taskId', $task->id)
+            ->render('sales-management::workflows.index', compact('task'));
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create()
+    public function create(Task $task)
     {
-        return view('sales-management::workflows.create');
+        return view('sales-management::workflows.create', compact('task'));
     }
 
     /**
      * @param  WorkflowRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(WorkflowRequest $workflowRequest)
+    public function store(Task $task, WorkflowRequest $workflowRequest)
     {
         Workflow::create($workflowRequest->validated());
 
         request()->session()->flash('message', __('Workflow successfully created!'));
 
-        return redirect()->route('workflows.index');
+        return redirect()->route('workflows.index', $task);
     }
 
     /**
      * @param  Workflow  $workflow
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Workflow $workflow)
+    public function edit(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflows.edit', compact('workflow'));
+        return view('sales-management::workflows.edit', compact('workflow', 'task'));
     }
 
     /**
@@ -55,31 +58,31 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(WorkflowRequest $workflowRequest, Workflow $workflow)
+    public function update(Task $task, WorkflowRequest $workflowRequest, Workflow $workflow)
     {
         $workflow->update($workflowRequest->validated());
 
         request()->session()->flash('message', __('Workflow successfully updated!'));
 
-        return redirect()->route('workflows.index');
+        return redirect()->route('workflows.index', $task);
     }
 
     /**
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Workflow $workflow)
+    public function destroy(Task $task, Workflow $workflow)
     {
         $workflow->delete();
 
         request()->session()->flash('message', __('Workflow successfully deleted!'));
 
-        return redirect()->route('workflows.index');
+        return redirect()->route('workflows.index', $task);
     }
 
-    public function show(Workflow $workflow)
+    public function show(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflows.show', compact('workflow'));
+        return view('sales-management::workflows.show', compact('workflow', 'task'));
     }
 
     public function newWorkflow()

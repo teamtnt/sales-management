@@ -24,10 +24,11 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'from_name' => 'string',
+            'from_name'  => 'string',
             'from_email' => 'required|email',
-            'subject' => 'required|string',
-            'body' => 'string',
+            'subject'    => 'required|string',
+            'body'       => 'string',
+            'task_id'    => 'required|int',
         ];
     }
 }

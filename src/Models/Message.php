@@ -12,6 +12,7 @@ class Message extends Model
     protected $table;
 
     protected $fillable = [
+        'task_id',
         'subject',
         'body',
         'from_email',
@@ -24,4 +25,8 @@ class Message extends Model
         parent::__construct($attributes);
     }
 
+    public function tasks()
+    {
+        return $this->belongsTo(Task::class);
+    }
 }

@@ -3,6 +3,8 @@
 @section('title', 'Messages')
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
+    <li class="breadcrumb-item">{{ __('Tasks') }}</li>
+    <li class="breadcrumb-item">{{ __($task->name) }}</li>
     <li class="breadcrumb-item">{{ __('Message') }}</li>
     <li class="breadcrumb-item active">{{ __('Edit Message') }}</li>
 @endsection
@@ -18,15 +20,15 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill message details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::model($message, ['method' => 'PUT', 'route' => ['messages.update', $message->id]]) }}
+                        {{ Form::model($message, ['method' => 'PUT', 'route' => ['messages.update', [$task, $message->id]]]) }}
 
                         @include('sales-management::messages.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Update Message")}}</button>
-                             <a href="{{ route('messages.index') }}" class="btn btn-danger">{{__("Back")}}</a>
-                         </div>
+                            <a href="{{ route('messages.index', $task) }}" class="btn btn-danger">{{__("Back")}}</a>
+                        </div>
                         {{ Form::close() }}
                     </div>
                 </div>

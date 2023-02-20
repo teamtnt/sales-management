@@ -67,10 +67,10 @@
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">{{ $dealsCount }}</h3>
+                            <h3 class="mb-2">23</h3>
                             <p class="mb-2">{{ __("Deals Closed") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-success me-2">{{ $dealsCountLastWeek }}</span>
+                                <span class="badge badge-soft-success me-2">3</span>
                                 <span class="text-muted">Since last week</span>
                             </div>
                         </div>

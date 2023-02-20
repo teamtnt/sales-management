@@ -31,7 +31,7 @@ class WorkflowDataTable extends DataTable
      */
     public function query(Workflow $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->whereTaskId($this->taskId);
     }
 
     /**
@@ -67,6 +67,7 @@ class WorkflowDataTable extends DataTable
             Column::make('description')->title(__('Description')),
 
             Column::computed('action')
+                ->with('taskId', $this->taskId)
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

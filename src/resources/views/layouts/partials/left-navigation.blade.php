@@ -23,7 +23,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ (Route::currentRouteName() == "lists.index") ? 'active' : '' }}">
+            <li class="sidebar-item {{ request()->is('list*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('lists.index') }}">
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">{{ __("Lists")}}</span>
                 </a>
@@ -41,28 +41,6 @@
                     <i class="align-middle" data-feather="list"></i> <span
                             class="align-middle">{{ __("Pipelines")}}</span>
                 </a>
-            </li>
-            <li class="sidebar-item {{ request()->is('deals*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('deals.index') }}">
-                    <i class="align-middle" data-feather="check-square"></i> <span
-                            class="align-middle">{{ __("Deals")}}</span>
-                </a>
-            </li>
-            <li class="sidebar-item {{ (request()->is('automation*')) ? 'active' : '' }}">
-                <a data-bs-target="#elements" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="play-circle"></i> <span
-                            class="align-middle">{{__("Automation")}}</span>
-                </a>
-                <ul id="elements"
-                    class="sidebar-dropdown list-unstyled collapse {{ request()->is('automation*') ? 'show' : '' }}"
-                    data-bs-parent="#sidebar">
-                    <li class="sidebar-item {{ (request()->is('automation/messages*')) ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('messages.index') }}">{{__("Messages")}}</a>
-                    </li>
-                    <li class="sidebar-item {{ (request()->is('automation/workflows*')) ? 'active' : '' }}">
-                        <a class="sidebar-link" href="{{ route('workflows.index') }}">{{__("Workflow")}}</a>
-                    </li>
-                </ul>
             </li>
         </ul>
     </div>

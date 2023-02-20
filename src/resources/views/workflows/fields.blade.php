@@ -1,3 +1,5 @@
+<input type="hidden" name="task_id" value="{{ $task->id }}">
+
 <div class="row">
     <div class="col-md-12">
         <div class="mb-3">

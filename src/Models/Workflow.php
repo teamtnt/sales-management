@@ -10,6 +10,7 @@ class Workflow extends Model
     use HasFactory;
 
     protected $fillable = [
+        'task_id',
         'name',
         'description',
         'elements',
@@ -20,5 +21,10 @@ class Workflow extends Model
     {
         $this->table = config('sales-management.tablePrefix').'workflows';
         parent::__construct($attributes);
+    }
+
+    public function tasks()
+    {
+        return $this->belongsTo(Task::class);
     }
 }

@@ -1,3 +1,5 @@
+<input type="hidden" name="task_id" value="{{ $task->id }}">
+
 <div class="row">
     <div class="col-md-6">
         <div class="mb-3">
@@ -28,9 +30,9 @@
     </div>
     <div class="col-md-12">
         <text-area
-            name="body"
-            error-message="{{ $errors->first('body') }}"
-            message-body="{{ $message->body ?? '' }}">
+                name="body"
+                error-message="{{ $errors->first('body') }}"
+                message-body="{{ $message->body ?? '' }}">
         </text-area>
     </div>
 </div>

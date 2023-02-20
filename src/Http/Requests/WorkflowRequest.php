@@ -28,6 +28,7 @@ class WorkflowRequest extends FormRequest
             'description' => 'nullable|string',
             'elements'    => 'nullable|json',
             'status'      => 'nullable|int',
+            'task_id'     => 'required|int',
         ];
     }
 }

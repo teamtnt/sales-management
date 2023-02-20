@@ -14,7 +14,7 @@ class MessageDataTable extends DataTable
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param  QueryBuilder  $query  Results from query() method.
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
@@ -26,12 +26,12 @@ class MessageDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param Message $model
+     * @param  Message  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Message $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->whereTaskId($this->taskId);
     }
 
     /**
@@ -79,6 +79,6 @@ class MessageDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Messages_' . date('YmdHis');
+        return 'Messages_'.date('YmdHis');
     }
 }

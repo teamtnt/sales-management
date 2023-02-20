@@ -80,7 +80,7 @@ Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tas
 //Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
 Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
 
-Route::group(['prefix' => 'automation'], function () {
+Route::group(['prefix' => 'task/{task}'], function () {
     // Messages
     Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('/messages/create', [MessagesController::class, 'create'])->name('messages.create');

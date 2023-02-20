@@ -52,4 +52,14 @@ class Task extends Model
     {
         return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'task_assignee', 'task_id', 'assignee_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function workflows()
+    {
+        return $this->hasMany(Workflow::class);
+    }
 }

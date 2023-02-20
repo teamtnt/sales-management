@@ -20,15 +20,10 @@ class DashboardController extends Controller
         $companiesCount = Company::count();
         $companiesCountLastWeek = Company::where('created_at', '>=', $date)->count();
 
-        $dealsCount = Deal::whereStatus(Status::DEAL_STATUS_CLOSED)->count();
-        $dealsCountLastWeek = Deal::whereStatus(Status::DEAL_STATUS_CLOSED)->where('created_at', '>=', $date)->count();
-
         return view('sales-management::dashboard.index', compact('contactsCount',
             'contactsCountLastWeek',
             'companiesCount',
             'companiesCountLastWeek',
-            'dealsCount',
-            'dealsCountLastWeek',
         ));
     }
 
