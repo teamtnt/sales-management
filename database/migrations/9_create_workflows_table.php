@@ -13,7 +13,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('workflows', function (Blueprint $table) {
+        Schema::create(config('sales-management.tablePrefix').'workflows', function (Blueprint $table) {
             $table->id();
             $table->string("name");
             $table->text("description")->nullable();
@@ -30,6 +30,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('workflows');
+        Schema::drop(config('sales-management.tablePrefix').'workflows');
+
     }
 };
