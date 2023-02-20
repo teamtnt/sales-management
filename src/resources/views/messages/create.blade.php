@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
     <li class="breadcrumb-item">{{ __('Tasks') }}</li>
-    <li class="breadcrumb-item">{{ __($task->name) }}</li>
+    <li class="breadcrumb-item"><a href="{{ route('tasklist.show', $task->id) }}">{{ __($task->name) }}</a></li>
     <li class="breadcrumb-item">{{ __('Messages') }}</li>
     <li class="breadcrumb-item active">{{ __('New Message') }}</li>
 @endsection
