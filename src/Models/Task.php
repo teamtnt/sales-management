@@ -15,6 +15,8 @@ class Task extends Model
         'name',
         'description',
         'pipeline_id',
+        'contact_list_id',
+        'status',
     ];
 
     public function __construct(array $attributes = [])
@@ -48,6 +50,6 @@ class Task extends Model
 
     public function assignees()
     {
-        return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'task_assignee', 'assignee_id', 'task_id');
+        return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'task_assignee', 'task_id', 'assignee_id');
     }
 }

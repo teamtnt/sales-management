@@ -8,7 +8,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
   },
   "src/resources/js/app.css": {
-    "file": "assets/app-7e3f9e9b.css",
+    "file": "assets/app-c1a45ece.css",
     "src": "src/resources/js/app.css"
   },
   "src/resources/scss/light.scss": {
@@ -17,17 +17,17 @@
     "isEntry": true
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-020bd8d4.js",
+    "file": "assets/app-a872b194.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor-0b811fdc.js"
+      "_vendor-54f69326.js"
     ],
     "css": [
-      "assets/app-7e3f9e9b.css"
+      "assets/app-c1a45ece.css"
     ]
   },
-  "_vendor-0b811fdc.js": {
-    "file": "assets/vendor-0b811fdc.js"
+  "_vendor-54f69326.js": {
+    "file": "assets/vendor-54f69326.js"
   }
 }

@@ -26,7 +26,7 @@ class TaskListController extends Controller
     public function store(TaskRequest $taskRequest)
     {
         $task = Task::create($taskRequest->validated());
-
+        $task->assignees()->sync($taskRequest->get('assignees'));
         $this->createLeadsFromAllContacts($task->id, $task->pipeline_id);
 
         request()->session()->flash('message', __('Task successfully created!'));
@@ -42,7 +42,7 @@ class TaskListController extends Controller
     public function update(TaskRequest $taskRequest, Task $task)
     {
         $task->update($taskRequest->validated());
-
+        $task->assignees()->sync($taskRequest->get('assignees'));
         request()->session()->flash('message', __('Task successfully updated!'));
 
         return redirect()->route('tasklist.index');

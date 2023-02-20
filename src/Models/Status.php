@@ -12,4 +12,10 @@ class Status
 
     const TASK_STATUS_NEW = 300;
 
+    public static function getTaskStatusNames()
+    {
+        return [
+            self::TASK_STATUS_NEW => __('New'),
+        ];
+    }
 }
