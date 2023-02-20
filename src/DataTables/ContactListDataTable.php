@@ -39,7 +39,7 @@ class ContactListDataTable extends DataTable
      */
     public function query(ContactList $model): QueryBuilder
     {
-        return $model->newQuery()->with('contacts');
+        return $model->newQuery();
     }
 
     /**
