@@ -3,9 +3,15 @@
 @section('title', $task->name)
 
 @section('add-css-class', 'overflow-auto')
-
+@push('styles')
+    <style>
+        body {
+            overflow: hidden !important;
+        }
+    </style>
+@endpush
 @section('content')
-    <div class="container-fluid p-0">
+    <div class="container-fluid p-0" style="height: 75vh;">
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
 
