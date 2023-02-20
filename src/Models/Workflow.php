@@ -16,4 +16,9 @@ class Workflow extends Model
         'status',
     ];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->table = config('sales-management.tablePrefix').'workflows';
+        parent::__construct($attributes);
+    }
 }
