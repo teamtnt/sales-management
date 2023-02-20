@@ -14,5 +14,6 @@
     "Message Body": "Nachrichtentext",
     "Firstname": "Vorname",
     "Lastname": "Nachname",
-    "Add message placeholders": "Nachrichtenplatzhalter hinzufügen"
+    "Add message placeholders": "Nachrichtenplatzhalter hinzufügen",
+    "Email": "Email"
 }
