@@ -70,6 +70,9 @@ Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index
 Route::get('/task/create', [TaskListController::class, 'create'])->name('tasklist.create');
 Route::post('/task/store', [TaskListController::class, 'store'])->name('tasklist.store');
 Route::get('/task/{task}', [TaskListController::class, 'show'])->name('tasklist.show');
+Route::get('/task/{task}/edit', [TaskListController::class, 'edit'])->name('tasklist.edit');
+Route::put('/task/{task}/update', [TaskListController::class, 'update'])->name('tasklist.update');
+Route::delete('/task/{task:id}/destroy', [TaskListController::class, 'destroy'])->name('tasklist.destroy');
 
 Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tasklist.primjer1');
 Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');

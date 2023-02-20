@@ -9,24 +9,17 @@
         <h1 class="h3 mb-3">Tasks</h1>
 
         <div class="row">
-            <table class="table table-bordered">
-                <thead>
-                <th>{{__("Task Name")}}</th>
-                <th>{{__("Pipeline")}}</th>
-                <th>{{__("Asignee")}}</th>
-                </thead>
-
-                <tbody>
-                @foreach($tasks as $task)
-                    <tr>
-                        <td><a href="{{ route('tasklist.show', $task) }}">{{ $task->name }}</a></td>
-                        <td>{{ $task->pipeline->name }}</td>
-                        <td>Tome Perica</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        {!! $dataTable->table() !!}
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 @stop
+
+@push('scripts')
+    {!! $dataTable->scripts(attributes: ['type' => 'module']) !!}
+@endpush

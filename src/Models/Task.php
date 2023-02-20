@@ -34,7 +34,6 @@ class Task extends Model
             ->where('pipeline_id', $pipelineId)
             ->where('pipeline_stage_id', $stageId)
             ->with('contact')->limit($limit)->get();
-
     }
 
     public function getLeads($limit)
@@ -45,5 +44,10 @@ class Task extends Model
     public function leads()
     {
         return $this->hasMany(Lead::class);
+    }
+
+    public function assignees()
+    {
+        return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'task_assignee', 'assignee_id', 'task_id');
     }
 }

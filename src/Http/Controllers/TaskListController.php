@@ -2,8 +2,10 @@
 
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
+use Teamtnt\SalesManagement\DataTables\TaskListDataTable;
 use Teamtnt\SalesManagement\Http\Requests\TaskRequest;
 use Teamtnt\SalesManagement\Models\Contact;
+use Teamtnt\SalesManagement\Models\Deal;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Lead;
 use Illuminate\Http\Request;
@@ -11,10 +13,9 @@ use Illuminate\Http\Request;
 class TaskListController extends Controller
 {
 
-    public function index()
+    public function index(TaskListDataTable $taskListDataTable)
     {
-        $tasks = Task::all();
-        return view('sales-management::tasklist.index', compact('tasks'));
+        return $taskListDataTable->render('sales-management::tasklist.index');
     }
 
     public function create()
@@ -24,12 +25,25 @@ class TaskListController extends Controller
 
     public function store(TaskRequest $taskRequest)
     {
-
         $task = Task::create($taskRequest->validated());
 
         $this->createLeadsFromAllContacts($task->id, $task->pipeline_id);
 
         request()->session()->flash('message', __('Task successfully created!'));
+
+        return redirect()->route('tasklist.index');
+    }
+
+    public function edit(Task $task)
+    {
+        return view('sales-management::tasklist.edit', compact('task'));
+    }
+
+    public function update(TaskRequest $taskRequest, Task $task)
+    {
+        $task->update($taskRequest->validated());
+
+        request()->session()->flash('message', __('Task successfully updated!'));
 
         return redirect()->route('tasklist.index');
     }
@@ -64,5 +78,14 @@ class TaskListController extends Controller
             .$select->toSql();
 
         \DB::insert($insertQuery, $bindings);
+    }
+
+    public function destroy(Task $task)
+    {
+        $task->delete();
+
+        request()->session()->flash('message', __('Task successfully deleted!'));
+
+        return redirect()->route('tasklist.index');
     }
 }

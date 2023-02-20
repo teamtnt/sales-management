@@ -2,8 +2,9 @@
 
 // config for Teamtnt/SalesManagement
 return [
-    'logoPath' => '',
-    'logoLink' => '/',
+    'logoPath'    => '',
+    'logoLink'    => '/',
     'tablePrefix' => 'sales_management_',
-    'middleware' => ['web']
+    'middleware'  => ['web'],
+    'userModel'   => \App\Models\User::class
 ];

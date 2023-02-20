@@ -10,4 +10,6 @@ class Status
 
     const WORKFLOW_STATUS_NEW = 200;
 
+    const TASK_STATUS_NEW = 300;
+
 }
