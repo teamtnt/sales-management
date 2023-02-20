@@ -8,6 +8,10 @@ const props = defineProps({
     },
     messageBody: {
         type: String
+    },
+    name: {
+        type: String,
+        required: true
     }
 })
 
@@ -37,7 +41,7 @@ const addPlaceholder = (event, type) => {
          <textarea
              ref="textarea"
              v-model="messageBody"
-             name="body"
+             :name="name"
              id="body"
              :class="[{'is-invalid': errorMessage}, 'form-control']"
              cols="10"

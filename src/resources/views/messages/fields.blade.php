@@ -27,8 +27,10 @@
         </div>
     </div>
     <div class="col-md-12">
-        <text-area error-message="{{ $errors->first('body') }}"
-                   message-body="{{ $message->body ?? '' }}">
+        <text-area
+            name="body"
+            error-message="{{ $errors->first('body') }}"
+            message-body="{{ $message->body ?? '' }}">
         </text-area>
     </div>
 </div>
