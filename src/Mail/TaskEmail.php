@@ -9,8 +9,9 @@ use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\Message;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TaskEmail extends Mailable
+class TaskEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
