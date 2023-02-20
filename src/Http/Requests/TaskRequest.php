@@ -3,6 +3,7 @@
 namespace Teamtnt\SalesManagement\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\Pipeline;
 
 class TaskRequest extends FormRequest
@@ -25,11 +26,15 @@ class TaskRequest extends FormRequest
     public function rules()
     {
         $pipelineTable = app(Pipeline::class)->getTable();
+        $contactListTable = app(ContactList::class)->getTable();
 
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string',
-            'pipeline_id' => "required|exists:{$pipelineTable},id",
+            'name'            => 'required|string',
+            'description'     => 'nullable|string',
+            'assignees'       => 'nullable|array',
+            'status'          => 'nullable|integer',
+            'pipeline_id'     => "required|exists:{$pipelineTable},id",
+            'contact_list_id' => "nullable|exists:{$contactListTable},id",
         ];
     }
 }

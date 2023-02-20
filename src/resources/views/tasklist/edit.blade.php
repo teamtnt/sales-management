@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
     <li class="breadcrumb-item">{{ __('Tasks') }}</li>
-    <li class="breadcrumb-item active">{{ __('New Task') }}</li>
+    <li class="breadcrumb-item active">{{ __('Edit Task') }}</li>
 @endsection
 
 @section('content')
@@ -18,13 +18,13 @@
                         <h6 class="card-subtitle text-muted">{{__("Add task details bellow")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'tasklist.store']) }}
+                        {{ Form::model($task, ['method' => 'put', 'route' => ['tasklist.update', $task->id]]) }}
 
                         @include('sales-management::tasklist.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
-                                    id="notyf-show">{{__("Create Task")}}</button>
+                                    id="notyf-show">{{__("Update Task")}}</button>
                             <a href="{{ route('tasklist.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}
