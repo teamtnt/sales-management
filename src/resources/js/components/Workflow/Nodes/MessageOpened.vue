@@ -22,8 +22,8 @@ const props = defineProps({
 
         <Handle type="target" :position="Position.Top"/>
 
-        <Handle id="yes" type="source" :position="Position.Bottom" :style="bottomLeft"/>
-        <Handle id="no" type="source" :position="Position.Bottom" :style="bottomRight"/>
+        <Handle id="yes" type="source" :position="Position.Bottom" class="bottom-left"/>
+        <Handle id="no" type="source" :position="Position.Bottom" class="bottom-right"/>
     </div>
 </template>
 
