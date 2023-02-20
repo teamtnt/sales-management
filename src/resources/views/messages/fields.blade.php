@@ -27,13 +27,9 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="mb-3">
-            {{ Form::label('body', __('Body'), ['class' => 'form-label']) }}
-            {{ Form::textarea('body', null, ['class' => 'form-control '.($errors->has('body') ? ' is-invalid' : '') , 'placeholder' => __('Enter Body')]) }}
-            @error('body')
-            <small class="invalid-feedback">{{ $message }}</small>
-            @enderror
-        </div>
+        <text-area error-message="{{ $errors->first('body') }}"
+                   message-body="{{ $message->body ?? '' }}">
+        </text-area>
     </div>
 </div>
 

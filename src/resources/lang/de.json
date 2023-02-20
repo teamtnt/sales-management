@@ -10,5 +10,9 @@
     "Description": "Description",
     "Count": "Count",
     "Save": "Speichern",
-    "Cancel": "Stornieren"
+    "Cancel": "Stornieren",
+    "Message Body": "Nachrichtentext",
+    "Firstname": "Vorname",
+    "Lastname": "Nachname",
+    "Add message placeholders": "Nachrichtenplatzhalter hinzufügen"
 }
