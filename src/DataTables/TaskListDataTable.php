@@ -27,7 +27,11 @@ class TaskListDataTable extends DataTable
             ->addColumn('assignee', function (Task $task) {
                 return $task->assignees->implode('email', ', ');
             })
+            ->editColumn('name', function (Task $task) {
+                return '<a href="'.route('tasklist.show', $task).'">'.$task->name.'</a>';
+            })
             ->addColumn('action', 'sales-management::tasklist.actions')
+            ->rawColumns(['name', 'action'])
             ->setRowId('id');
     }
 
@@ -69,7 +73,7 @@ class TaskListDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('name')->title(__('Name')),
+            Column::computed('name')->title(__('Name')),
             Column::make('description')->title(__('Description')),
             Column::make('status')->title(__('Status')),
             Column::make('assignee')->title(__('Assignee')),
