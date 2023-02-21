@@ -88,7 +88,7 @@ Route::group(['prefix' => 'task/{task}'], function () {
     Route::get('/messages/{message:id}/edit', [MessagesController::class, 'edit'])->name('messages.edit');
     Route::put('/messages/{message:id}/update', [MessagesController::class, 'update'])->name('messages.update');
     Route::delete('/messages/{message:id}/destroy', [MessagesController::class, 'destroy'])->name('messages.destroy');
-    Route::post('/messages/{message:id}/send', [MessagesController::class, 'send'])->name('messages.send');
+    Route::post('/messages/{message:id}/send', [MessagesController::class, 'sendToAllLeads'])->name('messages.send');
 
     // Workflows
     Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');

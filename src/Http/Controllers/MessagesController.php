@@ -7,6 +7,8 @@ use Teamtnt\SalesManagement\DataTables\MessageDataTable;
 use Teamtnt\SalesManagement\Http\Requests\MessageRequest;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Illuminate\Support\Facades\Mail;
 
 class MessagesController extends Controller
 {
@@ -77,9 +79,9 @@ class MessagesController extends Controller
                 $message->messageStages()->updateOrCreate(
                     ['id' => $messageStage['id']],
                     [
-                        'name'        => $messageStage['name'],
+                        'name' => $messageStage['name'],
                         'description' => $messageStage['description'],
-                        'color'       => $messageStage['color'],
+                        'color' => $messageStage['color'],
                     ]
                 );
             }
@@ -103,8 +105,17 @@ class MessagesController extends Controller
         return redirect()->route('messages.index', $task);
     }
 
-    public function send()
+    public function sendToAllLeads(Task $task, Message $message)
     {
-        dd('send message');
+        $leads = $task->leads()->with('contact')->get();
+
+        foreach ($leads as $lead) {
+            if ($email = $lead->contact->email) {
+                Mail::to($email)->send(new TaskEmail($message, $lead));
+            }
+        }
+        request()->session()->flash('message', __('Message has been sent to all leads!'));
+
+        return redirect()->route('messages.index', $task);
     }
 }

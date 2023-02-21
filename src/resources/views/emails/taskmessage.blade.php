@@ -1,1 +1,1 @@
-ovo je tijelo poruke
+{{$messageBody}}
