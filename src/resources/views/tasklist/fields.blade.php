@@ -49,7 +49,7 @@
     <div class="col-md-6">
         <div class="mb-3">
             {{ Form::label('status', __('Status'), ['class' => 'form-label']) }}
-            {{ Form::select('status', \Teamtnt\SalesManagement\Models\Status::getTaskStatusNames(), null, ['class' => 'form-control ' .($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Select status']) }}
+            {{ Form::select('status', \Teamtnt\SalesManagement\Models\Status::getTaskStatusNames(), \Teamtnt\SalesManagement\Models\Status::TASK_STATUS_NEW, ['class' => 'form-control ' .($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Select status']) }}
             @error('status')
             <small class="invalid-feedback">{{ $message }}</small>
             @enderror
