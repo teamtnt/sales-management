@@ -102,4 +102,9 @@ class MessagesController extends Controller
 
         return redirect()->route('messages.index', $task);
     }
+
+    public function send()
+    {
+        dd('send message');
+    }
 }
