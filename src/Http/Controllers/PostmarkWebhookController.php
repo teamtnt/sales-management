@@ -24,19 +24,43 @@ class PostmarkWebhookController extends Controller
 
     }
 
-    public function handleDelivery()
+    public function handleDelivery($payload)
     {
-        dd("handling delivery");
+        $leadId = $payload['Metadata']['lead_id'];
+        $taskId = $payload['Metadata']['task_id'];
+        $messageId = $payload['Metadata']['message_id'];
+
+        $task = Task::find($taskId);
+        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+
+        $transitionName = 'transition.delivery.yes.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleBounce()
+    public function handleBounce($payload)
     {
-        dd("handling bounce");
+        $leadId = $payload['Metadata']['lead_id'];
+        $taskId = $payload['Metadata']['task_id'];
+        $messageId = $payload['Metadata']['message_id'];
+
+        $task = Task::find($taskId);
+        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+
+        $transitionName = 'transition.bounce.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleSpamComplaint()
+    public function handleSpamComplaint($payload)
     {
-        dd("handling spam complaint");
+        $leadId = $payload['Metadata']['lead_id'];
+        $taskId = $payload['Metadata']['task_id'];
+        $messageId = $payload['Metadata']['message_id'];
+
+        $task = Task::find($taskId);
+        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+
+        $transitionName = 'transition.spam.complaint.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
     public function handleOpen($payload)
@@ -49,7 +73,38 @@ class PostmarkWebhookController extends Controller
         $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
 
         $transitionName = 'transition.opened.yes.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
 
+    }
+
+    public function handleLinkClick($payload)
+    {
+        $leadId = $payload['Metadata']['lead_id'];
+        $taskId = $payload['Metadata']['task_id'];
+        $messageId = $payload['Metadata']['message_id'];
+
+        $task = Task::find($taskId);
+        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+
+        $transitionName = 'transition.link.click.yes.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+    }
+
+    public function handleSubscriptionChange($payload)
+    {
+        $leadId = $payload['Metadata']['lead_id'];
+        $taskId = $payload['Metadata']['task_id'];
+        $messageId = $payload['Metadata']['message_id'];
+
+        $task = Task::find($taskId);
+        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+
+        $transitionName = 'transition.subscription.change.yes.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+    }
+
+    public function applyTransition($task, $transitionName, $leadJourney, $leadId)
+    {
         foreach ($task->publishedWorkflows() as $workflow) {
             $fsm = $workflow->fsm();
             if ($fsm->can($leadJourney, $transitionName)) {
@@ -60,20 +115,10 @@ class PostmarkWebhookController extends Controller
 
                 $job = new $action($leadId, $argument);
                 $job->dispatch();
-                
-                $fsm->apply($leadJourney, 'transition.opened.yes.'.$messageId);
+
+                $fsm->apply($leadJourney, $transitionName);
             }
         }
-    }
-
-    public function handleLinkClick()
-    {
-        dd("handling link click");
-    }
-
-    public function handleSubscriptionChange()
-    {
-        dd("handling subscription change");
     }
 
     protected function missingMethod($parameters = [])
