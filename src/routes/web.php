@@ -74,8 +74,6 @@ Route::get('/task/{task}/edit', [TaskListController::class, 'edit'])->name('task
 Route::put('/task/{task}/update', [TaskListController::class, 'update'])->name('tasklist.update');
 Route::delete('/task/{task:id}/destroy', [TaskListController::class, 'destroy'])->name('tasklist.destroy');
 
-Route::get('/task/primjer1', [TaskListController::class, 'primjer1'])->name('tasklist.primjer1');
-Route::get('/task/primjer2', [TaskListController::class, 'primjer2'])->name('tasklist.primjer2');
 
 //Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
 Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');

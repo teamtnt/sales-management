@@ -44,6 +44,8 @@ class TaskEmail extends Mailable implements ShouldQueue
             subject: $this->message->subject,
             metadata: [
                 'lead_id' => $this->lead->id,
+                'task_id' => $this->lead->task_id,
+                'message_id' => $this->message->id,
             ],
         );
     }

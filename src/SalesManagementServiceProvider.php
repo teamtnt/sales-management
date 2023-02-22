@@ -11,7 +11,7 @@ class SalesManagementServiceProvider extends ServiceProvider
     {
         $this->registerRoutes();
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'sales-management');
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         if ($this->app->runningInConsole()) {
 
@@ -37,6 +37,9 @@ class SalesManagementServiceProvider extends ServiceProvider
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/routes/web.php');
         });
+        Route::group($this->routeConfigurationForWebhook(), function () {
+            $this->loadRoutesFrom(__DIR__.'/routes/webhook.php');
+        });
     }
 
     protected function routeConfiguration()
@@ -44,6 +47,13 @@ class SalesManagementServiceProvider extends ServiceProvider
         return [
             'prefix' => config('sales-management.prefix'),
             'middleware' => config('sales-management.middleware'),
+        ];
+    }
+
+    protected function routeConfigurationForWebhook()
+    {
+        return [
+            'prefix' => config('sales-management.prefix'),
         ];
     }
 }
