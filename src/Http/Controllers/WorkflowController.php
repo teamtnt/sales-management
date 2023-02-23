@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
+use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Task;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
@@ -93,6 +94,19 @@ class WorkflowController extends Controller
 
     public function debug(Task $task, Workflow $workflow)
     {
+        $fsm = $workflow->fsm();
+
+
+        /*
+            $leadJourney = \Teamtnt\SalesManagement\Models\LeadJourney::find(1);
+
+            if ($fsm->can($leadJourney, 'transition.message.opened')) {
+                $fsm->apply($leadJourney, 'transition.message.opened');
+                $leadJourney->save();
+            }
+
+            dd($leadJourney->getCurrentPlace());
+        */
         $dumper = new GraphvizDumper();
         return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
     }

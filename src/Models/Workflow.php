@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\Workflow\DefinitionBuilder;
 use Symfony\Component\Workflow\Transition;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Workflow\Workflow as SymfonyWorkflow;
+use Symfony\Component\Workflow\MarkingStore\MethodMarkingStore;
 
 class Workflow extends Model
 {
@@ -49,5 +51,13 @@ class Workflow extends Model
         }
 
         return $builder->build();
+    }
+
+    public function fsm()
+    {
+        $definition = $this->getStateMachineDefinition();
+        $markingStore = new MethodMarkingStore(true, "currentPlace");
+
+        return new SymfonyWorkflow($definition, $markingStore, null, $this->name);
     }
 }
