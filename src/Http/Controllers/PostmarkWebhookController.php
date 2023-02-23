@@ -15,7 +15,13 @@ class PostmarkWebhookController extends Controller
         $method = 'handle'.$payload['RecordType'];
 
         if (method_exists($this, $method)) {
-            $response = $this->{$method}($payload);
+
+            $leadId = $payload['Metadata']['lead_id'];
+            $taskId = $payload['Metadata']['task_id'];
+            $messageId = $payload['Metadata']['message_id'];
+            $task = Task::find($taskId);
+
+            $response = $this->{$method}($payload, $task, $leadId, $messageId);
 
             return $response;
         }
@@ -24,14 +30,15 @@ class PostmarkWebhookController extends Controller
 
     }
 
+    public function handleOpen($payload, $task, $leadId, $messageId)
+    {
+        $transitionName = 'transition.opened.yes.'.$messageId;
+        $this->applyTransition($task, $transitionName, $leadId);
+    }
+
     public function handleDelivery($payload)
     {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+        return;
 
         $transitionName = 'transition.delivery.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
@@ -39,12 +46,7 @@ class PostmarkWebhookController extends Controller
 
     public function handleBounce($payload)
     {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+        return;
 
         $transitionName = 'transition.bounce.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
@@ -52,39 +54,15 @@ class PostmarkWebhookController extends Controller
 
     public function handleSpamComplaint($payload)
     {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+        return;
 
         $transitionName = 'transition.spam.complaint.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleOpen($payload)
-    {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
-
-        $transitionName = 'transition.opened.yes.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
-
-    }
-
     public function handleLinkClick($payload)
     {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+        return;
 
         $transitionName = 'transition.link.click.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
@@ -92,20 +70,21 @@ class PostmarkWebhookController extends Controller
 
     public function handleSubscriptionChange($payload)
     {
-        $leadId = $payload['Metadata']['lead_id'];
-        $taskId = $payload['Metadata']['task_id'];
-        $messageId = $payload['Metadata']['message_id'];
-
-        $task = Task::find($taskId);
-        $leadJourney = LeadJourney::where('lead_id', $leadId)->where('task_id', $taskId)->first();
+        return;
 
         $transitionName = 'transition.subscription.change.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
-    public function applyTransition($task, $transitionName, $leadJourney, $leadId)
+    public function applyTransition($task, $transitionName, $leadId)
     {
         foreach ($task->publishedWorkflows() as $workflow) {
+            $leadJourney = LeadJourney::where('lead_id', $leadId)
+                ->where('task_id', $task->id)
+                ->where('workflow_id', $workflow->id)
+                ->first();
+            dd($leadJourney);
+
             $fsm = $workflow->fsm();
             if ($fsm->can($leadJourney, $transitionName)) {
                 $action = $fsm->getMetadataStore()
