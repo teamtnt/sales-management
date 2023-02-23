@@ -44,8 +44,8 @@ class Workflow extends Model
             $builder->addPlace($placeName);
         }
 
-        foreach ($definitionArray[$workflowName]['transitions'] as $transtionName => $transitionValue) {
-            $transition = new Transition($transtionName, $transitionValue['from'], $transitionValue['to']);
+        foreach ($definitionArray[$workflowName]['transitions'] as $transitionName => $transitionValue) {
+            $transition = new Transition($transitionName, $transitionValue['from'], $transitionValue['to']);
 
             $builder->addTransition($transition);
         }
