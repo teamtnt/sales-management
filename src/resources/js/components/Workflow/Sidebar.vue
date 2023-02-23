@@ -1,10 +1,10 @@
 <script setup>
-const onDragStart = (event, nodeType, label) => {
-    if (event.dataTransfer) {
-        event.dataTransfer.setData('application/vueflow', nodeType)
-        event.dataTransfer.effectAllowed = 'move'
+    const onDragStart = (event, nodeType, label) => {
+        if (event.dataTransfer) {
+            event.dataTransfer.setData('application/vueflow', nodeType)
+            event.dataTransfer.effectAllowed = 'move'
+        }
     }
-}
 </script>
 
 <template>
@@ -36,7 +36,7 @@ const onDragStart = (event, nodeType, label) => {
             </div>
             <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'stageChanged')">
+                     @dragstart="onDragStart($event, 'stage.changed')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -48,7 +48,7 @@ const onDragStart = (event, nodeType, label) => {
                         Stage Changed</span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'messageOpened')">
+                     @dragstart="onDragStart($event, 'message.opened')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -73,7 +73,7 @@ const onDragStart = (event, nodeType, label) => {
             </div>
             <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'sendMessage')">
+                     @dragstart="onDragStart($event, 'message.sent')">
                     <span class="action-box pe-2 justify-content-end">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -112,7 +112,7 @@ const onDragStart = (event, nodeType, label) => {
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'moveToList')">
+                     @dragstart="onDragStart($event, 'move_to_list')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

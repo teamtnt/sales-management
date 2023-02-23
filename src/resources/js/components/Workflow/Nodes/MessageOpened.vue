@@ -1,11 +1,11 @@
 <script setup>
-import {Handle, Position} from '@vue-flow/core'
+    import {Handle, Position} from '@vue-flow/core'
 
-const props = defineProps({
-    id: String,
-    label: String,
-    type: String
-})
+    const props = defineProps({
+        id: String,
+        label: String,
+        type: String
+    })
 </script>
 
 <template>
@@ -20,10 +20,10 @@ const props = defineProps({
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
             Message Opened</span>
 
-        <Handle type="target" :position="Position.Top"/>
+        <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top"/>
 
-        <Handle id="yes" type="source" :position="Position.Bottom" class="bottom-left"/>
-        <Handle id="no" type="source" :position="Position.Bottom" class="bottom-right"/>
+        <Handle :id="`state.message.opened.${id}`" type="source" :position="Position.Bottom" class="bottom-left"/>
+        <Handle :id="`state.message.not_opened.${id}`" type="source" :position="Position.Bottom" class="bottom-right"/>
     </div>
 </template>
 

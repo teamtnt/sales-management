@@ -84,7 +84,7 @@ class WorkflowController extends Controller
 
     public function show(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflows.show', compact('workflow', 'task'));
+        return view('sales-management::workflow.new', compact('workflow', 'task'));
     }
 
     public function newWorkflow()
@@ -95,7 +95,6 @@ class WorkflowController extends Controller
     public function debug(Task $task, Workflow $workflow)
     {
         $fsm = $workflow->fsm();
-
 
         /*
             $leadJourney = \Teamtnt\SalesManagement\Models\LeadJourney::find(1);
@@ -108,6 +107,16 @@ class WorkflowController extends Controller
             dd($leadJourney->getCurrentPlace());
         */
         $dumper = new GraphvizDumper();
+
         return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
+    }
+
+    public function saveElements(Request $request)
+    {
+        $workflow = Workflow::find(1);
+        $workflow->elements = json_encode($request->elements);
+        $workflow->save();
+
+        dd($request->elements);
     }
 }

@@ -60,4 +60,11 @@ class Workflow extends Model
 
         return new SymfonyWorkflow($definition, $markingStore, null, $this->name);
     }
+
+    public function generateStateMachineDefinitionFromElements()
+    {
+        $elements = json_encode($this->elements);
+        foreach ($elements as $element) {
+        }
+    }
 }

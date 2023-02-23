@@ -74,9 +74,9 @@ Route::get('/task/{task}/edit', [TaskListController::class, 'edit'])->name('task
 Route::put('/task/{task}/update', [TaskListController::class, 'update'])->name('tasklist.update');
 Route::delete('/task/{task:id}/destroy', [TaskListController::class, 'destroy'])->name('tasklist.destroy');
 
-
 //Route::get('/automation/workflow', [WorkflowController::class, 'index'])->name('automation.workflow.index');
 Route::get('/automation/workflow/new', [WorkflowController::class, 'newWorkflow'])->name('automation.workflow.new');
+Route::post('/automation/workflow/save', [WorkflowController::class, 'saveElements'])->name('automation.workflow.save');
 
 Route::group(['prefix' => 'task/{task}'], function () {
     // Messages

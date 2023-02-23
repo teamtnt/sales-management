@@ -1,17 +1,14 @@
 <script setup>
-import {Handle, Position} from '@vue-flow/core'
+    import {Handle, Position} from '@vue-flow/core'
 
-const props = defineProps({
-    id: String,
-    label: String,
-    type: String
-})
+    const props = defineProps({
+        id: String,
+        label: String,
+        type: String
+    })
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
-
-        <div :data-handleid="`${id}__handle-top`" :data-nodeid="id" data-handlepos="top"
-             :class="`vue-flow__handle nodrag vue-flow__handle-top vue-flow__handle-${id}__handle-top target connectable`"></div>
 
         <span class="action-box pe-2 justify-content-end">
             <span class="action-box__icon">
@@ -24,8 +21,8 @@ const props = defineProps({
             Send Message
         </span>
 
-        <Handle id="source" type="source" :position="Position.Bottom"/>
+        <Handle :id="`state.message.sent.target.${id}`" type="target" :position="Position.Bottom"/>
 
-        <Handle id="target" type="target" :position="Position.Top"/>
+        <Handle :id="`state.message.sent.${id}`" type="source" :position="Position.Top"/>
     </div>
 </template>
