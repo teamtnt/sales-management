@@ -1,18 +1,14 @@
 <script setup>
-import {Handle, Position} from '@vue-flow/core'
+    import {Handle, Position} from '@vue-flow/core'
 
-const props = defineProps({
-    id: String,
-    label: String,
-    type: String
-})
+    const props = defineProps({
+        id: String,
+        label: String,
+        type: String
+    })
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
-
-        <div :data-handleid="`${id}__handle-top`" :data-nodeid="id" data-handlepos="top"
-             :class="`vue-flow__handle nodrag vue-flow__handle-top vue-flow__handle-${id}__handle-top target connectable`"></div>
-
         <span class="action-box pe-2 justify-content-center">
             <span class="action-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -24,8 +20,8 @@ const props = defineProps({
             AddTag
         </span>
 
-        <Handle id="source" type="source" :position="Position.Bottom"/>
+        <Handle :id="`state.tag.add.${id}`" type="source" :position="Position.Bottom"/>
 
-        <Handle id="target" type="target" :position="Position.Top"/>
+        <Handle :id="`state.tag.add.target.${id}`" type="target" :position="Position.Top"/>
     </div>
 </template>

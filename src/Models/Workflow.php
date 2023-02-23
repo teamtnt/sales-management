@@ -103,7 +103,16 @@ class Workflow extends Model
                     $transitions[$transition]['to'] = $place2;
                 }
                 $transition = str_replace('state.', 'transition.', $place);
-                $transitions[$transition]['from'] = $element['sourceHandle'];
+                if (isset($transitions[$transition])) {
+                    if (is_array($transitions[$transition]['from'])) {
+                        $transitions[$transition]['from'][] = $element['sourceHandle'];
+                    } else {
+                        $transitions[$transition]['from'] = [$transitions[$transition]['from'], $element['sourceHandle']];
+                    }
+                } else {
+                    $transitions[$transition]['from'] = $element['sourceHandle'];
+                }
+
                 $transitions[$transition]['to'] = $place;
             }
         }

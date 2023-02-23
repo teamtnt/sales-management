@@ -20,8 +20,8 @@
             Wait
         </span>
 
-        <Handle type="target" :position="Position.Top"/>
-        <Handle type="source" :position="Position.Bottom"/>
+        <Handle :id="`state.wait.target.${id}`" type="target" :position="Position.Top"/>
+        <Handle :id="`state.wait.${id}`" type="source" :position="Position.Bottom"/>
 
     </div>
 </template>

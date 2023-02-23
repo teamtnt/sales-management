@@ -1,11 +1,11 @@
 <script setup>
-import {Handle, Position} from '@vue-flow/core'
+    import {Handle, Position} from '@vue-flow/core'
 
-const props = defineProps({
-    id: String,
-    label: String,
-    type: String
-})
+    const props = defineProps({
+        id: String,
+        label: String,
+        type: String
+    })
 </script>
 
 <template>
@@ -18,8 +18,8 @@ const props = defineProps({
                      class="feather feather-refresh-cw align-middle"><polyline
                     points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
-            Stagge Changed</span>
+            Stage Changed</span>
 
-        <Handle type="source" :position="Position.Bottom"/>
+        <Handle :id="`state.stage.changed.${id}`" type="source" :position="Position.Bottom"/>
     </div>
 </template>
