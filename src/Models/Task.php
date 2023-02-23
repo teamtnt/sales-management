@@ -62,4 +62,8 @@ class Task extends Model
     {
         return $this->hasMany(Workflow::class);
     }
+
+    public function publishedWorkflows() {
+        return $this->workflows()->where('status', Workflow::STATUS_PUBLISHED)->get();
+    }
 }

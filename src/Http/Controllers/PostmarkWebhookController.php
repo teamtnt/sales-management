@@ -78,28 +78,36 @@ class PostmarkWebhookController extends Controller
 
     public function applyTransition($task, $transitionName, $leadId)
     {
-        foreach ($task->workflows as $workflow) {
+        foreach ($task->publishedWorkflows() as $workflow) {
             $leadJourney = LeadJourney::where('lead_id', $leadId)
                 ->where('task_id', $task->id)
                 ->where('workflow_id', $workflow->id)
                 ->first(); 
 
+            if(!$leadJourney) {
+                $leadJourney = new LeadJourney;
+                $leadJourney->lead_id = $leadId;
+                $leadJourney->task_id = $task->id;
+                $leadJourney->workflow_id = $workflow->id;
+                $leadJourney->save();
+            }
+
             $fsm = $workflow->fsm();
 
             if ($fsm->can($leadJourney, $transitionName)) {
-                /*
-                $action = $fsm->getMetadataStore()
-                    ->getTransitionMetadata($transitionName)['action'];
-                $argument = $fsm->getMetadataStore()
-                    ->getTransitionMetadata($transitionName)['argument'];
+                $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
 
-                $job = new $action($leadId, $argument);
-                $job->dispatch();
-                */
+                if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
+                    $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
+                    $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
+
+                    $job = new $action($leadId, $argument);
+                    $job->dispatch($leadId, $argument);
+                }
 
                 $fsm->apply($leadJourney, $transitionName);
                 $leadJourney->save();
-                
+
                 info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
             }
         }
