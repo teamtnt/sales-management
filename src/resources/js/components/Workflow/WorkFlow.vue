@@ -27,6 +27,9 @@
             type: String,
             default: "Workflow"
         },
+        saveUrl: {
+            type: String
+        },
         elementsData: {
             type: Array,
             default: []
@@ -98,7 +101,7 @@
 
     const saveWorkflow = function () {
         //ovdje cemo poslat na server
-        axios.post('/automation/workflow/save', {
+        axios.post(props.saveUrl, {
             elements: elements.value
         })
             .then(function (response) {

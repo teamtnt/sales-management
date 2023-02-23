@@ -111,11 +111,10 @@ class WorkflowController extends Controller
         return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
     }
 
-    public function saveElements(Request $request)
+    public function saveElements(Task $task, Workflow $workflow, Request $request)
     {
-        $workflow = Workflow::find(1);
         $workflow->elements = json_encode($request->elements);
-        $workflow->generateStateMachineDefinitionFromElements();
+        $workflow->generateStateMachineDefinitionFromElements($request->elements);
         $workflow->save();
 
         dd($workflow->state_machine_definition);

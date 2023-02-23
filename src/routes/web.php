@@ -97,4 +97,5 @@ Route::group(['prefix' => 'task/{task}'], function () {
     Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
     Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
     Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
+    Route::post('/workflows/{workflow:id}/save-elements', [WorkflowController::class, 'saveElements'])->name('workflows.save-elements');
 });

@@ -83,37 +83,38 @@ class Workflow extends Model
         return self::STATUS_PUBLISHED == $this->status;
     }
 
-    public function generateStateMachineDefinitionFromElements()
+    public function generateStateMachineDefinitionFromElements($elements)
     {
-        $elements = json_decode($this->elements, true);
         $transitions = [];
         $places = [];
         $places['start'] = null;
-        foreach ($elements as $element) {
-            if (isset($element['handleBounds']['source'])) {
-                foreach ($element['handleBounds']['source'] as $state) {
-                    $places[$state['id']] = null;
-                }
-            } elseif (isset($element['sourceHandle']) && isset($element['targetHandle'])) {
-                $place = str_replace('target.', '', $element['targetHandle']);
-                if (strpos($place, 'state.message.opened') !== false) {
-                    $place2 = str_replace('opened.', 'not_opened.', $place);
-                    $transition = str_replace('state.', 'transition.', $place2);
-                    $transitions[$transition]['from'] = $element['sourceHandle'];
-                    $transitions[$transition]['to'] = $place2;
-                }
-                $transition = str_replace('state.', 'transition.', $place);
-                if (isset($transitions[$transition])) {
-                    if (is_array($transitions[$transition]['from'])) {
-                        $transitions[$transition]['from'][] = $element['sourceHandle'];
-                    } else {
-                        $transitions[$transition]['from'] = [$transitions[$transition]['from'], $element['sourceHandle']];
+        if (count($elements) > 0) {
+            foreach ($elements as $element) {
+                if (isset($element['handleBounds']['source'])) {
+                    foreach ($element['handleBounds']['source'] as $state) {
+                        $places[$state['id']] = null;
                     }
-                } else {
-                    $transitions[$transition]['from'] = $element['sourceHandle'];
-                }
+                } elseif (isset($element['sourceHandle']) && isset($element['targetHandle'])) {
+                    $place = str_replace('target.', '', $element['targetHandle']);
+                    if (strpos($place, 'state.message.opened') !== false) {
+                        $place2 = str_replace('opened.', 'not_opened.', $place);
+                        $transition = str_replace('state.', 'transition.', $place2);
+                        $transitions[$transition]['from'] = $element['sourceHandle'];
+                        $transitions[$transition]['to'] = $place2;
+                    }
+                    $transition = str_replace('state.', 'transition.', $place);
+                    if (isset($transitions[$transition])) {
+                        if (is_array($transitions[$transition]['from'])) {
+                            $transitions[$transition]['from'][] = $element['sourceHandle'];
+                        } else {
+                            $transitions[$transition]['from'] = [$transitions[$transition]['from'], $element['sourceHandle']];
+                        }
+                    } else {
+                        $transitions[$transition]['from'] = $element['sourceHandle'];
+                    }
 
-                $transitions[$transition]['to'] = $place;
+                    $transitions[$transition]['to'] = $place;
+                }
             }
         }
 
