@@ -45,11 +45,11 @@ class Workflow extends Model
         $builder = new DefinitionBuilder;
         $transitionsMetadata = new \SplObjectStorage();
         $placesMetadata = [];
-        
+
         foreach ($definitionArray[$workflowName]['places'] as $placeName => $placeValue) {
             $builder->addPlace($placeName);
 
-            if(isset($placeValue['metadata'])) {
+            if (isset($placeValue['metadata'])) {
                 $placesMetadata[$placeName] = $placeValue['metadata'];
             }
         }
@@ -59,7 +59,7 @@ class Workflow extends Model
 
             $builder->addTransition($transition);
 
-            if(isset($transitionValue['metadata'])) {
+            if (isset($transitionValue['metadata'])) {
                 $transitionsMetadata[$transition] = $transitionValue['metadata'];
             }
         }
@@ -78,7 +78,44 @@ class Workflow extends Model
         return new SymfonyWorkflow($definition, $markingStore, null, $this->name);
     }
 
-    public function isPublished() {
+    public function isPublished()
+    {
         return self::STATUS_PUBLISHED == $this->status;
+    }
+
+    public function generateStateMachineDefinitionFromElements()
+    {
+        $elements = json_decode($this->elements, true);
+        $transitions = [];
+        $places = [];
+        $places['start'] = null;
+        foreach ($elements as $element) {
+            if (isset($element['handleBounds']['source'])) {
+                foreach ($element['handleBounds']['source'] as $state) {
+                    $places[$state['id']] = null;
+                }
+            } elseif (isset($element['sourceHandle']) && isset($element['targetHandle'])) {
+                $place = str_replace('target.', '', $element['targetHandle']);
+                if (strpos($place, 'state.message.opened') !== false) {
+                    $place2 = str_replace('opened.', 'not_opened.', $place);
+                    $transition = str_replace('state.', 'transition.', $place2);
+                    $transitions[$transition]['from'] = $element['sourceHandle'];
+                    $transitions[$transition]['to'] = $place2;
+                }
+                $transition = str_replace('state.', 'transition.', $place);
+                $transitions[$transition]['from'] = $element['sourceHandle'];
+                $transitions[$transition]['to'] = $place;
+            }
+        }
+
+        return $this->state_machine_definition = Yaml::dump([
+            $this->id => [
+                'type'          => 'state_machine',
+                'supports'      => ['Teamtnt\SalesManagement\Models\LeadJourney'],
+                'initial_place' => 'start',
+                'places'        => $places,
+                'transitions'   => $transitions,
+            ]
+        ]);
     }
 }

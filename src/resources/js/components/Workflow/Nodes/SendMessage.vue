@@ -21,8 +21,8 @@
             Send Message
         </span>
 
-        <Handle :id="`state.message.sent.target.${id}`" type="target" :position="Position.Bottom"/>
+        <Handle :id="`state.message.sent.${id}`" type="source" :position="Position.Bottom"/>
 
-        <Handle :id="`state.message.sent.${id}`" type="source" :position="Position.Top"/>
+        <Handle :id="`state.message.sent.target.${id}`" type="target" :position="Position.Top"/>
     </div>
 </template>

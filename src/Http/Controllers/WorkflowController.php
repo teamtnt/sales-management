@@ -115,8 +115,9 @@ class WorkflowController extends Controller
     {
         $workflow = Workflow::find(1);
         $workflow->elements = json_encode($request->elements);
+        $workflow->generateStateMachineDefinitionFromElements();
         $workflow->save();
 
-        dd($request->elements);
+        dd($workflow->state_machine_definition);
     }
 }

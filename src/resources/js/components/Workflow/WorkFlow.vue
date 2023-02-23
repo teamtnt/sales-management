@@ -7,6 +7,7 @@
     import StageChangedNode from "./Nodes/StageChanged.vue";
     import SendMessageNode from "./Nodes/SendMessage.vue";
     import WaitNode from "./Nodes/Wait.vue";
+    import StartNode from "./Nodes/Start.vue";
     import AddTagNode from "./Nodes/AddTag.vue";
     import MessageOpened from "./Nodes/MessageOpened.vue";
     import MoveToList from "./Nodes/MoveToList.vue";
@@ -15,6 +16,7 @@
         'stage.changed': markRaw(StageChangedNode),
         'message.sent': markRaw(SendMessageNode),
         wait: markRaw(WaitNode),
+        start: markRaw(StartNode),
         addTag: markRaw(AddTagNode),
         move_to_list: markRaw(MoveToList),
         'message.opened': markRaw(MessageOpened),

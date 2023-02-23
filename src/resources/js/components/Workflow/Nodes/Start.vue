@@ -17,11 +17,10 @@
                                 <circle cx="12" cy="12" r="10"></circle><polyline
                     points="12 6 12 12 16 14"></polyline></svg>
             </span>
-            Wait
+            Start
         </span>
 
-        <Handle type="target" :position="Position.Top"/>
-        <Handle type="source" :position="Position.Bottom"/>
+        <Handle id="start" type="source" :position="Position.Bottom"/>
 
     </div>
 </template>

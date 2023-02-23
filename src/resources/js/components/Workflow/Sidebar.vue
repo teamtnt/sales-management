@@ -24,6 +24,21 @@
                 </svg>You can drag these nodes to the pane</span>
         </h5>
         <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'start')">
+                    <span class="action-box px-3 justify-content-center">
+                        <span class="action-box__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-clock align-middle">
+                                <circle cx="12" cy="12" r="10"></circle><polyline
+                                points="12 6 12 12 16 14"></polyline></svg>
+                        </span>
+                        Start
+                    </span>
+                </div>
+            </div>
             <div class="bg-white shadow-sm px-3 py-2">
                 <h6 class="mb-0">
                     <span class="d-flex align-items-center">
