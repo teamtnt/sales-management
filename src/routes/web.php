@@ -92,6 +92,7 @@ Route::group(['prefix' => 'task/{task}'], function () {
     Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
     Route::get('/workflows/create', [WorkflowController::class, 'create'])->name('workflows.create');
     Route::post('/workflows/store', [WorkflowController::class, 'store'])->name('workflows.store');
+    Route::get('/workflows/{workflow:id}/debug', [WorkflowController::class, 'debug'])->name('workflows.debug');
     Route::get('/workflows/{workflow:id}/show', [WorkflowController::class, 'show'])->name('workflows.show');
     Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
     Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');

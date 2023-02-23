@@ -20,7 +20,8 @@
         "illuminate/contracts": "^9.0",
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.62.1",
-        "symfony/workflow": "^6.2",
+        "symfony/workflow": "^6.0",
+        "symfony/yaml": "^6.0",
         "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {

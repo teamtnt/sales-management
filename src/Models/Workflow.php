@@ -4,6 +4,9 @@ namespace Teamtnt\SalesManagement\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Workflow\DefinitionBuilder;
+use Symfony\Component\Workflow\Transition;
+use Symfony\Component\Yaml\Yaml;
 
 class Workflow extends Model
 {
@@ -26,5 +29,25 @@ class Workflow extends Model
     public function tasks()
     {
         return $this->belongsTo(Task::class);
+    }
+
+    public function getStateMachineDefinition()
+    {
+        $definitionArray = Yaml::parse($this->state_machine_definition);
+        $workflowName = array_keys($definitionArray)[0];
+
+        $builder = new DefinitionBuilder;
+
+        foreach ($definitionArray[$workflowName]['places'] as $placeName => $placeValue) {
+            $builder->addPlace($placeName);
+        }
+
+        foreach ($definitionArray[$workflowName]['transitions'] as $transtionName => $transitionValue) {
+            $transition = new Transition($transtionName, $transitionValue['from'], $transitionValue['to']);
+
+            $builder->addTransition($transition);
+        }
+
+        return $builder->build();
     }
 }

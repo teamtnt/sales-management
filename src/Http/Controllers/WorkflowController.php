@@ -8,6 +8,7 @@ use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Task;
+use Symfony\Component\Workflow\Dumper\GraphvizDumper;
 
 class WorkflowController extends Controller
 {
@@ -88,5 +89,11 @@ class WorkflowController extends Controller
     public function newWorkflow()
     {
         return view('sales-management::workflow.new');
+    }
+
+    public function debug(Task $task, Workflow $workflow)
+    {
+        $dumper = new GraphvizDumper();
+        return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
     }
 }
