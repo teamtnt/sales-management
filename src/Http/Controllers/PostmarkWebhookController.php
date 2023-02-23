@@ -32,7 +32,7 @@ class PostmarkWebhookController extends Controller
 
     public function handleOpen($payload, $task, $leadId, $messageId)
     {
-        $transitionName = 'transition.opened.yes.'.$messageId;
+        $transitionName = 'transition.message.opened.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadId);
     }
 
@@ -40,7 +40,7 @@ class PostmarkWebhookController extends Controller
     {
         return;
 
-        $transitionName = 'transition.delivery.yes.'.$messageId;
+        $transitionName = 'transition.message.delivery.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
@@ -48,7 +48,7 @@ class PostmarkWebhookController extends Controller
     {
         return;
 
-        $transitionName = 'transition.bounce.'.$messageId;
+        $transitionName = 'transition.message.bounce.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
@@ -56,7 +56,7 @@ class PostmarkWebhookController extends Controller
     {
         return;
 
-        $transitionName = 'transition.spam.complaint.'.$messageId;
+        $transitionName = 'transition.message.spam.complaint.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
@@ -64,7 +64,7 @@ class PostmarkWebhookController extends Controller
     {
         return;
 
-        $transitionName = 'transition.link.click.yes.'.$messageId;
+        $transitionName = 'transition.message.link.click.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
@@ -72,21 +72,22 @@ class PostmarkWebhookController extends Controller
     {
         return;
 
-        $transitionName = 'transition.subscription.change.yes.'.$messageId;
+        $transitionName = 'transition.message.subscription.change.yes.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
     }
 
     public function applyTransition($task, $transitionName, $leadId)
     {
-        foreach ($task->publishedWorkflows() as $workflow) {
+        foreach ($task->workflows as $workflow) {
             $leadJourney = LeadJourney::where('lead_id', $leadId)
                 ->where('task_id', $task->id)
                 ->where('workflow_id', $workflow->id)
-                ->first();
-            dd($leadJourney);
+                ->first(); 
 
             $fsm = $workflow->fsm();
+
             if ($fsm->can($leadJourney, $transitionName)) {
+                /*
                 $action = $fsm->getMetadataStore()
                     ->getTransitionMetadata($transitionName)['action'];
                 $argument = $fsm->getMetadataStore()
@@ -94,8 +95,12 @@ class PostmarkWebhookController extends Controller
 
                 $job = new $action($leadId, $argument);
                 $job->dispatch();
+                */
 
                 $fsm->apply($leadJourney, $transitionName);
+                $leadJourney->save();
+                
+                info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
             }
         }
     }
