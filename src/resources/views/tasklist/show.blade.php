@@ -14,7 +14,11 @@
     <div class="container-fluid p-0" style="height: 75vh;">
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
-        <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">Send email to leads</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">Send email to leads</a>
+            <a href="{{ route('workflows.index', $task->id) }}" class="btn btn-info mb-3">Workflows</a>
+        </div>
+
 
         <div class="row" style="flex-wrap: unset;" id="pipeline" data-pipeline-id="{{$task->pipeline_id}}">
             <div class="task-card">

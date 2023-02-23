@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string("name");
             $table->text("description")->nullable();
             $table->jsonb("elements")->nullable();
+            $table->text("state_machine_definition")->nullable();
             $table->unsignedInteger("status")->default(\Teamtnt\SalesManagement\Models\Status::WORKFLOW_STATUS_NEW);
             $table->timestamps();
         });
