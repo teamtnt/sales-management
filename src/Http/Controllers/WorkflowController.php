@@ -5,6 +5,7 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
+use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Workflow;
@@ -37,14 +38,13 @@ class WorkflowController extends Controller
      * @param  WorkflowRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Task $task)
+    public function store(Task $task, StateMachineBuilder $stateMachineBuilder)
     {
         $workflow = new Workflow;
         $workflow->task_id = $task->id;
         $workflow->name = request()->title;
         $workflow->elements = json_encode(request()->elements);
-        $workflow->generateStateMachineDefinitionFromElements(request()->elements);
-
+        $workflow->state_machine_definition = $stateMachineBuilder->buildFromElements(request()->elements, 'workflow');
         $workflow->save();
     }
 
@@ -62,11 +62,11 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Task $task, Workflow $workflow)
+    public function update(Task $task, Workflow $workflow, StateMachineBuilder $stateMachineBuilder)
     {
         $workflow->name = request()->title;
         $workflow->elements = json_encode(request()->elements);
-        $workflow->generateStateMachineDefinitionFromElements(request()->elements);
+        $workflow->state_machine_definition = $stateMachineBuilder->buildFromElements(request()->elements, 'workflow_'.$workflow->id);
         $workflow->save();
     }
 
@@ -81,11 +81,6 @@ class WorkflowController extends Controller
         request()->session()->flash('message', __('Workflow successfully deleted!'));
 
         return redirect()->route('workflows.index', $task);
-    }
-
-    public function show(Task $task, Workflow $workflow)
-    {
-        return view('sales-management::workflows.show', compact('workflow', 'task'));
     }
 
     public function debug(Task $task, Workflow $workflow)
