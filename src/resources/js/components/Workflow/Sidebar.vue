@@ -114,7 +114,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'addTag')">
+                     @dragstart="onDragStart($event, 'add.tag')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -127,7 +127,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'move_to_list')">
+                     @dragstart="onDragStart($event, 'move.to.list')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -139,6 +139,20 @@
                                 x1="3" y1="18" x2="3.01" y2="18"></line></svg>
                         </span>
                         Move To List
+                    </span>
+                </div>
+                <div class="vue-flow__node-input shadow-sm" :draggable="true"
+                     @dragstart="onDragStart($event, 'ab.split')">
+                    <span class="action-box ps-2 justify-content-center">
+                        <span class="action-box__icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                                <line x1="12" y1="16" x2="12" y2="16"></line>
+                                <line x1="12" y1="8" x2="12" y2="8"></line>
+                            </svg>
+                        </span>
+                        A/B Split
                     </span>
                 </div>
             </div>

@@ -11,15 +11,17 @@
     import AddTagNode from "./Nodes/AddTag.vue";
     import MessageOpened from "./Nodes/MessageOpened.vue";
     import MoveToList from "./Nodes/MoveToList.vue";
+    import ABSplit from "./Nodes/ABSplit.vue";
 
     const nodeTypes = {
         'stage.changed': markRaw(StageChangedNode),
         'message.sent': markRaw(SendMessageNode),
-        wait: markRaw(WaitNode),
-        start: markRaw(StartNode),
-        addTag: markRaw(AddTagNode),
-        move_to_list: markRaw(MoveToList),
+        'wait': markRaw(WaitNode),
+        'start': markRaw(StartNode),
+        'add.tag': markRaw(AddTagNode),
+        'move.to.list': markRaw(MoveToList),
         'message.opened': markRaw(MessageOpened),
+        'ab.split': markRaw(ABSplit),
     }
 
     const props = defineProps({
