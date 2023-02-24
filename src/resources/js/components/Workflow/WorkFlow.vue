@@ -40,6 +40,9 @@
         elementsData: {
             type: Array,
             default: []
+        },
+        cancelUrl: {
+            type: String
         }
     })
     const elements = ref(props.elementsData)
@@ -121,6 +124,9 @@
                 console.log(error);
             });
     }
+    const cancelWorkflow = function () {
+        window.location.replace(props.cancelUrl);
+    }
 </script>
 
 <template>
@@ -133,7 +139,7 @@
                 <Panel :position="PanelPosition.BottomRight">
                     <input type="text" class="form-control" v-model="title">
                     <button class="btn btn-success me-2" @click="saveWorkflow">{{ $t("Save") }}</button>
-                    <button class="btn btn-danger">{{ $t("Cancel") }}</button>
+                    <button class="btn btn-danger" @click="cancelWorkflow">{{ $t("Cancel") }}</button>
                 </Panel>
             </VueFlow>
         </div>
