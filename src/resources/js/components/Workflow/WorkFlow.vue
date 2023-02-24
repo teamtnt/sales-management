@@ -43,6 +43,7 @@
         }
     })
     const elements = ref(props.elementsData)
+    const title = ref(props.workflowTitle)
 
     let id = 0
     const getId = () => `dndnode_${id++}`
@@ -110,7 +111,7 @@
         //ovdje cemo poslat na server
         axios.post(props.saveUrl, {
             elements: elements.value,
-            title: props.workflowTitle
+            title: title.value
         })
             .then(function (response) {
                 console.log(response);
@@ -130,7 +131,7 @@
                 <Background/>
                 <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
                 <Panel :position="PanelPosition.BottomRight">
-                    <input type="text" class="form-control" :value="workflowTitle">
+                    <input type="text" class="form-control" v-model="title">
                     <button class="btn btn-success me-2" @click="saveWorkflow">{{ $t("Save") }}</button>
                     <button class="btn btn-danger">{{ $t("Cancel") }}</button>
                 </Panel>

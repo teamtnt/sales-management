@@ -5,8 +5,8 @@
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
     <li class="breadcrumb-item">{{ __('Tasks') }}</li>
     <li class="breadcrumb-item"><a href="{{ route('tasklist.show', $task->id) }}">{{ __($task->name) }}</a></li>
-    <li class="breadcrumb-item"><a
-            href="{{ route('workflows.show', [$task->id, $workflow->id]) }}">{{ $workflow->name }}</a>
+    <li class="breadcrumb-item">
+        <a href="{{ route('workflows.edit', [$task->id, $workflow->id]) }}">{{ $workflow->name }}</a>
     </li>
     <li class="breadcrumb-item active">Debug State Machine</li>
 @endsection

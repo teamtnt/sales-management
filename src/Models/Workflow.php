@@ -114,6 +114,7 @@ class Workflow extends Model
                     }
 
                     $transitions[$transition]['to'] = $place;
+                    $transitions[$transition]['metadata'] = $element['targetNode']['data'];
                 }
             }
         }

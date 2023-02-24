@@ -62,13 +62,12 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Task $task, WorkflowRequest $workflowRequest, Workflow $workflow)
+    public function update(Task $task, Workflow $workflow)
     {
-        $workflow->update($workflowRequest->validated());
-
-        request()->session()->flash('message', __('Workflow successfully updated!'));
-
-        return redirect()->route('workflows.index', $task);
+        $workflow->name = request()->title;
+        $workflow->elements = json_encode(request()->elements);
+        $workflow->generateStateMachineDefinitionFromElements(request()->elements);
+        $workflow->save();
     }
 
     /**
@@ -83,12 +82,7 @@ class WorkflowController extends Controller
 
         return redirect()->route('workflows.index', $task);
     }
-
-    public function show(Task $task, Workflow $workflow)
-    {
-        return view('sales-management::workflows.show', compact('workflow', 'task'));
-    }
-
+    
     public function debug(Task $task, Workflow $workflow)
     {
         $fsm = $workflow->fsm();
@@ -108,12 +102,4 @@ class WorkflowController extends Controller
         return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
     }
 
-    public function saveElements(Task $task, Workflow $workflow, Request $request)
-    {
-        $workflow->elements = json_encode($request->elements);
-        $workflow->generateStateMachineDefinitionFromElements($request->elements);
-        $workflow->save();
-
-        dd($workflow->state_machine_definition);
-    }
 }
