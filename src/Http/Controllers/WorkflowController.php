@@ -37,13 +37,15 @@ class WorkflowController extends Controller
      * @param  WorkflowRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Task $task, WorkflowRequest $workflowRequest)
+    public function store(Task $task)
     {
-        Workflow::create($workflowRequest->validated());
+        $workflow = new Workflow;
+        $workflow->task_id = $task->id;
+        $workflow->name = request()->title;
+        $workflow->elements = json_encode(request()->elements);
+        $workflow->generateStateMachineDefinitionFromElements(request()->elements);
 
-        request()->session()->flash('message', __('Workflow successfully created!'));
-
-        return redirect()->route('workflows.index', $task);
+        $workflow->save();
     }
 
     /**
@@ -84,7 +86,7 @@ class WorkflowController extends Controller
 
     public function show(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflows.new', compact('workflow', 'task'));
+        return view('sales-management::workflow.new', compact('workflow', 'task'));
     }
 
     public function newWorkflow()

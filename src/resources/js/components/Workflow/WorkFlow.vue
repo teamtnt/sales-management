@@ -107,17 +107,16 @@
     const saveWorkflow = function () {
         //ovdje cemo poslat na server
         axios.post(props.saveUrl, {
-            elements: elements.value
+            elements: elements.value,
+            title: props.workflowTitle
         })
             .then(function (response) {
                 console.log(response);
+                alert("Spremljeno, Tome probaj stilizirat da je ovo onaj zeleni toast")
             })
             .catch(function (error) {
                 console.log(error);
             });
-
-        console.log(elements.value);
-        alert("Workflow saved");
     }
 </script>
 

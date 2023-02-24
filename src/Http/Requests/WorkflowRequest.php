@@ -25,10 +25,7 @@ class WorkflowRequest extends FormRequest
     {
         return [
             'name'        => 'required|string',
-            'description' => 'nullable|string',
-            'elements'    => 'nullable|json',
-            'status'      => 'nullable|int',
-            'task_id'     => 'required|int',
+            'elements'    => 'nullable|json'
         ];
     }
 }
