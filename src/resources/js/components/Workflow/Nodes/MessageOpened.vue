@@ -1,11 +1,43 @@
 <script setup>
-    import {Handle, Position} from '@vue-flow/core'
+import { computed } from "vue";
+import { Handle, Position } from '@vue-flow/core'
 
-    const props = defineProps({
-        id: String,
-        label: String,
-        type: String
-    })
+const props = defineProps({
+    id: String,
+    label: String,
+    type: String
+});
+
+const sourceHandleStyleOpened = computed(() => ({
+    backgroundColor: 'green',
+    left: '48px',
+    width: '14px',
+    height: '14px',
+    right: 'auto',
+    bottom: '-7px'
+
+}));
+
+const sourceHandleStyleNotOpened = computed(() => ({
+    backgroundColor: 'red',
+    width: '14px',
+    height: '14px',
+    right: '40px',
+    left: 'auto',
+    bottom: '-7px'
+
+}));
+
+const sourceHandleStyleTarget = computed(() => ({
+    backgroundColor: 'white',
+    borderColor: '#dcdbdb',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    width: '14px',
+    height: '14px',
+    top: '-6px'
+
+}));
 </script>
 
 <template>
@@ -20,24 +52,41 @@
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
             Message Opened</span>
 
-        <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top"/>
+        <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top"
+                :style="sourceHandleStyleTarget" class="handle"><span class="circle"/></Handle>
 
-        <Handle :id="`state.message.opened.${id}`" type="source" :position="Position.Bottom" class="bottom-left"/>
-        <Handle :id="`state.message.not_opened.${id}`" type="source" :position="Position.Bottom" class="bottom-right"/>
+        <Handle :id="`state.message.opened.${id}`" type="source" :position="Position.Bottom"
+                :style="sourceHandleStyleOpened" class="handle">
+            <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+            </svg>
+        </Handle>
+        <Handle :id="`state.message.not_opened.${id}`" type="source" :position="Position.Bottom"
+                :style="sourceHandleStyleNotOpened" class="handle">
+            <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </Handle>
     </div>
 </template>
 
+<style scoped lang="scss">
+.handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-<style lang="scss">
-.bottom-left {
-    left: 40px;
-    background-color: green;
-    border-color: green;
-}
+    .circle {
+        display: block;
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: gray;
+    }
 
-.bottom-right {
-    right: 40px;
-    background-color: red;
-    border-color: red;
+    & > svg {
+        position: absolute;
+    }
 }
 </style>
