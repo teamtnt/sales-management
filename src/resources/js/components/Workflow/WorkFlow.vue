@@ -27,6 +27,10 @@
             type: String,
             default: "Workflow"
         },
+        workflowTitle: {
+            type: String,
+            default: "Untitled"
+        },
         saveUrl: {
             type: String,
             default: "/automation/workflow/save"
@@ -125,6 +129,7 @@
                 <Background/>
                 <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
                 <Panel :position="PanelPosition.BottomRight">
+                    <input type="text" class="form-control" :value="workflowTitle">
                     <button class="btn btn-success me-2" @click="saveWorkflow">{{ $t("Save") }}</button>
                     <button class="btn btn-danger">{{ $t("Cancel") }}</button>
                 </Panel>
