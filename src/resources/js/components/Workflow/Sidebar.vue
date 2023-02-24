@@ -49,7 +49,7 @@
                             <path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
                         Conditions</span></h6>
             </div>
-            <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
+            <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
                      @dragstart="onDragStart($event, 'stage.changed')">
                     <span class="condition-box pe-2 justify-content-end">
