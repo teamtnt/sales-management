@@ -84,7 +84,7 @@ class WorkflowController extends Controller
 
     public function show(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflow.new', compact('workflow', 'task'));
+        return view('sales-management::workflows.new', compact('workflow', 'task'));
     }
 
     public function newWorkflow()
