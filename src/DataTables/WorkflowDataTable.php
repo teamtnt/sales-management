@@ -70,7 +70,7 @@ class WorkflowDataTable extends DataTable
                 ->with('taskId', $this->taskId)
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(300)
                 ->addClass('text-center'),
         ];
     }

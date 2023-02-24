@@ -1,150 +1,223 @@
 <script setup>
-    import {Panel, PanelPosition, Position, VueFlow, useVueFlow} from '@vue-flow/core'
-    import {Background} from '@vue-flow/background'
-    import {nextTick, watch, ref, markRaw} from 'vue'
-    import Sidebar from './Sidebar.vue'
+import {
+    Panel,
+    PanelPosition,
+    Position,
+    VueFlow,
+    useVueFlow,
+} from "@vue-flow/core";
+import { Background } from "@vue-flow/background";
+import { nextTick, watch, ref, markRaw } from "vue";
+import Sidebar from "./Sidebar.vue";
 
-    import StageChangedNode from "./Nodes/StageChanged.vue";
-    import SendMessageNode from "./Nodes/SendMessage.vue";
-    import WaitNode from "./Nodes/Wait.vue";
-    import StartNode from "./Nodes/Start.vue";
-    import AddTagNode from "./Nodes/AddTag.vue";
-    import MessageOpened from "./Nodes/MessageOpened.vue";
-    import MoveToList from "./Nodes/MoveToList.vue";
-    import ABSplit from "./Nodes/ABSplit.vue";
+import StageChangedNode from "./Nodes/StageChanged.vue";
+import SendMessageNode from "./Nodes/SendMessage.vue";
+import WaitNode from "./Nodes/Wait.vue";
+import StartNode from "./Nodes/Start.vue";
+import AddTagNode from "./Nodes/AddTag.vue";
+import MessageOpened from "./Nodes/MessageOpened.vue";
+import MoveToList from "./Nodes/MoveToList.vue";
+import ABSplit from "./Nodes/ABSplit.vue";
 
-    const nodeTypes = {
-        'stage.changed': markRaw(StageChangedNode),
-        'message.sent': markRaw(SendMessageNode),
-        'wait': markRaw(WaitNode),
-        'start': markRaw(StartNode),
-        'add.tag': markRaw(AddTagNode),
-        'move.to.list': markRaw(MoveToList),
-        'message.opened': markRaw(MessageOpened),
-        'ab.split': markRaw(ABSplit),
+const nodeTypes = {
+    "stage.changed": markRaw(StageChangedNode),
+    "message.sent": markRaw(SendMessageNode),
+    wait: markRaw(WaitNode),
+    start: markRaw(StartNode),
+    "add.tag": markRaw(AddTagNode),
+    "move.to.list": markRaw(MoveToList),
+    "message.opened": markRaw(MessageOpened),
+    "ab.split": markRaw(ABSplit),
+};
+
+const props = defineProps({
+    panelTitle: {
+        type: String,
+        default: "Workflow",
+    },
+    workflowTitle: {
+        type: String,
+        default: "Untitled",
+    },
+    saveUrl: {
+        type: String,
+        default: "/automation/workflow/save",
+    },
+    elementsData: {
+        type: Array,
+        default: [],
+    },
+    backUrl: {
+        type: String,
+        default: "/",
+    },
+});
+const elements = ref(props.elementsData);
+const title = ref(props.workflowTitle);
+
+let id = 0;
+const getId = () => `dndnode_${id++}`;
+
+const {
+    findNode,
+    onConnect,
+    nodes,
+    edges,
+    addEdges,
+    addNodes,
+    viewport,
+    project,
+    vueFlowRef,
+} = useVueFlow({
+    nodes: [
+        // {
+        //     id: '1',
+        //     type: 'input',
+        //     label: 'input node',
+        //     position: { x: 250, y: 25 },
+        // },
+    ],
+});
+
+const onDragOver = (event) => {
+    event.preventDefault();
+
+    if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "move";
     }
+};
 
-    const props = defineProps({
-        panelTitle: {
-            type: String,
-            default: "Workflow"
-        },
-        workflowTitle: {
-            type: String,
-            default: "Untitled"
-        },
-        saveUrl: {
-            type: String,
-            default: "/automation/workflow/save"
-        },
-        elementsData: {
-            type: Array,
-            default: []
-        },
-        cancelUrl: {
-            type: String
-        }
-    })
-    const elements = ref(props.elementsData)
-    const title = ref(props.workflowTitle)
+onConnect((params) => addEdges([params]));
 
-    let id = 0
-    const getId = () => `dndnode_${id++}`
+const onDrop = (event) => {
+    const type = event.dataTransfer?.getData("application/vueflow");
 
-    const {findNode, onConnect, nodes, edges, addEdges, addNodes, viewport, project, vueFlowRef} = useVueFlow({
-        nodes: [
-            // {
-            //     id: '1',
-            //     type: 'input',
-            //     label: 'input node',
-            //     position: { x: 250, y: 25 },
-            // },
-        ],
-    })
+    const { left, top } = vueFlowRef.value.getBoundingClientRect();
 
-    const onDragOver = (event) => {
-        event.preventDefault()
+    const position = project({
+        x: event.clientX - left,
+        y: event.clientY - top,
+    });
 
-        if (event.dataTransfer) {
-            event.dataTransfer.dropEffect = 'move'
-        }
-    }
+    const newNode = {
+        id: getId(),
+        type,
+        position,
+        label: `${type} node`,
+    };
 
-    onConnect((params) => addEdges([params]))
+    addNodes([newNode]);
 
-    const onDrop = (event) => {
-        const type = event.dataTransfer?.getData('application/vueflow')
+    // align node position after drop, so it's centered to the mouse
+    nextTick(() => {
+        const node = findNode(newNode.id);
+        const stop = watch(
+            () => node.dimensions,
+            (dimensions) => {
+                if (dimensions.width > 0 && dimensions.height > 0) {
+                    node.position = {
+                        x: node.position.x - node.dimensions.width / 2,
+                        y: node.position.y - node.dimensions.height / 2,
+                    };
+                    stop();
+                }
+            },
+            { deep: true, flush: "post" }
+        );
+    });
+};
 
-        const {left, top} = vueFlowRef.value.getBoundingClientRect()
-
-        const position = project({
-            x: event.clientX - left,
-            y: event.clientY - top,
-        })
-
-        const newNode = {
-            id: getId(),
-            type,
-            position,
-            label: `${type} node`,
-        }
-
-        addNodes([newNode])
-
-        // align node position after drop, so it's centered to the mouse
-        nextTick(() => {
-            const node = findNode(newNode.id)
-            const stop = watch(
-                () => node.dimensions,
-                (dimensions) => {
-                    if (dimensions.width > 0 && dimensions.height > 0) {
-                        node.position = {
-                            x: node.position.x - node.dimensions.width / 2,
-                            y: node.position.y - node.dimensions.height / 2
-                        }
-                        stop()
-                    }
-                },
-                {deep: true, flush: 'post'},
-            )
-        })
-    }
-
-    const saveWorkflow = function () {
-        //ovdje cemo poslat na server
-        axios.post(props.saveUrl, {
+const saveWorkflow = function () {
+    //ovdje cemo poslat na server
+    axios
+        .post(props.saveUrl, {
             elements: elements.value,
-            title: title.value
+            title: title.value,
         })
-            .then(function (response) {
-                console.log(response);
-                alert("Spremljeno, Tome probaj stilizirat da je ovo onaj zeleni toast")
-            })
-            .catch(function (error) {
-                console.log(error);
+        .then(function (response) {
+            console.log(response);
+            window.notyf.open({
+                type: "success",
+                message: "Workflow successfully saved!",
+                duration: "5000",
+                ripple: true,
+                dismissible: true,
             });
-    }
-    const cancelWorkflow = function () {
-        window.location.replace(props.cancelUrl);
-    }
+        })
+        .catch(function (error) {
+            console.log(error);
+            window.notyf.open({
+                type: "warning",
+                message: "Something went wrong!",
+                duration: "5000",
+                ripple: true,
+                dismissible: true,
+            });
+        });
+};
+const cancelWorkflow = function () {
+    window.location.replace(props.cancelUrl);
+};
 </script>
 
 <template>
     <div class="row w-100 h-100 mx-0" @drop="onDrop">
         <div class="col-lg-7 col-xl-8 col-xxl-9 pe-0">
-            <VueFlow @dragover="onDragOver" v-model="elements"
-                     :node-types="nodeTypes">
-                <Background/>
-                <Panel><h1 class="h3 mb-3 px-4 py-2 bg-white">{{ panelTitle }}</h1></Panel>
+            <VueFlow
+                @dragover="onDragOver"
+                v-model="elements"
+                :node-types="nodeTypes"
+            >
+                <Background />
+                <Panel>
+                    <div class="d-flex gap-2">
+                        <a
+                            class="d-flex align-items-center h4 mb-3 px-4 py-2 text-white bg-info text-decoration-none"
+                            :href="backUrl"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="feather feather-arrow-left-circle align-middle me-2"
+                            >
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 8 8 12 12 16"></polyline>
+                                <line x1="16" y1="12" x2="8" y2="12"></line>
+                            </svg>
+                            <span>{{ $t("Back") }}</span></a
+                        >
+                        <h1 class="h3 mb-3 px-4 py-2 bg-white">
+                            {{ panelTitle }}
+                        </h1>
+                    </div>
+                </Panel>
                 <Panel :position="PanelPosition.BottomRight">
-                    <input type="text" class="form-control" v-model="title">
-                    <button class="btn btn-success me-2" @click="saveWorkflow">{{ $t("Save") }}</button>
-                    <button class="btn btn-danger" @click="cancelWorkflow">{{ $t("Cancel") }}</button>
+                    <div class="d-flex gap-2">
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="workflowTitle"
+                            style="min-width: 200px"
+                        />
+                        <button class="btn btn-success" @click="saveWorkflow">
+                            {{ $t("Save") }}
+                        </button>
+                        <a :href="backUrl" class="btn btn-danger">{{
+                            $t("Cancel")
+                        }}</a>
+                    </div>
                 </Panel>
             </VueFlow>
         </div>
         <div class="col-lg-5 col-xl-4 col-xxl-3 px-0">
-            <Sidebar/>
+            <Sidebar />
         </div>
     </div>
 </template>

@@ -82,7 +82,12 @@ class WorkflowController extends Controller
 
         return redirect()->route('workflows.index', $task);
     }
-    
+
+    public function show(Task $task, Workflow $workflow)
+    {
+        return view('sales-management::workflows.show', compact('workflow', 'task'));
+    }
+
     public function debug(Task $task, Workflow $workflow)
     {
         $fsm = $workflow->fsm();
