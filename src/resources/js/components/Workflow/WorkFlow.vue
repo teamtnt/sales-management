@@ -221,3 +221,12 @@ const cancelWorkflow = function () {
         </div>
     </div>
 </template>
+<style lang="scss">
+
+.vue-flow__handle {
+    width: 8px;
+    height: 8px;
+    box-sizing: border-box;
+    border-color: transparent;
+}
+</style>
