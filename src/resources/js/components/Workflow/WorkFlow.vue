@@ -138,9 +138,6 @@ const saveWorkflow = function () {
             });
         });
 };
-const cancelWorkflow = function () {
-    window.location.replace(props.cancelUrl);
-};
 </script>
 
 <template>

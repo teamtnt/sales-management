@@ -1,11 +1,33 @@
 <script setup>
     import {Handle, Position} from '@vue-flow/core'
+    import { computed } from "vue";
 
     const props = defineProps({
         id: String,
         label: String,
         type: String
     })
+
+    const sourceHandleStyleTargetTop = computed(() => ({
+        backgroundColor: 'white',
+        borderColor: '#dcdbdb',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        width: '14px',
+        height: '14px',
+        top: '-7px'
+
+    }));
+    const sourceHandleStyleTargetBottom = computed(() => ({
+        backgroundColor: 'white',
+        borderColor: '#dcdbdb',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        width: '14px',
+        height: '14px',
+        bottom: '-7px'
+
+    }));
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
@@ -20,8 +42,30 @@
             AddTag
         </span>
 
-        <Handle :id="`state.tag.add.${id}`" type="source" :position="Position.Bottom"/>
+        <Handle :id="`state.tag.add.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleTargetBottom" class="handle">
+            <span class="circle"/>
+        </Handle>
 
-        <Handle :id="`state.tag.add.target.${id}`" type="target" :position="Position.Top"/>
+        <Handle :id="`state.tag.add.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTargetTop" class="handle">
+            <span class="circle"/>
+        </Handle>
     </div>
 </template>
+
+<style scoped lang="scss">
+.handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .circle {
+        display: block;
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: gray;
+        pointer-events: none;
+    }
+}
+</style>

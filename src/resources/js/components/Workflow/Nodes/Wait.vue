@@ -51,6 +51,7 @@
 
     </div>
 </template>
+
 <style scoped lang="scss">
 .handle {
     display: flex;
@@ -64,6 +65,7 @@
         height: 4px;
         border-radius: 50%;
         background-color: gray;
+        pointer-events: none;
     }
 }
 </style>

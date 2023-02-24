@@ -83,10 +83,12 @@ const sourceHandleStyleTarget = computed(() => ({
         height: 4px;
         border-radius: 50%;
         background-color: gray;
+        pointer-events: none;
     }
 
     & > svg {
         position: absolute;
+        pointer-events: none;
     }
 }
 </style>
