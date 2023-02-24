@@ -2,19 +2,13 @@
 
 @section('title', 'Workflows')
 
+@section('add-css-class', 'overflow-hidden px-0 py-0')
+
 @section('content')
-    <div class="container-fluid p-0">
-        <h1 class="h3 mb-3">{{ __('Show Workflow ') }}</h1>
-        <div class="row">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">{{ $workflow->name }}</h5>
-                </div>
-                <div class="card-body">
-                    {{ $workflow->description }}
-                </div>
-            </div>
-        </div>
-    </div>
+    <work-flow
+        save-url="{{ route('workflows.save-elements', [$task->id, $workflow->id]) }}"
+        panel-title="{{ $workflow->name }}"
+        :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
+    ></work-flow>
 @stop
 
