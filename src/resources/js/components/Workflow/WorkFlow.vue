@@ -1,10 +1,6 @@
 <script setup>
 import {
-    Panel,
-    PanelPosition,
-    Position,
-    VueFlow,
-    useVueFlow,
+    Panel, PanelPosition, Position, VueFlow, useVueFlow,
 } from "@vue-flow/core";
 import { Background } from "@vue-flow/background";
 import { nextTick, watch, ref, markRaw } from "vue";
@@ -59,18 +55,9 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const {
-    findNode,
-    onConnect,
-    nodes,
-    edges,
-    addEdges,
-    addNodes,
-    viewport,
-    project,
-    vueFlowRef,
+    findNode, onConnect, nodes, edges, addEdges, addNodes, viewport, project, vueFlowRef,
 } = useVueFlow({
-    nodes: [
-        // {
+    nodes: [// {
         //     id: '1',
         //     type: 'input',
         //     label: 'input node',
@@ -92,18 +79,14 @@ onConnect((params) => addEdges([params]));
 const onDrop = (event) => {
     const type = event.dataTransfer?.getData("application/vueflow");
 
-    const { left, top } = vueFlowRef.value.getBoundingClientRect();
+    const {left, top} = vueFlowRef.value.getBoundingClientRect();
 
     const position = project({
-        x: event.clientX - left,
-        y: event.clientY - top,
+        x: event.clientX - left, y: event.clientY - top,
     });
 
     const newNode = {
-        id: getId(),
-        type,
-        position,
-        label: `${type} node`,
+        id: getId(), type, position, label: `${type} node`,
     };
 
     addNodes([newNode]);
@@ -168,7 +151,7 @@ const cancelWorkflow = function () {
                 v-model="elements"
                 :node-types="nodeTypes"
             >
-                <Background />
+                <Background/>
                 <Panel>
                     <div class="d-flex gap-2">
                         <a
@@ -206,18 +189,23 @@ const cancelWorkflow = function () {
                             :value="workflowTitle"
                             style="min-width: 200px"
                         />
-                        <button class="btn btn-success" @click="saveWorkflow">
-                            {{ $t("Save") }}
+                        <button class="btn btn-success text-uppercase px-4" @click="saveWorkflow">
+                            <span class="d-flex align-items-center">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                     class="feather feather-save align-middle me-2"><path
+                                    d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline
+                                    points="17 21 17 13 7 13 7 21"></polyline><polyline
+                                    points="7 3 7 8 15 8"></polyline></svg>
+                                {{ $t("Save") }}
+                            </span>
                         </button>
-                        <a :href="backUrl" class="btn btn-danger">{{
-                            $t("Cancel")
-                        }}</a>
                     </div>
                 </Panel>
             </VueFlow>
         </div>
         <div class="col-lg-5 col-xl-4 col-xxl-3 px-0">
-            <Sidebar />
+            <Sidebar/>
         </div>
     </div>
 </template>
