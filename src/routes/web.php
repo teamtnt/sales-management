@@ -47,7 +47,6 @@ Route::get('/deals/{deal:id}/edit', [DealController::class, 'edit'])->name('deal
 Route::put('/deals/{deal:id}/update', [DealController::class, 'update'])->name('deals.update');
 Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->name('deals.destroy');
 
-Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
 Route::post('/stage/chage', [TaskListController::class, 'stageChange'])->name('stage.change');
 
 // Pipelines
@@ -81,9 +80,7 @@ Route::group(['prefix' => 'task/{task}'], function () {
     Route::get('/workflows/create', [WorkflowController::class, 'create'])->name('workflows.create');
     Route::post('/workflows/store', [WorkflowController::class, 'store'])->name('workflows.store');
     Route::get('/workflows/{workflow:id}/debug', [WorkflowController::class, 'debug'])->name('workflows.debug');
-    Route::get('/workflows/{workflow:id}/show', [WorkflowController::class, 'show'])->name('workflows.show');
     Route::get('/workflows/{workflow:id}/edit', [WorkflowController::class, 'edit'])->name('workflows.edit');
-    Route::put('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
+    Route::post('/workflows/{workflow:id}/update', [WorkflowController::class, 'update'])->name('workflows.update');
     Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
-    Route::post('/workflows/{workflow:id}/save-elements', [WorkflowController::class, 'saveElements'])->name('workflows.save-elements');
 });

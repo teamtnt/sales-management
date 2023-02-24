@@ -1,8 +1,6 @@
 <div class="d-flex align-items-center">
     <a href="{{ route('workflows.debug', [$task_id, $id]) }}"
        class="btn btn-sm btn-info d-inline me-1">{{ __('Debug Machine') }}</a>
-    <a href="{{ route('workflows.show', [$task_id, $id]) }}"
-       class="btn btn-sm btn-primary d-inline me-1">{{ __('Show') }}</a>
     <a href="{{ route('workflows.edit', [$task_id, $id]) }}"
        class="btn btn-sm btn-warning d-inline me-1">{{ __('Edit') }}</a>
     <form action="{{ route('workflows.destroy', [$task_id, $id]) }}" method="POST">
