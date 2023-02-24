@@ -28,7 +28,8 @@
             default: "Workflow"
         },
         saveUrl: {
-            type: String
+            type: String,
+            default: "/automation/workflow/save"
         },
         elementsData: {
             type: Array,

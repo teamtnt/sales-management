@@ -6,8 +6,7 @@
 
 @section('content')
     <work-flow
-            save-url="{{ route('workflows.save-elements', [$task->id, $workflow->id]) }}"
-            panel-title="{{ $workflow->name }}"
-            :elements-data="{{ $workflow->elements }}"
+            save-url="/automation/workflow/save"
+            panel-title="Workflow"
     ></work-flow>
 @stop
