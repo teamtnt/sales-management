@@ -55,7 +55,7 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 const {
-    findNode, onConnect, nodes, edges, addEdges, addNodes, viewport, project, vueFlowRef,
+    findNode, onConnect, nodes, edges,onNodeClick, addEdges, addNodes, viewport, project, vueFlowRef,
 } = useVueFlow({
     nodes: [// {
         //     id: '1',
@@ -66,6 +66,11 @@ const {
     ],
 });
 
+onNodeClick(({ node }) => {
+    console.log("sad se kliknuo node i njemu dodajemo neki radnom property");
+    node.data = {ime: "Joca"}
+    console.log(node.data);
+})
 const onDragOver = (event) => {
     event.preventDefault();
 
