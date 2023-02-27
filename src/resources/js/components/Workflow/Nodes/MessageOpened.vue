@@ -1,43 +1,43 @@
 <script setup>
-import { computed } from "vue";
-import { Handle, Position } from '@vue-flow/core'
+    import {computed} from "vue";
+    import {Handle, Position} from '@vue-flow/core'
 
-const props = defineProps({
-    id: String,
-    label: String,
-    type: String
-});
+    const props = defineProps({
+        id: String,
+        label: String,
+        type: String
+    });
 
-const sourceHandleStyleOpened = computed(() => ({
-    backgroundColor: 'green',
-    left: '48px',
-    width: '14px',
-    height: '14px',
-    right: 'auto',
-    bottom: '-7px'
+    const sourceHandleStyleOpened = computed(() => ({
+        backgroundColor: 'green',
+        left: '48px',
+        width: '14px',
+        height: '14px',
+        right: 'auto',
+        bottom: '-7px'
 
-}));
+    }));
 
-const sourceHandleStyleNotOpened = computed(() => ({
-    backgroundColor: 'red',
-    width: '14px',
-    height: '14px',
-    right: '40px',
-    left: 'auto',
-    bottom: '-7px'
+    const sourceHandleStyleNotOpened = computed(() => ({
+        backgroundColor: 'red',
+        width: '14px',
+        height: '14px',
+        right: '40px',
+        left: 'auto',
+        bottom: '-7px'
 
-}));
+    }));
 
-const sourceHandleStyleTarget = computed(() => ({
-    backgroundColor: 'white',
-    borderColor: '#dcdbdb',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    width: '14px',
-    height: '14px',
-    top: '-6px'
+    const sourceHandleStyleTarget = computed(() => ({
+        backgroundColor: 'white',
+        borderColor: '#dcdbdb',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        width: '14px',
+        height: '14px',
+        top: '-6px'
 
-}));
+    }));
 </script>
 
 <template>
@@ -50,7 +50,9 @@ const sourceHandleStyleTarget = computed(() => ({
                      class="feather feather-refresh-cw align-middle"><polyline
                     points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
-            Message Opened</span>
+            Message Opened
+            <i data-feather="settings" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></i>
+        </span>
 
         <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top"
                 :style="sourceHandleStyleTarget" class="handle"><span class="circle"/></Handle>

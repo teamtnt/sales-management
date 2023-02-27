@@ -55,7 +55,7 @@ class Workflow extends Model
         }
 
         foreach ($definitionArray[$workflowName]['transitions'] as $transitionName => $transitionValue) {
-            $transition = new Transition($transitionName, $transitionValue['from'], $transitionValue['to']);
+            $transition = new Transition($transitionValue['name'], $transitionValue['from'], $transitionValue['to']);
 
             $builder->addTransition($transition);
 

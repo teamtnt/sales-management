@@ -48,7 +48,8 @@ class StateMachineBuilder
                 $transition['from'] = $element['sourceHandle'];
                 $transition['to'] = $toState['id'];
                 $transition['metadata'] = $element['targetNode']['data'];
-                $this->addToTransitions($transition);
+                $transition['name'] = $this->generateTransitionNameFromTransition($transition);
+                $this->transitions[] = $transition;
             }
         }
     }
@@ -56,28 +57,17 @@ class StateMachineBuilder
     public function generateTransitionNameFromTransition($transition)
     {
         $parseName = explode('.', $transition['to']);
+        $lastKey = array_key_last($parseName);
+        $id = $transition['metadata']['argument'] ?? $parseName[$lastKey];
+        unset($parseName[$lastKey]);
         if ($parseName[0] === 'state') {
-            $parseName[0] = 'transition';
-            $transitionName = implode('.', $parseName);
-        } else {
-            $transitionName = 'transition.'.$transition['to'];
+            unset($parseName[0]);
         }
+        array_unshift($parseName, 'transition');
+        $parseName[] = $id;
+        $transitionName = implode('.', $parseName);
 
         return $transitionName;
-    }
-
-    public function addToTransitions($transition)
-    {
-        $transitionName = $this->generateTransitionNameFromTransition($transition);
-        if (isset($this->transitions[$transitionName])) {
-            if (is_array($this->transitions[$transitionName]['from'])) {
-                $this->transitions[$transitionName]['from'][] = $transition['from'];
-            } else {
-                $this->transitions[$transitionName]['from'] = [$this->transitions[$transitionName]['from'], $transition['from']];
-            }
-        } else {
-            $this->transitions[$transitionName] = $transition;
-        }
     }
 
 }
