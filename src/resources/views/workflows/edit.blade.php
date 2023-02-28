@@ -11,9 +11,9 @@
             workflow-title="{{ $workflow->name }}"
             panel-title="{{ $workflow->name }}"
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
-            :messages="{{ $workflow->task->messages ?? json_encode([]) }}"
-            :contact-lists="{{ $contactLists ?? json_encode([]) }}"
-            :wait-options="{{ $waitOptions ?? json_encode([]) }}"
+            :messages="{{ json_encode($messages) }}"
+            :contact-lists="{{ json_encode($contactLists) }}"
+            :wait-options="{{ json_encode($waitOptions) }}"
     ></work-flow>
 @endsection
 

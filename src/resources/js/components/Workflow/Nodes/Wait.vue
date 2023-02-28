@@ -44,7 +44,7 @@
             :position="Position.Right"
         >
             <select name="argument" class="form-select" v-model="node.data">
-                <option v-for="item in items" :value="item">{{ item.subject }}</option>
+                <option v-for="item in items" :value="item">{{ item.title }}</option>
             </select>
         </NodeToolbar>
         <span class="action-box pe-2 justify-content-center">

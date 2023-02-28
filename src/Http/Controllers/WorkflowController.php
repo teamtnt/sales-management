@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
+use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Task;
@@ -31,7 +32,41 @@ class WorkflowController extends Controller
      */
     public function create(Task $task)
     {
-        return view('sales-management::workflows.create', compact('task'));
+        $contactLists = ContactList::all()->transform(function ($contactList) {
+            return [
+                'argument' => $contactList->id,
+                'action'   => $contactList::class,
+                'title'    => $contactList->name,
+            ];
+        });
+
+        $messages = $task->messages->transform(function ($message) {
+            return [
+                'argument' => $message->id,
+                'action'   => $message::class,
+                'title'    => $message->subject,
+            ];
+        });
+
+        $waitOptions = [
+            [
+                'argument' => 1,
+                'action'   => 'wait',
+                'title'    => '1h',
+            ],
+            [
+                'argument' => 2,
+                'action'   => 'wait',
+                'title'    => '2h',
+            ],
+            [
+                'argument' => 3,
+                'action'   => 'wait',
+                'title'    => '3h',
+            ],
+        ];
+
+        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages'));
     }
 
     /**
@@ -54,7 +89,41 @@ class WorkflowController extends Controller
      */
     public function edit(Task $task, Workflow $workflow)
     {
-        return view('sales-management::workflows.edit', compact('workflow', 'task'));
+        $contactLists = ContactList::all()->transform(function ($contactList) {
+            return [
+                'argument' => $contactList->id,
+                'action'   => $contactList::class,
+                'title'    => $contactList->name,
+            ];
+        });
+
+        $messages = $workflow->task->messages->transform(function ($message) {
+            return [
+                'argument' => $message->id,
+                'action'   => $message::class,
+                'title'    => $message->subject,
+            ];
+        });
+
+        $waitOptions = [
+            [
+                'argument' => 1,
+                'action'   => 'wait',
+                'title'    => '1h',
+            ],
+            [
+                'argument' => 2,
+                'action'   => 'wait',
+                'title'    => '2h',
+            ],
+            [
+                'argument' => 3,
+                'action'   => 'wait',
+                'title'    => '3h',
+            ],
+        ];
+
+        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages'));
     }
 
     /**

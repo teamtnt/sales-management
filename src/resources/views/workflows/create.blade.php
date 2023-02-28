@@ -10,6 +10,9 @@
             workflow-title="Untitled Workflow"
             panel-title="Workflow"
             back-url="{{ route('workflows.index', [$task->id]) }}"
+            :messages="{{ json_encode($messages) }}"
+            :contact-lists="{{ json_encode($contactLists) }}"
+            :wait-options="{{ json_encode($waitOptions) }}"
     ></work-flow>
 @stop
 
