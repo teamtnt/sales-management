@@ -5,7 +5,6 @@
     import {Background} from "@vue-flow/background";
     import {nextTick, watch, ref, markRaw} from "vue";
     import Sidebar from "./Sidebar.vue";
-    import NodeSettings from "./NodeSettings.vue";
 
 
     import StageChangedNode from "./Nodes/StageChanged.vue";
@@ -54,6 +53,11 @@
                     'title': 'Message 3',
                 },
                 {
+                    'argument': 2,
+                    'action': 'Message 2',
+                    'title': 'Message 2',
+                },
+                {
                     'argument': 4,
                     'action': 'Message 4',
                     'title': 'Message 4'
@@ -84,10 +88,8 @@
         ],
     });
 
-    onNodeClick(({node}) => {
-        selectedNode = node;
-        console.log(selectedNode);
-    })
+    window.messages = props.messages;
+   
     const onDragOver = (event) => {
         event.preventDefault();
 
@@ -161,9 +163,11 @@
             });
     };
 
-    const addData = function (message) {
-        selectedNode.data = message;
+    const addData = function (item) {
+        selectedNode.data = item;
+        console.log(selectedNode.data)
     }
+
 </script>
 
 <template>
@@ -230,7 +234,6 @@
         <div class="col-lg-5 col-xl-4 col-xxl-3 px-0">
             <Sidebar/>
         </div>
-        <NodeSettings @addData="addData" :items="messages" :node-type="selectedNode.type"/>
     </div>
 </template>
 <style lang="scss">

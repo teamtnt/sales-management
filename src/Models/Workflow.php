@@ -32,7 +32,7 @@ class Workflow extends Model
         parent::__construct($attributes);
     }
 
-    public function tasks()
+    public function task()
     {
         return $this->belongsTo(Task::class);
     }

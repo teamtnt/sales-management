@@ -1,6 +1,6 @@
 <script setup>
-    import {computed} from "vue";
-    import {Handle, Position} from '@vue-flow/core'
+    import {computed, ref} from "vue";
+    import {Handle, Position, useVueFlow} from '@vue-flow/core'
     import {NodeToolbar} from '@vue-flow/node-toolbar'
 
     const props = defineProps({
@@ -37,8 +37,13 @@
         width: '14px',
         height: '14px',
         top: '-6px'
-
     }));
+
+
+    let items = window.messages;
+    const {findNode} = useVueFlow()
+    const node = ref(findNode(props.id));
+
 </script>
 
 <template>
@@ -46,13 +51,11 @@
         <NodeToolbar
             style="display: flex; gap: 0.5rem; align-items: center"
             :is-visible="true"
+            :node-id="id"
             :position="Position.Right"
         >
-            <select name="cars" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+            <select name="argument" class="form-select" v-model="node.data">
+                <option v-for="item in items" :value="item">{{ item.subject }}</option>
             </select>
         </NodeToolbar>
         <span class="condition-box pe-2 justify-content-end">
@@ -64,7 +67,6 @@
                     points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
             Message Opened
-            <i data-feather="settings" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"></i>
         </span>
 
         <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top"

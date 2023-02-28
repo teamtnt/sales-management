@@ -11,6 +11,7 @@
             workflow-title="{{ $workflow->name }}"
             panel-title="{{ $workflow->name }}"
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
+            :messages="{{ $workflow->task->messages ?? json_encode([]) }}"
     ></work-flow>
 @endsection
 
