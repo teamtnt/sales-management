@@ -1,3 +1,22 @@
+<script setup>
+    import {ref} from "vue";
+
+    const props = defineProps({
+        nodeType: {
+            type: String,
+            default: '',
+        },
+        items: Array
+    });
+    const selectedNode = ref(props.nodeType);
+
+    const emits = defineEmits(["addData"]);
+
+    const addData = function (item) {
+        emits('addData', item);
+    }
+
+</script>
 <template>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog">
         <div class="offcanvas-header">
@@ -6,20 +25,9 @@
         </div>
         <div class="offcanvas-body">
             <div>
+                {{ selectedNode.value }} lala
                 <button v-for="item in items" type="button" class="btn btn-primary text-reset" @click="addData(item)" data-bs-dismiss="offcanvas" aria-label="Close">{{ item.title }}</button>
             </div>
         </div>
     </div>
 </template>
-<script setup>
-    const props = defineProps({
-        node: String,
-        items: Array
-    });
-
-    const emits = defineEmits(["addTodo"]);
-
-    const addData = function (item) {
-        emits('addData', item);
-    }
-</script>

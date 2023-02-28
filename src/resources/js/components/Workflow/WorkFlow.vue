@@ -6,7 +6,6 @@
     import {nextTick, watch, ref, markRaw} from "vue";
     import Sidebar from "./Sidebar.vue";
     import NodeSettings from "./NodeSettings.vue";
-    import {Offcanvas} from 'bootstrap'
 
 
     import StageChangedNode from "./Nodes/StageChanged.vue";
@@ -68,7 +67,7 @@
     });
     const elements = ref(props.elementsData);
     const title = ref(props.workflowTitle);
-    let selectedNode = null;
+    let selectedNode = {};
 
     let id = 0;
     const getId = () => Math.floor((Math.random() * 10000) + 1) + `_${id++}`;
@@ -231,7 +230,7 @@
         <div class="col-lg-5 col-xl-4 col-xxl-3 px-0">
             <Sidebar/>
         </div>
-        <NodeSettings @addData="addData" :items="messages"/>
+        <NodeSettings @addData="addData" :items="messages" :node-type="selectedNode.type"/>
     </div>
 </template>
 <style lang="scss">

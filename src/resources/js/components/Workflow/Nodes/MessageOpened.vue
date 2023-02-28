@@ -1,6 +1,7 @@
 <script setup>
     import {computed} from "vue";
     import {Handle, Position} from '@vue-flow/core'
+    import {NodeToolbar} from '@vue-flow/node-toolbar'
 
     const props = defineProps({
         id: String,
@@ -42,6 +43,18 @@
 
 <template>
     <div class="vue-flow__node-input shadow-sm">
+        <NodeToolbar
+            style="display: flex; gap: 0.5rem; align-items: center"
+            :is-visible="true"
+            :position="Position.Right"
+        >
+            <select name="cars" id="cars">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select>
+        </NodeToolbar>
         <span class="condition-box pe-2 justify-content-end">
             <span class="condition-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -69,6 +82,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </Handle>
+
     </div>
 </template>
 
