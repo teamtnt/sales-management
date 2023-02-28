@@ -52,16 +52,26 @@
                     'action': 'Message 3',
                     'title': 'Message 3',
                 },
+            ],
+        },
+        contactLists: {
+            type: Array,
+            default: [
                 {
                     'argument': 2,
-                    'action': 'Message 2',
-                    'title': 'Message 2',
+                    'action': 'contactList 2',
+                    'title': 'contactList 2',
                 },
+            ],
+        },
+        waitOptions: {
+            type: Array,
+            default: [
                 {
-                    'argument': 4,
-                    'action': 'Message 4',
-                    'title': 'Message 4'
-                }
+                    'argument': 2,
+                    'action': 'contactList 2',
+                    'title': 'contactList 2',
+                },
             ],
         },
         backUrl: {
@@ -89,7 +99,9 @@
     });
 
     window.messages = props.messages;
-   
+    window.contactLists = props.contactLists;
+    window.waitOptions = props.waitOptions;
+
     const onDragOver = (event) => {
         event.preventDefault();
 

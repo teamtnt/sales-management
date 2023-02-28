@@ -1,6 +1,7 @@
 <script setup>
-    import {Handle, Position} from '@vue-flow/core'
-    import { computed } from "vue";
+    import {Handle, Position, useVueFlow} from '@vue-flow/core'
+    import {computed, ref} from "vue";
+    import {NodeToolbar} from '@vue-flow/node-toolbar'
 
     const props = defineProps({
         id: String,
@@ -27,10 +28,23 @@
         bottom: '-7px'
 
     }));
+
+    let items = window.messages;
+    const {findNode} = useVueFlow()
+    const node = ref(findNode(props.id));
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
-
+        <NodeToolbar
+            style="display: flex; gap: 0.5rem; align-items: center"
+            :is-visible="true"
+            :node-id="id"
+            :position="Position.Right"
+        >
+            <select name="argument" class="form-select" v-model="node.data">
+                <option v-for="item in items" :value="item">{{ item.subject }}</option>
+            </select>
+        </NodeToolbar>
         <span class="action-box pe-2 justify-content-end">
             <span class="action-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -43,11 +57,11 @@
         </span>
 
         <Handle :id="`state.message.sent.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleTargetBottom" class="handle">
-             <span class="circle"/>
+            <span class="circle"/>
         </Handle>
 
         <Handle :id="`state.message.sent.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTargetTop" class="handle">
-             <span class="circle"/>
+            <span class="circle"/>
         </Handle>
     </div>
 </template>
