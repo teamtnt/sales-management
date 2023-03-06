@@ -33,7 +33,10 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title overf">{{ __("Leads") }}</h5>
-                        <div class="w-100">
+                        <div class="input-group">
+                             <span class="input-group-text">
+                                 <x-sales-management::icons.search width="15" height="15"/>
+                             </span>
                             <input id="lead-search" class="form-control" type="search" name="lead-search" placeholder="Search leads by email...">
                         </div>
                     </div>
