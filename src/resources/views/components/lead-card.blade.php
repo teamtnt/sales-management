@@ -1,4 +1,4 @@
-<div class="card mb-3 p-2 bg-light cursor-grab border gap-1 leads" data-lead-id="{{ $lead->id }}">
+<div class="card mb-3 p-2 bg-light cursor-grab border gap-1 lead-item" data-lead-id="{{ $lead->id }}">
     <div class="d-flex align-items-center">
         <x-sales-management::icons.user/>
         <span class="ms-2">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</span>

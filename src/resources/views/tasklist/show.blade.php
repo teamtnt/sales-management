@@ -107,7 +107,7 @@
 
             searchInput.addEventListener('input', function (e) {
                 const searchValue = this.value.toLowerCase();
-                const leads = document.querySelectorAll('.leads');
+                const leads = document.querySelectorAll('#leads .lead-item');
 
                 leads.forEach( lead => {
                     const email = lead.querySelector('.lead-email').textContent.toLowerCase();
