@@ -15,8 +15,16 @@
         <h1 class="h3 mb-3">{{ $task->name }}</h1>
         <h6 class="mb-3">{{ $task->description }}</h6>
         <div class="d-flex gap-2">
-            <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">Send email to leads</a>
-            <a href="{{ route('workflows.index', $task->id) }}" class="btn btn-info mb-3">Workflows</a>
+            <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">
+                <span class="d-flex align-items-center">
+                    <x-sales-management::icons.mail class="me-1"/> Send email to leads
+                </span>
+            </a>
+            <a href="{{ route('workflows.index', $task->id) }}" class="btn btn-info mb-3">
+                 <span class="d-flex align-items-center">
+                    <x-sales-management::icons.workflow class="me-1"/> Workflows
+                </span>
+            </a>
         </div>
 
 
@@ -25,9 +33,11 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title overf">{{ __("Leads") }}</h5>
+                        <div class="w-100">
+                            <input id="lead-search" class="form-control" type="search" name="lead-search" placeholder="Search leads by email...">
+                        </div>
                     </div>
                     <div class="card-body">
-
                         <div id="leads">
                             @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
                                 <x-sales-management::lead-card :lead="$lead"/>
@@ -86,9 +96,27 @@
 @stop
 
 @push('scripts')
-
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
+
+            // Lead search
+            const searchInput = document.getElementById('lead-search');
+
+            searchInput.addEventListener('input', function (e) {
+                const searchValue = this.value.toLowerCase();
+                const leads = document.querySelectorAll('.leads');
+
+                leads.forEach( lead => {
+                    const email = lead.querySelector('.lead-email').textContent.toLowerCase();
+                    if(email.includes(searchValue)) {
+                        lead.style.display = '';
+                    } else {
+                        lead.style.display = 'none';
+                    }
+                })
+            })
+
+
             const pipelineId = document.querySelector("#pipeline").dataset.pipelineId;
 
             let stages = [];
@@ -117,5 +145,4 @@
                 })
         });
     </script>
-
 @endpush
