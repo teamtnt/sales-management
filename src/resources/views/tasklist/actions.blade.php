@@ -1,10 +1,8 @@
 <div class="d-flex align-items-center">
-
-
     <div class="dropdown position-relative">
-        <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static">
             {{ __('Action') }}
-        </a>
+        </button>
 
         <div class="dropdown-menu dropdown-menu-end">
             <a href="{{ route('workflows.index', $id) }}" class="dropdown-item">{{__('Workflows')}}</a>
