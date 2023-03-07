@@ -15,6 +15,7 @@
             :contact-lists="{{ json_encode($contactLists) }}"
             :wait-options="{{ json_encode($waitOptions) }}"
             :ab-split="{{ json_encode($abSplit) }}"
+            :stages="{{ json_encode($stages) }}"
     ></work-flow>
 @stop
 
