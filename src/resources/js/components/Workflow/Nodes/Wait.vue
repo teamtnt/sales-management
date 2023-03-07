@@ -33,7 +33,6 @@
     let items = window.waitOptions;
     const {findNode} = useVueFlow()
     const node = ref(findNode(props.id));
-
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">

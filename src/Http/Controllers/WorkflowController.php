@@ -12,6 +12,8 @@ use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Task;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
+use Teamtnt\SalesManagement\Jobs\SendMailJob;
+use Teamtnt\SalesManagement\Jobs\WaitJob;
 
 class WorkflowController extends Controller
 {
@@ -43,7 +45,7 @@ class WorkflowController extends Controller
         $messages = $task->messages->transform(function ($message) {
             return [
                 'argument' => $message->id,
-                'action'   => $message::class,
+                'action'   => SendMailJob::class,
                 'title'    => $message->subject,
             ];
         });
@@ -51,17 +53,17 @@ class WorkflowController extends Controller
         $waitOptions = [
             [
                 'argument' => 1,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '1h',
             ],
             [
                 'argument' => 2,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '2h',
             ],
             [
                 'argument' => 3,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '3h',
             ],
         ];
@@ -100,7 +102,7 @@ class WorkflowController extends Controller
         $messages = $workflow->task->messages->transform(function ($message) {
             return [
                 'argument' => $message->id,
-                'action'   => $message::class,
+                'action'   => SendMailJob::class,
                 'title'    => $message->subject,
             ];
         });
@@ -108,17 +110,17 @@ class WorkflowController extends Controller
         $waitOptions = [
             [
                 'argument' => 1,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '1h',
             ],
             [
                 'argument' => 2,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '2h',
             ],
             [
                 'argument' => 3,
-                'action'   => 'wait',
+                'action'   => WaitJob::class,
                 'title'    => '3h',
             ],
         ];

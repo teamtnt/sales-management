@@ -32,7 +32,7 @@ class PostmarkWebhookController extends Controller
 
     public function handleOpen($payload, $task, $leadId, $messageId)
     {
-        $transitionName = 'transition.message.opened.yes.'.$messageId;
+        $transitionName = 'transition.message.opened.'.$messageId;
         $this->applyTransition($task, $transitionName, $leadId);
     }
 
@@ -83,7 +83,6 @@ class PostmarkWebhookController extends Controller
                 ->where('task_id', $task->id)
                 ->where('workflow_id', $workflow->id)
                 ->first(); 
-
             if(!$leadJourney) {
                 $leadJourney = new LeadJourney;
                 $leadJourney->lead_id = $leadId;
@@ -100,9 +99,9 @@ class PostmarkWebhookController extends Controller
                 if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
                     $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
                     $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
-
-                    $job = new $action($leadId, $argument);
-                    $job->dispatch($leadId, $argument);
+                    $job = new $action($leadId, $workflow->id, $argument);
+                    $job->dispatch($leadId, $workflow->id, $argument);
+                    info("Calling job: {$action} with argument: {$argument}");
                 }
 
                 $fsm->apply($leadJourney, $transitionName);

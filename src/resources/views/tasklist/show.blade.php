@@ -17,12 +17,17 @@
         <div class="d-flex gap-2">
             <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">
                 <span class="d-flex align-items-center">
-                    <x-sales-management::icons.mail class="me-1"/> Send email to leads
+                    <x-sales-management::icons.mail class="me-1"/> {{ __("Send email to leads") }}
                 </span>
             </a>
             <a href="{{ route('workflows.index', $task->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
-                    <x-sales-management::icons.workflow class="me-1"/> Workflows
+                    <x-sales-management::icons.workflow class="me-1"/> {{ __("Workflows") }}
+                </span>
+            </a>
+            <a href="{{ route('messages.index', $task->id) }}" class="btn btn-info mb-3">
+                 <span class="d-flex align-items-center">
+                    <x-sales-management::icons.workflow class="me-1"/> {{ __("Messages") }}
                 </span>
             </a>
         </div>

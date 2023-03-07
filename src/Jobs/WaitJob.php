@@ -11,24 +11,24 @@ use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Workflow;
  
-class SendMailJob implements ShouldQueue
+class WaitJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    
     public $leadId;
     public $workflowId;
-    public $mailId;
+    public $waitHours;
  
-    public function __construct($leadId, $workflowId, $mailId) {
+    public function __construct($leadId, $workflowId, $waitHours) {
         $this->leadId = $leadId;
         $this->workflowId = $workflowId;
-        $this->mailId = $mailId;
+        $this->waitHours = $waitHours;
     }
  
     public function handle(): void
     {
-        info("SendMail Job {$this->mailId}");
-
+        info("Now waiting for {$this->waitHours} hours");
+        
         $leadJourney = LeadJourney::where('lead_id', $this->leadId)
             ->where('workflow_id', $this->workflowId)
             ->first(); 
@@ -43,7 +43,7 @@ class SendMailJob implements ShouldQueue
             info("We reached the end of the workflow");
             return;
         }
-        
+
         if ($fsm->can($leadJourney, $transitionName)) {
             $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
 
