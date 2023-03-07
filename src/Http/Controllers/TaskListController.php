@@ -68,8 +68,10 @@ class TaskListController extends Controller
         $lead->pipeline_stage_id = $request->target_stage_id;
         $lead->save();
 
+        $transitionName = "transition.stage.changed.".$lead->pipeline_stage_id;
+
         foreach ($lead->task->publishedWorkflows() as $workflow) {
-            ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, "stage.change.".$lead->pipeline_stage_id);
+            ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, $transitionName);
         }
     }
 

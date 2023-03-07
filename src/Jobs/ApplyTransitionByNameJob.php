@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Workflow;
  
@@ -32,7 +33,12 @@ class ApplyTransitionByNameJob implements ShouldQueue
             ->first(); 
 
         if(!$leadJourney) {
-            return;
+            $lead = Lead::find($this->leadId); 
+            $leadJourney = new LeadJourney;
+            $leadJourney->lead_id = $this->leadId;
+            $leadJourney->task_id = $lead->task_id;
+            $leadJourney->workflow_id = $this->workflowId;
+            $leadJourney->save();
         }
 
         $workflow = Workflow::find($this->workflowId);
@@ -51,7 +57,7 @@ class ApplyTransitionByNameJob implements ShouldQueue
             NextTransitionJob::dispatch($this->leadId, $this->workflowId);
 
         } else {
-            info("Coudn't apply transition {transitionName}");
+            info("Coudn't apply transition {$transitionName}");
         }
     }
 }
