@@ -31,6 +31,10 @@ class ApplyTransitionByNameJob implements ShouldQueue
             ->where('workflow_id', $this->workflowId)
             ->first(); 
 
+        if(!$leadJourney) {
+            return;
+        }
+
         $workflow = Workflow::find($this->workflowId);
         $fsm = $workflow->fsm();
 
