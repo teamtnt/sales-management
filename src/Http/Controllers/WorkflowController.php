@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
+use Teamtnt\SalesManagement\Jobs\NextTransitionJob;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Workflow;
@@ -42,13 +43,34 @@ class WorkflowController extends Controller
             ];
         });
 
-        $messages = $task->messages->transform(function ($message) {
-            return [
+//        $messagesOpened = $task->messages->transform(function ($message) {
+//            return [
+//                'argument' => $message->id,
+//                'action'   => OpenedMailJob::class,
+//                'title'    => $message->subject,
+//            ];
+//        });
+//
+//        $messages = $task->messages->transform(function ($message) {
+//            return [
+//                'argument' => $message->id,
+//                'action'   => SendMailJob::class,
+//                'title'    => $message->subject,
+//            ];
+//        });
+
+        foreach ($task->messages as $message) {
+            $messagesOpened[] = [
+                'argument' => $message->id,
+                'action'   => NextTransitionJob::class,
+                'title'    => $message->subject,
+            ];
+            $messages[] = [
                 'argument' => $message->id,
                 'action'   => SendMailJob::class,
                 'title'    => $message->subject,
             ];
-        });
+        }
 
         $waitOptions = [
             [
@@ -68,7 +90,7 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages'));
+        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened'));
     }
 
     /**
@@ -99,13 +121,34 @@ class WorkflowController extends Controller
             ];
         });
 
-        $messages = $workflow->task->messages->transform(function ($message) {
-            return [
+//        $messages = $workflow->task->messages->transform(function ($message) {
+//            return [
+//                'argument' => $message->id,
+//                'action'   => SendMailJob::class,
+//                'title'    => $message->subject,
+//            ];
+//        });
+//
+//        $messagesOpened = $workflow->task->messages->transform(function ($message) {
+//            return [
+//                'argument' => $message->id,
+//                'action'   => OpenedMailJob::class,
+//                'title'    => $message->subject,
+//            ];
+//        });
+
+        foreach ($task->messages as $message) {
+            $messagesOpened[] = [
+                'argument' => $message->id,
+                'action'   => NextTransitionJob::class,
+                'title'    => $message->subject,
+            ];
+            $messages[] = [
                 'argument' => $message->id,
                 'action'   => SendMailJob::class,
                 'title'    => $message->subject,
             ];
-        });
+        }
 
         $waitOptions = [
             [
@@ -125,7 +168,7 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages'));
+        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened'));
     }
 
     /**

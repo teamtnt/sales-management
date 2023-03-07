@@ -40,7 +40,7 @@
     }));
 
 
-    let items = window.messages;
+    let items = window.messagesOpened;
     const {findNode} = useVueFlow()
     const node = ref(findNode(props.id));
 

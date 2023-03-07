@@ -54,6 +54,16 @@
                 },
             ],
         },
+        messagesOpened: {
+            type: Array,
+            default: [
+                {
+                    'argument': 3,
+                    'action': 'Message 3',
+                    'title': 'Message 3',
+                },
+            ],
+        },
         contactLists: {
             type: Array,
             default: [
@@ -99,6 +109,7 @@
     });
 
     window.messages = props.messages;
+    window.messagesOpened = props.messagesOpened;
     window.contactLists = props.contactLists;
     window.waitOptions = props.waitOptions;
 
