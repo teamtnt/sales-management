@@ -11,10 +11,13 @@ use Illuminate\Queue\SerializesModels;
 class ABSplitJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
- 
-    public function __construct($leadId) {
-        $this->lead = $leadId;
-        $this->mailId = $mailId;
+    
+    public $leadId;
+    public $workflowId;
+
+    public function __construct($leadId, $workflowId) {
+        $this->leadId = $leadId;
+        $this->workflowId = $workflowId;
     }
  
     public function handle(): void
@@ -24,5 +27,17 @@ class ABSplitJob implements ShouldQueue
         } else {
             info("Spliting to B");
         }
+
+
+        $leadJourney = LeadJourney::where('lead_id', $this->leadId)
+            ->where('workflow_id', $this->workflowId)
+            ->first(); 
+
+        $workflow = Workflow::find($this->workflowId);
+        $fsm = $workflow->fsm();
+
+        $enabledTransitions = $fsm->getEnabledTransition($leadJourney);
+
+        info($enabledTransitions);
     }
 }
