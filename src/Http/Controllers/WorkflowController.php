@@ -8,6 +8,7 @@ use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Jobs\ABSplitJob;
+use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 use Teamtnt\SalesManagement\Jobs\NextTransitionJob;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\LeadJourney;
@@ -72,6 +73,13 @@ class WorkflowController extends Controller
                 'title'    => $message->subject,
             ];
         }
+        foreach ($task->pipeline->stages as $stage) {
+            $stages[] = [
+                'argument' => $stage->id,
+                'action'   => ApplyTransitionByNameJob::class,
+                'title'    => $stage->name,
+            ];
+        }
 
         $abSplit[] = [
             'argument' => '50/50',
@@ -97,7 +105,9 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened', 'abSplit'));
+        return view('sales-management::workflows.create', compact('task',
+            'contactLists', 'waitOptions', 'messages', 'messagesOpened',
+            'abSplit', 'stages'));
     }
 
     /**
@@ -156,6 +166,13 @@ class WorkflowController extends Controller
                 'title'    => $message->subject,
             ];
         }
+        foreach ($task->pipeline->stages as $stage) {
+            $stages[] = [
+                'argument' => $stage->id,
+                'action'   => SendMailJob::class,
+                'title'    => $stage->name,
+            ];
+        }
 
         $abSplit[] = [
             'argument' => '50/50',
@@ -181,7 +198,9 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened', 'abSplit'));
+        return view('sales-management::workflows.edit', compact('workflow',
+            'task', 'contactLists', 'waitOptions', 'messages',
+            'messagesOpened', 'abSplit', 'stages'));
     }
 
     /**

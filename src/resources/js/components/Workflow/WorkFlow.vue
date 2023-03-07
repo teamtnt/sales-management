@@ -64,6 +64,16 @@
                 },
             ],
         },
+        stages: {
+            type: Array,
+            default: [
+                {
+                    'argument': '50/50',
+                    'action': 'ABSplit',
+                    'title': '50/50',
+                },
+            ],
+        },
         abSplit: {
             type: Array,
             default: [
@@ -123,6 +133,7 @@
     window.contactLists = props.contactLists;
     window.waitOptions = props.waitOptions;
     window.abSplit = props.abSplit;
+    window.stages = props.stages;
 
     const onDragOver = (event) => {
         event.preventDefault();
