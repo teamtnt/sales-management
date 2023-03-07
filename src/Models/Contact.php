@@ -39,4 +39,9 @@ class Contact extends Model
         $this->table = config('sales-management.tablePrefix').'contacts';
         parent::__construct($attributes);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
