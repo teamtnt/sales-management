@@ -9,10 +9,10 @@ use Teamtnt\SalesManagement\Models\Deal;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Lead;
 use Illuminate\Http\Request;
+use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
 class TaskListController extends Controller
 {
-
     public function index(TaskListDataTable $taskListDataTable)
     {
         return $taskListDataTable->render('sales-management::tasklist.index');
@@ -55,16 +55,24 @@ class TaskListController extends Controller
 
     public function stageChange(Request $request)
     {
-        $lead = Lead::where('id', $request->lead_id)
+        $leadId = $request->lead_id;
+        $lead = Lead::where('id', $leadId)
             ->where('pipeline_id', $request->pipeline_id)
             ->where('pipeline_stage_id', $request->source_stage_id ?? 0)
             ->first();
 
-        if ($lead) {
-            $lead->pipeline_stage_id = $request->target_stage_id;
-            $lead->save();
+        if (!$lead) {
+            return;
         }
-        //TODO ovdje trigeriramo event da je stage promijenjen
+
+        $lead->pipeline_stage_id = $request->target_stage_id;
+        $lead->save();
+
+        $transitionName = "transition.stage.changed.".$lead->pipeline_stage_id;
+
+        foreach ($lead->task->publishedWorkflows() as $workflow) {
+            ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, $transitionName);
+        }
     }
 
     public function createLeadsFromAllContacts($task_id, $pipeline_id)

@@ -88,6 +88,7 @@ class PostmarkWebhookController extends Controller
                 $leadJourney->lead_id = $leadId;
                 $leadJourney->task_id = $task->id;
                 $leadJourney->workflow_id = $workflow->id;
+                $leadJourney->current_place = "start";
                 $leadJourney->save();
             }
 

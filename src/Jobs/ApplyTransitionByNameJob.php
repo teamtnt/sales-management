@@ -8,6 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Workflow;
  
@@ -31,6 +32,16 @@ class ApplyTransitionByNameJob implements ShouldQueue
             ->where('workflow_id', $this->workflowId)
             ->first(); 
 
+        if(!$leadJourney) {
+            $lead = Lead::find($this->leadId); 
+            $leadJourney = new LeadJourney;
+            $leadJourney->lead_id = $this->leadId;
+            $leadJourney->task_id = $lead->task_id;
+            $leadJourney->current_place = "start";
+            $leadJourney->workflow_id = $this->workflowId;
+            $leadJourney->save();
+        }
+
         $workflow = Workflow::find($this->workflowId);
         $fsm = $workflow->fsm();
 
@@ -44,17 +55,10 @@ class ApplyTransitionByNameJob implements ShouldQueue
 
             info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
             
-
-            if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
-                $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
-                $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
-                $job = new $action($this->leadId, $workflow->id, $argument);
-                $job->dispatch($this->leadId, $workflow->id, $argument);
-                info("Calling job: {$action} with argument: {$argument}");
-            }
+            NextTransitionJob::dispatch($this->leadId, $this->workflowId);
 
         } else {
-            info("Coudn't apply transition {transitionName}");
+            info("Coudn't apply transition {$transitionName}");
         }
     }
 }
