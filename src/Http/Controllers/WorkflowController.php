@@ -173,4 +173,24 @@ class WorkflowController extends Controller
         return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
     }
 
+    public function publish(Task $task, Workflow $workflow)
+    {
+        $workflow->status = 1;
+        $workflow->save();
+
+        request()->session()->flash('message', __('Workflow successfully published!'));
+
+        return redirect()->route('workflows.index', $task);
+    }
+
+    public function unpublish(Task $task, Workflow $workflow)
+    {
+        $workflow->status = 0;
+        $workflow->save();
+
+        request()->session()->flash('message', __('Workflow successfully unpublished!'));
+
+        return redirect()->route('workflows.index', $task);
+    }
+
 }

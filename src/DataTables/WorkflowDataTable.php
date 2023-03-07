@@ -20,6 +20,12 @@ class WorkflowDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('status', function (Workflow $workflow) {
+                return collect([
+                    0 => __('Unpublished'),
+                    1 => __('Published'),
+                ])->get($workflow->status);
+            })
             ->addColumn('action', 'sales-management::workflows.actions');
     }
 
@@ -64,6 +70,7 @@ class WorkflowDataTable extends DataTable
 
             Column::make('id')->title('ID'),
             Column::make('name')->title(__('Name')),
+            Column::make('status')->title(__('Status')),
             Column::make('description')->title(__('Description')),
 
             Column::computed('action')
