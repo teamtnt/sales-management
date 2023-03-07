@@ -30,6 +30,6 @@ class WaitJob implements ShouldQueue
         info("Now waiting for {$this->waitHours} hours");
 
         NextTransitionJob::dispatch($this->leadId, $this->workflowId)
-                    ->delay(now()->addHours($this->waitHours));
+            ->delay(now()->addHours($this->waitHours));
     }
 }

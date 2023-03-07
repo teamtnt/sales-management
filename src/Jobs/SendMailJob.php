@@ -10,7 +10,11 @@ use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Task;
 use Teamtnt\SalesManagement\Models\Workflow;
- 
+use Teamtnt\SalesManagement\Models\Message;
+use Teamtnt\SalesManagement\Models\Lead;
+use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Illuminate\Support\Facades\Mail;
+
 class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -27,42 +31,19 @@ class SendMailJob implements ShouldQueue
  
     public function handle(): void
     {
-        info("SendMail Job {$this->mailId}");
+        info("Sending mail ID: {$this->mailId} to Lead ID: {$this->leadId}");
 
-        $leadJourney = LeadJourney::where('lead_id', $this->leadId)
-            ->where('workflow_id', $this->workflowId)
-            ->first(); 
+        $lead = Lead::find($this->leadId);
+        $message = Message::find($this->mailId);
 
-        $workflow = Workflow::find($this->workflowId);
+        if ($email = $lead->contact->email) {
+            Mail::to($email)->send(new TaskEmail($message, $lead));
+            MessageNotOpenedJob::dispatch($this->leadId, $this->workflowId, $this->mailId)
+                ->delay(now()->addHours(24));
 
-        $fsm = $workflow->fsm();
-
-        if(isset($fsm->getEnabledTransitions($leadJourney)[0])) {
-            $transitionName = $fsm->getEnabledTransitions($leadJourney)[0]->getName();
-        } else {
-            info("We reached the end of the workflow");
-            return;
+            info("Sending mail with subject: {$message->subject} to {$lead->contact->email}");
         }
-        
-        if ($fsm->can($leadJourney, $transitionName)) {
-            
-            $fsm->apply($leadJourney, $transitionName);
-            $leadJourney->save();
 
-            info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
-
-            $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
-
-            if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
-                $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
-                $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
-                $job = new $action($this->leadId, $workflow->id, $argument);
-                $job->dispatch($this->leadId, $workflow->id, $argument);
-                info("Calling job: {$action} with argument: {$argument}");
-            }
-            
-        } else {
-            info("Coudn't apply transition {transitionName}");
-        }
+        NextTransitionJob::dispatch($this->leadId, $this->workflowId);
     }
 }
