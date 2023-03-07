@@ -37,6 +37,7 @@ class ApplyTransitionByNameJob implements ShouldQueue
             $leadJourney = new LeadJourney;
             $leadJourney->lead_id = $this->leadId;
             $leadJourney->task_id = $lead->task_id;
+            $leadJourney->current_place = "start";
             $leadJourney->workflow_id = $this->workflowId;
             $leadJourney->save();
         }
