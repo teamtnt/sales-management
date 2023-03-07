@@ -44,14 +44,7 @@ class ApplyTransitionByNameJob implements ShouldQueue
 
             info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
             
-
-            if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
-                $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
-                $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
-                $job = new $action($this->leadId, $workflow->id, $argument);
-                $job->dispatch($this->leadId, $workflow->id, $argument);
-                info("Calling job: {$action} with argument: {$argument}");
-            }
+            NextTransitionJob::dispatch($this->leadId, $this->workflowId);
 
         } else {
             info("Coudn't apply transition {transitionName}");

@@ -34,7 +34,7 @@ class NextTransitionJob implements ShouldQueue
 
         $fsm = $workflow->fsm();
 
-        //if there are multiple enabled transition, we need to send it to Job that makes the decistion, ie A/B Splitter
+        //if there are multiple enabled transitions, we need to send it to a Job that makes the decision, ie A/B Splitter
         if( $this->hasMultipleEnabledTransition($fsm, $leadJourney)) {
             info("We have multiple targets, so a decision must be made");
             $transition = $fsm->getEnabledTransition($leadJourney, $fsm->getEnabledTransitions($leadJourney)[0]->getName());
@@ -47,8 +47,7 @@ class NextTransitionJob implements ShouldQueue
                 info("Calling job: {$action} with argument: {$argument}");
             }
             return;
-        } 
-
+        }
 
         if(isset($fsm->getEnabledTransitions($leadJourney)[0])) {
             $transitionName = $fsm->getEnabledTransitions($leadJourney)[0]->getName();

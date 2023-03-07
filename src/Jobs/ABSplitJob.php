@@ -24,7 +24,6 @@ class ABSplitJob implements ShouldQueue
  
     public function handle(): void
     {
- 
         $leadJourney = LeadJourney::where('lead_id', $this->leadId)
             ->where('workflow_id', $this->workflowId)
             ->first(); 
