@@ -7,7 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
- 
+use Teamtnt\SalesManagement\Models\LeadJourney;
+use Teamtnt\SalesManagement\Models\Workflow;
+
 class ABSplitJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -22,13 +24,7 @@ class ABSplitJob implements ShouldQueue
  
     public function handle(): void
     {
-        if(rand(1,2) == 1 ) {
-            info("Spliting to A");
-        } else {
-            info("Spliting to B");
-        }
-
-
+ 
         $leadJourney = LeadJourney::where('lead_id', $this->leadId)
             ->where('workflow_id', $this->workflowId)
             ->first(); 
@@ -36,8 +32,12 @@ class ABSplitJob implements ShouldQueue
         $workflow = Workflow::find($this->workflowId);
         $fsm = $workflow->fsm();
 
-        $enabledTransitions = $fsm->getEnabledTransition($leadJourney);
+        $enabledTransitions = $fsm->getEnabledTransitions($leadJourney);
 
-        info($enabledTransitions);
+        $transitionName = $enabledTransitions[rand(0,1)]->getName();
+
+        info("Spliting to: {$transitionName}");
+
+        ApplyTransitionByNameJob::dispatch($this->leadId, $this->workflowId, $transitionName);
     }
 }

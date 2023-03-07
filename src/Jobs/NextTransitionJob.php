@@ -34,6 +34,22 @@ class NextTransitionJob implements ShouldQueue
 
         $fsm = $workflow->fsm();
 
+        //if there are multiple enabled transition, we need to send it to Job that makes the decistion, ie A/B Splitter
+        if( $this->hasMultipleEnabledTransition($fsm, $leadJourney)) {
+            info("We have multiple targets, so a decision must be made");
+            $transition = $fsm->getEnabledTransition($leadJourney, $fsm->getEnabledTransitions($leadJourney)[0]->getName());
+
+            if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
+                $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
+                $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
+                $job = new $action($this->leadId, $workflow->id, $argument);
+                $job->dispatch($this->leadId, $workflow->id, $argument);
+                info("Calling job: {$action} with argument: {$argument}");
+            }
+            return;
+        } 
+
+
         if(isset($fsm->getEnabledTransitions($leadJourney)[0])) {
             $transitionName = $fsm->getEnabledTransitions($leadJourney)[0]->getName();
         } else {
@@ -61,5 +77,12 @@ class NextTransitionJob implements ShouldQueue
         } else {
             info("Coudn't apply transition {transitionName}");
         }
+    }
+
+    public function hasMultipleEnabledTransition($fsm, $leadJourney) {
+        if (count($fsm->getEnabledTransitions($leadJourney)) > 1 ) {
+            return true;
+        }
+        return false;
     }
 }
