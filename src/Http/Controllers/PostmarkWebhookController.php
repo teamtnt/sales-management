@@ -94,12 +94,12 @@ class PostmarkWebhookController extends Controller
             $fsm = $workflow->fsm();
 
             if ($fsm->can($leadJourney, $transitionName)) {
+                $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
 
                 $fsm->apply($leadJourney, $transitionName);
                 $leadJourney->save();
                 info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
 
-                $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
 
                 if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
                     $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
