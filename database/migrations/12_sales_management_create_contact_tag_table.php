@@ -18,8 +18,9 @@ return new class extends Migration {
             $table->unsignedBigInteger('contact_id')->index();
             $table->unsignedBigInteger('tag_id')->index();
 
-            $table->foreign('contact_id')->references('id')->on(config('sales-management.tablePrefix').'contacts');
+            $table->foreign('contact_id')->references('id')->on(config('sales-management.tablePrefix').'contacts')->cascadeOnDelete();;
             $table->foreign('tag_id')->references('id')->on(config('sales-management.tablePrefix').'tags');
+
         });
     }
 

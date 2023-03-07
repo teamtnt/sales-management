@@ -32,7 +32,9 @@ class ContactsController extends Controller
      */
     public function create()
     {
-        return view('sales-management::contacts.create');
+        $contact = new Contact();
+
+        return view('sales-management::contacts.create', compact('contact'));
     }
 
     /**
