@@ -175,7 +175,7 @@ class WorkflowController extends Controller
 
     public function publish(Task $task, Workflow $workflow)
     {
-        $workflow->status = 1;
+        $workflow->status = Workflow::STATUS_PUBLISHED;
         $workflow->save();
 
         request()->session()->flash('message', __('Workflow successfully published!'));
@@ -185,7 +185,7 @@ class WorkflowController extends Controller
 
     public function unpublish(Task $task, Workflow $workflow)
     {
-        $workflow->status = 0;
+        $workflow->status = Workflow::STATUS_DRAFT;
         $workflow->save();
 
         request()->session()->flash('message', __('Workflow successfully unpublished!'));
