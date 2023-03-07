@@ -73,14 +73,14 @@
             A/B Split
         </span>
 
-        <Handle :id="`state.message.opened.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTarget" class="handle">
+        <Handle :id="`state.abSplit.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTarget" class="handle">
             <span class="circle"/>
         </Handle>
 
-        <Handle :id="`state.message.opened.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleOpened" class="handle">
+        <Handle :id="`state.abSplit.left.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleOpened" class="handle">
             <span class="circle"/>
         </Handle>
-        <Handle :id="`state.message.not_opened.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleNotOpened" class="handle">
+        <Handle :id="`state.abSplit.right.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleNotOpened" class="handle">
             <span class="circle"/>
         </Handle>
     </div>
