@@ -7,6 +7,7 @@ use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\DealController;
 use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
+use Teamtnt\SalesManagement\Http\Controllers\TagsController;
 use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactListController;
@@ -48,6 +49,15 @@ Route::put('/deals/{deal:id}/update', [DealController::class, 'update'])->name('
 Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->name('deals.destroy');
 
 Route::post('/stage/chage', [TaskListController::class, 'stageChange'])->name('stage.change');
+
+// Tags
+Route::get('/tags', [TagsController::class, 'index'])->name('tags.index');
+Route::get('/tags/create', [TagsController::class, 'create'])->name('tags.create');
+Route::post('/tags/store', [TagsController::class, 'store'])->name('tags.store');
+Route::get('/tags/{tag:id}/edit', [TagsController::class, 'edit'])->name('tags.edit');
+Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('tags.update');
+Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
+
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');

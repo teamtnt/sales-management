@@ -10,7 +10,11 @@ class Tag extends Model
     use HasFactory;
 
     protected $table;
-    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
     public function __construct(array $attributes = [])
     {

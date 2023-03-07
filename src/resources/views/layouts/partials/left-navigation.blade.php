@@ -42,6 +42,11 @@
                             class="align-middle">{{ __("Pipelines")}}</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ request()->is('tags*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('tags.index') }}">
+                    <i class="align-middle" data-feather="tag"></i> <span class="align-middle">{{ __("Tags")}}</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
