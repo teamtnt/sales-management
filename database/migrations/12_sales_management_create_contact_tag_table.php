@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('contact_id')->index();
             $table->unsignedBigInteger('tag_id')->index();
-            $table->timestamps();
 
             $table->foreign('contact_id')->references('id')->on(config('sales-management.tablePrefix').'contacts');
             $table->foreign('tag_id')->references('id')->on(config('sales-management.tablePrefix').'tags');
