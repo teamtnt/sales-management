@@ -40,11 +40,15 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <assignee-list-multiselect
-                :assignees="{{ isset($task) ? $task->assignees->toJson() : '[]' }}"
-                :users="{{ config('sales-management.userModel')::all()->toJson() ?? '[]' }}"
-                class="mb-3">
-        </assignee-list-multiselect>
+         <multi-select-list
+             name=assignees[]
+             label="Assign users / user"
+             placeholder="Choose user..."
+             label-by="email"
+             track-by="email"
+             :selected="{{ isset($task) ? $task->assignees->toJson() : '[]' }}"
+             :options="{{ config('sales-management.userModel')::all()->toJson() ?? '[]' }}">
+        </multi-select-list>
     </div>
     <div class="col-md-6">
         <div class="mb-3">

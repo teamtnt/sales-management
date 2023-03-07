@@ -130,6 +130,19 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <multi-select-list
+            name=tags[]
+            label="Add tag to user"
+            placeholder="Choose tags..."
+            label-by="name"
+            track-by="name"
+            :selected="{{ $contact->tags->toJson() ?? '[]'}}"
+            :options="{{ getAllTags() ?? '[]'}}">
+        </multi-select-list>
+    </div>
+</div>
 
 
 

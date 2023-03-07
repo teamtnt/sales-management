@@ -28,7 +28,7 @@ i18n.global.locale = document.documentElement.lang.substring(0, 2);
 import WorkFlow from './components/Workflow/WorkFlow.vue';
 import PipelineStageRepeater from "./components/PipelineStageRepeater/PipelineStageRepeater.vue";
 import TextArea from "./components/TextareaWithPlaceholders/TextArea.vue";
-import AssigneeListMultiselect from "./components/Assignees/AssigneeListMultiselect.vue";
+import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
 
 
 const emitter = mitt();
@@ -37,7 +37,7 @@ const app = createApp({
         WorkFlow,
         PipelineStageRepeater,
         TextArea,
-        AssigneeListMultiselect,
+        MultiSelectList
     }
 })
 
