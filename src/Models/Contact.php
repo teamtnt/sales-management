@@ -36,12 +36,12 @@ class Contact extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'contacts';
+        $this->table = config('sales-management.tablePrefix') . 'contacts';
         parent::__construct($attributes);
     }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'contact_tag');
     }
 }

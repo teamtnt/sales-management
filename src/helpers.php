@@ -4,6 +4,7 @@ use Teamtnt\SalesManagement\Models\Contact;
 use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\ContactTemp;
 use Teamtnt\SalesManagement\Models\ContactListContact;
+use Teamtnt\SalesManagement\Models\Tag;
 
 if (!function_exists('importTempContactsIntoContacts')) {
     function importTempContactsIntoContacts($batchId)
@@ -47,4 +48,12 @@ if (!function_exists('createListFromPipelineStage')) {
 
         \DB::insert($insertQuery, $bindings);
     }
+}
+
+/**
+ * Get all Tags
+ * @return mixed
+ */
+function getAllTags(): ?string {
+    return Tag::all()->toJson();
 }

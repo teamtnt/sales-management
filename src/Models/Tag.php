@@ -18,12 +18,12 @@ class Tag extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'tags';
+        $this->table = config('sales-management.tablePrefix') . 'tags';
         parent::__construct($attributes);
     }
 
     public function contacts()
     {
-        return $this->belongsToMany(Contact::class);
+        return $this->belongsToMany(Contact::class, config('sales-management.tablePrefix') . 'contact_tag');
     }
 }

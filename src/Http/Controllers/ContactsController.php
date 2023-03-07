@@ -13,6 +13,7 @@ use Teamtnt\SalesManagement\Models\ContactTemp;
 use Maatwebsite\Excel\Facades\Excel;
 use Teamtnt\SalesManagement\Imports\ContactsImport;
 use DB;
+use Teamtnt\SalesManagement\Models\Tag;
 
 class ContactsController extends Controller
 {
@@ -40,7 +41,8 @@ class ContactsController extends Controller
      */
     public function store(ContactRequest $request)
     {
-        Contact::create($request->validated());
+        $contact = Contact::create($request->validated());
+        $contact->tags()->sync($request->get('tags'));
 
         request()->session()->flash('message', __('Contact successfully created!'));
 
@@ -64,6 +66,8 @@ class ContactsController extends Controller
     public function update(ContactRequest $request, Contact $contact)
     {
         $contact->update($request->validated());
+
+        $contact->tags()->sync($request->get('tags'));
 
         request()->session()->flash('message', __('Contact successfully updated!'));
 

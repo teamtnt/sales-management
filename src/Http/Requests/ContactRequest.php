@@ -38,6 +38,7 @@ class ContactRequest extends FormRequest
             'postal'        => 'nullable|string',
             'city'          => 'nullable|string',
             'country'       => 'nullable|string',
+            'tags'          => 'nullable|array'
         ];
     }
 }
