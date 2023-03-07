@@ -15,6 +15,7 @@
             :messages-opened="{{ json_encode($messagesOpened) }}"
             :contact-lists="{{ json_encode($contactLists) }}"
             :wait-options="{{ json_encode($waitOptions) }}"
+            :ab-split="{{ json_encode($abSplit) }}"
     ></work-flow>
 @endsection
 

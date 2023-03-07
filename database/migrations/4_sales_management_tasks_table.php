@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->string("description")->nullable();
             $table->unsignedBigInteger("pipeline_id");
             $table->unsignedBigInteger("contact_list_id")->nullable();
-            $table->unsignedInteger("status")->default(\Teamtnt\SalesManagement\Models\Status::TASK_STATUS_NEW);
+            $table->unsignedInteger("status")->default(0);
             $table->timestamps();
         });
 

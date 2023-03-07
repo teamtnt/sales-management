@@ -1,6 +1,7 @@
 <script setup>
-    import {Handle, Position} from '@vue-flow/core'
-    import { computed } from "vue";
+    import {Handle, Position, useVueFlow} from '@vue-flow/core'
+    import {computed, ref} from "vue";
+    import {NodeToolbar} from '@vue-flow/node-toolbar'
 
     const props = defineProps({
         id: String,
@@ -42,10 +43,24 @@
         bottom: '-7px'
 
     }));
+
+    let items = window.abSplit;
+    const {findNode} = useVueFlow()
+    const node = ref(findNode(props.id));
 </script>
 
 <template>
     <div class="vue-flow__node-input shadow-sm">
+        <NodeToolbar
+            style="display: flex; gap: 0.5rem; align-items: center"
+            :is-visible="true"
+            :node-id="id"
+            :position="Position.Right"
+        >
+            <select name="argument" class="form-select" v-model="node.data">
+                <option v-for="item in items" :value="item">{{ item.title }}</option>
+            </select>
+        </NodeToolbar>
         <span class="action-box ps-2 justify-content-center">
             <span class="action-box__icon">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">

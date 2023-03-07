@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
+use Teamtnt\SalesManagement\Jobs\ABSplitJob;
 use Teamtnt\SalesManagement\Jobs\NextTransitionJob;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\LeadJourney;
@@ -72,6 +73,12 @@ class WorkflowController extends Controller
             ];
         }
 
+        $abSplit[] = [
+            'argument' => '50/50',
+            'action'   => ABSplitJob::class,
+            'title'    => '50/50',
+        ];
+
         $waitOptions = [
             [
                 'argument' => 1,
@@ -90,7 +97,7 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened'));
+        return view('sales-management::workflows.create', compact('task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened', 'abSplit'));
     }
 
     /**
@@ -150,6 +157,12 @@ class WorkflowController extends Controller
             ];
         }
 
+        $abSplit[] = [
+            'argument' => '50/50',
+            'action'   => ABSplitJob::class,
+            'title'    => '50/50',
+        ];
+
         $waitOptions = [
             [
                 'argument' => 1,
@@ -168,7 +181,7 @@ class WorkflowController extends Controller
             ],
         ];
 
-        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened'));
+        return view('sales-management::workflows.edit', compact('workflow', 'task', 'contactLists', 'waitOptions', 'messages', 'messagesOpened', 'abSplit'));
     }
 
     /**
