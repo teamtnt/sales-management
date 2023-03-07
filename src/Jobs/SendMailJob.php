@@ -45,6 +45,12 @@ class SendMailJob implements ShouldQueue
         }
         
         if ($fsm->can($leadJourney, $transitionName)) {
+            
+            $fsm->apply($leadJourney, $transitionName);
+            $leadJourney->save();
+
+            info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
+
             $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
 
             if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
@@ -54,11 +60,6 @@ class SendMailJob implements ShouldQueue
                 $job->dispatch($this->leadId, $workflow->id, $argument);
                 info("Calling job: {$action} with argument: {$argument}");
             }
-   
-            $fsm->apply($leadJourney, $transitionName);
-            $leadJourney->save();
-
-            info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
             
         } else {
             info("Coudn't apply transition {transitionName}");
