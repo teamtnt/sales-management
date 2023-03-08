@@ -29,11 +29,7 @@
     };
 
     const props = defineProps({
-        panelTitle: {
-            type: String,
-            default: "Workflow",
-        },
-        workflowTitle: {
+        workflowName: {
             type: String,
             default: "Untitled",
         },
@@ -122,7 +118,7 @@
         },
     });
     const elements = ref(props.elementsData);
-    const title = ref(props.workflowTitle);
+    const title = ref(props.workflowName);
     let selectedNode = {};
 
     let id = 0;
@@ -262,7 +258,7 @@
                             <span>{{ $t("Back") }}</span></a
                         >
                         <h1 class="h3 mb-3 px-4 py-2 bg-white">
-                            {{ panelTitle }}
+                            {{ title }}
                         </h1>
                     </div>
                 </Panel>
@@ -271,7 +267,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            :value="workflowTitle"
+                            v-model="title"
                             style="min-width: 200px"
                         />
                         <button class="btn btn-success text-uppercase px-4" @click="saveWorkflow">

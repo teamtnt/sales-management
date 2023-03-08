@@ -7,9 +7,8 @@
 @section('content')
     <work-flow
             save-url="{{ route('workflows.store', [$task->id])}}"
-            workflow-title="Untitled Workflow"
-            panel-title="Workflow"
             back-url="{{ route('workflows.index', [$task->id]) }}"
+            workflow-name="Untitled Workflow"
             :messages="{{ json_encode($messages) }}"
             :messages-opened="{{ json_encode($messagesOpened) }}"
             :contact-lists="{{ json_encode($contactLists) }}"

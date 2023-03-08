@@ -8,8 +8,7 @@
     <work-flow
             save-url="{{ route('workflows.update', [$task->id, $workflow->id]) }}"
             back-url="{{ route('workflows.index', [$task->id]) }}"
-            workflow-title="{{ $workflow->name }}"
-            panel-title="{{ $workflow->name }}"
+            workflow-name="{{ $workflow->name }}"
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
             :messages="{{ json_encode($messages) }}"
             :messages-opened="{{ json_encode($messagesOpened) }}"

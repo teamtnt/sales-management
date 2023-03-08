@@ -17,17 +17,17 @@
     "isEntry": true
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-29bd82f9.js",
+    "file": "assets/app-151316a6.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor-10a397eb.js"
+      "_vendor-9cfce2be.js"
     ],
     "css": [
       "assets/app-6ae953c3.css"
     ]
   },
-  "_vendor-10a397eb.js": {
-    "file": "assets/vendor-10a397eb.js"
+  "_vendor-9cfce2be.js": {
+    "file": "assets/vendor-9cfce2be.js"
   }
 }
