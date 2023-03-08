@@ -42,6 +42,7 @@ class WorkflowController extends Controller
                 'argument' => $contactList->id,
                 'action'   => $contactList::class,
                 'title'    => $contactList->name,
+                'type'     => 'action',
             ];
         });
 
@@ -50,11 +51,13 @@ class WorkflowController extends Controller
                 'argument' => $message->id,
                 'action'   => 'condition',
                 'title'    => $message->subject,
+                'type'     => 'condition',
             ];
             $messages[] = [
                 'argument' => $message->id,
                 'action'   => SendMailJob::class,
                 'title'    => $message->subject,
+                'type'     => 'action',
             ];
         }
         foreach ($task->pipeline->stages as $stage) {
@@ -62,6 +65,7 @@ class WorkflowController extends Controller
                 'argument' => $stage->id,
                 'action'   => 'condition',
                 'title'    => $stage->name,
+                'type'     => 'condition',
             ];
         }
 
@@ -69,6 +73,7 @@ class WorkflowController extends Controller
             'argument' => '50/50',
             'action'   => ABSplitJob::class,
             'title'    => '50/50',
+            'type'     => 'action',
         ];
 
         $waitOptions = [
@@ -76,16 +81,19 @@ class WorkflowController extends Controller
                 'argument' => 1,
                 'action'   => WaitJob::class,
                 'title'    => '1h',
+                'type'     => 'action',
             ],
             [
                 'argument' => 2,
                 'action'   => WaitJob::class,
                 'title'    => '2h',
+                'type'     => 'action',
             ],
             [
                 'argument' => 3,
                 'action'   => WaitJob::class,
                 'title'    => '3h',
+                'type'     => 'action',
             ],
         ];
 
@@ -119,6 +127,7 @@ class WorkflowController extends Controller
                 'argument' => $contactList->id,
                 'action'   => $contactList::class,
                 'title'    => $contactList->name,
+                'type'     => 'action',
             ];
         });
 
@@ -127,11 +136,13 @@ class WorkflowController extends Controller
                 'argument' => $message->id,
                 'action'   => 'condition',
                 'title'    => $message->subject,
+                'type'     => 'condition',
             ];
             $messages[] = [
                 'argument' => $message->id,
                 'action'   => SendMailJob::class,
                 'title'    => $message->subject,
+                'type'     => 'action',
             ];
         }
         foreach ($task->pipeline->stages as $stage) {
@@ -139,6 +150,7 @@ class WorkflowController extends Controller
                 'argument' => $stage->id,
                 'action'   => 'condition',
                 'title'    => $stage->name,
+                'type'     => 'condition',
             ];
         }
 
@@ -146,6 +158,7 @@ class WorkflowController extends Controller
             'argument' => '50/50',
             'action'   => ABSplitJob::class,
             'title'    => '50/50',
+            'type'     => 'action',
         ];
 
         $waitOptions = [
@@ -153,16 +166,19 @@ class WorkflowController extends Controller
                 'argument' => 1,
                 'action'   => WaitJob::class,
                 'title'    => '1h',
+                'type'     => 'action',
             ],
             [
                 'argument' => 2,
                 'action'   => WaitJob::class,
                 'title'    => '2h',
+                'type'     => 'action',
             ],
             [
                 'argument' => 3,
                 'action'   => WaitJob::class,
                 'title'    => '3h',
+                'type'     => 'action',
             ],
         ];
 
