@@ -8,10 +8,12 @@ use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Jobs\ABSplitJob;
+use Teamtnt\SalesManagement\Jobs\AddTagJob;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 use Teamtnt\SalesManagement\Jobs\NextTransitionJob;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\LeadJourney;
+use Teamtnt\SalesManagement\Models\Tag;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Task;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
@@ -46,6 +48,15 @@ class WorkflowController extends Controller
             ];
         });
 
+        $tags = Tag::all()->transform(function ($tag) {
+            return [
+                'argument' => $tag->id,
+                'action'   => AddTagJob::class,
+                'title'    => $tag->name,
+                'type'     => 'action',
+            ];
+        });
+        $stages = $messages = $messagesOpened = [];
         foreach ($task->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
@@ -99,7 +110,7 @@ class WorkflowController extends Controller
 
         return view('sales-management::workflows.create', compact('task',
             'contactLists', 'waitOptions', 'messages', 'messagesOpened',
-            'abSplit', 'stages'));
+            'tags', 'abSplit', 'stages'));
     }
 
     /**
@@ -131,6 +142,15 @@ class WorkflowController extends Controller
             ];
         });
 
+        $tags = Tag::all()->transform(function ($tag) {
+            return [
+                'argument' => $tag->id,
+                'action'   => AddTagJob::class,
+                'title'    => $tag->name,
+                'type'     => 'action',
+            ];
+        });
+        $stages = $messages = $messagesOpened = [];
         foreach ($task->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
@@ -184,7 +204,7 @@ class WorkflowController extends Controller
 
         return view('sales-management::workflows.edit', compact('workflow',
             'task', 'contactLists', 'waitOptions', 'messages',
-            'messagesOpened', 'abSplit', 'stages'));
+            'tags', 'messagesOpened', 'abSplit', 'stages'));
     }
 
     /**

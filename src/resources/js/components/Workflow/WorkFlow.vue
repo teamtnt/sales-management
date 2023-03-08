@@ -75,6 +75,17 @@
                 },
             ],
         },
+        tags: {
+            type: Array,
+            default: [
+                {
+                    'argument': 'default',
+                    'action': 'default',
+                    'title': 'default',
+                    'type': 'default',
+                },
+            ],
+        },
         abSplit: {
             type: Array,
             default: [
@@ -135,6 +146,7 @@
     window.waitOptions = props.waitOptions;
     window.abSplit = props.abSplit;
     window.stages = props.stages;
+    window.tags = props.tags;
 
     const onDragOver = (event) => {
         event.preventDefault();

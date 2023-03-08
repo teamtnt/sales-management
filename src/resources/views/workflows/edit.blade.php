@@ -17,6 +17,7 @@
             :wait-options="{{ json_encode($waitOptions) }}"
             :ab-split="{{ json_encode($abSplit) }}"
             :stages="{{ json_encode($stages) }}"
+            :tags="{{ json_encode($tags) }}"
     ></work-flow>
 @endsection
 
