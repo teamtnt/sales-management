@@ -5,7 +5,7 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Task;
-
+use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
 class PostmarkWebhookController extends Controller
 {
@@ -79,37 +79,7 @@ class PostmarkWebhookController extends Controller
     public function applyTransition($task, $transitionName, $leadId)
     {
         foreach ($task->publishedWorkflows() as $workflow) {
-            $leadJourney = LeadJourney::where('lead_id', $leadId)
-                ->where('task_id', $task->id)
-                ->where('workflow_id', $workflow->id)
-                ->first(); 
-            if(!$leadJourney) {
-                $leadJourney = new LeadJourney;
-                $leadJourney->lead_id = $leadId;
-                $leadJourney->task_id = $task->id;
-                $leadJourney->workflow_id = $workflow->id;
-                $leadJourney->current_place = "start";
-                $leadJourney->save();
-            }
-
-            $fsm = $workflow->fsm();
-
-            if ($fsm->can($leadJourney, $transitionName)) {
-                $transition = $fsm->getEnabledTransition($leadJourney, $transitionName);
-
-                $fsm->apply($leadJourney, $transitionName);
-                $leadJourney->save();
-                info("Applying {$transitionName} and changing state to ". $leadJourney->getCurrentPlace());
-
-
-                if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
-                    $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
-                    $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
-                    $job = new $action($leadId, $workflow->id, $argument);
-                    $job->dispatch($leadId, $workflow->id, $argument);
-                    info("Calling job: {$action} with argument: {$argument}");
-                }
-            }
+            ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, $transitionName);
         }
     }
 
