@@ -21,11 +21,11 @@
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm">
-        <span class="action-box pe-2 justify-content-center">
-            <span class="condition-box__icon">
-                <svg style="transform: rotate(315deg);" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span class="start-box pe-2 justify-content-center">
+            <span class="start-box__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-flag"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
             </span>
-            If published
+            Start
         </span>
 
         <Handle id="start" type="source" :position="Position.Bottom" :style="sourceHandleStyleTarget" class="handle">
