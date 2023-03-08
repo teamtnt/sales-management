@@ -10,6 +10,7 @@ class ContactListContact extends Model
     use HasFactory;
 
     protected $table;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

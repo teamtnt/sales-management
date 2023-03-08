@@ -14,6 +14,7 @@ use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Mail\TaskEmail;
 use Illuminate\Support\Facades\Mail;
+use Teamtnt\SalesManagement\Models\ContactListContact;
 
 class MoveToListJob implements ShouldQueue
 {
@@ -34,6 +35,11 @@ class MoveToListJob implements ShouldQueue
         $lead = Lead::find($this->leadId);
 
         if ($email = $lead->contact->email) {
+            $contactListContact = new ContactListContact;
+            $contactListContact->contact_id = $lead->contact->id;
+            $contactListContact->contact_list_id = $this->listId;
+            $contactListContact->save();
+
             info("Moving contact {$lead->contact->email} to List ID: {$this->listId}");
         }
 
