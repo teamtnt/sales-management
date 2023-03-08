@@ -96,7 +96,7 @@ class NextTransitionJob implements ShouldQueue
     public function nextElementIsCondition($fsm, $leadJourney)
     {
         if (!isset($fsm->getEnabledTransitions($leadJourney)[0])) {
-            return fasle;
+            return false;
         }
 
         $transition = $fsm->getEnabledTransition($leadJourney, $fsm->getEnabledTransitions($leadJourney)[0]->getName());
