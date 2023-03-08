@@ -38,7 +38,9 @@ class MessagesController extends Controller
      */
     public function store(Task $task, MessageRequest $messageRequest)
     {
-        Message::create($messageRequest->validated());
+        $request = $messageRequest->all();
+        $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
+        Message::create($request);
 
         request()->session()->flash('message', __('Message successfully created!'));
 
@@ -61,7 +63,10 @@ class MessagesController extends Controller
      */
     public function update(Task $task, MessageRequest $messageRequest, Message $message)
     {
-        $message->update($messageRequest->validated());
+        $request = $messageRequest->all();
+        $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
+
+        $message->update($request);
 
         if ($messageRequest->has('message_stages')) {
             $messageStages = $messageRequest->get('message_stages');
@@ -79,9 +84,9 @@ class MessagesController extends Controller
                 $message->messageStages()->updateOrCreate(
                     ['id' => $messageStage['id']],
                     [
-                        'name' => $messageStage['name'],
+                        'name'        => $messageStage['name'],
                         'description' => $messageStage['description'],
-                        'color' => $messageStage['color'],
+                        'color'       => $messageStage['color'],
                     ]
                 );
             }

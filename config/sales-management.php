@@ -6,5 +6,9 @@ return [
     'logoLink'    => '/',
     'tablePrefix' => 'sales_management_',
     'middleware'  => ['web'],
-    'userModel'   => \App\Models\User::class
+    'userModel'   => \App\Models\User::class,
+    'emails'      => [
+        'info@primeros.de' => 'Primeros',
+        'neki@random.mail' => 'Random',
+    ],
 ];

@@ -9,7 +9,9 @@
 @endsection
 @section('content')
     <div class="container-fluid p-0">
-
+        <a href="{{ route('workflows.create', $task) }}" class="btn btn-primary float-end mt-n1">
+            <i class="fas fa-plus"></i> {{__("New Workflow")}}
+        </a>
         <h1 class="h3 mb-3">{{ __('Workflows') }}</h1>
         <div class="d-flex mb-3 justify-content-between align-items-center">
             <a href="{{ route('messages.index', $task->id) }}" class="btn btn-info">
@@ -17,9 +19,6 @@
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Messages") }}
                 </span>
             </a>
-            <a href="{{ route('workflows.create', $task) }}" class="btn btn-primary float-end mt-n1">
-            <i class="fas fa-plus"></i> {{__("New Workflow")}}
-        </a>
         </div>
         <div class="row">
             <div class="col-12">
