@@ -169,7 +169,7 @@ class WorkflowController extends Controller
         foreach ($task->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => SendMailJob::class,
+                'action'   => ApplyTransitionByNameJob::class,
                 'title'    => $stage->name,
             ];
         }

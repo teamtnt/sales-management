@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Teamtnt\SalesManagement\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -22,13 +22,14 @@ class SendMailJob implements ShouldQueue
     public $leadId;
     public $workflowId;
     public $mailId;
- 
-    public function __construct($leadId, $workflowId, $mailId) {
+
+    public function __construct($leadId, $workflowId, $mailId)
+    {
         $this->leadId = $leadId;
         $this->workflowId = $workflowId;
         $this->mailId = $mailId;
     }
- 
+
     public function handle(): void
     {
         info("Sending mail ID: {$this->mailId} to Lead ID: {$this->leadId}");
