@@ -45,26 +45,10 @@ class WorkflowController extends Controller
             ];
         });
 
-//        $messagesOpened = $task->messages->transform(function ($message) {
-//            return [
-//                'argument' => $message->id,
-//                'action'   => OpenedMailJob::class,
-//                'title'    => $message->subject,
-//            ];
-//        });
-//
-//        $messages = $task->messages->transform(function ($message) {
-//            return [
-//                'argument' => $message->id,
-//                'action'   => SendMailJob::class,
-//                'title'    => $message->subject,
-//            ];
-//        });
-
         foreach ($task->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
-                'action'   => NextTransitionJob::class,
+                'action'   => 'condition',
                 'title'    => $message->subject,
             ];
             $messages[] = [
@@ -76,7 +60,7 @@ class WorkflowController extends Controller
         foreach ($task->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => ApplyTransitionByNameJob::class,
+                'action'   => 'condition',
                 'title'    => $stage->name,
             ];
         }
@@ -138,26 +122,10 @@ class WorkflowController extends Controller
             ];
         });
 
-//        $messages = $workflow->task->messages->transform(function ($message) {
-//            return [
-//                'argument' => $message->id,
-//                'action'   => SendMailJob::class,
-//                'title'    => $message->subject,
-//            ];
-//        });
-//
-//        $messagesOpened = $workflow->task->messages->transform(function ($message) {
-//            return [
-//                'argument' => $message->id,
-//                'action'   => OpenedMailJob::class,
-//                'title'    => $message->subject,
-//            ];
-//        });
-
         foreach ($task->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
-                'action'   => NextTransitionJob::class,
+                'action'   => 'condition',
                 'title'    => $message->subject,
             ];
             $messages[] = [
@@ -169,7 +137,7 @@ class WorkflowController extends Controller
         foreach ($task->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => ApplyTransitionByNameJob::class,
+                'action'   => 'condition',
                 'title'    => $stage->name,
             ];
         }
