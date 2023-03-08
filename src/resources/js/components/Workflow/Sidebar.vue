@@ -26,7 +26,7 @@
         <div class="d-flex flex-column gap-2">
             <div class="d-flex flex-wrap gap-2 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'start')">
+                     @dragstart="onDragStart($event, 'action.start')">
                     <span class="action-box px-3 justify-content-center">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
