@@ -8,7 +8,6 @@ return [
     'middleware'  => ['web'],
     'userModel'   => \App\Models\User::class,
     'emails'      => [
-        'info@primeros.de' => 'Primeros',
-        'neki@random.mail' => 'Random',
+        'change.this.email.in.config@example.com' => 'Example',
     ],
 ];
