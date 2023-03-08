@@ -37,6 +37,11 @@ class Workflow extends Model
         return $this->belongsTo(Task::class);
     }
 
+    public function leadJearneys()
+    {
+        return $this->hasMany(LeadJourney::class);
+    }
+
     public function getStateMachineDefinition()
     {
         $definitionArray = Yaml::parse($this->state_machine_definition);

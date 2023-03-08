@@ -264,6 +264,7 @@ class WorkflowController extends Controller
     {
         $workflow->status = Workflow::STATUS_DRAFT;
         $workflow->save();
+        $workflow->leadJearneys()->delete();
 
         request()->session()->flash('message', __('Workflow successfully unpublished!'));
 
