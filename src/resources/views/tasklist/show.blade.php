@@ -27,7 +27,7 @@
             </a>
             <a href="{{ route('messages.index', $task->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
-                    <x-sales-management::icons.workflow class="me-1"/> {{ __("Messages") }}
+                    <x-sales-management::icons.mail class="me-1"/> {{ __("Messages") }}
                 </span>
             </a>
         </div>
@@ -118,9 +118,9 @@
                 const searchValue = this.value.toLowerCase();
                 const leads = document.querySelectorAll('#leads .lead-item');
 
-                leads.forEach( lead => {
+                leads.forEach(lead => {
                     const email = lead.querySelector('.lead-email').textContent.toLowerCase();
-                    if(email.includes(searchValue)) {
+                    if (email.includes(searchValue)) {
                         lead.style.display = '';
                     } else {
                         lead.style.display = 'none';
