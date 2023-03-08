@@ -35,6 +35,7 @@ class AddTagJob implements ShouldQueue
 
         if ($email = $lead->contact->email) {
             info("Adding tag ID: {$this->tagId} to Contact: {$lead->contact->email}");
+            $lead->contact->tags()->sync($this->tagId);
         }
 
         NextTransitionJob::dispatch($this->leadId, $this->workflowId);
