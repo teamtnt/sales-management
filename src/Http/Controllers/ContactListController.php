@@ -5,6 +5,7 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\ContactListContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListDataTable;
+use Teamtnt\SalesManagement\Http\Requests\ContactListRequest;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 
@@ -14,6 +15,20 @@ class ContactListController extends Controller
     public function index(ContactListDataTable $contactListDataTable)
     {
         return $contactListDataTable->render('sales-management::contact-list.index');
+    }
+
+    public function create()
+    {
+        return view('sales-management::contact-list.create');
+    }
+
+    public function store(ContactListRequest $contactListRequest)
+    {
+        $contactList = ContactList::create($contactListRequest->validated());
+
+        request()->session()->flash('message', __('List successfully created!'));
+
+        return redirect()->route('lists.index');
     }
 
     public function edit(ContactList $contactList, ContactListContactDataTable $contactDataTable)

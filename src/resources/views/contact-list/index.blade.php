@@ -2,13 +2,14 @@
 
 @section('title', 'List')
 @section('breadcrumb')
-   <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
-   <li class="breadcrumb-item active">{{ __('List') }}</li>
+    <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
+    <li class="breadcrumb-item active">{{ __('List') }}</li>
 @endsection
 
 @section('content')
     <div class="container-fluid p-0">
-        <h1 class="h3 mb-3">{{ __('All Lists') }}</h1>
+        <a href="{{ route('lists.create') }}" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> {{ __("New List") }}</a>
+        <h1 class="h3 mb-3">{{ __('Lists') }}</h1>
         <div class="row">
             <div class="col-12">
                 <div class="card">

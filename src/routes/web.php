@@ -39,6 +39,8 @@ Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 
 Route::delete('/lists/contact/{contactListContact:id}/destroy', [ContactListController::class, 'contactDestroy'])->name('lists.contact.destroy');
 Route::get('/lists/contact/{task}/{pipelelineStage}/create', [ContactListController::class, 'createListFromPipelineStage'])->name('lists.create.from.stage');
 Route::post('/lists/contact/from/stage', [ContactListController::class, 'createListFromPipelineStageStore'])->name('lists.create.from.stage.store');
+Route::get('/lists/create', [ContactListController::class, 'create'])->name('lists.create');
+Route::post('/lists/store', [ContactListController::class, 'store'])->name('lists.store');
 
 // Deals
 Route::get('/deals', [DealController::class, 'index'])->name('deals.index');
@@ -57,7 +59,6 @@ Route::post('/tags/store', [TagsController::class, 'store'])->name('tags.store')
 Route::get('/tags/{tag:id}/edit', [TagsController::class, 'edit'])->name('tags.edit');
 Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('tags.update');
 Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
-
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');
