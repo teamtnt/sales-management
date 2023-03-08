@@ -48,6 +48,7 @@ class StateMachineBuilder
                 $transition['from'] = $element['sourceHandle'];
                 $transition['to'] = $toState['id'];
                 $transition['metadata'] = $element['targetNode']['data'];
+                $transition['metadata']['type'] = $element['targetNode']['type'];
                 $transition['name'] = $this->generateTransitionNameFromTransition($transition);
                 $this->transitions[] = $transition;
             }

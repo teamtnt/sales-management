@@ -17,14 +17,15 @@
     import ABSplit from "./Nodes/ABSplit.vue";
 
     const nodeTypes = {
-        "stage.changed": markRaw(StageChangedNode),
-        "message.sent": markRaw(SendMessageNode),
-        wait: markRaw(WaitNode),
-        start: markRaw(StartNode),
-        "add.tag": markRaw(AddTagNode),
-        "move.to.list": markRaw(MoveToList),
-        "message.opened": markRaw(MessageOpened),
-        "ab.split": markRaw(ABSplit),
+        "condition.stage.changed": markRaw(StageChangedNode),
+        "condition.message.opened": markRaw(MessageOpened),
+        
+        "action.message.sent": markRaw(SendMessageNode),
+        "action.wait": markRaw(WaitNode),
+        "action.start": markRaw(StartNode),
+        "action.add.tag": markRaw(AddTagNode),
+        "action.move.to.list": markRaw(MoveToList),
+        "action.ab.split": markRaw(ABSplit),
     };
 
     const props = defineProps({

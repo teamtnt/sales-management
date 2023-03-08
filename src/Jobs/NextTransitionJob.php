@@ -107,7 +107,7 @@ class NextTransitionJob implements ShouldQueue
             $nodeType = $fsm->getMetadataStore()->getTransitionMetadata($transition)['type'];
             info("The node type is $nodeType");
 
-            if ($nodeType == "condition") {
+            if (str_starts_with($nodeType, "condition") ) {
                 return true;
             }
         }

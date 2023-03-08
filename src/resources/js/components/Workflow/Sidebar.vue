@@ -47,7 +47,7 @@
             </div>
             <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'stage.changed')">
+                     @dragstart="onDragStart($event, 'condition.stage.changed')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -59,7 +59,7 @@
                         Stage Changed</span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'message.opened')">
+                     @dragstart="onDragStart($event, 'condition.message.opened')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -85,7 +85,7 @@
             </div>
             <div class="d-flex flex-wrap gap-4 align-items-center my-3 px-4">
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'message.sent')">
+                     @dragstart="onDragStart($event, 'action.message.sent')">
                     <span class="action-box pe-2 justify-content-end">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -98,7 +98,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'wait')">
+                     @dragstart="onDragStart($event, 'action.wait')">
                     <span class="action-box px-3 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -111,7 +111,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'add.tag')">
+                     @dragstart="onDragStart($event, 'action.add.tag')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -124,7 +124,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'move.to.list')">
+                     @dragstart="onDragStart($event, 'action.move.to.list')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -139,7 +139,7 @@
                     </span>
                 </div>
                 <div class="vue-flow__node-input shadow-sm" :draggable="true"
-                     @dragstart="onDragStart($event, 'ab.split')">
+                     @dragstart="onDragStart($event, 'action.ab.split')">
                     <span class="action-box ps-2 justify-content-center">
                         <span class="action-box__icon">
                             <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
