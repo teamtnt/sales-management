@@ -88,25 +88,25 @@
     </div>
 </template>
 
-<style scoped lang="scss">
-.handle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+<!--<style scoped lang="scss">-->
+<!--.handle {-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--    justify-content: center;-->
 
-    .circle {
-        display: block;
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background-color: gray;
-        pointer-events: none;
-    }
+<!--    .circle {-->
+<!--        display: block;-->
+<!--        position: absolute;-->
+<!--        width: 4px;-->
+<!--        height: 4px;-->
+<!--        border-radius: 50%;-->
+<!--        background-color: gray;-->
+<!--        pointer-events: none;-->
+<!--    }-->
 
-    & > svg {
-        position: absolute;
-        pointer-events: none;
-    }
-}
-</style>
+<!--    & > svg {-->
+<!--        position: absolute;-->
+<!--        pointer-events: none;-->
+<!--    }-->
+<!--}-->
+<!--</style>-->
