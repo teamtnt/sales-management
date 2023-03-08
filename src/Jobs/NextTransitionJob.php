@@ -49,6 +49,11 @@ class NextTransitionJob implements ShouldQueue
             return;
         }
 
+        //if the next element is a condition, then we don't execute it automatically
+        if($this->nextElementIsCondition($fsm, $leadJourney)) {
+            return;
+        }
+
         if(isset($fsm->getEnabledTransitions($leadJourney)[0])) {
             $transitionName = $fsm->getEnabledTransitions($leadJourney)[0]->getName();
         } else {
@@ -81,6 +86,26 @@ class NextTransitionJob implements ShouldQueue
     public function hasMultipleEnabledTransition($fsm, $leadJourney) {
         if (count($fsm->getEnabledTransitions($leadJourney)) > 1 ) {
             return true;
+        }
+        return false;
+    }
+
+    public function nextElementIsCondition($fsm, $leadJourney) {
+        if(!isset($fsm->getEnabledTransitions($leadJourney)[0])) {
+            return fasle;
+        }
+
+        $transition = $fsm->getEnabledTransition($leadJourney, $fsm->getEnabledTransitions($leadJourney)[0]->getName());
+
+        if(isset($fsm->getMetadataStore()->getTransitionMetadata($transition)['action'])) {
+            $action = $fsm->getMetadataStore()->getTransitionMetadata($transition)['action'];
+            $argument = $fsm->getMetadataStore()->getTransitionMetadata($transition)['argument'];
+            $nodeType = $fsm->getMetadataStore()->getTransitionMetadata($transition)['type'];
+            info("The node type is $nodeType");
+
+            if($nodeType == "condition") {
+                return true
+            }
         }
         return false;
     }
