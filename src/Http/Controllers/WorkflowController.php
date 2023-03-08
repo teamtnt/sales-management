@@ -8,6 +8,7 @@ use Teamtnt\SalesManagement\DataTables\WorkflowDataTable;
 use Teamtnt\SalesManagement\FSM\StateMachineBuilder;
 use Teamtnt\SalesManagement\Http\Requests\WorkflowRequest;
 use Teamtnt\SalesManagement\Jobs\ABSplitJob;
+use Teamtnt\SalesManagement\Jobs\AddTagJob;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 use Teamtnt\SalesManagement\Jobs\NextTransitionJob;
 use Teamtnt\SalesManagement\Models\ContactList;
@@ -50,7 +51,7 @@ class WorkflowController extends Controller
         $tags = Tag::all()->transform(function ($tag) {
             return [
                 'argument' => $tag->id,
-                'action'   => $tag::class,
+                'action'   => AddTagJob::class,
                 'title'    => $tag->name,
                 'type'     => 'action',
             ];
@@ -144,7 +145,7 @@ class WorkflowController extends Controller
         $tags = Tag::all()->transform(function ($tag) {
             return [
                 'argument' => $tag->id,
-                'action'   => $tag::class,
+                'action'   => AddTagJob::class,
                 'title'    => $tag->name,
                 'type'     => 'action',
             ];
