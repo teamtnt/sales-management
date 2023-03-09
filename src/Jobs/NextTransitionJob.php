@@ -35,6 +35,11 @@ class NextTransitionJob implements ShouldQueue
 
         $fsm = $workflow->fsm();
 
+        //if the next element is a condition, then we don't execute it automatically
+        if ($this->nextElementIsCondition($fsm, $leadJourney)) {
+            return;
+        }
+
         //if there are multiple enabled transitions, we need to send it to a Job that makes the decision, ie A/B Splitter
         if ($this->hasMultipleEnabledTransition($fsm, $leadJourney)) {
             info("We have multiple targets, so a decision must be made");
@@ -48,11 +53,6 @@ class NextTransitionJob implements ShouldQueue
                 info("Calling job: {$action} with argument: {$argument}");
             }
 
-            return;
-        }
-
-        //if the next element is a condition, then we don't execute it automatically
-        if ($this->nextElementIsCondition($fsm, $leadJourney)) {
             return;
         }
 
