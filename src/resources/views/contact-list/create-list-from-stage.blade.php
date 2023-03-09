@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                         {!! Form::model(null, ['route' => ['lists.create.from.stage.store'], 'method' => 'POST',  'enctype'=>'multipart/form-data']) !!}
-                        {{ Form::hidden('task_id', $taskId) }}
+                        {{ Form::hidden('campaign_id', $campaignId) }}
                         {{ Form::hidden('stage_id', $pipelineStageId) }}
                         <div class="row">
                             <div class="col-md-4">
@@ -30,7 +30,8 @@
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary me-2">{{__("Create List CSV")}}</button>
-                            <a href="{{ route('tasklist.show', $taskId) }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                            <a href="{{ route('campaign.show', $campaignId) }}"
+                               class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}
                     </div>

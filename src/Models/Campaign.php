@@ -5,7 +5,7 @@ namespace Teamtnt\SalesManagement\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Campaign extends Model
 {
     use HasFactory;
 
@@ -21,7 +21,7 @@ class Task extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'tasks';
+        $this->table = config('sales-management.tablePrefix').'campaigns';
         parent::__construct($attributes);
     }
 
@@ -50,7 +50,7 @@ class Task extends Model
 
     public function assignees()
     {
-        return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'task_assignee', 'task_id', 'assignee_id');
+        return $this->belongsToMany(config('sales-management.userModel'), config('sales-management.tablePrefix').'campaign_assignee', 'campaign_id', 'assignee_id');
     }
 
     public function messages()
@@ -63,7 +63,8 @@ class Task extends Model
         return $this->hasMany(Workflow::class);
     }
 
-    public function publishedWorkflows() {
+    public function publishedWorkflows()
+    {
         return $this->workflows()->where('status', Workflow::STATUS_PUBLISHED)->get();
     }
 }

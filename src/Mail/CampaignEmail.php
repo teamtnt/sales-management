@@ -12,7 +12,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TaskEmail extends Mailable implements ShouldQueue
+class CampaignEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -44,7 +44,7 @@ class TaskEmail extends Mailable implements ShouldQueue
             subject: $this->message->subject,
             metadata: [
                 'lead_id' => $this->lead->id,
-                'task_id' => $this->lead->task_id,
+                'campaign_id' => $this->lead->campaign_id,
                 'message_id' => $this->message->id,
             ],
         );
@@ -64,7 +64,7 @@ class TaskEmail extends Mailable implements ShouldQueue
         $messageBody = $this->message->body;
 
         return new Content(
-            view: 'sales-management::emails.taskmessage',
+            view: 'sales-management::emails.campaignmessage',
             with: [
                 'messageBody' => $messageBody,
             ],

@@ -12,14 +12,14 @@
             <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('dashboard') }}">
                     <i class="align-middle" data-feather="sliders"></i> <span
-                            class="align-middle">{{ __("Dashboard")}}</span>
+                        class="align-middle">{{ __("Dashboard")}}</span>
                 </a>
             </li>
 
             <li class="sidebar-item {{ request()->is('contacts*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('contacts.index') }}">
                     <i class="align-middle" data-feather="user"></i> <span
-                            class="align-middle">{{ __("Contacts")}}</span>
+                        class="align-middle">{{ __("Contacts")}}</span>
                 </a>
             </li>
 
@@ -29,17 +29,17 @@
                 </a>
             </li>
 
-            <li class="sidebar-item {{ request()->is('task*') ? 'active' : '' }}">
-                <a class="sidebar-link" href="{{ route('tasklist.index') }}">
+            <li class="sidebar-item {{ request()->is('campaign*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('campaign.index') }}">
                     <i class="align-middle" data-feather="thumbs-up"></i> <span
-                            class="align-middle">{{ __("Task List")}}</span>
+                        class="align-middle">{{ __("Campaigns")}}</span>
                 </a>
             </li>
 
             <li class="sidebar-item {{ request()->is('pipelines*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('pipelines.index') }}">
                     <i class="align-middle" data-feather="list"></i> <span
-                            class="align-middle">{{ __("Pipelines")}}</span>
+                        class="align-middle">{{ __("Pipelines")}}</span>
                 </a>
             </li>
             <li class="sidebar-item {{ request()->is('tags*') ? 'active' : '' }}">

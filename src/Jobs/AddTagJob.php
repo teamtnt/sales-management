@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Teamtnt\SalesManagement\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -8,11 +8,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Lead;
-use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Teamtnt\SalesManagement\Mail\CampaignEmail;
 use Illuminate\Support\Facades\Mail;
 
 class AddTagJob implements ShouldQueue
@@ -22,13 +22,14 @@ class AddTagJob implements ShouldQueue
     public $leadId;
     public $workflowId;
     public $tagId;
- 
-    public function __construct($leadId, $workflowId, $tagId) {
+
+    public function __construct($leadId, $workflowId, $tagId)
+    {
         $this->leadId = $leadId;
         $this->workflowId = $workflowId;
         $this->tagId = $tagId;
     }
- 
+
     public function handle(): void
     {
         $lead = Lead::find($this->leadId);

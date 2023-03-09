@@ -31,7 +31,7 @@ class MessageDataTable extends DataTable
      */
     public function query(Message $model): QueryBuilder
     {
-        return $model->newQuery()->whereTaskId($this->taskId);
+        return $model->newQuery()->whereCampaignId($this->campaignId);
     }
 
     /**

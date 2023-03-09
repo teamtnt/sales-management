@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\Pipeline;
 
-class TaskRequest extends FormRequest
+class CampaignRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,11 +29,11 @@ class TaskRequest extends FormRequest
         $contactListTable = app(ContactList::class)->getTable();
 
         return [
-            'name'            => 'required|string',
-            'description'     => 'nullable|string',
-            'assignees'       => 'nullable|array',
-            'status'          => 'nullable|integer',
-            'pipeline_id'     => "required|exists:{$pipelineTable},id",
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'assignees' => 'nullable|array',
+            'status' => 'nullable|integer',
+            'pipeline_id' => "required|exists:{$pipelineTable},id",
             'contact_list_id' => "nullable|exists:{$contactListTable},id",
         ];
     }

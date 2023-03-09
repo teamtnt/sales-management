@@ -3,10 +3,11 @@
 @section('title', 'Workflows')
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
-    <li class="breadcrumb-item">{{ __('Tasks') }}</li>
-    <li class="breadcrumb-item"><a href="{{ route('tasklist.show', $task->id) }}">{{ __($task->name) }}</a></li>
+    <li class="breadcrumb-item">{{ __('Campaigns') }}</li>
+    <li class="breadcrumb-item"><a href="{{ route('campaign.show', $campaign->id) }}">{{ __($campaign->name) }}</a>
+    </li>
     <li class="breadcrumb-item">
-        <a href="{{ route('workflows.edit', [$task->id, $workflow->id]) }}">{{ $workflow->name }}</a>
+        <a href="{{ route('workflows.edit', [$campaign->id, $workflow->id]) }}">{{ $workflow->name }}</a>
     </li>
     <li class="breadcrumb-item active">Debug State Machine</li>
 @endsection

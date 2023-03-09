@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create(config('sales-management.tablePrefix').'leads', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("task_id")->index();
+            $table->unsignedBigInteger("campaign_id")->index();
             $table->unsignedBigInteger("contact_id")->index();
             $table->unsignedBigInteger("pipeline_id")->index();
             $table->unsignedBigInteger("pipeline_stage_id")->index();

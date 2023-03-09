@@ -56,25 +56,25 @@ class ContactListController extends Controller
         return redirect()->route('lists.edit', $contactListId);
     }
 
-    public function createListFromPipelineStage($taskId, $pipelineStageId)
+    public function createListFromPipelineStage($campaignId, $pipelineStageId)
     {
-        return view('sales-management::contact-list.create-list-from-stage', compact('taskId', 'pipelineStageId'));
+        return view('sales-management::contact-list.create-list-from-stage', compact('campaignId', 'pipelineStageId'));
     }
 
     public function createListFromPipelineStageStore(Request $request)
     {
-        $taskId = request()->get('task_id');;
+        $campaignId = request()->get('campaign_id');;
         $stageId = request()->get('stage_id');
 
         $contactList = new ContactList;
-        $contactList->name = $request->get('new_list', "New list from $taskId stage $stageId");
+        $contactList->name = $request->get('new_list', "New list from $campaignId stage $stageId");
         $contactList->save();
 
-        createListFromPipelineStage($contactList->id, $taskId, $stageId);
+        createListFromPipelineStage($contactList->id, $campaignId, $stageId);
 
         request()->session()->flash('message', __('List has been successfully created!'));
 
-        return redirect()->route('tasklist.show', $taskId);
+        return redirect()->route('campaign.show', $campaignId);
     }
 
 }

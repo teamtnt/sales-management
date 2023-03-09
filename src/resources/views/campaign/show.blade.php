@@ -1,6 +1,6 @@
 @extends('sales-management::layouts.app')
 
-@section('title', $task->name)
+@section('title', $campaign->name)
 
 @section('add-css-class', 'overflow-auto')
 @push('styles')
@@ -12,20 +12,20 @@
 @endpush
 @section('content')
     <div class="container-fluid p-0" style="height: 75vh;">
-        <h1 class="h3 mb-3">{{ $task->name }}</h1>
-        <h6 class="mb-3">{{ $task->description }}</h6>
+        <h1 class="h3 mb-3">{{ $campaign->name }}</h1>
+        <h6 class="mb-3">{{ $campaign->description }}</h6>
         <div class="d-flex gap-2">
-            <a href="{{ route('messages.create', $task->id) }}" class="btn btn-warning mb-3">
+            <a href="{{ route('messages.create', $campaign->id) }}" class="btn btn-warning mb-3">
                 <span class="d-flex align-items-center">
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Send email to leads") }}
                 </span>
             </a>
-            <a href="{{ route('workflows.index', $task->id) }}" class="btn btn-info mb-3">
+            <a href="{{ route('workflows.index', $campaign->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
                     <x-sales-management::icons.workflow class="me-1"/> {{ __("Workflows") }}
                 </span>
             </a>
-            <a href="{{ route('messages.index', $task->id) }}" class="btn btn-info mb-3">
+            <a href="{{ route('messages.index', $campaign->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Messages") }}
                 </span>
@@ -33,8 +33,8 @@
         </div>
 
 
-        <div class="row" style="flex-wrap: unset;" id="pipeline" data-pipeline-id="{{$task->pipeline_id}}">
-            <div class="task-card">
+        <div class="row" style="flex-wrap: unset;" id="pipeline" data-pipeline-id="{{$campaign->pipeline_id}}">
+            <div class="campaign-card">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title overf">{{ __("Leads") }}</h5>
@@ -42,12 +42,13 @@
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>
                              </span>
-                            <input id="lead-search" class="form-control" type="search" name="lead-search" placeholder="Search leads by email...">
+                            <input id="lead-search" class="form-control" type="search" name="lead-search"
+                                   placeholder="Search leads by email...">
                         </div>
                     </div>
                     <div class="card-body">
                         <div id="leads" data-stage-id="0">
-                            @foreach($task->getLeadsOnStage($task->pipeline_id, 0, 100) as $lead)
+                            @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 100) as $lead)
                                 <x-sales-management::lead-card :lead="$lead"/>
                             @endforeach
 
@@ -58,8 +59,8 @@
                     </div>
                 </div>
             </div>
-            @foreach($task->pipeline->stages as $stage)
-                <div class="task-card">
+            @foreach($campaign->pipeline->stages as $stage)
+                <div class="campaign-card">
                     <div class="card">
                         <div class="card-header">
                             <div class="card-actions float-end">
@@ -78,7 +79,7 @@
 
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item"
-                                           href="{{ route('lists.create.from.stage', [$task->id, $stage->id]) }}">{{__("Create New List")}}</a>
+                                           href="{{ route('lists.create.from.stage', [$campaign->id, $stage->id]) }}">{{__("Create New List")}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +90,7 @@
 
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
-                                @foreach($task->getLeadsOnStage($task->pipeline_id, $stage->id, 100) as $lead)
+                                @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 100) as $lead)
                                     <x-sales-management::lead-card :lead="$lead"/>
                                 @endforeach
 

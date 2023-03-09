@@ -16,7 +16,7 @@ return new class extends Migration {
         Schema::create(config('sales-management.tablePrefix').'lead_journeys', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("lead_id")->index();
-            $table->unsignedBigInteger("task_id")->index();
+            $table->unsignedBigInteger("campaign_id")->index();
             $table->unsignedBigInteger("workflow_id")->index();
             $table->string("current_place")->nullable();
             $table->timestamps();

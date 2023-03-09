@@ -3,7 +3,7 @@
 namespace Teamtnt\SalesManagement\DataTables;
 
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Support\Facades\DB;
 
-class TaskListDataTable extends DataTable
+class CampaignDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,13 +24,13 @@ class TaskListDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('assignee', function (Task $task) {
-                return $task->assignees->implode('email', ', ');
+            ->addColumn('assignee', function (Campaign $campaign) {
+                return $campaign->assignees->implode('email', ', ');
             })
-            ->editColumn('name', function (Task $task) {
-                return '<a href="'.route('tasklist.show', $task).'">'.$task->name.'</a>';
+            ->editColumn('name', function (Campaign $campaign) {
+                return '<a href="'.route('campaign.show', $campaign).'">'.$campaign->name.'</a>';
             })
-            ->addColumn('action', 'sales-management::tasklist.actions')
+            ->addColumn('action', 'sales-management::campaign.actions')
             ->rawColumns(['name', 'action'])
             ->setRowId('id');
     }
@@ -38,10 +38,10 @@ class TaskListDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param  Task  $model
+     * @param  Campaign  $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Task $model): QueryBuilder
+    public function query(Campaign $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -55,7 +55,7 @@ class TaskListDataTable extends DataTable
     {
         return $this->builder()
             ->dom('lfrtip')
-            ->setTableId('task-list-table')
+            ->setTableId('campaign-list-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
@@ -92,6 +92,6 @@ class TaskListDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Task_'.date('YmdHis');
+        return 'Campaign_'.date('YmdHis');
     }
 }

@@ -4,7 +4,7 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\Models\LeadJourney;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
 class PostmarkWebhookController extends Controller
@@ -17,11 +17,11 @@ class PostmarkWebhookController extends Controller
         if (method_exists($this, $method)) {
 
             $leadId = $payload['Metadata']['lead_id'];
-            $taskId = $payload['Metadata']['task_id'];
+            $campaignId = $payload['Metadata']['campaign_id'];
             $messageId = $payload['Metadata']['message_id'];
-            $task = Task::find($taskId);
+            $campaign = Campaign::find($campaignId);
 
-            $response = $this->{$method}($payload, $task, $leadId, $messageId);
+            $response = $this->{$method}($payload, $campaign, $leadId, $messageId);
 
             return $response;
         }
@@ -30,10 +30,10 @@ class PostmarkWebhookController extends Controller
 
     }
 
-    public function handleOpen($payload, $task, $leadId, $messageId)
+    public function handleOpen($payload, $campaign, $leadId, $messageId)
     {
         $transitionName = 'transition.message.opened.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadId);
     }
 
     public function handleDelivery($payload)
@@ -41,7 +41,7 @@ class PostmarkWebhookController extends Controller
         return;
 
         $transitionName = 'transition.message.delivery.yes.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
     public function handleBounce($payload)
@@ -49,7 +49,7 @@ class PostmarkWebhookController extends Controller
         return;
 
         $transitionName = 'transition.message.bounce.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
     public function handleSpamComplaint($payload)
@@ -57,7 +57,7 @@ class PostmarkWebhookController extends Controller
         return;
 
         $transitionName = 'transition.message.spam.complaint.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
     public function handleLinkClick($payload)
@@ -65,7 +65,7 @@ class PostmarkWebhookController extends Controller
         return;
 
         $transitionName = 'transition.message.link.click.yes.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
     public function handleSubscriptionChange($payload)
@@ -73,12 +73,12 @@ class PostmarkWebhookController extends Controller
         return;
 
         $transitionName = 'transition.message.subscription.change.yes.'.$messageId;
-        $this->applyTransition($task, $transitionName, $leadJourney, $leadId);
+        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
-    public function applyTransition($task, $transitionName, $leadId)
+    public function applyTransition($campaign, $transitionName, $leadId)
     {
-        foreach ($task->publishedWorkflows() as $workflow) {
+        foreach ($campaign->publishedWorkflows() as $workflow) {
             ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, $transitionName);
         }
     }

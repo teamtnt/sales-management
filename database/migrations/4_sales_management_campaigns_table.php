@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create(config('sales-management.tablePrefix').'tasks', function (Blueprint $table) {
+        Schema::create(config('sales-management.tablePrefix').'campaigns', function (Blueprint $table) {
             $table->id();
             $table->string("name")->nullable();
             $table->string("description")->nullable();
@@ -17,14 +17,14 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::create(config('sales-management.tablePrefix').'task_assignee', function (Blueprint $table) {
+        Schema::create(config('sales-management.tablePrefix').'campaign_assignee', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("task_id");
+            $table->unsignedBigInteger("campaign_id");
             $table->unsignedBigInteger("assignee_id");
 
-            $table->foreign('task_id')
+            $table->foreign('campaign_id')
                 ->references('id')
-                ->on(config('sales-management.tablePrefix').'tasks')
+                ->on(config('sales-management.tablePrefix').'campaigns')
                 ->cascadeOnDelete();
 
             $table->foreign('assignee_id')
@@ -36,7 +36,7 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::drop(config('sales-management.tablePrefix').'task_assignee');
-        Schema::drop(config('sales-management.tablePrefix').'tasks');
+        Schema::drop(config('sales-management.tablePrefix').'campaign_assignee');
+        Schema::drop(config('sales-management.tablePrefix').'campaigns');
     }
 };

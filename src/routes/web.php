@@ -8,7 +8,7 @@ use Teamtnt\SalesManagement\Http\Controllers\DealController;
 use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TagsController;
-use Teamtnt\SalesManagement\Http\Controllers\TaskListController;
+use Teamtnt\SalesManagement\Http\Controllers\CampaignController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactListController;
 
@@ -37,7 +37,7 @@ Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index
 Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
 Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
 Route::delete('/lists/contact/{contactListContact:id}/destroy', [ContactListController::class, 'contactDestroy'])->name('lists.contact.destroy');
-Route::get('/lists/contact/{task}/{pipelelineStage}/create', [ContactListController::class, 'createListFromPipelineStage'])->name('lists.create.from.stage');
+Route::get('/lists/contact/{campaign}/{pipelelineStage}/create', [ContactListController::class, 'createListFromPipelineStage'])->name('lists.create.from.stage');
 Route::post('/lists/contact/from/stage', [ContactListController::class, 'createListFromPipelineStageStore'])->name('lists.create.from.stage.store');
 Route::get('/lists/create', [ContactListController::class, 'create'])->name('lists.create');
 Route::post('/lists/store', [ContactListController::class, 'store'])->name('lists.store');
@@ -50,7 +50,7 @@ Route::get('/deals/{deal:id}/edit', [DealController::class, 'edit'])->name('deal
 Route::put('/deals/{deal:id}/update', [DealController::class, 'update'])->name('deals.update');
 Route::delete('/deals/{deal:id}/destroy', [DealController::class, 'destroy'])->name('deals.destroy');
 
-Route::post('/stage/chage', [TaskListController::class, 'stageChange'])->name('stage.change');
+Route::post('/stage/chage', [CampaignController::class, 'stageChange'])->name('stage.change');
 
 // Tags
 Route::get('/tags', [TagsController::class, 'index'])->name('tags.index');
@@ -68,15 +68,15 @@ Route::get('/pipelines/{pipeline:id}/edit', [PipelineController::class, 'edit'])
 Route::put('/pipelines/{pipeline:id}/update', [PipelineController::class, 'update'])->name('pipelines.update');
 Route::delete('/pipelines/{pipeline:id}/destroy', [PipelineController::class, 'destroy'])->name('pipelines.destroy');
 
-Route::get('/tasks', [TaskListController::class, 'index'])->name('tasklist.index');
-Route::get('/task/create', [TaskListController::class, 'create'])->name('tasklist.create');
-Route::post('/task/store', [TaskListController::class, 'store'])->name('tasklist.store');
-Route::get('/task/{task}', [TaskListController::class, 'show'])->name('tasklist.show');
-Route::get('/task/{task}/edit', [TaskListController::class, 'edit'])->name('tasklist.edit');
-Route::put('/task/{task}/update', [TaskListController::class, 'update'])->name('tasklist.update');
-Route::delete('/task/{task:id}/destroy', [TaskListController::class, 'destroy'])->name('tasklist.destroy');
+Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaign.index');
+Route::get('/campaign/create', [CampaignController::class, 'create'])->name('campaign.create');
+Route::post('/campaign/store', [CampaignController::class, 'store'])->name('campaign.store');
+Route::get('/campaign/{campaign}', [CampaignController::class, 'show'])->name('campaign.show');
+Route::get('/campaign/{campaign}/edit', [CampaignController::class, 'edit'])->name('campaign.edit');
+Route::put('/campaign/{campaign}/update', [CampaignController::class, 'update'])->name('campaign.update');
+Route::delete('/campaign/{campaign:id}/destroy', [CampaignController::class, 'destroy'])->name('campaign.destroy');
 
-Route::group(['prefix' => 'task/{task}'], function () {
+Route::group(['prefix' => 'campaign/{campaign}'], function () {
     // Messages
     Route::get('/messages', [MessagesController::class, 'index'])->name('messages.index');
     Route::get('/messages/create', [MessagesController::class, 'create'])->name('messages.create');

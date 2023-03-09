@@ -8,11 +8,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Lead;
-use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Teamtnt\SalesManagement\Mail\CampaignEmail;
 use Illuminate\Support\Facades\Mail;
 
 class SendMailJob implements ShouldQueue
@@ -38,7 +38,7 @@ class SendMailJob implements ShouldQueue
         $message = Message::find($this->mailId);
 
         if ($email = $lead->contact->email) {
-            Mail::to($email)->send(new TaskEmail($message, $lead));
+            Mail::to($email)->send(new CampaignEmail($message, $lead));
             MessageNotOpenedJob::dispatch($this->leadId, $this->workflowId, $this->mailId)
                 ->delay(now()->addHours(24));
 

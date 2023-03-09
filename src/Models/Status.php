@@ -10,12 +10,12 @@ class Status
 
     const WORKFLOW_STATUS_NEW = 200;
 
-    const TASK_STATUS_NEW = 300;
+    const CAMPAIGN_STATUS_NEW = 300;
 
-    public static function getTaskStatusNames()
+    public static function getCampaignStatusNames()
     {
         return [
-            self::TASK_STATUS_NEW => __('New'),
+            self::CAMPAIGN_STATUS_NEW => __('New'),
         ];
     }
 }

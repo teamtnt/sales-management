@@ -25,9 +25,9 @@ class MessageRequest extends FormRequest
     {
         return [
             'from_email' => 'required|email',
-            'subject'    => 'required|string',
-            'body'       => 'string',
-            'task_id'    => 'required|int',
+            'subject' => 'required|string',
+            'body' => 'string',
+            'campaign_id' => 'required|int',
         ];
     }
 }

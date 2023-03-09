@@ -4,8 +4,8 @@
 
     <div class="container-fluid p-0">
 
-        <a href="#" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> New task</a>
-        <h1 class="h3 mb-3">Tasks</h1>
+        <a href="#" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> New campaign</a>
+        <h1 class="h3 mb-3">Campaigns</h1>
 
         <div class="row">
             <div class="col-12 col-lg-6 col-xl-3">
@@ -14,7 +14,13 @@
                         <div class="card-actions float-end">
                             <div class="dropdown position-relative">
                                 <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -29,31 +35,38 @@
                     </div>
                     <div class="card-body">
 
-                        <div id="tasks-upcoming">
+                        <div id="campaigns-upcoming">
 
                             <div class="card mb-3 bg-light cursor-grab border">
                                 <div class="card-body p-3">
                                     <div class="float-end mr-n2">
                                         <label class="form-check">
-                                            <input type="checkbox" class="form-check-input" aria-label="completed" checked="">
+                                            <input type="checkbox" class="form-check-input" aria-label="completed"
+                                                   checked="">
                                         </label>
                                     </div>
-                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.</p>
+                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+                                        Maecenas malesuada.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
-                            </div><div class="card mb-3 bg-light cursor-grab border">
+                            </div>
+                            <div class="card mb-3 bg-light cursor-grab border">
                                 <div class="card-body p-3">
                                     <div class="float-end mr-n2">
                                         <label class="form-check">
-                                            <input type="checkbox" class="form-check-input" aria-label="completed" checked="">
+                                            <input type="checkbox" class="form-check-input" aria-label="completed"
+                                                   checked="">
                                         </label>
                                     </div>
-                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>
+                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+                                        imperdiet iaculis, ipsum.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -65,9 +78,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -79,9 +94,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique.</p>
+                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis.
+                                        Curabitur a felis tristique.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -93,9 +110,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>
+                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+                                        imperdiet iaculis, ipsum.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -103,7 +122,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <a href="#" class="btn btn-primary">Add new task</a>
+                            <a href="#" class="btn btn-primary">Add new campaign</a>
                         </div>
 
                     </div>
@@ -115,7 +134,13 @@
                         <div class="card-actions float-end">
                             <div class="dropdown position-relative">
                                 <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -130,7 +155,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div id="tasks-progress">
+                        <div id="campaigns-progress">
                             <div class="card mb-3 bg-light cursor-grab border">
                                 <div class="card-body p-3">
                                     <div class="float-end mr-n2">
@@ -138,9 +163,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.</p>
+                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+                                        Maecenas malesuada.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -152,9 +179,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -166,9 +195,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>
+                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+                                        imperdiet iaculis, ipsum.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -176,7 +207,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <a href="#" class="btn btn-primary">Add new task</a>
+                            <a href="#" class="btn btn-primary">Add new campaign</a>
                         </div>
 
                     </div>
@@ -188,7 +219,13 @@
                         <div class="card-actions float-end">
                             <div class="dropdown position-relative">
                                 <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -203,7 +240,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div id="tasks-completed">
+                        <div id="campaigns-completed">
                             <div class="card mb-3 bg-light cursor-grab border">
                                 <div class="card-body p-3">
                                     <div class="float-end mr-n2">
@@ -211,9 +248,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>
+                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+                                        imperdiet iaculis, ipsum.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -225,9 +264,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique.</p>
+                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis.
+                                        Curabitur a felis tristique.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -239,9 +280,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -253,9 +296,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.</p>
+                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+                                        Maecenas malesuada.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -267,9 +312,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -277,7 +324,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <a href="#" class="btn btn-primary">Add new task</a>
+                            <a href="#" class="btn btn-primary">Add new campaign</a>
                         </div>
 
                     </div>
@@ -289,7 +336,13 @@
                         <div class="card-actions float-end">
                             <div class="dropdown position-relative">
                                 <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -304,7 +357,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div id="tasks-completed">
+                        <div id="campaigns-completed">
                             <div class="card mb-3 bg-light cursor-grab border">
                                 <div class="card-body p-3">
                                     <div class="float-end mr-n2">
@@ -312,9 +365,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum.</p>
+                                    <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec,
+                                        imperdiet iaculis, ipsum.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-2.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -326,9 +381,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis tristique.</p>
+                                    <p>In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis.
+                                        Curabitur a felis tristique.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-4.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -340,9 +397,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -354,9 +413,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada.</p>
+                                    <p>Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
+                                        Maecenas malesuada.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -368,9 +429,11 @@
                                             <input type="checkbox" class="form-check-input" aria-label="completed">
                                         </label>
                                     </div>
-                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis.</p>
+                                    <p>Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu
+                                        sollicitudin urna dolor sagittis.</p>
                                     <div class="float-end mt-n1">
-                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32" height="32" class="rounded-circle" alt="Avatar">
+                                        <img src="https://appstack.bootlab.io/img/avatars/avatar-3.jpg" width="32"
+                                             height="32" class="rounded-circle" alt="Avatar">
                                     </div>
                                     <a class="btn btn-primary btn-sm" href="#">View</a>
                                 </div>
@@ -378,7 +441,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <a href="#" class="btn btn-primary">Add new task</a>
+                            <a href="#" class="btn btn-primary">Add new campaign</a>
                         </div>
 
                     </div>

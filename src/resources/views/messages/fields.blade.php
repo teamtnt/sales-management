@@ -1,4 +1,4 @@
-<input type="hidden" name="task_id" value="{{ $task->id }}">
+<input type="hidden" name="campaign_id" value="{{ $campaign->id }}">
 
 <div class="row">
     <div class="col-md-12">
@@ -21,9 +21,9 @@
     </div>
     <div class="col-md-12">
         <text-area
-                name="body"
-                error-message="{{ $errors->first('body') }}"
-                message-body="{{ $message->body ?? '' }}">
+            name="body"
+            error-message="{{ $errors->first('body') }}"
+            message-body="{{ $message->body ?? '' }}">
         </text-area>
     </div>
 </div>

@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create(config('sales-management.tablePrefix').'messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("task_id")->index();
+            $table->unsignedBigInteger("campaign_id")->index();
             $table->string("from_email");
             $table->string("from_name")->nullable();
             $table->string("subject");

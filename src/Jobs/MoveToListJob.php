@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Teamtnt\SalesManagement\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -8,11 +8,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Lead;
-use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Teamtnt\SalesManagement\Mail\CampaignEmail;
 use Illuminate\Support\Facades\Mail;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 
@@ -23,13 +23,14 @@ class MoveToListJob implements ShouldQueue
     public $leadId;
     public $workflowId;
     public $listId;
- 
-    public function __construct($leadId, $workflowId, $listId) {
+
+    public function __construct($leadId, $workflowId, $listId)
+    {
         $this->leadId = $leadId;
         $this->workflowId = $workflowId;
         $this->listId = $listId;
     }
- 
+
     public function handle(): void
     {
         $lead = Lead::find($this->leadId);

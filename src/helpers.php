@@ -36,10 +36,10 @@ if (!function_exists('importContactsToContactList')) {
 }
 
 if (!function_exists('createListFromPipelineStage')) {
-    function createListFromPipelineStage($contactListId, $taskId, $stageId)
+    function createListFromPipelineStage($contactListId, $campaignId, $stageId)
     {
         $select = Lead::select(["contact_id", \DB::raw("{$contactListId} as contact_list_id")])
-            ->where('task_id', $taskId)
+            ->where('campaign_id', $campaignId)
             ->where('pipeline_stage_id', $stageId);
 
         $bindings = $select->getBindings();
@@ -54,6 +54,7 @@ if (!function_exists('createListFromPipelineStage')) {
  * Get all Tags
  * @return mixed
  */
-function getAllTags(): ?string {
+function getAllTags(): ?string
+{
     return Tag::all()->toJson();
 }

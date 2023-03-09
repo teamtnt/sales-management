@@ -15,7 +15,7 @@ return new class extends Migration {
     {
         Schema::create(config('sales-management.tablePrefix').'workflows', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("task_id")->index();
+            $table->unsignedBigInteger("campaign_id")->index();
             $table->string("name");
             $table->text("description")->nullable();
             $table->jsonb("elements")->nullable();

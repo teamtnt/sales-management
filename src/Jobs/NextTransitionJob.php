@@ -8,7 +8,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Workflow;
 
 class NextTransitionJob implements ShouldQueue
@@ -107,7 +107,7 @@ class NextTransitionJob implements ShouldQueue
             $nodeType = $fsm->getMetadataStore()->getTransitionMetadata($transition)['type'];
             info("The node type is $nodeType");
 
-            if (str_starts_with($nodeType, "condition") ) {
+            if (str_starts_with($nodeType, "condition")) {
                 return true;
             }
         }

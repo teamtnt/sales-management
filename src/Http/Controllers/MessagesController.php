@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\MessageDataTable;
 use Teamtnt\SalesManagement\Http\Requests\MessageRequest;
 use Teamtnt\SalesManagement\Models\Message;
-use Teamtnt\SalesManagement\Models\Task;
-use Teamtnt\SalesManagement\Mail\TaskEmail;
+use Teamtnt\SalesManagement\Models\Campaign;
+use Teamtnt\SalesManagement\Mail\CampaignEmail;
 use Illuminate\Support\Facades\Mail;
 
 class MessagesController extends Controller
@@ -17,26 +17,26 @@ class MessagesController extends Controller
      * @param  MessageDataTable  $messageDataTable
      * @return mixed
      */
-    public function index(Task $task, MessageDataTable $messageDataTable)
+    public function index(Campaign $campaign, MessageDataTable $messageDataTable)
     {
         return $messageDataTable
-            ->with('taskId', $task->id)
-            ->render('sales-management::messages.index', compact('task'));
+            ->with('campaignId', $campaign->id)
+            ->render('sales-management::messages.index', compact('campaign'));
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(Task $task)
+    public function create(Campaign $campaign)
     {
-        return view('sales-management::messages.create', compact('task'));
+        return view('sales-management::messages.create', compact('campaign'));
     }
 
     /**
      * @param  MessageRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Task $task, MessageRequest $messageRequest)
+    public function store(Campaign $campaign, MessageRequest $messageRequest)
     {
         $request = $messageRequest->all();
         $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
@@ -44,16 +44,16 @@ class MessagesController extends Controller
 
         request()->session()->flash('message', __('Message successfully created!'));
 
-        return redirect()->route('messages.index', $task);
+        return redirect()->route('messages.index', $campaign);
     }
 
     /**
      * @param  Message  $message
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Task $task, Message $message)
+    public function edit(Campaign $campaign, Message $message)
     {
-        return view('sales-management::messages.edit', compact('message', 'task'));
+        return view('sales-management::messages.edit', compact('message', 'campaign'));
     }
 
     /**
@@ -61,7 +61,7 @@ class MessagesController extends Controller
      * @param  Message  $message
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Task $task, MessageRequest $messageRequest, Message $message)
+    public function update(Campaign $campaign, MessageRequest $messageRequest, Message $message)
     {
         $request = $messageRequest->all();
         $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
@@ -84,9 +84,9 @@ class MessagesController extends Controller
                 $message->messageStages()->updateOrCreate(
                     ['id' => $messageStage['id']],
                     [
-                        'name'        => $messageStage['name'],
+                        'name' => $messageStage['name'],
                         'description' => $messageStage['description'],
-                        'color'       => $messageStage['color'],
+                        'color' => $messageStage['color'],
                     ]
                 );
             }
@@ -94,33 +94,33 @@ class MessagesController extends Controller
 
         request()->session()->flash('message', __('Message successfully updated!'));
 
-        return redirect()->route('messages.index', $task);
+        return redirect()->route('messages.index', $campaign);
     }
 
     /**
      * @param  Message  $message
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task, Message $message)
+    public function destroy(Campaign $campaign, Message $message)
     {
         $message->delete();
 
         request()->session()->flash('message', __('Message successfully deleted!'));
 
-        return redirect()->route('messages.index', $task);
+        return redirect()->route('messages.index', $campaign);
     }
 
-    public function sendToAllLeads(Task $task, Message $message)
+    public function sendToAllLeads(Campaign $campaign, Message $message)
     {
-        $leads = $task->leads()->with('contact')->get();
+        $leads = $campaign->leads()->with('contact')->get();
 
         foreach ($leads as $lead) {
             if ($email = $lead->contact->email) {
-                Mail::to($email)->send(new TaskEmail($message, $lead));
+                Mail::to($email)->send(new CampaignEmail($message, $lead));
             }
         }
         request()->session()->flash('message', __('Message has been sent to all leads!'));
 
-        return redirect()->route('messages.index', $task);
+        return redirect()->route('messages.index', $campaign);
     }
 }

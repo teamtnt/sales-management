@@ -19,7 +19,7 @@ class Workflow extends Model
     const STATUS_PUBLISHED = 1;
 
     protected $fillable = [
-        'task_id',
+        'campaign_id',
         'name',
         'description',
         'elements',
@@ -32,9 +32,9 @@ class Workflow extends Model
         parent::__construct($attributes);
     }
 
-    public function task()
+    public function campaign()
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Campaign::class);
     }
 
     public function leadJearneys()

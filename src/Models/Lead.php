@@ -23,8 +23,8 @@ class Lead extends Model
         return $this->belongsTo(Contact::class);
     }
 
-    public function task()
+    public function campaign()
     {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Campaign::class);
     }
 }

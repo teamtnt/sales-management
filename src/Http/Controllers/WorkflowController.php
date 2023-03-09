@@ -13,7 +13,7 @@ use Teamtnt\SalesManagement\Jobs\MoveToListJob;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\Tag;
 use Teamtnt\SalesManagement\Models\Workflow;
-use Teamtnt\SalesManagement\Models\Task;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
 use Teamtnt\SalesManagement\Jobs\SendMailJob;
 use Teamtnt\SalesManagement\Jobs\WaitJob;
@@ -25,88 +25,88 @@ class WorkflowController extends Controller
      * @param  WorkflowDataTable  $workflowDataTable
      * @return mixed
      */
-    public function index(Task $task, WorkflowDataTable $workflowDataTable)
+    public function index(Campaign $campaign, WorkflowDataTable $workflowDataTable)
     {
         return $workflowDataTable
-            ->with('taskId', $task->id)
-            ->render('sales-management::workflows.index', compact('task'));
+            ->with('campaignId', $campaign->id)
+            ->render('sales-management::workflows.index', compact('campaign'));
     }
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function create(Task $task)
+    public function create(Campaign $campaign)
     {
         $contactLists = ContactList::all()->transform(function ($contactList) {
             return [
                 'argument' => $contactList->id,
-                'action'   => MoveToListJob::class,
-                'title'    => $contactList->name,
-                'type'     => 'action',
+                'action' => MoveToListJob::class,
+                'title' => $contactList->name,
+                'type' => 'action',
             ];
         });
 
         $tags = Tag::all()->transform(function ($tag) {
             return [
                 'argument' => $tag->id,
-                'action'   => AddTagJob::class,
-                'title'    => $tag->name,
-                'type'     => 'action',
+                'action' => AddTagJob::class,
+                'title' => $tag->name,
+                'type' => 'action',
             ];
         });
         $stages = $messages = $messagesOpened = [];
-        foreach ($task->messages as $message) {
+        foreach ($campaign->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
-                'action'   => 'condition',
-                'title'    => $message->subject,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $message->subject,
+                'type' => 'condition',
             ];
             $messages[] = [
                 'argument' => $message->id,
-                'action'   => SendMailJob::class,
-                'title'    => $message->subject,
-                'type'     => 'action',
+                'action' => SendMailJob::class,
+                'title' => $message->subject,
+                'type' => 'action',
             ];
         }
-        foreach ($task->pipeline->stages as $stage) {
+        foreach ($campaign->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => 'condition',
-                'title'    => $stage->name,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $stage->name,
+                'type' => 'condition',
             ];
         }
 
         $abSplit[] = [
             'argument' => '50/50',
-            'action'   => ABSplitJob::class,
-            'title'    => '50/50',
-            'type'     => 'action',
+            'action' => ABSplitJob::class,
+            'title' => '50/50',
+            'type' => 'action',
         ];
 
         $waitOptions = [
             [
                 'argument' => 1,
-                'action'   => WaitJob::class,
-                'title'    => '1h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '1h',
+                'type' => 'action',
             ],
             [
                 'argument' => 2,
-                'action'   => WaitJob::class,
-                'title'    => '2h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '2h',
+                'type' => 'action',
             ],
             [
                 'argument' => 3,
-                'action'   => WaitJob::class,
-                'title'    => '3h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '3h',
+                'type' => 'action',
             ],
         ];
 
-        return view('sales-management::workflows.create', compact('task',
+        return view('sales-management::workflows.create', compact('campaign',
             'contactLists', 'waitOptions', 'messages', 'messagesOpened',
             'tags', 'abSplit', 'stages'));
     }
@@ -115,10 +115,10 @@ class WorkflowController extends Controller
      * @param  WorkflowRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Task $task, StateMachineBuilder $stateMachineBuilder)
+    public function store(Campaign $campaign, StateMachineBuilder $stateMachineBuilder)
     {
         $workflow = new Workflow;
-        $workflow->task_id = $task->id;
+        $workflow->campaign_id = $campaign->id;
         $workflow->name = request()->title;
         $workflow->elements = json_encode(request()->elements);
         $workflow->state_machine_definition = $stateMachineBuilder->buildFromElements(request()->elements, 'workflow');
@@ -129,79 +129,79 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Task $task, Workflow $workflow)
+    public function edit(Campaign $campaign, Workflow $workflow)
     {
         $contactLists = ContactList::all()->transform(function ($contactList) {
             return [
                 'argument' => $contactList->id,
-                'action'   => MoveToListJob::class,
-                'title'    => $contactList->name,
-                'type'     => 'action',
+                'action' => MoveToListJob::class,
+                'title' => $contactList->name,
+                'type' => 'action',
             ];
         });
 
         $tags = Tag::all()->transform(function ($tag) {
             return [
                 'argument' => $tag->id,
-                'action'   => AddTagJob::class,
-                'title'    => $tag->name,
-                'type'     => 'action',
+                'action' => AddTagJob::class,
+                'title' => $tag->name,
+                'type' => 'action',
             ];
         });
         $stages = $messages = $messagesOpened = [];
-        foreach ($task->messages as $message) {
+        foreach ($campaign->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
-                'action'   => 'condition',
-                'title'    => $message->subject,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $message->subject,
+                'type' => 'condition',
             ];
             $messages[] = [
                 'argument' => $message->id,
-                'action'   => SendMailJob::class,
-                'title'    => $message->subject,
-                'type'     => 'action',
+                'action' => SendMailJob::class,
+                'title' => $message->subject,
+                'type' => 'action',
             ];
         }
-        foreach ($task->pipeline->stages as $stage) {
+        foreach ($campaign->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => 'condition',
-                'title'    => $stage->name,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $stage->name,
+                'type' => 'condition',
             ];
         }
 
         $abSplit[] = [
             'argument' => '50/50',
-            'action'   => ABSplitJob::class,
-            'title'    => '50/50',
-            'type'     => 'action',
+            'action' => ABSplitJob::class,
+            'title' => '50/50',
+            'type' => 'action',
         ];
 
         $waitOptions = [
             [
                 'argument' => 1,
-                'action'   => WaitJob::class,
-                'title'    => '1h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '1h',
+                'type' => 'action',
             ],
             [
                 'argument' => 2,
-                'action'   => WaitJob::class,
-                'title'    => '2h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '2h',
+                'type' => 'action',
             ],
             [
                 'argument' => 3,
-                'action'   => WaitJob::class,
-                'title'    => '3h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => '3h',
+                'type' => 'action',
             ],
         ];
 
         return view('sales-management::workflows.edit', compact('workflow',
-            'task', 'contactLists', 'waitOptions', 'messages',
+            'campaign', 'contactLists', 'waitOptions', 'messages',
             'tags', 'messagesOpened', 'abSplit', 'stages'));
     }
 
@@ -210,7 +210,7 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Task $task, Workflow $workflow, StateMachineBuilder $stateMachineBuilder)
+    public function update(Campaign $campaign, Workflow $workflow, StateMachineBuilder $stateMachineBuilder)
     {
         $workflow->name = request()->title;
         $workflow->elements = json_encode(request()->elements);
@@ -222,16 +222,16 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task, Workflow $workflow)
+    public function destroy(Campaign $campaign, Workflow $workflow)
     {
         $workflow->delete();
 
         request()->session()->flash('message', __('Workflow successfully deleted!'));
 
-        return redirect()->route('workflows.index', $task);
+        return redirect()->route('workflows.index', $campaign);
     }
 
-    public function debug(Task $task, Workflow $workflow)
+    public function debug(Campaign $campaign, Workflow $workflow)
     {
         $fsm = $workflow->fsm();
 
@@ -247,20 +247,20 @@ class WorkflowController extends Controller
         */
         $dumper = new GraphvizDumper();
 
-        return view('sales-management::workflows.debug', compact('workflow', 'task', 'dumper'));
+        return view('sales-management::workflows.debug', compact('workflow', 'campaign', 'dumper'));
     }
 
-    public function publish(Task $task, Workflow $workflow)
+    public function publish(Campaign $campaign, Workflow $workflow)
     {
         $workflow->status = Workflow::STATUS_PUBLISHED;
         $workflow->save();
 
         request()->session()->flash('message', __('Workflow successfully published!'));
 
-        return redirect()->route('workflows.index', $task);
+        return redirect()->route('workflows.index', $campaign);
     }
 
-    public function unpublish(Task $task, Workflow $workflow)
+    public function unpublish(Campaign $campaign, Workflow $workflow)
     {
         $workflow->status = Workflow::STATUS_DRAFT;
         $workflow->save();
@@ -268,7 +268,7 @@ class WorkflowController extends Controller
 
         request()->session()->flash('message', __('Workflow successfully unpublished!'));
 
-        return redirect()->route('workflows.index', $task);
+        return redirect()->route('workflows.index', $campaign);
     }
 
 }
