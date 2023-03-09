@@ -38,87 +38,12 @@ class WorkflowController extends Controller
      */
     public function create(Campaign $campaign)
     {
-        $contactLists = ContactList::all()->transform(function ($contactList) {
-            return [
-                'argument' => $contactList->id,
-                'action'   => MoveToListJob::class,
-                'title'    => $contactList->name,
-                'type'     => 'action',
-            ];
-        });
+        $workflow = new Workflow;
+        $workflow->name = "Untitled Workflow";
+        $workflow->campaign_id = $campaign->id;
+        $workflow->save();
 
-        $tags = Tag::all()->transform(function ($tag) {
-            return [
-                'argument' => $tag->id,
-                'action'   => AddTagJob::class,
-                'title'    => $tag->name,
-                'type'     => 'action',
-            ];
-        });
-        $stages = $messages = $messagesOpened = [];
-        foreach ($campaign->messages as $message) {
-            $messagesOpened[] = [
-                'argument' => $message->id,
-                'action'   => 'condition',
-                'title'    => $message->subject,
-                'type'     => 'condition',
-            ];
-            $messages[] = [
-                'argument' => $message->id,
-                'action'   => SendMailJob::class,
-                'title'    => $message->subject,
-                'type'     => 'action',
-            ];
-        }
-        foreach ($campaign->pipeline->stages as $stage) {
-            $stages[] = [
-                'argument' => $stage->id,
-                'action'   => 'condition',
-                'title'    => $stage->name,
-                'type'     => 'condition',
-            ];
-        }
-
-        $abSplit[] = [
-            'argument' => '50/50',
-            'action'   => ABSplitJob::class,
-            'title'    => '50/50',
-            'type'     => 'action',
-        ];
-
-        $waitOptions = [
-            [
-                'argument' => 1,
-                'action'   => WaitJob::class,
-                'title'    => '1h',
-                'type'     => 'action',
-            ],
-            [
-                'argument' => 2,
-                'action'   => WaitJob::class,
-                'title'    => '2h',
-                'type'     => 'action',
-            ],
-            [
-                'argument' => 3,
-                'action'   => WaitJob::class,
-                'title'    => '3h',
-                'type'     => 'action',
-            ],
-        ];
-
-        $workflows = Workflow::whereCampaignId($campaign->id)->get()->transform(function ($workflow) {
-            return [
-                'argument' => $workflow->id,
-                'action'   => 'condition',
-                'title'    => $workflow->name,
-                'type'     => 'condition',
-            ];
-        });
-
-        return view('sales-management::workflows.create', compact('campaign',
-            'contactLists', 'waitOptions', 'messages', 'messagesOpened',
-            'tags', 'abSplit', 'stages', 'workflows'));
+        return redirect()->route('workflows.edit', [$campaign->id, $workflow->id]);
     }
 
     /**
@@ -147,14 +72,6 @@ class WorkflowController extends Controller
                 'action'   => MoveToListJob::class,
                 'title'    => $contactList->name,
                 'type'     => 'action',
-            ];
-        });
-        $workflows = Workflow::whereCampaignId($campaign->id)->get()->transform(function ($workflow) {
-            return [
-                'argument' => $workflow->id,
-                'action'   => 'condition',
-                'title'    => $workflow->name,
-                'type'     => 'condition',
             ];
         });
 
@@ -220,7 +137,7 @@ class WorkflowController extends Controller
 
         return view('sales-management::workflows.edit', compact('workflow',
             'campaign', 'contactLists', 'waitOptions', 'messages',
-            'tags', 'messagesOpened', 'abSplit', 'stages', 'workflows'));
+            'tags', 'messagesOpened', 'abSplit', 'stages'));
     }
 
     /**

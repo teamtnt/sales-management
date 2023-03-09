@@ -35,6 +35,10 @@
             type: String,
             default: "Untitled",
         },
+        workflowId: {
+            type: Number,
+            default: null,
+        },
         saveUrl: {
             type: String,
             default: "/automation/workflow/save",
@@ -114,17 +118,6 @@
                 },
             ],
         },
-        workflows: {
-            type: Array,
-            default: [
-                {
-                    'argument': 2,
-                    'action': 'workflow 2',
-                    'title': 'workflow 2',
-                    'type': 'condition',
-                },
-            ],
-        },
         backUrl: {
             type: String,
             default: "/",
@@ -156,7 +149,7 @@
     window.abSplit = props.abSplit;
     window.stages = props.stages;
     window.tags = props.tags;
-    window.workflows = props.workflows;
+    window.workflowId = props.workflowId;
 
     const onDragOver = (event) => {
         event.preventDefault();
