@@ -17,6 +17,7 @@ use Teamtnt\SalesManagement\Models\Campaign;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
 use Teamtnt\SalesManagement\Jobs\SendMailJob;
 use Teamtnt\SalesManagement\Jobs\WaitJob;
+use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
 class WorkflowController extends Controller
 {
@@ -290,7 +291,13 @@ class WorkflowController extends Controller
 
     public function run(Campaign $campaign, Workflow $workflow)
     {
-        dd("sada je run");
+        foreach ($campaign->leads as $lead) {
+            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, "transition.run.6693_0");
+        }
+
+        request()->session()->flash('message', __('Workflow run was successfull!'));
+
+        return redirect()->route('workflows.index', $campaign);
     }
 
 }
