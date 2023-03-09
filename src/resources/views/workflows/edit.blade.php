@@ -6,17 +6,18 @@
 
 @section('content')
     <work-flow
-        save-url="{{ route('workflows.update', [$campaign->id, $workflow->id]) }}"
-        back-url="{{ route('workflows.index', [$campaign->id]) }}"
-        workflow-name="{{ $workflow->name }}"
-        :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
-        :messages="{{ json_encode($messages) }}"
-        :messages-opened="{{ json_encode($messagesOpened) }}"
-        :contact-lists="{{ json_encode($contactLists) }}"
-        :wait-options="{{ json_encode($waitOptions) }}"
-        :ab-split="{{ json_encode($abSplit) }}"
-        :stages="{{ json_encode($stages) }}"
-        :tags="{{ json_encode($tags) }}"
+            save-url="{{ route('workflows.update', [$campaign->id, $workflow->id]) }}"
+            back-url="{{ route('workflows.index', [$campaign->id]) }}"
+            workflow-name="{{ $workflow->name }}"
+            :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
+            :messages="{{ json_encode($messages) }}"
+            :messages-opened="{{ json_encode($messagesOpened) }}"
+            :contact-lists="{{ json_encode($contactLists) }}"
+            :wait-options="{{ json_encode($waitOptions) }}"
+            :ab-split="{{ json_encode($abSplit) }}"
+            :stages="{{ json_encode($stages) }}"
+            :tags="{{ json_encode($tags) }}"
+            :workflows="{{ json_encode($workflows) }}"
     ></work-flow>
 @endsection
 

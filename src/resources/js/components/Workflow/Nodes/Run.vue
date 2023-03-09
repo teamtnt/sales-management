@@ -30,10 +30,23 @@
 
     }));
 
+    let items = window.workflows;
+    const {findNode} = useVueFlow()
+    const node = ref(findNode(props.id));
 </script>
 
 <template>
     <div class="vue-flow__node-input shadow-sm">
+        <NodeToolbar
+            style="display: flex; gap: 0.5rem; align-items: center"
+            :is-visible="true"
+            :node-id="id"
+            :position="Position.Right"
+        >
+            <select name="argument" class="form-select" v-model="node.data">
+                <option v-for="item in items" :value="item">{{ item.title }}</option>
+            </select>
+        </NodeToolbar>
         <span class="condition-box pe-2 justify-content-center">
             <span class="condition-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

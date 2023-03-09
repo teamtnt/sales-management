@@ -21,7 +21,7 @@
         "condition.stage.changed": markRaw(StageChangedNode),
         "condition.message.opened": markRaw(MessageOpened),
         "condition.run": markRaw(Run),
-        
+
         "action.message.sent": markRaw(SendMessageNode),
         "action.wait": markRaw(WaitNode),
         "action.start": markRaw(StartNode),
@@ -114,6 +114,17 @@
                 },
             ],
         },
+        workflows: {
+            type: Array,
+            default: [
+                {
+                    'argument': 2,
+                    'action': 'workflow 2',
+                    'title': 'workflow 2',
+                    'type': 'condition',
+                },
+            ],
+        },
         backUrl: {
             type: String,
             default: "/",
@@ -145,6 +156,7 @@
     window.abSplit = props.abSplit;
     window.stages = props.stages;
     window.tags = props.tags;
+    window.workflows = props.workflows;
 
     const onDragOver = (event) => {
         event.preventDefault();
