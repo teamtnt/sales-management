@@ -30,9 +30,6 @@
 
     }));
 
-    let items = window.stages;
-    const {findNode} = useVueFlow()
-    const node = ref(findNode(props.id));
 </script>
 
 <template>
@@ -47,10 +44,10 @@
                     d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
             On run</span>
 
-        <Handle :id="`state.stage.changed.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTargetTop" class="handle">
+        <Handle :id="`state.run.target.${id}`" type="target" :position="Position.Top" :style="sourceHandleStyleTargetTop" class="handle">
             <span class="circle"/>
         </Handle>
-        <Handle :id="`state.stage.changed.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleTargetBottom" class="handle">
+        <Handle :id="`state.run.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleTargetBottom" class="handle">
             <span class="circle"/>
         </Handle>
     </div>
