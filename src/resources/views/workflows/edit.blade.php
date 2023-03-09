@@ -18,6 +18,7 @@
             :ab-split="{{ json_encode($abSplit) }}"
             :stages="{{ json_encode($stages) }}"
             :tags="{{ json_encode($tags) }}"
+            :stage-actions="{{ json_encode($stageActions) }}"
     ></work-flow>
 @endsection
 

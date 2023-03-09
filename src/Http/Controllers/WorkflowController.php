@@ -16,6 +16,7 @@ use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Campaign;
 use Symfony\Component\Workflow\Dumper\GraphvizDumper;
 use Teamtnt\SalesManagement\Jobs\SendMailJob;
+use Teamtnt\SalesManagement\Jobs\ChangeStageJob;
 use Teamtnt\SalesManagement\Jobs\WaitJob;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
@@ -83,7 +84,7 @@ class WorkflowController extends Controller
                 'type'     => 'action',
             ];
         });
-        $stages = $messages = $messagesOpened = [];
+        $stages = $stageActions = $messages = $messagesOpened = [];
         foreach ($campaign->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
@@ -104,6 +105,12 @@ class WorkflowController extends Controller
                 'action'   => 'condition',
                 'title'    => $stage->name,
                 'type'     => 'condition',
+            ];
+            $stageActions[] = [
+                'argument' => $stage->id,
+                'action'   => ChangeStageJob::class,
+                'title'    => $stage->name,
+                'type'     => 'action',
             ];
         }
 
@@ -137,7 +144,7 @@ class WorkflowController extends Controller
 
         return view('sales-management::workflows.edit', compact('workflow',
             'campaign', 'contactLists', 'waitOptions', 'messages',
-            'tags', 'messagesOpened', 'abSplit', 'stages'));
+            'tags', 'messagesOpened', 'abSplit', 'stages', 'stageActions'));
     }
 
     /**
