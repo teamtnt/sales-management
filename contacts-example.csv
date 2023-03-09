@@ -1,7 +1,5 @@
-Salutation, Firstname, Lastname,"Job Title", Email, Phone, "Company Name", VAT, URL, "Company Email", Address, Postal, City, Country
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
-Mr., Daniel, Muth, Manager, daniel.muth@primeros.de,,Primeros,, https://www.primeros.de, info@primeros.de, Bahnhofstraße 25, 74072, Heilbronn, Germany
+Salutation, Firstname, Lastname,Job Title, Email, Phone," ""Company Name""", VAT, URL," ""Company Email""", Address, Postal, City, Country
+Mr., Sasa,Tokic,Developer,sasa.tokic@gmail.com,981234567,TNT Studio,, https://www.tnt.studio, info@tnt.studio,Sv. Mateja 19,10000,Zagreb,Croatia
+Mr.,Nenad,Ticaric,Developer,nticaric@gmail.com,981234567,TNT Studio,, https://www.tnt.studio, info@tnt.studio,Sv. Mateja 19,10000,Zagreb,Croatia
+Mr.,Josipa,Beslic,Developer,josipa.beslic@gmail.com ,981234567,TNT Studio,, https://www.tnt.studio, info@tnt.studio,Sv. Mateja 19,10000,Zagreb,Croatia
+Mr.,Tome,Perica,Developer,tome0perica@gmail.com,981234567,TNT Studio,, https://www.tnt.studio, info@tnt.studio,Sv. Mateja 19,10000,Zagreb,Croatia

@@ -21,6 +21,11 @@
             <button class="btn btn-sm btn-warning"
                     onclick="return confirm('Are you sure you want to unpublish this workflow?')">{{ __('Unpublish') }}</button>
         </form>
+        <form action="{{ route('workflows.run', [$campaign_id, $id]) }}" method="POST">
+            {{ csrf_field() }}
+            <button class="btn btn-sm btn-info"
+                    onclick="return confirm('Are you sure you want to unpublish this workflow?')">{{ __('RUN') }}</button>
+        </form>
     @endif
 </div>
 

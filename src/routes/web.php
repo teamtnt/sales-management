@@ -96,4 +96,5 @@ Route::group(['prefix' => 'campaign/{campaign}'], function () {
     Route::delete('/workflows/{workflow:id}/destroy', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
     Route::post('/workflows/{workflow:id}/publish', [WorkflowController::class, 'publish'])->name('workflows.publish');
     Route::post('/workflows/{workflow:id}/unpublish', [WorkflowController::class, 'unpublish'])->name('workflows.unpublish');
+    Route::post('/workflows/{workflow:id}/run', [WorkflowController::class, 'run'])->name('workflows.run');
 });

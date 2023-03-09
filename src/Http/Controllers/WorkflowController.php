@@ -271,4 +271,8 @@ class WorkflowController extends Controller
         return redirect()->route('workflows.index', $campaign);
     }
 
+    public function run(Campaign $campaign, Workflow $workflow) {
+        dd("sada je run");
+    }
+
 }

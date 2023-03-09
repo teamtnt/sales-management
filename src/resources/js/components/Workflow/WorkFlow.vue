@@ -15,10 +15,12 @@
     import MessageOpened from "./Nodes/MessageOpened.vue";
     import MoveToList from "./Nodes/MoveToList.vue";
     import ABSplit from "./Nodes/ABSplit.vue";
+    import Run from "./Nodes/Run.vue";
 
     const nodeTypes = {
         "condition.stage.changed": markRaw(StageChangedNode),
         "condition.message.opened": markRaw(MessageOpened),
+        "condition.run": markRaw(Run),
         
         "action.message.sent": markRaw(SendMessageNode),
         "action.wait": markRaw(WaitNode),
