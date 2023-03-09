@@ -209,7 +209,7 @@ class WorkflowController extends Controller
     public function run(Campaign $campaign, Workflow $workflow)
     {
         foreach ($campaign->leads as $lead) {
-            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, "transition.run.".$campaign->id);
+            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, "transition.run.".$workflow->id);
         }
 
         request()->session()->flash('message', __('Workflow run was successfull!'));
