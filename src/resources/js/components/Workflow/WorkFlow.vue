@@ -16,6 +16,7 @@
     import MoveToList from "./Nodes/MoveToList.vue";
     import ABSplit from "./Nodes/ABSplit.vue";
     import Run from "./Nodes/Run.vue";
+    import StageChangedAction from "./Nodes/StageChangedAction.vue";
 
     const nodeTypes = {
         "condition.stage.changed": markRaw(StageChangedNode),
@@ -28,6 +29,7 @@
         "action.add.tag": markRaw(AddTagNode),
         "action.move.to.list": markRaw(MoveToList),
         "action.ab.split": markRaw(ABSplit),
+        "action.stage.changed": markRaw(StageChangedAction),
     };
 
     const props = defineProps({
@@ -78,6 +80,17 @@
             ],
         },
         tags: {
+            type: Array,
+            default: [
+                {
+                    'argument': 'default',
+                    'action': 'default',
+                    'title': 'default',
+                    'type': 'default',
+                },
+            ],
+        },
+        stageActions: {
             type: Array,
             default: [
                 {
@@ -150,6 +163,7 @@
     window.stages = props.stages;
     window.tags = props.tags;
     window.workflowId = props.workflowId;
+    window.stageActions = props.stageActions;
 
     const onDragOver = (event) => {
         event.preventDefault();
