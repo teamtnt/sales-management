@@ -12,12 +12,12 @@
     "src": "src/resources/js/app.css"
   },
   "src/resources/scss/light.scss": {
-    "file": "assets/light-f94cfe33.css",
+    "file": "assets/light-83a35c47.css",
     "src": "src/resources/scss/light.scss",
     "isEntry": true
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-7abba8b5.js",
+    "file": "assets/app-45608e1b.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
