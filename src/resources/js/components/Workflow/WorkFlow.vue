@@ -16,7 +16,7 @@
     import MoveToList from "./Nodes/MoveToList.vue";
     import ABSplit from "./Nodes/ABSplit.vue";
     import Run from "./Nodes/Run.vue";
-    import StageChangedAction from "./Nodes/StageChangedAction.vue";
+    import ChangeStage from "./Nodes/ChangeStage.vue";
 
     const nodeTypes = {
         "condition.stage.changed": markRaw(StageChangedNode),
@@ -29,7 +29,7 @@
         "action.add.tag": markRaw(AddTagNode),
         "action.move.to.list": markRaw(MoveToList),
         "action.ab.split": markRaw(ABSplit),
-        "action.stage.changed": markRaw(StageChangedAction),
+        "action.change.stage": markRaw(ChangeStage),
     };
 
     const props = defineProps({
