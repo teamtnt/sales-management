@@ -41,6 +41,6 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
 
     public function startRow(): int
     {
-        return 1;
+        return 2;
     }
 }
