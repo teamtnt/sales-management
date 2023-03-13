@@ -49,7 +49,7 @@
                     <div class="card-body">
                         <div id="leads" data-stage-id="0">
                             @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 100) as $lead)
-                                <x-sales-management::lead-card :lead="$lead"/>
+                                <x-sales-management::lead-card :lead="$lead" off-canvas />
                             @endforeach
 
                             <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
@@ -91,7 +91,7 @@
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 100) as $lead)
-                                    <x-sales-management::lead-card :lead="$lead"/>
+                                    <x-sales-management::lead-card :lead="$lead" off-canvas/>
                                 @endforeach
 
                                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
@@ -105,15 +105,6 @@
             @endforeach
         </div>
     </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    ...
-  </div>
-</div>
 @stop
 
 @push('scripts')
