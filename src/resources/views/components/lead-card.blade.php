@@ -22,10 +22,10 @@
 
 @if($offCanvas)
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight-{{ $lead->contact->id }}" aria-labelledby="offcanvasRightLabel-{{$lead->contact->id}}">
-        <div class="offcanvas-header">
+        <div class="offcanvas-header bg-light">
             <h4 class="offcanvas-title" id="offcanvasRightLabel-{{$lead->contact->id}}">
-                <span class="d-flex align-items-center">
-                    <x-sales-management::icons.user class="me-2"/> {{ __('User') }}: {{ $lead->contact->fullname }}
+                <span class="d-flex">
+                    <x-sales-management::icons.user class="me-2" style="width: 24px; height: 24px;"/> {{ __('User') }}: {{ $lead->contact->fullname }}
                 </span>
             </h4>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
