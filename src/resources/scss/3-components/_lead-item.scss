@@ -1,0 +1,24 @@
+.lead-item {
+    position: relative;
+    overflow: hidden;
+    cursor: grab;
+
+    .info-icon {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 5px;
+        cursor: pointer;
+        transform: translateX(30px);
+        transition: opacity .25s ease, transform .15s ease;
+        opacity: 0;
+    }
+
+    &:hover {
+        .info-icon {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+}
