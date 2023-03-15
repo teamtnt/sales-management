@@ -101,6 +101,7 @@ class ContactsController extends Controller
     {
         ini_set('max_execution_time', 0);
         //Create database table from ContactTemp model
+        DB::statement('SET SESSION sql_require_primary_key=0');
         DB::statement("CREATE TEMPORARY TABLE ".(new ContactTemp)->getTable()." SELECT * FROM ".(new Contact)->getTable()." LIMIT 0");
         Excel::import(new ContactsImport, $request->csv);
 
