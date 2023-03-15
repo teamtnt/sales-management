@@ -5,6 +5,7 @@ use Teamtnt\SalesManagement\Http\Controllers\CompanyController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\DealController;
+use Teamtnt\SalesManagement\Http\Controllers\LeadNotesController;
 use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TagsController;
@@ -59,6 +60,12 @@ Route::post('/tags/store', [TagsController::class, 'store'])->name('tags.store')
 Route::get('/tags/{tag:id}/edit', [TagsController::class, 'edit'])->name('tags.edit');
 Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('tags.update');
 Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
+
+// Lead Notes
+Route::get('/lead-notes/{lead:id}',[LeadNotesController::class, 'getLeadNotes'])->name('get-lead-notes');
+Route::post('/lead-notes/{lead:id}/note/store',[LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
+Route::put('/lead-notes/{lead:id}/note/{note:id}/update',[LeadNotesController::class, 'updateLeadNote'])->name('update-lead-note');
+Route::put('/lead-notes/{lead:id}/note/{note:id}/destroy',[LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');
