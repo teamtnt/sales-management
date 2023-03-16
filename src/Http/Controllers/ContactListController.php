@@ -3,6 +3,7 @@
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Teamtnt\SalesManagement\DataTables\AddContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListDataTable;
 use Teamtnt\SalesManagement\Http\Requests\ContactListRequest;
@@ -51,7 +52,7 @@ class ContactListController extends Controller
     {
         $contactListId = $contactListContact->contact_list_id;
         $contactListContact->delete();
-        request()->session()->flash('message', __('Contact successfully deleted!'));
+        request()->session()->flash('message', __('Contact successfully removed!'));
 
         return redirect()->route('lists.edit', $contactListId);
     }
@@ -77,5 +78,18 @@ class ContactListController extends Controller
         return redirect()->route('campaign.show', $campaignId);
     }
 
+    public function contactAdd(ContactList $contactList)
+    {
+        $contactList->contacts()->attach(request()->contact_id);
+        request()->session()->flash('message', __('Contact has been successfully added to list!'));
+
+        return redirect()->back();
+    }
+
+    public function showContactAdd(ContactList $contactList, AddContactDataTable $addContactDataTable)
+    {
+        return $addContactDataTable->with('contactList', $contactList)
+            ->render('sales-management::contact-list-contacts.add', compact('contactList'));
+    }
 }
 

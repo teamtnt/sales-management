@@ -38,6 +38,8 @@ Route::get('/lists', [ContactListController::class, 'index'])->name('lists.index
 Route::get('/lists/{contactList:id}/edit', [ContactListController::class, 'edit'])->name('lists.edit');
 Route::delete('/lists/{contactList:id}/destroy', [ContactListController::class, 'destroy'])->name('lists.destroy');
 Route::delete('/lists/contact/{contactListContact:id}/destroy', [ContactListController::class, 'contactDestroy'])->name('lists.contact.destroy');
+Route::post('/lists/{contactList:id}/contact/add', [ContactListController::class, 'contactAdd'])->name('lists.contact.add');
+Route::get('/lists/{contactList:id}/add', [ContactListController::class, 'showContactAdd'])->name('lists.contact.showAdd');
 Route::get('/lists/contact/{campaign}/{pipelelineStage}/create', [ContactListController::class, 'createListFromPipelineStage'])->name('lists.create.from.stage');
 Route::post('/lists/contact/from/stage', [ContactListController::class, 'createListFromPipelineStageStore'])->name('lists.create.from.stage.store');
 Route::get('/lists/create', [ContactListController::class, 'create'])->name('lists.create');
@@ -62,10 +64,10 @@ Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('ta
 Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
 
 // Lead Notes
-Route::get('/lead-notes/{lead:id}',[LeadNotesController::class, 'getLeadNotes'])->name('get-lead-notes');
-Route::post('/lead-notes/{lead:id}/note/store',[LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
-Route::put('/lead-notes/{lead:id}/note/{note:id}/update',[LeadNotesController::class, 'updateLeadNote'])->name('update-lead-note');
-Route::put('/lead-notes/{lead:id}/note/{note:id}/destroy',[LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
+Route::get('/lead-notes/{lead:id}', [LeadNotesController::class, 'getLeadNotes'])->name('get-lead-notes');
+Route::post('/lead-notes/{lead:id}/note/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
+Route::put('/lead-notes/{lead:id}/note/{note:id}/update', [LeadNotesController::class, 'updateLeadNote'])->name('update-lead-note');
+Route::put('/lead-notes/{lead:id}/note/{note:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');
