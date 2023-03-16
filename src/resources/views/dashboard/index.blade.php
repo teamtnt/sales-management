@@ -6,21 +6,7 @@
 @section('content')
     <h1>Dashboard</h1>
     <div class="row">
-        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
-            <div class="card illustration flex-fill">
-                <div class="card-body p-0 d-flex flex-fill">
-                    <div class="row g-0 w-100">
-                        <div class="col-12">
-                            <div class="illustration-text p-3 m-1">
-                                <h4 class="illustration-text">Welcome Back, Chris!</h4>
-                                <p class="mb-0">Sales-Management Dashboard</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -28,7 +14,7 @@
                             <h3 class="mb-2">{{ $contactsCount }}</h3>
                             <p class="mb-2">{{ __("Total Contacts") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-success me-2"> {{ $contactsCountLastWeek }} </span>
+                                <span class="badge badge-soft-success me-2"> 23 </span>
                                 <span class="text-muted">Since last week</span>
                             </div>
                         </div>
@@ -41,16 +27,37 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">{{ $companiesCount }}</h3>
-                            <p class="mb-2">{{ __("Total Companies") }}</p>
+                            <h3 class="mb-2">{{ $deliveries }}</h3>
+                            <p class="mb-2">{{ __("Deliveries") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-danger me-2"> {{ $companiesCountLastWeek }} </span>
-                                <span class="text-muted">Since last week</span>
+                                <span class="badge badge-soft-success me-2"> 99% </span>
+                                <span class="text-muted">{{ __("Delivery rate") }}</span>
+                            </div>
+                        </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-success" data-feather="user"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">{{ $opens }}</h3>
+                            <p class="mb-2">{{ __("Opens") }}</p>
+                            <div class="mb-0">
+                                <span class="badge badge-soft-danger me-2"> 0,54 </span>
+                                <span class="text-muted">Open rate</span>
                             </div>
                         </div>
                         <div class="d-inline-block ms-3">
@@ -62,16 +69,58 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-3 d-flex">
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">23</h3>
-                            <p class="mb-2">{{ __("Deals Closed") }}</p>
+                            <h3 class="mb-2">{{ $clicks }}</h3>
+                            <p class="mb-2">{{ __("Clicks") }}</p>
                             <div class="mb-0">
-                                <span class="badge badge-soft-success me-2">3</span>
-                                <span class="text-muted">Since last week</span>
+                                <span class="badge badge-soft-success me-2">0.12</span>
+                                <span class="text-muted">Click rate</span>
+                            </div>
+                        </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-success" data-feather="check-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">{{ $bounces }}</h3>
+                            <p class="mb-2">{{ __("Bounces") }}</p>
+                            <div class="mb-0">
+                                <span class="badge badge-soft-success me-2">0.03</span>
+                                <span class="text-muted">{{ __("Bounce rate") }}</span>
+                            </div>
+                        </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <i class="align-middle text-success" data-feather="check-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body py-4">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">{{ $spamComplaints }}</h3>
+                            <p class="mb-2">{{ __("Spam Complains") }}</p>
+                            <div class="mb-0">
+                                <span class="badge badge-soft-success me-2">0.3</span>
+                                <span class="text-muted">{{ __("Spam complaint rate")}}</span>
                             </div>
                         </div>
                         <div class="d-inline-block ms-3">
@@ -125,46 +174,34 @@
         <div class="col-12 col-lg-4 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
-                    <span class="badge bg-info float-end">Today</span>
-                    <h5 class="card-title mb-0">Daily feed</h5>
+                    <h5 class="card-title mb-0">{{__("Feed")}}</h5>
                 </div>
                 <div class="card-body">
+                    @foreach($events as $event)
                     <div class="d-flex align-items-start">
-                        <img src="/sales-management/img/avatars/avatar-5.jpg" width="36" height="36" class="rounded-circle me-2" alt="Ashley Briggs">
+                        <i class="align-middle text-success" data-feather="user"></i>
                         <div class="flex-grow-1">
-                            <small class="float-end">5m ago</small>
-                            <strong>Ashley Briggs</strong> started following <strong>Stacie Hall</strong><br>
-                            <small class="text-muted">Today 7:51 pm</small><br>
+                            <small class="float-end">{{$event->created_at->diffForHumans()}}</small>
+                            @if($event->event_type === 'Open')
+                               Email opened: {{ $event->message_id }} ({{ $event->recipient }})
+                            @elseif($event->event_type === 'Click')
+                               Email clicked: {{ $event->message_id }} ({{ $event->recipient }})
+                            @elseif($event->event_type === 'SpamComplaint')
+                               Spam complaint: {{ $event->message_id }} ({{ $event->recipient }})
+                            @elseif($event->event_type === 'Bounce')
+                               Email bounced: {{ $event->message_id }} ({{ $event->recipient }})
+                            @elseif($event->event_type === 'Delivery')
+                               Email delivered: {{ $event->message_id }} ({{ $event->recipient }})
+                            @elseif($event->event_type === 'SubscriptionChange')
+                               Subscription change: {{ $event->message_id }} ({{ $event->recipient }})
+                            @endif
+                            <br>
+                            <small class="text-muted">{{ $event->created_at->isToday() ? 'Today ' : $event->created_at->format('d.m.Y') }} {{ $event->created_at->format('g:i A') }}</small><br>
 
                         </div>
                     </div>
-
                     <hr>
-                    <div class="d-flex align-items-start">
-                        <img src="/sales-management/img/avatars/avatar.jpg" width="36" height="36" class="rounded-circle me-2" alt="Chris Wood">
-                        <div class="flex-grow-1">
-                            <small class="float-end">30m ago</small>
-                            <strong>Chris Wood</strong> posted something on <strong>Stacie Hall</strong>'s timeline<br>
-                            <small class="text-muted">Today 7:21 pm</small>
-
-                            <div class="border text-sm text-muted p-2 mt-1">
-                                Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing...
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr>
-                    <div class="d-flex align-items-start">
-                        <img src="/sales-management/img/avatars/avatar-4.jpg" width="36" height="36" class="rounded-circle me-2" alt="Stacie Hall">
-                        <div class="flex-grow-1">
-                            <small class="float-end">1h ago</small>
-                            <strong>Stacie Hall</strong> posted a new blog<br>
-
-                            <small class="text-muted">Today 6:35 pm</small>
-                        </div>
-                    </div>
-
-                    <hr>
+                    @endforeach
                     <div class="d-grid">
                         <a href="#" class="btn btn-primary">Load more</a>
                     </div>

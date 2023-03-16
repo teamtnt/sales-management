@@ -3,6 +3,8 @@
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Teamtnt\SalesManagement\Models\PostmarkEvent;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
@@ -14,7 +16,13 @@ class PostmarkWebhookController extends Controller
         $payload = json_decode($request->getContent(), true);
         $method = 'handle'.$payload['RecordType'];
 
+        $this->savePostmarkEvent($payload);
+
         if (method_exists($this, $method)) {
+
+            if(!isset($payload['Metadata']['lead_id'])) {
+                return new Response;
+            }
 
             $leadId = $payload['Metadata']['lead_id'];
             $campaignId = $payload['Metadata']['campaign_id'];
@@ -32,6 +40,10 @@ class PostmarkWebhookController extends Controller
 
     public function handleOpen($payload, $campaign, $leadId, $messageId)
     {
+        if(!$campaign) {
+            return new Response;
+        }
+
         $transitionName = 'transition.message.opened.'.$messageId;
         $this->applyTransition($campaign, $transitionName, $leadId);
     }
@@ -86,6 +98,28 @@ class PostmarkWebhookController extends Controller
     protected function missingMethod($parameters = [])
     {
         return new Response;
+    }
+
+    public function savePostmarkEvent($payload) {
+
+        $recipient = "";
+
+        if( isset($payload['Recipient']) ) {
+            $recipient = $payload['Recipient'];
+        } elseif (isset($payload['Email'])) {
+            $recipient = $payload['Email'];
+        } 
+
+        $event = new PostmarkEvent();
+        $event->event_type = $payload['RecordType']; 
+
+        if(isset($payload['Metadata']['message_id'])) {
+            $event->message_id = $payload['Metadata']['message_id'];
+        }
+        $event->postmark_message_id = $payload['MessageID'];
+        $event->recipient = $recipient;
+        $event->payload = json_encode($payload);
+        $event->save();
     }
 }
 
