@@ -64,7 +64,7 @@ class CampaignEmail extends Mailable implements ShouldQueue
         $messageBody = $this->message->body;
 
         return new Content(
-            view: 'sales-management::emails.campaignmessage',
+            markdown: 'sales-management::emails.campaignmessage',
             with: [
                 'messageBody' => $messageBody,
             ],
