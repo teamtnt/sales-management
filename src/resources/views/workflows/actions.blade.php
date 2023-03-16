@@ -18,7 +18,7 @@
     @elseif($model->status === 1)
         <form action="{{ route('workflows.unpublish', [$campaign_id, $id]) }}" method="POST">
             {{ csrf_field() }}
-            <button class="btn btn-sm btn-warning"
+            <button class="btn btn-sm btn-warning d-inline me-1"
                     onclick="return confirm('Are you sure you want to unpublish this workflow?')">{{ __('Unpublish') }}</button>
         </form>
         <form action="{{ route('workflows.run', [$campaign_id, $id]) }}" method="POST">
