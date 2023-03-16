@@ -30,6 +30,12 @@ class CampaignDataTable extends DataTable
             ->editColumn('name', function (Campaign $campaign) {
                 return '<a href="'.route('campaign.show', $campaign).'">'.$campaign->name.'</a>';
             })
+            ->editColumn('updated_at', function (Campaign $campaign) {
+                return $campaign->updated_at->format('d.m.Y');
+            })
+            ->editColumn('status', function (Campaign $campaign) {
+                return Campaign::getCampaignStatusNames()[$campaign->status] ?? '--';
+            })
             ->addColumn('action', 'sales-management::campaign.actions')
             ->rawColumns(['name', 'action'])
             ->setRowId('id');
@@ -59,7 +65,7 @@ class CampaignDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
-            ->orderBy(1)
+            ->orderBy(2)
             ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
     }
 
@@ -74,7 +80,7 @@ class CampaignDataTable extends DataTable
 
             Column::make('id'),
             Column::computed('name')->title(__('Name')),
-            Column::make('description')->title(__('Description')),
+            Column::make('updated_at')->title(__('Updated')),
             Column::make('status')->title(__('Status')),
             Column::make('assignee')->title(__('Assignee')),
             Column::computed('action')->title(__('Action'))
