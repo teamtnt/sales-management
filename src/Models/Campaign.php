@@ -9,6 +9,10 @@ class Campaign extends Model
 {
     use HasFactory;
 
+    const CAMPAIGN_STATUS_NEW = 0;
+    const CAMPAIGN_STATUS_IN_PROGRESS = 1;
+    const CAMPAIGN_STATUS_CLOSED = 2;
+
     protected $table;
 
     protected $fillable = [
@@ -66,5 +70,14 @@ class Campaign extends Model
     public function publishedWorkflows()
     {
         return $this->workflows()->where('status', Workflow::STATUS_PUBLISHED)->get();
+    }
+
+    public static function getCampaignStatusNames()
+    {
+        return [
+            self::CAMPAIGN_STATUS_NEW         => __('New'),
+            self::CAMPAIGN_STATUS_IN_PROGRESS => __('In progress'),
+            self::CAMPAIGN_STATUS_CLOSED      => __('Closed'),
+        ];
     }
 }
