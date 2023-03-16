@@ -16,4 +16,18 @@ class PostmarkEvent extends Model
         $this->table = config('sales-management.tablePrefix').'postmark_events';
         parent::__construct($attributes);
     }
+
+    public function message() {
+        return $this->belongsTo(Message::class);
+    }
+
+    public function getPayload($index) {
+        $payload = json_decode($this->payload, true);
+
+        if(isset($payload[$index])) {
+            return $payload[$index];
+        }
+
+        return "";
+    }
 }

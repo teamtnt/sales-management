@@ -137,24 +137,7 @@
         <div class="col-12 col-lg-8 d-flex">
             <div class="card flex-fill w-100">
                 <div class="card-header">
-                    <div class="card-actions float-end">
-                        <div class="dropdown position-relative">
-                            <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
-                                    <circle cx="12" cy="12" r="1"></circle>
-                                    <circle cx="19" cy="12" r="1"></circle>
-                                    <circle cx="5" cy="12" r="1"></circle>
-                                </svg>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="card-title mb-0">Sales / Revenue</h5>
+                    <h5 class="card-title mb-0">{{__("Open / Clicks")}}</h5>
                 </div>
                 <div class="card-body d-flex w-100">
                     <div class="align-self-center chart chart-lg">
@@ -179,21 +162,25 @@
                 <div class="card-body">
                     @foreach($events as $event)
                     <div class="d-flex align-items-start">
-                        <i class="align-middle text-success" data-feather="user"></i>
                         <div class="flex-grow-1">
-                            <small class="float-end">{{$event->created_at->diffForHumans()}}</small>
                             @if($event->event_type === 'Open')
-                               Email opened: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>Email opened:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
+                            {{ $event->recipient }}
                             @elseif($event->event_type === 'Click')
-                               Email clicked: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>{{__("Email Link Clicked")}}:</strong> <a href="{{ $event->getPayload('OriginalLink') }}" target="_blank">{{ $event->getPayload('OriginalLink') }}</a> 
+                            {{ $event->recipient }}
                             @elseif($event->event_type === 'SpamComplaint')
-                               Spam complaint: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>Spam complaint:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
+                            {{ $event->recipient }}
                             @elseif($event->event_type === 'Bounce')
-                               Email bounced: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>Email bounced:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
+                            {{ $event->recipient }}
                             @elseif($event->event_type === 'Delivery')
-                               Email delivered: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>Email delivered:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
+                            {{ $event->recipient }}
                             @elseif($event->event_type === 'SubscriptionChange')
-                               Subscription change: {{ $event->message_id }} ({{ $event->recipient }})
+                            <strong>Subscription change:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
+                            {{ $event->recipient }}
                             @endif
                             <br>
                             <small class="text-muted">{{ $event->created_at->isToday() ? 'Today ' : $event->created_at->format('d.m.Y') }} {{ $event->created_at->format('g:i A') }}</small><br>
