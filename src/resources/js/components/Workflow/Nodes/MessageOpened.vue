@@ -60,12 +60,19 @@
         </NodeToolbar>
         <span class="condition-box pe-2 justify-content-end">
             <span class="condition-box__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                     class="feather feather-refresh-cw align-middle"><polyline
-                    points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path
-                    d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></span>
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-10 -10 84 84" enable-background="new -10 -10 84 84" xml:space="preserve">
+                    <g>
+                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="36" y1="9" x2="45" y2="9"/>
+                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="17" x2="45" y2="17"/>
+                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="25" x2="45" y2="25"/>
+                        <g>
+                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="1,26 32,45.434 63,26"/>
+                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11.334,21.667 1,26 1,63 63,63 63,26 63,26 52.666,21.667"/>
+                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11,32 11,1 53,1 53,32"/>
+                        </g>
+                    </g>
+                </svg>
+            </span>
             Message Opened
         </span>
 

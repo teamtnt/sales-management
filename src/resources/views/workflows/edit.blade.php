@@ -13,6 +13,7 @@
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"
             :messages="{{ json_encode($messages) }}"
             :messages-opened="{{ json_encode($messagesOpened) }}"
+            :messages-with-links="{{ json_encode($messagesWithLinks) }}"
             :contact-lists="{{ json_encode($contactLists) }}"
             :wait-options="{{ json_encode($waitOptions) }}"
             :ab-split="{{ json_encode($abSplit) }}"

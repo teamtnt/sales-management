@@ -23,7 +23,7 @@ class CampaignEmail extends Mailable implements ShouldQueue
      */
     public $message;
     public $lead;
-
+    public $workflowId,
     /**
      * Create a new message instance.
      *
@@ -31,10 +31,11 @@ class CampaignEmail extends Mailable implements ShouldQueue
      * @param  \Teamtnt\SalesManagement\Models\Lead  $lead
      * @return void
      */
-    public function __construct(Message $message, Lead $lead)
+    public function __construct(Message $message, Lead $lead, $workflowId = null)
     {
         $this->message = $message;
         $this->lead = $lead;
+        $this->workflowId = $workflowId;
     }
 
     public function envelope()
@@ -46,6 +47,7 @@ class CampaignEmail extends Mailable implements ShouldQueue
                 'lead_id' => $this->lead->id,
                 'campaign_id' => $this->lead->campaign_id,
                 'message_id' => $this->message->id,
+                'workflow_id' => $this->workflowId,
             ],
         );
     }

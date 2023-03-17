@@ -84,7 +84,7 @@ class WorkflowController extends Controller
                 'type'     => 'action',
             ];
         });
-        $stages = $stageActions = $messages = $messagesOpened = [];
+        $stages = $stageActions = $messages = $messagesOpened = $messagesWithLinks = [];
         foreach ($campaign->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
@@ -98,7 +98,20 @@ class WorkflowController extends Controller
                 'title'    => $message->subject,
                 'type'     => 'action',
             ];
+
+            $extractedLinks = $message->extractLinks();
+                
+            if (!empty($extractedLinks)) {
+                $messagesWithLinks[] = [
+                    'argument' => $message->id,
+                    'action'   => 'condition',
+                    'title'    => $message->subject,
+                    'links'    => $extractedLinks,
+                    'type'     => 'action',
+                ];
+            }
         }
+
         foreach ($campaign->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
@@ -121,30 +134,20 @@ class WorkflowController extends Controller
             'type'     => 'action',
         ];
 
-        $waitOptions = [
-            [
-                'argument' => 1,
+        $waitOptions = [];
+
+        for ($i = 1; $i <= 48; $i++) {
+            $waitOptions[] = [
+                'argument' => $i,
                 'action'   => WaitJob::class,
-                'title'    => '1h',
+                'title'    => $i . 'h',
                 'type'     => 'action',
-            ],
-            [
-                'argument' => 2,
-                'action'   => WaitJob::class,
-                'title'    => '2h',
-                'type'     => 'action',
-            ],
-            [
-                'argument' => 3,
-                'action'   => WaitJob::class,
-                'title'    => '3h',
-                'type'     => 'action',
-            ],
-        ];
+            ];
+        }
 
         return view('sales-management::workflows.edit', compact('workflow',
             'campaign', 'contactLists', 'waitOptions', 'messages',
-            'tags', 'messagesOpened', 'abSplit', 'stages', 'stageActions'));
+            'tags', 'messagesOpened', 'messagesWithLinks', 'abSplit', 'stages', 'stageActions'));
     }
 
     /**

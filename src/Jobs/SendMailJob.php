@@ -38,7 +38,7 @@ class SendMailJob implements ShouldQueue
         $message = Message::find($this->mailId);
 
         if ($email = $lead->contact->email) {
-            Mail::to($email)->send(new CampaignEmail($message, $lead));
+            Mail::to($email)->send(new CampaignEmail($message, $lead, $this->workflowId));
             MessageNotOpenedJob::dispatch($this->leadId, $this->workflowId, $this->mailId)
                 ->delay(now()->addHours(24));
 

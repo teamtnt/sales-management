@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Teamtnt\SalesManagement\Models\PostmarkEvent;
 use Teamtnt\SalesManagement\Models\LeadJourney;
+use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
+use Teamtnt\SalesManagement\Jobs\LinkNotClickedJob;
 
 class PostmarkWebhookController extends Controller
 {
@@ -16,20 +18,26 @@ class PostmarkWebhookController extends Controller
         $payload = json_decode($request->getContent(), true);
         $method = 'handle'.$payload['RecordType'];
 
-        $this->savePostmarkEvent($payload);
-
         if (method_exists($this, $method)) {
 
             if(!isset($payload['Metadata']['lead_id'])) {
                 return new Response;
             }
 
+            $this->savePostmarkEvent($payload);
+            
             $leadId = $payload['Metadata']['lead_id'];
             $campaignId = $payload['Metadata']['campaign_id'];
             $messageId = $payload['Metadata']['message_id'];
+            $workflowId = $payload['Metadata']['workflow_id'];
             $campaign = Campaign::find($campaignId);
 
-            $response = $this->{$method}($payload, $campaign, $leadId, $messageId);
+            //if there is no campaign, we have nothing to do
+            if(!$campaign) {
+                return new Response;
+            }
+
+            $response = $this->{$method}($payload, $campaign, $leadId, $messageId, $workflowId);
 
             return $response;
         }
@@ -38,17 +46,24 @@ class PostmarkWebhookController extends Controller
 
     }
 
-    public function handleOpen($payload, $campaign, $leadId, $messageId)
+    public function handleOpen($payload, $campaign, $leadId, $messageId, $workflowId)
     {
-        if(!$campaign) {
-            return new Response;
+        //at this point we need to triger that the link has not been clicked job
+        $message = Message::find($messageId);
+
+        if($message && $payload['FirstOpen'] == true) {
+            $links = $message->extractLinks();
+            foreach ($links as $link) {
+                LinkNotClickedJob::dispatch($leadId, $workflowId, $messageId, $link['url'])
+                    ->delay(now()->addHours(24));
+            }
         }
 
         $transitionName = 'transition.message.opened.'.$messageId;
         $this->applyTransition($campaign, $transitionName, $leadId);
     }
 
-    public function handleDelivery($payload)
+    public function handleDelivery($payload, $campaign, $leadId, $messageId, $workflowId)
     {
         return;
 
@@ -56,7 +71,7 @@ class PostmarkWebhookController extends Controller
         $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleBounce($payload)
+    public function handleBounce($payload, $campaign, $leadId, $messageId, $workflowId)
     {
         return;
 
@@ -64,7 +79,7 @@ class PostmarkWebhookController extends Controller
         $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleSpamComplaint($payload)
+    public function handleSpamComplaint($payload, $campaign, $leadId, $messageId, $workflowId)
     {
         return;
 
@@ -72,15 +87,13 @@ class PostmarkWebhookController extends Controller
         $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
     }
 
-    public function handleLinkClick($payload)
+    public function handleClick($payload, $campaign, $leadId, $messageId, $workflowId)
     {
-        return;
-
-        $transitionName = 'transition.message.link.click.yes.'.$messageId;
-        $this->applyTransition($campaign, $transitionName, $leadJourney, $leadId);
+        $transitionName = 'transition.link.clicked.'.$messageId.".".$payload['OriginalLink'];
+        $this->applyTransition($campaign, $transitionName, $leadId);
     }
 
-    public function handleSubscriptionChange($payload)
+    public function handleSubscriptionChange($payload, $campaign, $leadId, $messageId, $workflowId)
     {
         return;
 

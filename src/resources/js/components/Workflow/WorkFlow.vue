@@ -17,11 +17,13 @@
     import ABSplit from "./Nodes/ABSplit.vue";
     import Run from "./Nodes/Run.vue";
     import ChangeStage from "./Nodes/ChangeStage.vue";
+    import LinkClicked from "./Nodes/LinkClicked.vue";
 
     const nodeTypes = {
         "condition.stage.changed": markRaw(StageChangedNode),
         "condition.message.opened": markRaw(MessageOpened),
         "condition.run": markRaw(Run),
+        "condition.link.clicked": markRaw(LinkClicked),
 
         "action.message.sent": markRaw(SendMessageNode),
         "action.wait": markRaw(WaitNode),
@@ -68,6 +70,9 @@
                     'title': 'Message 3',
                 },
             ],
+        },
+        messagesWithLinks: {
+            type: Array
         },
         stages: {
             type: Array,
@@ -164,6 +169,7 @@
     window.tags = props.tags;
     window.workflowId = props.workflowId;
     window.stageActions = props.stageActions;
+    window.messagesWithLinks = props.messagesWithLinks;
 
     const onDragOver = (event) => {
         event.preventDefault();

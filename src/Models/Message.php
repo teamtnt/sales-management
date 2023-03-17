@@ -29,4 +29,19 @@ class Message extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public function extractLinks() {
+        $string = $this->body;
+        
+        $links = array();
+        $regex = '/\[(.*?)\]\((https?\:\/\/[^\" ]+)\)/i';
+        preg_match_all($regex, $string, $matches);
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            $links[] = array(
+                'text' => $matches[1][$i],
+                'url' => $matches[2][$i]
+            );
+        }
+        return $links;
+    }
 }
