@@ -31,7 +31,7 @@
 
             <li class="sidebar-item {{ request()->is('campaign*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('campaign.index') }}">
-                    <i class="align-middle" data-feather="thumbs-up"></i> <span
+                    <i class="align-middle me-2 fas fa-fw fa-bullhorn"></i> <span
                         class="align-middle">{{ __("Campaigns")}}</span>
                 </a>
             </li>
