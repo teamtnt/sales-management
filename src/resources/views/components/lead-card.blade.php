@@ -117,13 +117,12 @@
                 </dd>
             </dl>
 
-{{-- TODO:delete-url="{{ route('destroy-lead-note', [$lead->id, ]) }}"--}}
 {{-- TODO: need to render only one componnet currenlty all are rendered for current user --}}
             <notes
                 lead-id="{{ $lead->id }}"
                 :lead-notes="{{ $lead->notes->toJson() }}"
                 url="{{route('store-lead-note', $lead->id)}}"
-
+                delete-url="{{ route('destroy-lead-note', [$lead->id, ":noteId"]) }}"
             >
             </notes>
         </div>

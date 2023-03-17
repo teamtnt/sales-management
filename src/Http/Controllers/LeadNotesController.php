@@ -18,7 +18,6 @@ class LeadNotesController extends Controller
     public function storeLeadNote(Request $request)
     {
         $leadNote             = new LeadNotes();
-
         $leadNote->lead_id    = $request->get('lead_id');
         $leadNote->created_by = auth()->id();
         $leadNote->note       = $request->get('note');
@@ -28,8 +27,9 @@ class LeadNotesController extends Controller
 
     }
 
-    public function destroyLeadNote(Lead $lead, LeadNotes $leadNote)
+    public function destroyLeadNote(Lead $lead, LeadNotes $note)
     {
+        $note->delete();
 
         return response()->json(200);
     }

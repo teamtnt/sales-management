@@ -5,6 +5,9 @@ const props = defineProps({
     url: {
         type: String
     },
+    deleteUrl: {
+        type: String
+    },
     leadId: {
         type: String
     },
@@ -44,14 +47,13 @@ const handleFormSubmit = () => {
 }
 
 const deleteNote = (id) => {
-    notes.value = notes.value.filter((note) => note.id !== id);
-    // axios.delete(deleteUrl).then((response) => {
-    //     if(response.status === 200) {
-    //         notes.value = notes.value.filter((note) => note.id !== id);
-    //     }
-    // }).catch((error) => {
-    //     console.log(error);
-    // });
+    axios.delete(props.deleteUrl.replace(":noteId", id)).then((response) => {
+        if(response.status === 200) {
+            notes.value = notes.value.filter((note) => note.id !== id);
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 };
 
 </script>
