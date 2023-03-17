@@ -23,7 +23,8 @@ class CampaignEmail extends Mailable implements ShouldQueue
      */
     public $message;
     public $lead;
-    public $workflowId,
+    public $workflowId;
+    
     /**
      * Create a new message instance.
      *
