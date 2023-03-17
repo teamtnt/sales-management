@@ -5,7 +5,7 @@ return [
     'logoPath'    => '',
     'logoLink'    => '/',
     'tablePrefix' => 'sales_management_',
-    'middleware'  => ['web'],
+    'middleware'  => ['web', 'auth'],
     'userModel'   => \App\Models\User::class,
     'emails'      => [
         'change.this.email.in.config@example.com' => 'Example',

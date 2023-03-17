@@ -29,6 +29,7 @@ import WorkFlow from './components/Workflow/WorkFlow.vue';
 import PipelineStageRepeater from "./components/PipelineStageRepeater/PipelineStageRepeater.vue";
 import TextArea from "./components/TextareaWithPlaceholders/TextArea.vue";
 import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
+import Notes from "./components/Notes/Notes.vue";
 
 
 const emitter = mitt();
@@ -37,7 +38,8 @@ const app = createApp({
         WorkFlow,
         PipelineStageRepeater,
         TextArea,
-        MultiSelectList
+        MultiSelectList,
+        Notes
     }
 })
 

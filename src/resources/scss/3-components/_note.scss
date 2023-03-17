@@ -1,12 +1,31 @@
 .note {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 5px 8px;
     border-radius: 8px;
     background-color: transparent;
     transition: background-color .2s ease;
+    overflow: hidden;
+
+    .delete-icon {
+        display: block;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        padding: 5px;
+        cursor: pointer;
+        transform: translateX(30px);
+        transition: opacity .25s ease, transform .15s ease;
+        opacity: 0;
+    }
 
     &:hover {
         background-color: #eff2f6;
+
+        .delete-icon {
+            transform: translateX(0);
+            opacity: 1;
+        }
     }
 }

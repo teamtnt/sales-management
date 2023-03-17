@@ -17,5 +17,7 @@
     "Add message placeholders": "Nachrichtenplatzhalter hinzufügen",
     "Email": "Email",
     "Back": "Zurück",
-    "VAT": "USt-ID"
+    "VAT": "USt-ID",
+    "Notes": "Notes",
+    "Note": "Note"
 }
