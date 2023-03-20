@@ -65,7 +65,7 @@ class WorkflowController extends Controller
      * @param  Workflow  $workflow
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Campaign $campaign, Workflow $workflow)
+    public function getWorkflowView(Campaign $campaign, Workflow $workflow, string $view = 'edit')
     {
         $contactLists = ContactList::all()->transform(function ($contactList) {
             return [
@@ -100,7 +100,7 @@ class WorkflowController extends Controller
             ];
 
             $extractedLinks = $message->extractLinks();
-                
+
             if (!empty($extractedLinks)) {
                 $messagesWithLinks[] = [
                     'argument' => $message->id,
@@ -140,12 +140,12 @@ class WorkflowController extends Controller
             $waitOptions[] = [
                 'argument' => $i,
                 'action'   => WaitJob::class,
-                'title'    => $i . 'h',
+                'title'    => $i.'h',
                 'type'     => 'action',
             ];
         }
 
-        return view('sales-management::workflows.edit', compact('workflow',
+        return view('sales-management::workflows.'.$view, compact('workflow',
             'campaign', 'contactLists', 'waitOptions', 'messages',
             'tags', 'messagesOpened', 'messagesWithLinks', 'abSplit', 'stages', 'stageActions'));
     }
@@ -225,6 +225,16 @@ class WorkflowController extends Controller
         request()->session()->flash('message', __('Workflow run was successfull!'));
 
         return redirect()->route('workflows.index', $campaign);
+    }
+
+    public function show(Campaign $campaign, Workflow $workflow)
+    {
+        return $this->getWorkflowView($campaign, $workflow, 'show');
+    }
+
+    public function edit(Campaign $campaign, Workflow $workflow)
+    {
+        return $this->getWorkflowView($campaign, $workflow, 'edit');
     }
 
 }

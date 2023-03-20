@@ -16,6 +16,8 @@
                     onclick="return confirm('Are you sure you want to publish this workflow?')">{{ __('Publish') }}</button>
         </form>
     @elseif($model->status === 1)
+        <a href="{{ route('workflows.show', [$campaign_id, $id]) }}"
+           class="btn btn-sm btn-info d-inline me-1">{{ __('Show') }}</a>
         <form action="{{ route('workflows.unpublish', [$campaign_id, $id]) }}" method="POST">
             {{ csrf_field() }}
             <button class="btn btn-sm btn-warning d-inline me-1"

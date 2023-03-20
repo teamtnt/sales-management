@@ -26,6 +26,7 @@ i18n.global.locale = document.documentElement.lang.substring(0, 2);
 
 // Components
 import WorkFlow from './components/Workflow/WorkFlow.vue';
+import ShowWorkFlow from './components/Workflow/ShowWorkFlow.vue';
 import PipelineStageRepeater from "./components/PipelineStageRepeater/PipelineStageRepeater.vue";
 import TextArea from "./components/TextareaWithPlaceholders/TextArea.vue";
 import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
@@ -36,6 +37,7 @@ const emitter = mitt();
 const app = createApp({
     components: {
         WorkFlow,
+        ShowWorkFlow,
         PipelineStageRepeater,
         TextArea,
         MultiSelectList,
