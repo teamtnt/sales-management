@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 
 const props = defineProps({
@@ -94,6 +94,19 @@ const isNotEmpty = (obj) => {
     return Object.keys(obj).length !== 0;
 }
 
+const formatDate = (timestamp) => {
+    let date = new Date(timestamp * 1000);
+    const formatDate = new Intl.DateTimeFormat("default", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+
+   return formatDate.format(date);
+};
+
 </script>
 
 <template>
@@ -120,7 +133,7 @@ const isNotEmpty = (obj) => {
                 <p class="mb-1">{{ note.note }}</p>
                 <span style="font-size: 11px;"><em><strong>Created by</strong> ID:{{ note.created_by }} <strong>this will be user name</strong></em></span>
 <!--                TODO: format vremena-->
-                <span style="font-size: 11px;"><strong><em>{{ note.created_at}}</em></strong></span>
+                <span style="font-size: 11px;"><strong><em>{{ formatDate(note.created_at) }}</em></strong></span>
             </div>
             <div class="d-flex gap-1">
                 <span class="delete-icon" @click="deleteNote(note.id)">
