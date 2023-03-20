@@ -4,12 +4,14 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\LeadNotes;
 
 class LeadNotesController extends Controller
 {
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeLeadNote(Request $request)
     {
 
@@ -23,10 +25,14 @@ class LeadNotesController extends Controller
         $leadNote->note       = $request->get('note');
         $leadNote->save();
 
-        return response()->json(['leadNote' => $leadNote], 200);
-
+        return response()->json(['leadNote' => $leadNote]);
     }
 
+    /**
+     * @param $lead
+     * @param $note
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroyLeadNote($lead, $note)
     {
         $leadNote = LeadNotes::where('id', $note)
