@@ -9,14 +9,14 @@ use Teamtnt\SalesManagement\Models\LeadNotes;
 
 class LeadNotesController extends Controller
 {
-    public function getLeadNotes()
-    {
-
-    }
-
 
     public function storeLeadNote(Request $request)
     {
+
+       $request->validate([
+            'note' => 'required|string|max:255'
+        ]);
+
         $leadNote             = new LeadNotes();
         $leadNote->lead_id    = $request->get('lead_id');
         $leadNote->created_by = auth()->id();
@@ -27,9 +27,13 @@ class LeadNotesController extends Controller
 
     }
 
-    public function destroyLeadNote(Lead $lead, LeadNotes $note)
+    public function destroyLeadNote($lead, $note)
     {
-        $note->delete();
+        $leadNote = LeadNotes::where('id', $note)
+            ->where('lead_id', $lead)
+            ->first();
+
+        $leadNote->delete();
 
         return response()->json(200);
     }

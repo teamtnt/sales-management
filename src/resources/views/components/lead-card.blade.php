@@ -117,7 +117,6 @@
                 </dd>
             </dl>
 
-{{-- TODO: need to render only one componnet currenlty all are rendered for current user --}}
             <notes
                 lead-id="{{ $lead->id }}"
                 :lead-notes="{{ $lead->notes->toJson() }}"

@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
+
 
 const props = defineProps({
     url: {
@@ -18,12 +19,15 @@ const props = defineProps({
 
 const notes = ref([]);
 const note = ref("");
+const errors = ref({});
+const submitting = ref(false)
 
 onMounted(() => {
     notes.value = [...props.leadNotes]
 });
 
 const handleFormSubmit = () => {
+    submitting.value = true;
 
     let formData = new FormData();
     formData.append('note', note.value)
@@ -35,14 +39,26 @@ const handleFormSubmit = () => {
         }
     }).then((response) => {
         if(response.status === 200) {
-            notes.value = [...props.leadNotes, response.data.leadNote]
+            notes.value = [...notes.value, response.data.leadNote]
             note.value = "";
+            submitting.value = false;
+            errors.value = {};
+
+            window.notyf.open({
+                type: "success",
+                message: "Note saved!",
+                duration: "2500",
+                ripple: true,
+                position: "bottom right",
+                dismissible: true,
+            });
         }
     }).catch((error) => {
-        console.log(error)
-        // if (error.response.status === 422) {
-        //     errors.value = error.response.data.errors
-        // }
+        console.log(error.message)
+        if (error.response.status === 422) {
+            errors.value = error.response.data.errors
+            submitting.value = false;
+        }
     });
 }
 
@@ -50,11 +66,33 @@ const deleteNote = (id) => {
     axios.delete(props.deleteUrl.replace(":noteId", id)).then((response) => {
         if(response.status === 200) {
             notes.value = notes.value.filter((note) => note.id !== id);
+
+            window.notyf.open({
+                type: "success",
+                message: "Note deleted!",
+                duration: "2500",
+                ripple: true,
+                position: "bottom right",
+                dismissible: true,
+            });
         }
     }).catch((error) => {
-        console.log(error);
+        console.log(error.message);
+
+        window.notyf.open({
+            type: "danger",
+            message: error.message,
+            duration: "2500",
+            ripple: true,
+            position: "bottom right",
+            dismissible: true,
+        });
     });
 };
+
+const isNotEmpty = (obj) => {
+    return Object.keys(obj).length !== 0;
+}
 
 </script>
 
@@ -67,10 +105,12 @@ const deleteNote = (id) => {
                 </span>
             </label>
             <div class="input-group d-flex align-items-center">
-                <input id="note" v-model="note" class="form-control" name="note" :placeholder="$t('Note')"/>
-                <button type="submit" class="btn btn-success">Add Note</button>
+                <input id="note" v-model="note" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}" name="note" :placeholder="$t('Note')"/>
+                <button type="submit" class="btn btn-success" :disabled="submitting">Add Note</button>
+            <small v-if="errors && errors.note" class="invalid-feedback">
+              {{ errors.note[0] }}
+            </small>
             </div>
-            <small class="text-info"><em>*press Enter to save note</em></small>
         </div>
     </form>
     <hr>
@@ -78,7 +118,7 @@ const deleteNote = (id) => {
         <div v-for="note in notes" :key="note.id" class="note mb-3">
             <div class="d-flex flex-column">
                 <p class="mb-1">{{ note.note }}</p>
-                <span style="font-size: 11px;"><em><strong>Created by</strong> {{ note.created_by }} THIS will be user name</em></span>
+                <span style="font-size: 11px;"><em><strong>Created by</strong> ID:{{ note.created_by }} <strong>this will be user name</strong></em></span>
 <!--                TODO: format vremena-->
                 <span style="font-size: 11px;"><strong><em>{{ note.created_at}}</em></strong></span>
             </div>

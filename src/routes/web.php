@@ -64,7 +64,6 @@ Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('ta
 Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
 
 // Lead Notes
-Route::get('/lead-notes/{lead:id}', [LeadNotesController::class, 'getLeadNotes'])->name('get-lead-notes');
 Route::post('/lead-notes/{lead:id}/note/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
 Route::delete('/lead-notes/{lead:id}/note/{note:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
 
