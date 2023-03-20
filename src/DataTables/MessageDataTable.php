@@ -20,6 +20,9 @@ class MessageDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->editColumn('created_at', function (Message $message) {
+                return $message->created_at->format('d.m.Y');
+            })
             ->addColumn('action', 'sales-management::messages.actions');
     }
 
@@ -61,6 +64,7 @@ class MessageDataTable extends DataTable
         return [
 
             Column::make('id')->title('ID'),
+            Column::make('created_at')->title('Created'),
             Column::make('subject')->title(__('Subject')),
             Column::make('from_email')->title(__('From')),
 
