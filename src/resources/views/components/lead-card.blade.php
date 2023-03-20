@@ -31,7 +31,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <dl class="row mb-3">
+            <dl class="row mb-4">
                 <dt class="col-4 col-xxl-3 mb-0">
                     <strong>{{ __('User ID') }}:</strong>
                 </dt>
@@ -116,7 +116,18 @@
                     <p class="mb-1">{{ $lead->contact->country }}</p>
                 </dd>
             </dl>
-
+            @if(count($lead->contact->tags) > 0)
+                <div class="mb-4">
+                    <span class="d-flex fw-bold align-items-center mb-2">
+                        <x-sales-management::icons.tag class="me-2"/> {{ __('Tags') }}
+                    </span>
+                    <ul class="list-unstyled d-flex flex-wrap gap-1">
+                        @foreach($lead->contact->tags as $tag)
+                            <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <notes
                 lead-id="{{ $lead->id }}"
                 :lead-notes="{{ $lead->notes->toJson() }}"
