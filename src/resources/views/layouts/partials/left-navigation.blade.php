@@ -25,7 +25,7 @@
 
             <li class="sidebar-item {{ request()->is('list*') ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route('lists.index') }}">
-                    <i class="align-middle" data-feather="users"></i> <span class="align-middle">{{ __("Lists")}}</span>
+                    <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">{{ __("Lists")}}</span>
                 </a>
             </li>
 

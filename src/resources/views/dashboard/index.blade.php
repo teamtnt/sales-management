@@ -6,7 +6,7 @@
 @section('content')
     <h1>Dashboard</h1>
     <div class="row">
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -20,14 +20,14 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle text-success" data-feather="user"></i>
+                                <x-sales-management::icons.users />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -41,14 +41,14 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle text-success" data-feather="user"></i>
+                                <x-sales-management::icons.sent-mail />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -62,14 +62,14 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle" data-feather="home"></i>
+                                <x-sales-management::icons.opened-mail />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -83,14 +83,14 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle text-success" data-feather="check-square"></i>
+                               <x-sales-management::icons.clicked-mail />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -104,14 +104,14 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle text-success" data-feather="check-square"></i>
+                                <x-sales-management::icons.bounce-mail />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-sm-6 col-xxl-2 d-flex">
+        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
                     <div class="d-flex align-items-start">
@@ -125,7 +125,7 @@
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <i class="align-middle text-success" data-feather="check-square"></i>
+                                <x-sales-management::icons.spam-mail />
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                             <strong>Email opened:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
                             {{ $event->recipient }}
                             @elseif($event->event_type === 'Click')
-                            <strong>{{__("Email Link Clicked")}}:</strong> <a href="{{ $event->getPayload('OriginalLink') }}" target="_blank">{{ $event->getPayload('OriginalLink') }}</a> 
+                            <strong>{{__("Email Link Clicked")}}:</strong> <a href="{{ $event->getPayload('OriginalLink') }}" target="_blank">{{ $event->getPayload('OriginalLink') }}</a>
                             {{ $event->recipient }}
                             @elseif($event->event_type === 'SpamComplaint')
                             <strong>Spam complaint:</strong> [{{ $event->message_id }}] {{ $event->message->subject }} <br>
