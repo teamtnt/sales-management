@@ -31,6 +31,7 @@ import PipelineStageRepeater from "./components/PipelineStageRepeater/PipelineSt
 import TextArea from "./components/TextareaWithPlaceholders/TextArea.vue";
 import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
 import Notes from "./components/Notes/Notes.vue";
+import OpenClicksChart from "./components/Dashboard/OpenClicksChart.vue";
 
 
 const emitter = mitt();
@@ -41,7 +42,8 @@ const app = createApp({
         PipelineStageRepeater,
         TextArea,
         MultiSelectList,
-        Notes
+        Notes,
+        OpenClicksChart
     }
 })
 
