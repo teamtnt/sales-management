@@ -65,5 +65,7 @@ class SalesManagementServiceProvider extends ServiceProvider
         Blade::component('sales-management::deliveries', \Teamtnt\SalesManagement\View\Components\DeliveriesComponent::class);
         Blade::component('sales-management::opens', \Teamtnt\SalesManagement\View\Components\OpensComponent::class);
         Blade::component('sales-management::clicks', \Teamtnt\SalesManagement\View\Components\ClicksComponent::class);
+        Blade::component('sales-management::bounces', \Teamtnt\SalesManagement\View\Components\BouncesComponent::class);
+        Blade::component('sales-management::spam-complaints', \Teamtnt\SalesManagement\View\Components\SpamComplaintsComponent::class);
     }
 }
