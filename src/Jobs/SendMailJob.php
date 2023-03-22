@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Teamtnt\SalesManagement\Models\LeadJourney;
 use Teamtnt\SalesManagement\Models\Campaign;
+use Teamtnt\SalesManagement\Models\PostmarkEvent;
 use Teamtnt\SalesManagement\Models\Workflow;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Lead;
@@ -39,6 +40,7 @@ class SendMailJob implements ShouldQueue
 
         if ($email = $lead->contact->email) {
             Mail::to($email)->send(new CampaignEmail($message, $lead, $this->workflowId));
+            $this->logEvent($email);
             MessageNotOpenedJob::dispatch($this->leadId, $this->workflowId, $this->mailId)
                 ->delay(now()->addHours(24));
 
@@ -46,5 +48,16 @@ class SendMailJob implements ShouldQueue
         }
 
         NextTransitionJob::dispatch($this->leadId, $this->workflowId);
+    }
+
+    public function logEvent($email)
+    {
+        $event = new PostmarkEvent();
+        $event->event_type = "Sent";
+        $event->message_id = $this->mailId;
+        $event->postmark_message_id = "";
+        $event->recipient = $email;
+        $event->payload = json_encode([]);
+        $event->save();
     }
 }

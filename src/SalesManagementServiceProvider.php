@@ -62,5 +62,6 @@ class SalesManagementServiceProvider extends ServiceProvider
     public function loadViewComponents()
     {
         Blade::component('sales-management::total-contacts', \Teamtnt\SalesManagement\View\Components\TotalContactsComponent::class);
+        Blade::component('sales-management::deliveries', \Teamtnt\SalesManagement\View\Components\DeliveriesComponent::class);
     }
 }
