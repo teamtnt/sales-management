@@ -4,12 +4,14 @@ namespace Teamtnt\SalesManagement;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class SalesManagementServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->registerRoutes();
+        $this->loadViewComponents();
         $this->loadViewsFrom(__DIR__.'/resources/views/', 'sales-management');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
@@ -55,5 +57,10 @@ class SalesManagementServiceProvider extends ServiceProvider
         return [
             'prefix' => config('sales-management.prefix'),
         ];
+    }
+
+    public function loadViewComponents()
+    {
+        Blade::component('sales-management::total-contacts', \Teamtnt\SalesManagement\View\Components\TotalContactsComponent::class);
     }
 }
