@@ -7,7 +7,6 @@ use Teamtnt\SalesManagement\Models\Contact;
 
 class TotalContactsComponent extends Component
 {
-    public $course;
 
     /**
      * Create a new component instance.

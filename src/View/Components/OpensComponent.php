@@ -5,7 +5,7 @@ namespace Teamtnt\SalesManagement\View\Components;
 use Illuminate\View\Component;
 use Teamtnt\SalesManagement\Models\PostmarkEvent;
 
-class DeliveriesComponent extends Component
+class OpensComponent extends Component
 {
 
     /**
@@ -24,11 +24,11 @@ class DeliveriesComponent extends Component
      */
     public function render()
     {
-        $sentCount = PostmarkEvent::where('event_type', 'Sent')->count();
+        $opensCount = PostmarkEvent::where('event_type', 'Open')->count();
         $deliveriesCount = PostmarkEvent::where('event_type', 'Delivery')->count();
-        $deliveryRate = $sentCount > 0 ? ($deliveriesCount / $sentCount) * 100 : 0;
+        $openRate = $deliveriesCount > 0 ? ($opensCount / $deliveriesCount) * 100 : 0;
 
-        return view('sales-management::components.dashboard.deliveries', compact('deliveriesCount', 'deliveryRate'));
+        return view('sales-management::components.dashboard.opens', compact('opensCount', 'openRate'));
     }
 
 

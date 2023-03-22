@@ -8,27 +8,8 @@
     <div class="row">
         <x-sales-management::total-contacts/>
         <x-sales-management::deliveries/>
-        <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
-            <div class="card flex-fill">
-                <div class="card-body py-4">
-                    <div class="d-flex align-items-start">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-2">{{ $opens }}</h3>
-                            <p class="mb-2">{{ __("Opens") }}</p>
-                            <div class="mb-0">
-                                <span class="badge badge-soft-danger me-2"> 0,54 </span>
-                                <span class="text-muted">Open rate</span>
-                            </div>
-                        </div>
-                        <div class="d-inline-block ms-3">
-                            <div class="stat">
-                                <x-sales-management::icons.opened-mail/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <x-sales-management::opens/>
+
         <div class="col-12 col-sm-6 col-xl-auto flex-grow-1 d-flex">
             <div class="card flex-fill">
                 <div class="card-body py-4">
