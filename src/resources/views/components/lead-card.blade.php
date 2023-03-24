@@ -1,4 +1,4 @@
-@props(['lead' => $lead, 'offCanvas' => false])
+@props(['campaign' => $campaign, 'lead' => $lead, 'offCanvas' => false])
 
 <div class="lead-item card mb-3 p-2 bg-light border gap-1" data-lead-id="{{ $lead->id }}">
     <div class="d-flex align-items-center">
@@ -21,6 +21,7 @@
     @endif
 </div>
 
+
 @if($offCanvas)
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight-{{ $lead->contact->id }}"
          aria-labelledby="offcanvasRightLabel-{{$lead->contact->id}}">
@@ -35,18 +36,18 @@
     </div>
     <ul class="nav nav-tabs" id="lead-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active text-uppercase" id="home-tab" data-bs-toggle="tab"
-                    data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
+            <button class="nav-link active text-uppercase" id="profile-tab" data-bs-toggle="tab"
+                    data-bs-target="#profile-tab-pane-{{ $lead->id }}" type="button" role="tab" aria-controls="profile-tab-pane"
                     aria-selected="true">{{ __('Profile details') }}</button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab"
-                    data-bs-target="#message-tab-pane" type="button" role="tab" aria-controls="message-tab-pane"
+                    data-bs-target="#message-tab-pane-{{ $lead->id }}" type="button" role="tab" aria-controls="message-tab-pane"
                     aria-selected="false">{{ __('Send Message') }}</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+        <div class="tab-pane fade show active" id="profile-tab-pane-{{ $lead->id }}" role="tabpanel" aria-labelledby="profile-tab"
              tabindex="0">
             <div class="offcanvas-body">
                 <dl class="row mb-4">
@@ -152,9 +153,9 @@
                 </notes>
             </div>
         </div>
-        <div class="tab-pane fade" id="message-tab-pane" role="tabpanel" aria-labelledby="message-tab" tabindex="0">
+        <div class="tab-pane fade" id="message-tab-pane-{{ $lead->id }}" role="tabpanel" aria-labelledby="message-tab" tabindex="0">
             <div class="offcanvas-body">
-                <form>
+                  {{ Form::open(['method' => 'post', 'id' => 'lead-message-form-'.$lead->id, 'route' => ['send.message', [$campaign, $lead]]]) }}
                     <div class="mb-3">
                         {{ Form::label('from_email', __('From'), ['class' => 'form-label']) }}
                         {{ Form::select('from_email', config('sales-management.emails'), null, ['class' => 'form-control
@@ -172,18 +173,73 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        {{ Form::label('message', __('Message'), ['class' => 'form-label']) }}
-                        {{ Form::textarea('message', null, ['class' => 'form-control']) }}
-                        @error('subject')
+                        {{ Form::label('body', __('Message'), ['class' => 'form-label']) }}
+                        {{ Form::textarea('body', null, ['class' => 'form-control']) }}
+                        @error('body')
                         <small class="invalid-feedback">{{ $message }}</small>
                         @enderror
                     </div>
                     <div class="my-3">
-                        <button type="submit" class="btn btn-success me-2 w-100">{{__("Send Message")}}</button>
+                        <button type="submit" class="btn btn-success me-2 w-100">
+                            <span class="d-flex align-items-center justify-content-center">
+                                <span id="spinner-loader" class="d-none spinner-border spinner-border-sm text-light me-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </span>{{__("Send Message")}} </span>
+                        </button>
                     </div>
-                </form>
+                {{ Form::close() }}
             </div>
         </div>
     </div>
 </div>
 @endif
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const leadMessageForm = document.getElementById('lead-message-form-{{ $lead->id }}');
+            const submitBtn = leadMessageForm.querySelector('button');
+            const spinner = document.getElementById('spinner-loader');
+
+            leadMessageForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+
+                spinner.classList.remove('d-none');
+                submitBtn.disabled = true;
+
+                axios.post(leadMessageForm.action, formData, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then((response) => {
+                    if(response.status === 200) {
+                        spinner.classList.add('d-none');
+                        submitBtn.disabled = false;
+
+                        window.notyf.open({
+                            type: "success",
+                            message: response.data.message,
+                            duration: "2500",
+                            ripple: true,
+                            position: "bottom right",
+                            dismissible: true,
+                        });
+
+                        leadMessageForm.reset();
+
+                        console.log(response)
+                    }
+                }).catch((error) => {
+                    if(error.response.status === 422) {
+                        spinner.classList.add('d-none');
+                        submitBtn.disabled = false;
+
+                        // TODO: show errors on front
+                        console.log(error)
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

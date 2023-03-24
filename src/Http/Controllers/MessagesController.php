@@ -5,6 +5,8 @@ namespace Teamtnt\SalesManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\MessageDataTable;
 use Teamtnt\SalesManagement\Http\Requests\MessageRequest;
+use Teamtnt\SalesManagement\Mail\LeadMessage;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\Message;
 use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Mail\CampaignEmail;
@@ -14,7 +16,7 @@ class MessagesController extends Controller
 {
 
     /**
-     * @param  MessageDataTable  $messageDataTable
+     * @param MessageDataTable $messageDataTable
      * @return mixed
      */
     public function index(Campaign $campaign, MessageDataTable $messageDataTable)
@@ -33,12 +35,12 @@ class MessagesController extends Controller
     }
 
     /**
-     * @param  MessageRequest  $request
+     * @param MessageRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Campaign $campaign, MessageRequest $messageRequest)
     {
-        $request = $messageRequest->all();
+        $request              = $messageRequest->all();
         $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
         Message::create($request);
 
@@ -48,7 +50,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * @param  Message  $message
+     * @param Message $message
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Campaign $campaign, Message $message)
@@ -57,13 +59,13 @@ class MessagesController extends Controller
     }
 
     /**
-     * @param  MessageRequest  $request
-     * @param  Message  $message
+     * @param MessageRequest $request
+     * @param Message $message
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Campaign $campaign, MessageRequest $messageRequest, Message $message)
     {
-        $request = $messageRequest->all();
+        $request              = $messageRequest->all();
         $request['from_name'] = config('sales-management.emails')[$request['from_email']] ?? null;
 
         $message->update($request);
@@ -72,7 +74,7 @@ class MessagesController extends Controller
             $messageStages = $messageRequest->get('message_stages');
 
             $messageStagesExistingIds = $message->messageStages->pluck('id')->toArray();
-            $messageStagesNewIds = array_column($messageStages, 'id');
+            $messageStagesNewIds      = array_column($messageStages, 'id');
 
             $messageStagesIdsToDelete = array_diff($messageStagesExistingIds, $messageStagesNewIds);
 
@@ -84,9 +86,9 @@ class MessagesController extends Controller
                 $message->messageStages()->updateOrCreate(
                     ['id' => $messageStage['id']],
                     [
-                        'name' => $messageStage['name'],
+                        'name'        => $messageStage['name'],
                         'description' => $messageStage['description'],
-                        'color' => $messageStage['color'],
+                        'color'       => $messageStage['color'],
                     ]
                 );
             }
@@ -98,7 +100,7 @@ class MessagesController extends Controller
     }
 
     /**
-     * @param  Message  $message
+     * @param Message $message
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Campaign $campaign, Message $message)
@@ -122,5 +124,21 @@ class MessagesController extends Controller
         request()->session()->flash('message', __('Message has been sent to all leads!'));
 
         return redirect()->route('messages.index', $campaign);
+    }
+
+    public function sendMessageToLead(Campaign $campaign, Lead $lead, Request $request)
+    {
+        $request->validate([
+            'from_email' => 'required|string',
+            'subject'    => 'required|string',
+            'body'       => 'required|string'
+        ]);
+
+        $leadEmail = $lead->contact->email;
+        $message   = $request->all();
+
+        Mail::to($leadEmail)->send(new LeadMessage($message));
+
+        return response()->json(['message' => 'Message has been sent!']);
     }
 }

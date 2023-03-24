@@ -49,7 +49,7 @@
                     <div class="card-body">
                         <div id="leads" data-stage-id="0">
                             @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 100) as $lead)
-                                <x-sales-management::lead-card :lead="$lead" off-canvas />
+                                <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                             @endforeach
 
                             <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
@@ -91,7 +91,7 @@
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
                                 @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 100) as $lead)
-                                    <x-sales-management::lead-card :lead="$lead" off-canvas/>
+                                    <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                                 @endforeach
 
                                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
