@@ -6,9 +6,20 @@ use Teamtnt\SalesManagement\Models\ContactTemp;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Illuminate\Validation\ValidationException;
 
-class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
+class ContactsImport implements ToModel, WithStartRow, WithBatchInserts, WithCustomCsvSettings
 {
+    private $delimiter;
+    private $encoding;
+
+    public function __construct($delimiter = ',', $encoding = "UTF-8")
+    {
+        $this->delimiter = $delimiter;
+        $this->encoding = $encoding;
+    }
     /**
      * @param  array  $row
      *
@@ -16,12 +27,18 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
      */
     public function model(array $row)
     {
+        $email = trim($row[4]);
+        if (! isValidEmail($email)) {
+            return null; // Skip rows with invalid email addresses
+        }
+
+
         return new ContactTemp([
             'salutation'    => trim($row[0]),
             'firstname'     => trim($row[1]),
             'lastname'      => trim($row[2]),
             'job_title'     => trim($row[3]),
-            'email'         => trim($row[4]),
+            'email'         => $email,
             'phone'         => trim($row[5]),
             'company_name'  => trim($row[6]),
             'vat'           => trim($row[7]),
@@ -32,7 +49,7 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
             'city'          => trim($row[12]),
             'country'       => trim($row[13]),
         ]);
-    }
+    } 
 
     public function batchSize(): int
     {
@@ -42,5 +59,21 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts
     public function startRow(): int
     {
         return 2;
+    }
+
+    public function delimiter(): string
+    {
+        return $this->delimiter;
+    }
+
+    public function getCsvSettings(): array
+    {
+        return [
+            'input_encoding' => $this->encoding,
+            'delimiter' => $this->delimiter,
+            'enclosure' => '"',
+            'escape_character' => '\\',
+            'to_encoding' => 'UTF-8',
+        ];
     }
 }

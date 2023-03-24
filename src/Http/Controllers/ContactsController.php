@@ -100,10 +100,14 @@ class ContactsController extends Controller
     public function importCSVStore(CSVImportRequest $request)
     {
         ini_set('max_execution_time', 0);
+
+        $delimiter = $this->guessDelimiter($request);
+        $encoding = $this->guessEncoding($request);
+
         //Create database table from ContactTemp model
         DB::statement('SET SESSION sql_require_primary_key=0');
         DB::statement("CREATE TEMPORARY TABLE ".(new ContactTemp)->getTable()." SELECT * FROM ".(new Contact)->getTable()." LIMIT 0");
-        Excel::import(new ContactsImport, $request->csv);
+        Excel::import(new ContactsImport($delimiter, $encoding), $request->csv);
 
         $batch = new Batch();
         if (auth()->check()) {
@@ -130,5 +134,37 @@ class ContactsController extends Controller
         return redirect()->route('contacts.index');
     }
 
+    private function guessEncoding($request)
+    {
+        $handle = fopen($request->csv, 'r');
+        $lines = [];
+        for ($i = 0; $i < 10; $i++) {
+            $lines[] = fgets($handle);
+        }
+        fclose($handle);
+
+        $text = implode('', $lines);
+
+        return mb_detect_encoding($text, "auto");
+    }
+
+
+    private function guessDelimiter($request)
+    {
+        // Read the first line of the file to guess the delimiter
+        $handle = fopen($request->csv, 'r');
+        $firstLine = fgets($handle);
+        fclose($handle);
+
+        $delimiters = array(',', ';', '\t', '|');
+        $delimiterCounts = array_fill_keys($delimiters, 0);
+
+        foreach ($delimiters as $delimiter) {
+            $delimiterCounts[$delimiter] = substr_count($firstLine, $delimiter);
+        }
+
+        arsort($delimiterCounts);
+        return key($delimiterCounts);
+    }
 }
 

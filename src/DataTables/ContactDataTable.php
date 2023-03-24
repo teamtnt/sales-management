@@ -34,7 +34,7 @@ class ContactDataTable extends DataTable
      */
     public function query(Contact $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->orderBy('id', 'desc');
     }
 
     /**

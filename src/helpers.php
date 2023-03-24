@@ -50,11 +50,19 @@ if (!function_exists('createListFromPipelineStage')) {
     }
 }
 
-/**
- * Get all Tags
- * @return mixed
- */
-function getAllTags(): ?string
-{
-    return Tag::all()->toJson();
+if(!function_exists('isValidEmail')) {
+    function isValidEmail($email) {
+        // Remove all illegal characters from email
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        // Check if the email is valid
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+    }
+}
+
+if(!function_exists('getAllTags')) {
+    function getAllTags(): ?string
+    {
+        return Tag::all()->toJson();
+    }
 }

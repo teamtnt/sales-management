@@ -27,8 +27,28 @@ class CSVImportRequest extends FormRequest
         $contactListTable = app(ContactList::class)->getTable();
 
         return [
-            'csv' => 'required|mimes:csv',
+            'csv' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!is_file($value)) {
+                        return $fail("The $attribute must be a file.");
+                    }
+                    if (!$this->isCsvValid($value)) {
+                        return $fail("The $attribute is not a valid CSV file.");
+                    }
+                },
+            ],
             'contact_list_id' => "required_without:new_list|exists:{$contactListTable},id|nullable",
         ];
     }
+
+    private function isCsvValid($filename)
+    {
+        $handle = fopen($filename, 'r');
+        $firstLine = fgets($handle);
+        fclose($handle);
+
+        return strpos($firstLine, ',') !== false || strpos($firstLine, ';') !== false;
+    }
+
 }
