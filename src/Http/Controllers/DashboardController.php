@@ -24,7 +24,7 @@ class DashboardController extends Controller
     public function getChartData()
     {
         $startDate = now()->subDays(30);
-        $endDate = now();
+        $endDate = now()->endOfDay();
 
         $dateRange = new DatePeriod(
             $startDate,

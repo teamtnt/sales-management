@@ -60,6 +60,10 @@
                                     <strong>Subscription change:</strong> [{{ $event->message_id }}
                                     ] {{ $event->message->subject }} <br>
                                     {{ $event->recipient }}
+                                @elseif($event->event_type === 'Sent')
+                                    <strong>Message sent:</strong> [{{ $event->message_id }}
+                                    ] {{ $event->message->subject }} <br>
+                                    {{ $event->recipient }}
                                 @endif
                                 <br>
                                 <small
