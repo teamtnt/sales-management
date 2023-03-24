@@ -1,0 +1,11 @@
+#lead-tabs {
+    .nav-link {
+        border: none;
+        border-radius: 0;
+
+        &.active {
+            border-bottom: 2px solid $blue;
+        }
+    }
+}
+
