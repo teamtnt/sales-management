@@ -229,8 +229,6 @@
                         });
 
                         leadMessageForm.reset();
-
-                        console.log(response)
                     }
                 }).catch((error) => {
                     if(error.response.status === 422) {
