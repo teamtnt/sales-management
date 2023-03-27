@@ -153,12 +153,13 @@
                 </notes>
             </div>
         </div>
+
         <div class="tab-pane fade" id="message-tab-pane-{{ $lead->id }}" role="tabpanel" aria-labelledby="message-tab" tabindex="0">
             <div class="offcanvas-body">
                   {{ Form::open(['method' => 'post', 'id' => 'lead-message-form-'.$lead->id, 'route' => ['send.message', [$campaign, $lead]]]) }}
                     <div class="mb-3">
                         {{ Form::label('from_email', __('From'), ['class' => 'form-label']) }}
-                        {{ Form::select('from_email', config('sales-management.emails'), null, ['class' => 'form-control
+                        {{ Form::select('from_email', config('sales-management.emails'), array_key_first(config('sales-management.emails')), ['class' => 'form-control
                         '.($errors->has('from_email') ? ' is-invalid' : ''), 'placeholder' => __('Select')]) }}
                         @error('from_email')
                         <small class="invalid-feedback">{{ $message }}</small>
