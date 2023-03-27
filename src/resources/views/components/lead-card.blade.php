@@ -159,26 +159,18 @@
                   {{ Form::open(['method' => 'post', 'id' => 'lead-message-form-'.$lead->id, 'route' => ['send.message', [$campaign, $lead]]]) }}
                     <div class="mb-3">
                         {{ Form::label('from_email', __('From'), ['class' => 'form-label']) }}
-                        {{ Form::select('from_email', config('sales-management.emails'), array_key_first(config('sales-management.emails')), ['class' => 'form-control
-                        '.($errors->has('from_email') ? ' is-invalid' : ''), 'placeholder' => __('Select')]) }}
-                        @error('from_email')
-                        <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                        {{ Form::select('from_email', config('sales-management.emails'), array_key_first(config('sales-management.emails')), ['class' => 'form-control', 'placeholder' => __('Select')]) }}
+                        <small class="invalid-feedback"></small>
                     </div>
                     <div class="mb-3">
                         {{ Form::label('subject', __('Subject'), ['class' => 'form-label']) }}
-                        {{ Form::text('subject', null, ['class' => 'form-control '.($errors->has('subject') ? '
-                        is-invalid' : '') , 'placeholder' => __('Enter subject')]) }}
-                        @error('subject')
-                        <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                        {{ Form::text('subject', null, ['class' => 'form-control', 'placeholder' => __('Enter subject')]) }}
+                        <small class="invalid-feedback"></small>
                     </div>
                     <div class="mb-3">
                         {{ Form::label('body', __('Message'), ['class' => 'form-label']) }}
                         {{ Form::textarea('body', null, ['class' => 'form-control']) }}
-                        @error('body')
-                        <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                        <small class="invalid-feedback"></small>
                     </div>
                     <div class="my-3">
                         <button type="submit" class="btn btn-success me-2 w-100">
@@ -204,8 +196,17 @@
 
             leadMessageForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                const formData = new FormData(this);
 
+                // Remove validation classes from all fields
+                const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');
+                inputFields.forEach((inputField) => {
+                    inputField.classList.remove('is-invalid');
+                    inputField.classList.remove('is-valid');
+                    const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
+                    errorElement.innerText = '';
+                });
+
+                const formData = new FormData(this);
                 spinner.classList.remove('d-none');
                 submitBtn.disabled = true;
 
@@ -235,9 +236,15 @@
                     if(error.response.status === 422) {
                         spinner.classList.add('d-none');
                         submitBtn.disabled = false;
+                        const errors = error.response.data.errors;
 
-                        // TODO: show errors on front
-                        console.log(error)
+                        Object.keys(errors).forEach((fieldName) => {
+                            const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);
+                            const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
+
+                            errorElement.innerText = errors[fieldName];
+                            inputField.classList.add('is-invalid');
+                        });
                     }
                 });
             });
