@@ -50,9 +50,11 @@
                      @dragstart="onDragStart($event, 'condition.run')">
                     <span class="condition-box pe-2 justify-content-center">
                         <span class="condition-box__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
-                                <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M3,2 L21,12 L3,22 Z"/>
-                            </svg>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" style="margin-left: 5px; margin-top: -1px;">
+                                    <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M3,2 L21,12 L3,22 Z"/>
+                                </svg>
+                            </span>
                         </span>
                         On Run</span>
                 </div>
@@ -73,19 +75,20 @@
                      @dragstart="onDragStart($event, 'condition.message.opened')">
                     <span class="condition-box pe-2 justify-content-end">
                         <span class="condition-box__icon">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-10 -10 84 84" enable-background="new -10 -10 84 84" xml:space="preserve">
-                                <g>
-                                    <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="36" y1="9" x2="45" y2="9"/>
-                                    <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="17" x2="45" y2="17"/>
-                                    <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="25" x2="45" y2="25"/>
+                            <span>
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20px" height="20px" viewBox="-10 -10 84 84" enable-background="new -10 -10 84 84" xml:space="preserve">
                                     <g>
-                                        <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="1,26 32,45.434 63,26"/>
-                                        <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11.334,21.667 1,26 1,63 63,63 63,26 63,26 52.666,21.667"/>
-                                        <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11,32 11,1 53,1 53,32"/>
+                                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="36" y1="9" x2="45" y2="9"/>
+                                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="17" x2="45" y2="17"/>
+                                        <line fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" x1="19" y1="25" x2="45" y2="25"/>
+                                        <g>
+                                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="1,26 32,45.434 63,26"/>
+                                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11.334,21.667 1,26 1,63 63,63 63,26 63,26 52.666,21.667"/>
+                                            <polyline fill="none" stroke="#FFFFFF" stroke-width="3" stroke-miterlimit="10" points="11,32 11,1 53,1 53,32"/>
+                                        </g>
                                     </g>
-                                </g>
-                            </svg>
-
+                                </svg>
+                            </span>
                         </span>
                         Message Opened
                     </span>
@@ -237,12 +240,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: 30px;
+        height: 30px;
         color: white;
         background-color: #4E68D0;
         transform: translate(-40%, 0%) rotate(45deg);
         transform-origin: center;
+
+        > span {
+            transform: rotate(315deg);
+            transform-origin: center;
+        }
     }
 }
 
