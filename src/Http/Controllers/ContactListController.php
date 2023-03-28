@@ -35,7 +35,7 @@ class ContactListController extends Controller
     public function edit(ContactList $contactList, ContactListContactDataTable $contactDataTable)
     {
         return $contactDataTable
-            ->with('contactListId', $contactList->id)
+            ->with('contactList', $contactList)
             ->render('sales-management::contact-list.edit', compact('contactList'));
     }
 

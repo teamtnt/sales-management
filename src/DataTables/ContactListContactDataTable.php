@@ -2,10 +2,12 @@
 
 namespace Teamtnt\SalesManagement\DataTables;
 
+use Illuminate\Support\Collection;
 use Teamtnt\SalesManagement\Models\Contact;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
+use Yajra\DataTables\CollectionDataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -16,34 +18,16 @@ use Yajra\DataTables\Services\DataTable;
 
 class ContactListContactDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+
+    public function dataTable(): CollectionDataTable
     {
-        return (new EloquentDataTable($query))
+        return (new CollectionDataTable($this->collection()))
             ->addColumn('action', 'sales-management::contact-list-contacts.actions');
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param Contact $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function query(ContactListContact $model): QueryBuilder
+    public function collection(): Collection
     {
-        $modelTable = $model->getTable();
-        $id = $modelTable.'.contact_id';
-        $joinTable = (new Contact())->getTable();
-        $joinColumn = $joinTable.'.id';
-
-        return $model->select([$modelTable.'.id as contact_list_contact_id', $joinTable.'.*'])
-            ->join($joinTable, $joinColumn, $id)
-            ->where($modelTable.'.contact_list_id', '=', $this->contactListId);
+        return $this->contactList->contacts()->withPivot(['id'])->get();
     }
 
     /**
@@ -71,8 +55,6 @@ class ContactListContactDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make('contact_list_contact_id')->title('ID'),
             Column::make('firstname')->title(__('First name')),
             Column::make('lastname')->title(__('Last name')),
             Column::make('job_title')->title(__('Job title')),
@@ -93,6 +75,6 @@ class ContactListContactDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Contact_' . date('YmdHis');
+        return 'Contact_'.date('YmdHis');
     }
 }
