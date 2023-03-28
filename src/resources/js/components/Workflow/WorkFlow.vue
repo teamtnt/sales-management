@@ -257,6 +257,7 @@
                 @dragover="onDragOver"
                 v-model="elements"
                 :node-types="nodeTypes"
+                :default-edge-options="{ type: 'smoothstep' }"
             >
                 <Background/>
                 <Panel>
