@@ -47,6 +47,23 @@
                     <i class="align-middle" data-feather="tag"></i> <span class="align-middle">{{ __("Tags")}}</span>
                 </a>
             </li>
+            <li class="sidebar-item {{ request()->is('docs*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="#docsMenu" data-bs-toggle="collapse" aria-expanded="false">
+                    <i class="align-middle" data-feather="book"></i> <span class="align-middle">Docs</span>
+                </a>
+                <ul id="docsMenu" class="sidebar-dropdown list-unstyled collapse {{ request()->is('docs*') ? 'show' : '' }}" data-bs-parent="#sidebar">
+                    <li class="sidebar-item {{ request()->is('docs/markdown') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('docs.markdown') }}">Markdown</a>
+                    </li>
+                    <li class="sidebar-item {{ request()->is('docs/pipelines') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('docs.pipelines') }}">Pipelines</a>
+                    </li>
+                    <li class="sidebar-item {{ request()->is('docs/workflow') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ route('docs.workflow') }}">Workflow</a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </div>
 </nav>

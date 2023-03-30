@@ -16,6 +16,7 @@ return new class extends Migration {
         Schema::create(config('sales-management.tablePrefix').'postmark_events', function (Blueprint $table) {
             $table->id();
             $table->string('event_type');
+            $table->integer('campaign_id')->nullable();
             $table->integer('message_id')->nullable();
             $table->string('postmark_message_id')->nullable();
             $table->string('recipient')->nullable();

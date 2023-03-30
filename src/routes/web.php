@@ -12,6 +12,7 @@ use Teamtnt\SalesManagement\Http\Controllers\TagsController;
 use Teamtnt\SalesManagement\Http\Controllers\CampaignController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactListController;
+use Teamtnt\SalesManagement\Http\Controllers\DocsController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -107,3 +108,7 @@ Route::group(['prefix' => 'campaign/{campaign}'], function () {
     Route::post('/workflows/{workflow:id}/unpublish', [WorkflowController::class, 'unpublish'])->name('workflows.unpublish');
     Route::post('/workflows/{workflow:id}/run', [WorkflowController::class, 'run'])->name('workflows.run');
 });
+
+Route::get('/docs/markdown', [DocsController::class, 'markdown'])->name('docs.markdown');
+Route::get('/docs/pipelines', [DocsController::class, 'pipelines'])->name('docs.pipelines');
+Route::get('/docs/workflow', [DocsController::class, 'workflow'])->name('docs.workflow');

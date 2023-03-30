@@ -28,6 +28,9 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts, WithCus
     public function model(array $row)
     {
         $email = trim($row[4]);
+        //this will also catch the non breaking space
+        $email = str_replace("\xA0", "", $email);
+
         if (! isValidEmail($email)) {
             return null; // Skip rows with invalid email addresses
         }
@@ -38,7 +41,7 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts, WithCus
             'firstname'     => trim($row[1]),
             'lastname'      => trim($row[2]),
             'job_title'     => trim($row[3]),
-            'email'         => $email,
+            'email'         => trim($email),
             'phone'         => trim($row[5]),
             'company_name'  => trim($row[6]),
             'vat'           => trim($row[7]),
