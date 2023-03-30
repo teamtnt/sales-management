@@ -222,6 +222,7 @@
 
 .vue-flow__node-input {
     position: relative;
+    min-width: 150px;
     border: 0;
     cursor: grab;
 
