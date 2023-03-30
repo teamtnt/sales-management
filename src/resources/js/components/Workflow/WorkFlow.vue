@@ -183,7 +183,6 @@
 
     const onDrop = (event) => {
         const type = event.dataTransfer?.getData("application/vueflow");
-
         const {left, top} = vueFlowRef.value.getBoundingClientRect();
 
         const position = project({
@@ -258,6 +257,7 @@
                 @dragover="onDragOver"
                 v-model="elements"
                 :node-types="nodeTypes"
+                :default-edge-options="{ type: 'smoothstep' }"
             >
                 <Background/>
                 <Panel>

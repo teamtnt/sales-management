@@ -1,5 +1,5 @@
-<x-mail::message>
+<x-sales-management::mail.text.message>
 
 {{ $data }}
 
-</x-mail::message>
+</x-sales-management::mail.text.message>

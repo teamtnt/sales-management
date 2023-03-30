@@ -29,7 +29,7 @@
         bottom: '-7px'
 
     }));
- 
+
     const {findNode} = useVueFlow()
     const node = ref(findNode(props.id));
     node.value.data = {
@@ -41,9 +41,11 @@
     <div class="vue-flow__node-input shadow-sm">
         <span class="condition-box pe-2 justify-content-center">
             <span class="condition-box__icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
-                    <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M3,2 L21,12 L3,22 Z"/>
-                </svg>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" style="margin-left: 5px; margin-top: -1px;">
+                        <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M3,2 L21,12 L3,22 Z"/>
+                    </svg>
+                </span>
             </span>
             On run</span>
 
