@@ -51,9 +51,9 @@
                     <span class="condition-box pe-2 justify-content-center">
                         <span class="condition-box__icon">
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" style="margin-left: 5px; margin-top: -1px;">
-                                    <path fill="none" stroke="#FFFFFF" stroke-width="2" d="M3,2 L21,12 L3,22 Z"/>
-                                </svg>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                      fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play-circle align-middle">
+                                     <circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
                             </span>
                         </span>
                         On Run</span>
