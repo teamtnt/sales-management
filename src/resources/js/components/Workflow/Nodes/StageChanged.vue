@@ -9,7 +9,7 @@
         type: String,
     })
 
-    const toolBarVisible = ref(false)
+    const toolBarVisible = ref(false);
 
     const sourceHandleStyleTargetTop = computed(() => ({
         backgroundColor: 'white',
@@ -51,13 +51,13 @@
             ripple: true,
             dismissible: true,
         });
-    }
+    };
 
     // TODO: create composable useOutsideClick for use here when we click outside of node
 </script>
 
 <template>
-    <div class="vue-flow__node-input shadow-sm" style="min-width: 150px; width: 100%; padding-left: 2rem;">
+    <div class="vue-flow__node-input shadow-sm" style="min-width: 150px; width: 100%; padding-left: 2rem; padding-right: 2rem;">
         <NodeToolbar
             style="display: flex; gap: 0.5rem; align-items: center"
             :is-visible="toolBarVisible"
@@ -65,9 +65,9 @@
             :position="Position.Right">
             <transition mode="in-out" appear>
                 <div class="bg-white p-3 rounded-3">
-                    <div>
-                        <h5>Node Properties</h5>
-                    </div>
+                    <h5 class="mb-3">
+                        <span class="d-flex align-items-center"><i class="align-middle me-1 fas fa-fw fa-cogs"></i>Node Properties</span>
+                    </h5>
                     <div class="mb-3">
                         <label for="argument" class="form-label" style="font-size: 12px;">Choose Stage</label>
                         <select name="argument" class="form-select form-select-sm" v-model="node.data" id="argument">
@@ -84,7 +84,7 @@
                 </div>
             </transition>
         </NodeToolbar>
-        <span class="condition-box pe-2">
+        <span class="condition-box">
             <span class="condition-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                      fill="none"
@@ -102,15 +102,3 @@
         </Handle>
     </div>
 </template>
-
-<style>
-.v-enter-active,
-.v-leave-active {
-    transition: opacity 0.10s ease-in-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-    opacity: 0;
-}
-</style>

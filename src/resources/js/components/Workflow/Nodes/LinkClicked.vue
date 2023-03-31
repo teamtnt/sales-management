@@ -9,6 +9,8 @@
         type: String
     });
 
+    const toolBarVisible = ref(false);
+
     const sourceHandleStyleClicked = computed(() => ({
         backgroundColor: 'green',
         left: '48px',
@@ -41,37 +43,75 @@
 
     let messages = ref(window.messagesWithLinks);
 
-    const {findNode} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes} = useVueFlow()
     const node = ref(findNode(props.id));
 
     const selectedMessage = computed(() => {
       return messages.value.find(m => m.argument === node.value.data.message) || { links: [] };
     });
-    
+
     node.value.data.argument = computed(() => {
       if (node.value.data.message && node.value.data.link) {
         return `${node.value.data.message}.${node.value.data.link}`;
       }
       return '';
-    }); 
+    });
+
+    onNodeClick((e) => {
+        if(e.node.id === node.value.id) {
+            toolBarVisible.value = !toolBarVisible.value
+        }
+    })
+
+    const deleteNode = (node) => {
+        removeNodes([node],true);
+        window.notyf.open({
+            type: "success",
+            message: "Node successfully deleted!",
+            duration: "3000",
+            ripple: true,
+            dismissible: true,
+        });
+    };
 </script>
 
 <template>
-    <div class="vue-flow__node-input shadow-sm">
-        <NodeToolbar
-            style="display: flex; gap: 0.5rem; align-items: center"
-            :is-visible="true"
-            :node-id="id"
-            :position="Position.Right"
-        >
-            <select name="argument" class="form-select" v-model="node.data.message">
-              <option v-for="m in messages" :value="m.argument">{{ m.title }}</option>
-            </select> <br> <br>
-            <select name="argument" class="form-select" v-model="node.data.link">
-              <option v-for="link in selectedMessage.links" :value="link.url">{{ link.text }}</option>
-            </select>
+    <div class="vue-flow__node-input shadow-sm" style="min-width: 150px; width: 100%; padding-left: 2rem; padding-right: 2rem;">
+         <NodeToolbar
+             style="display: flex; gap: 0.5rem; align-items: center"
+             :is-visible="toolBarVisible"
+             :node-id="id"
+             :position="Position.Right">
+            <transition mode="in-out" appear>
+                <div class="bg-white p-3 rounded-3">
+                     <h5 class="mb-3">
+                        <span class="d-flex align-items-center"><i class="align-middle me-1 fas fa-fw fa-cogs"></i>Node Properties</span>
+                    </h5>
+                    <div class="mb-3">
+                        <label for="argument" class="form-label" style="font-size: 12px;">Choose Message</label>
+                        <select name="argument" class="form-select" v-model="node.data.message">
+                          <option v-for="m in messages" :value="m.argument">{{ m.title }}</option>
+                        </select>
+                    </div>
+                    <transition mode="in-out" appear>
+                        <div class="mb-3" v-if="selectedMessage?.links?.length">
+                            <label for="argument" class="form-label" style="font-size: 12px;">Choose Link</label>
+                            <select name="argument" class="form-select" v-model="node.data.link">
+                                <option v-for="link in selectedMessage.links" :value="link.url">{{ link.text }}</option>
+                            </select>
+                        </div>
+                    </transition>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-danger btn-sm rounded-2" @click="deleteNode(node)">
+                            <span class="d-flex align-items-center">
+                                <i class="align-middle me-1 fas fa-fw fa-trash"></i>Delete Node
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </transition>
         </NodeToolbar>
-        <span class="condition-box pe-2 justify-content-center">
+        <span class="condition-box">
             <span class="condition-box__icon">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 52.965 52.965" width="15" height="15" xml:space="preserve">
                     <path style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10;" d="M24.008,13.401L33.2,4.208

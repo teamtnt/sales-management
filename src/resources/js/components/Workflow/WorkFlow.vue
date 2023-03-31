@@ -222,7 +222,6 @@
                 title: title.value,
             })
             .then(function (response) {
-                console.log(response);
                 window.notyf.open({
                     type: "success",
                     message: "Workflow successfully saved!",
@@ -324,5 +323,15 @@
     height: 8px;
     box-sizing: border-box;
     border-color: transparent;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.10s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
 </style>
