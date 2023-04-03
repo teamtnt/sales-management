@@ -33,7 +33,7 @@
     }));
 
     let items = window.messages;
-    const {findNode, onNodeClick, removeNodes} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
 
     onNodeClick((e) => {
@@ -42,6 +42,9 @@
         }
     })
 
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
     const deleteNode = (node) => {
         removeNodes([node],true);
         window.notyf.open({

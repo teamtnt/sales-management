@@ -33,7 +33,7 @@
     }));
 
     let items = window.waitOptions;
-    const {findNode, onNodeClick, removeNodes} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
 
     onNodeClick((e) => {
@@ -53,6 +53,9 @@
         });
     };
 
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
 </script>
 <template>
     <div class="vue-flow__node-input shadow-sm" style="min-width: 150px; width: 100%; padding-left: 2rem; padding-right: 2rem;">

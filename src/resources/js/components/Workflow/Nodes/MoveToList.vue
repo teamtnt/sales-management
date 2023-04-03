@@ -33,7 +33,7 @@
     }));
 
     let items = window.contactLists;
-    const {findNode, onNodeClick, removeNodes} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
 
     onNodeClick((e) => {
@@ -41,6 +41,10 @@
             toolBarVisible.value = !toolBarVisible.value
         }
     })
+
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
 
     const deleteNode = (node) => {
         removeNodes([node],true);

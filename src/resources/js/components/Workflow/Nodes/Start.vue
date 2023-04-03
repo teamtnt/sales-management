@@ -3,6 +3,7 @@
     import { computed, ref } from "vue";
     import {NodeToolbar} from '@vue-flow/node-toolbar'
 
+
     const props = defineProps({
         id: String,
         label: String,
@@ -10,6 +11,8 @@
     })
 
     const toolBarVisible = ref(false);
+    const nodeWrapper = ref();
+    const nodeToolbar = ref();
 
     const sourceHandleStyleTarget = computed(() => ({
         backgroundColor: 'white',
@@ -22,15 +25,19 @@
 
     }));
 
-    const {findNode, onNodeClick, removeNodes} = useVueFlow();
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow();
     const node = ref(findNode(props.id));
+
 
     onNodeClick((e) => {
         if(e.node.id === node.value.id) {
             toolBarVisible.value = !toolBarVisible.value
         }
-    })
+    });
 
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
     const deleteNode = (node) => {
         removeNodes([node],true);
         window.notyf.open({
@@ -41,10 +48,14 @@
             dismissible: true,
         });
     };
+
+
+
 </script>
 <template>
-    <div class="vue-flow__node-input shadow-sm">
+    <div class="vue-flow__node-input shadow-sm" ref="nodeWrapper">
         <NodeToolbar
+            ref="nodeToolbar"
             style="display: flex; gap: 0.5rem; align-items: center"
             :is-visible="toolBarVisible"
             :node-id="id"

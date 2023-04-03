@@ -33,7 +33,7 @@
 
     }));
 
-    const {findNode, onNodeClick, removeNodes} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
     node.value.data = {
         "argument": window.workflowId,
@@ -45,6 +45,9 @@
         }
     });
 
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
     const deleteNode = (node) => {
         removeNodes([node],true);
         window.notyf.open({

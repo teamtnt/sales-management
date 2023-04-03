@@ -33,15 +33,18 @@
     }));
 
     let items = window.tags;
-    const {findNode, onNodeClick, removeNodes} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
 
     onNodeClick((e) => {
         if(e.node.id === node.value.id) {
             toolBarVisible.value = !toolBarVisible.value
         }
-    })
+    });
 
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
     const deleteNode = (node) => {
         removeNodes([node],true);
         window.notyf.open({
