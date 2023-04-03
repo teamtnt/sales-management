@@ -279,6 +279,7 @@
 .action-box {
     display: flex;
     align-items: center;
+    justify-content: center;
 
     &__icon {
         position: absolute;
