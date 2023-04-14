@@ -37,6 +37,8 @@
     const node = ref(findNode(props.id));
 
     onNodeClick((e) => {
+        if(e.event.target.classList.contains("handle")) return;
+
         if(e.node.id === node.value.id) {
             toolBarVisible.value = !toolBarVisible.value
         }
