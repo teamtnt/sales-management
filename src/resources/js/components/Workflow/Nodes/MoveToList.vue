@@ -7,7 +7,9 @@
         id: String,
         label: String,
         type: String
-    })
+    });
+
+    const toolBarVisible = ref(false);
 
     const sourceHandleStyleTargetTop = computed(() => ({
         backgroundColor: 'white',
@@ -31,23 +33,60 @@
     }));
 
     let items = window.contactLists;
-    const {findNode} = useVueFlow()
+    const {findNode, onNodeClick, removeNodes, onPaneClick} = useVueFlow()
     const node = ref(findNode(props.id));
+
+    onNodeClick((e) => {
+        if(e.node.id === node.value.id) {
+            toolBarVisible.value = !toolBarVisible.value
+        }
+    })
+
+    onPaneClick(() => {
+        toolBarVisible.value = false
+    });
+
+    const deleteNode = (node) => {
+        removeNodes([node],true);
+        window.notyf.open({
+            type: "success",
+            message: "Node successfully deleted!",
+            duration: "3000",
+            ripple: true,
+            dismissible: true,
+        });
+    };
 
 </script>
 <template>
-    <div class="vue-flow__node-input shadow-sm">
+    <div class="vue-flow__node-input shadow-sm" style="min-width: 150px; width: 100%; padding-left: 2rem; padding-right: 2rem;">
         <NodeToolbar
             style="display: flex; gap: 0.5rem; align-items: center"
-            :is-visible="true"
+            :is-visible="toolBarVisible"
             :node-id="id"
-            :position="Position.Right"
-        >
-            <select name="argument" class="form-select" v-model="node.data">
-                <option v-for="item in items" :value="item">{{ item.title }}</option>
-            </select>
+            :position="Position.Right">
+            <transition mode="in-out" appear>
+                <div class="bg-white p-3 rounded-3">
+                    <h5 class="mb-3">
+                        <span class="d-flex align-items-center"><i class="align-middle me-1 fas fa-fw fa-cogs"></i>Node Properties</span>
+                    </h5>
+                    <div class="mb-3">
+                        <label for="argument" class="form-label" style="font-size: 12px;">Choose List</label>
+                        <select name="argument" class="form-select" v-model="node.data">
+                            <option v-for="item in items" :value="item">{{ item.title }}</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-danger btn-sm rounded-2" @click="deleteNode(node)">
+                            <span class="d-flex align-items-center">
+                                <i class="align-middle me-1 fas fa-fw fa-trash"></i>Delete Node
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </transition>
         </NodeToolbar>
-        <span class="action-box pe-2 justify-content-center">
+        <span class="action-box ps-1">
             <span class="action-box__icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -57,7 +96,7 @@
                     x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line
                     x1="3" y1="18" x2="3.01" y2="18"></line></svg>
             </span>
-            Move To List
+            {{ node.data.title ?? 'Move To List' }}
         </span>
 
         <Handle :id="`state.move_to_list.${id}`" type="source" :position="Position.Bottom" :style="sourceHandleStyleTargetBottom" class="handle">
