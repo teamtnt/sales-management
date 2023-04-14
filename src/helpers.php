@@ -1,9 +1,9 @@
 <?php
 
 use Teamtnt\SalesManagement\Models\Contact;
-use Teamtnt\SalesManagement\Models\Lead;
-use Teamtnt\SalesManagement\Models\ContactTemp;
 use Teamtnt\SalesManagement\Models\ContactListContact;
+use Teamtnt\SalesManagement\Models\ContactTemp;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\Tag;
 
 if (!function_exists('importTempContactsIntoContacts')) {
@@ -12,7 +12,7 @@ if (!function_exists('importTempContactsIntoContacts')) {
         \DB::table((new ContactTemp)->getTable())
             ->update(['batch_id' => $batchId]);
 
-        $select = ContactTemp::select(['*']);
+        $select   = ContactTemp::select(['*']);
         $bindings = $select->getBindings();
 
         $insertQuery = "INSERT into ".(new Contact)->getTable()." ".$select->toSql();
@@ -50,8 +50,26 @@ if (!function_exists('createListFromPipelineStage')) {
     }
 }
 
-if(!function_exists('isValidEmail')) {
-    function isValidEmail($email) {
+if (!function_exists('createLeadsFromContacts')) {
+
+    function createLeadsFromContacts($campaign_id, $pipeline_id, $contact_list_id)
+    {
+        $leadsTableName = (new Lead)->getTable();
+
+        $select = ContactListContact::select(["contact_id as id", \DB::raw("{$campaign_id} as campaign_id"), \DB::raw("{$pipeline_id} as pipeline_id"), \DB::raw("0 as pipeline_stage_id")])
+            ->where('contact_list_id', $contact_list_id);
+        $bindings = $select->getBindings();
+
+        $insertQuery = "INSERT into {$leadsTableName} (contact_id, campaign_id, pipeline_id, pipeline_stage_id) "
+        .$select->toSql();
+
+        \DB::insert($insertQuery, $bindings);
+    }
+}
+
+if (!function_exists('isValidEmail')) {
+    function isValidEmail($email)
+    {
         // Remove all illegal characters from email
         $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
@@ -60,8 +78,8 @@ if(!function_exists('isValidEmail')) {
     }
 }
 
-if(!function_exists('getAllTags')) {
-    function getAllTags(): ?string
+if (!function_exists('getAllTags')) {
+    function getAllTags():  ? string
     {
         return Tag::all()->toJson();
     }

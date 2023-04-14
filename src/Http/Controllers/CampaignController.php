@@ -2,14 +2,14 @@
 
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\CampaignDataTable;
 use Teamtnt\SalesManagement\Http\Requests\CampaignRequest;
+use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Contact;
 use Teamtnt\SalesManagement\Models\Deal;
-use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Lead;
-use Illuminate\Http\Request;
-use Teamtnt\SalesManagement\Jobs\ApplyTransitionByNameJob;
 
 class CampaignController extends Controller
 {
@@ -27,7 +27,7 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::create($campaignRequest->validated());
         $campaign->assignees()->sync($campaignRequest->get('assignees'));
-        $this->createLeadsFromAllContacts($campaign->id, $campaign->pipeline_id);
+        createLeadsFromContacts($campaign->id, $campaign->pipeline_id, $campaign->contact_list_id);
 
         request()->session()->flash('message', __('Campaign successfully created!'));
 
@@ -56,7 +56,7 @@ class CampaignController extends Controller
     public function stageChange(Request $request)
     {
         $leadId = $request->lead_id;
-        $lead = Lead::where('id', $leadId)
+        $lead   = Lead::where('id', $leadId)
             ->where('pipeline_id', $request->pipeline_id)
             ->where('pipeline_stage_id', $request->source_stage_id ?? 0)
             ->first();
@@ -73,19 +73,6 @@ class CampaignController extends Controller
         foreach ($lead->campaign->publishedWorkflows() as $workflow) {
             ApplyTransitionByNameJob::dispatch($leadId, $workflow->id, $transitionName);
         }
-    }
-
-    public function createLeadsFromAllContacts($campaign_id, $pipeline_id)
-    {
-        $leadsTableName = (new Lead)->getTable();
-
-        $select = Contact::select(["id", \DB::raw("{$campaign_id} as campaign_id"), \DB::raw("{$pipeline_id} as pipeline_id"), \DB::raw("0 as pipeline_stage_id")]);
-        $bindings = $select->getBindings();
-
-        $insertQuery = "INSERT into {$leadsTableName} (contact_id, campaign_id, pipeline_id, pipeline_stage_id) "
-            .$select->toSql();
-
-        \DB::insert($insertQuery, $bindings);
     }
 
     public function destroy(Campaign $campaign)
