@@ -36,8 +36,11 @@ class CampaignDataTable extends DataTable
             ->editColumn('status', function (Campaign $campaign) {
                 return Campaign::getCampaignStatusNames()[$campaign->status] ?? '--';
             })
+            ->addColumn('contact_list.name', function (Campaign $campaign) {
+                return '<a href="'.route('lists.edit', $campaign->contactList->id).'">'.$campaign->contactList->name.'</a>' ?? '--';
+            })
             ->addColumn('action', 'sales-management::campaign.actions')
-            ->rawColumns(['name', 'action'])
+            ->rawColumns(['name', 'action','contact_list.name'])
             ->setRowId('id');
     }
 
@@ -83,6 +86,7 @@ class CampaignDataTable extends DataTable
             Column::make('updated_at')->title(__('Updated')),
             Column::make('status')->title(__('Status')),
             Column::make('assignee')->title(__('Assignee')),
+            Column::make('contact_list.name')->title(__('Contact List')),
             Column::computed('action')->title(__('Action'))
                 ->exportable(false)
                 ->printable(false)

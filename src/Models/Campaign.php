@@ -67,6 +67,11 @@ class Campaign extends Model
         return $this->hasMany(Workflow::class);
     }
 
+    public function contactList()
+    {
+        return $this->belongsTo(ContactList::class);
+    }
+
     public function publishedWorkflows()
     {
         return $this->workflows()->where('status', Workflow::STATUS_PUBLISHED)->get();
