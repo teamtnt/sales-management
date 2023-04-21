@@ -323,6 +323,11 @@
     height: 8px;
     box-sizing: border-box;
     border-color: transparent;
+    transition: background-color .15s ease;
+
+    &:hover {
+        background-color: #dee6ed !important;
+    }
 }
 
 .v-enter-active,
