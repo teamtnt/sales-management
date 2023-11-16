@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create(config('sales-management.tablePrefix').'contacts', function (Blueprint $table) {
+        Schema::create(config('sales-management.tablePrefix') . 'contacts', function (Blueprint $table) {
             $table->id();
             $table->string("salutation")->nullable();
             $table->string("firstname")->nullable();
@@ -24,10 +24,11 @@ return new class extends Migration {
             $table->string("city")->nullable();
             $table->string("country")->nullable();
             $table->integer("batch_id")->nullable();
+            $table->unsignedBigInteger("uuid")->nullable();
             $table->timestamps();
         });
 
-        Schema::create(config('sales-management.tablePrefix').'batches', function (Blueprint $table) {
+        Schema::create(config('sales-management.tablePrefix') . 'batches', function (Blueprint $table) {
             $table->id();
             $table->integer("uploader_id")->nullable();
             $table->timestamps();
@@ -36,6 +37,7 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::drop(config('sales-management.tablePrefix').'contacts');
+        Schema::drop(config('sales-management.tablePrefix') . 'contacts');
+        Schema::drop(config('sales-management.tablePrefix') . 'batches');
     }
 };

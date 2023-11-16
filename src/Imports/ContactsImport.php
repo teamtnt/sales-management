@@ -20,8 +20,9 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts, WithCus
         $this->delimiter = $delimiter;
         $this->encoding = $encoding;
     }
+
     /**
-     * @param  array  $row
+     * @param array $row
      *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
@@ -31,28 +32,28 @@ class ContactsImport implements ToModel, WithStartRow, WithBatchInserts, WithCus
         //this will also catch the non breaking space
         $email = str_replace("\xA0", "", $email);
 
-        if (! isValidEmail($email)) {
+        if (!isValidEmail($email)) {
             return null; // Skip rows with invalid email addresses
         }
 
-
         return new ContactTemp([
-            'salutation'    => trim($row[0]),
-            'firstname'     => trim($row[1]),
-            'lastname'      => trim($row[2]),
-            'job_title'     => trim($row[3]),
-            'email'         => trim($email),
-            'phone'         => trim($row[5]),
-            'company_name'  => trim($row[6]),
-            'vat'           => trim($row[7]),
-            'url'           => trim($row[8]),
+            'salutation' => trim($row[0]),
+            'firstname' => trim($row[1]),
+            'lastname' => trim($row[2]),
+            'job_title' => trim($row[3]),
+            'email' => trim($email),
+            'phone' => trim($row[5]),
+            'company_name' => trim($row[6]),
+            'vat' => trim($row[7]),
+            'url' => trim($row[8]),
             'company_email' => trim($row[9]),
-            'address'       => trim($row[10]),
-            'postal'        => trim($row[11]),
-            'city'          => trim($row[12]),
-            'country'       => trim($row[13]),
+            'address' => trim($row[10]),
+            'postal' => trim($row[11]),
+            'city' => trim($row[12]),
+            'country' => trim($row[13]),
+            'uuid' => trim($row[14]),
         ]);
-    } 
+    }
 
     public function batchSize(): int
     {

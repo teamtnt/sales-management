@@ -32,11 +32,12 @@ class ContactTemp extends Model
         'postal',
         'city',
         'country',
+        'uuid',
     ];
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'contacts_temp';
+        $this->table = config('sales-management.tablePrefix') . 'contacts_temp';
         parent::__construct($attributes);
     }
 }

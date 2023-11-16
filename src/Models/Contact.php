@@ -32,6 +32,7 @@ class Contact extends Model
         'postal',
         'city',
         'country',
+        'uuid',
     ];
 
     public function __construct(array $attributes = [])
