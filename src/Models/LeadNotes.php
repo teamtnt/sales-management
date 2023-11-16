@@ -14,9 +14,15 @@ class LeadNotes extends Model
     protected $casts = [
         'created_at' => 'timestamp'
     ];
+
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'lead_notes';
+        $this->table = config('sales-management.tablePrefix') . 'lead_notes';
         parent::__construct($attributes);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(config('sales-management.userModel'), 'created_by', 'id');
     }
 }

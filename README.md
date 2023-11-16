@@ -49,20 +49,27 @@ php artisan vendor:publish --tag="sales-management-assets"
 
 ## Building Assets
 
-We use Vite to build assets. First install all dependencies. 
+We use Vite to build assets. First install all dependencies.
 
 ```js
-npm install
+npm
+install
 ```
+
 If there is no **public** folder in project root run first production build which will build needed folders:
 
 ```js
-npm run build
+npm
+run
+build
 ```
 
 Development build:
+
 ```js
-npm run dev
+npm
+run
+dev
 ```
 
 For local development to have hot reloading create a symlink
@@ -70,11 +77,15 @@ For local development to have hot reloading create a symlink
 `ln -s ../vendor/teamtnt/sales-management/public/sales-management public/sales-management`
 
 Add to composer.json
+
 ```
     "repositories": [{
         "type": "path",
         "url": "../sales-management"
     }],
+    "require": {
+        "teamtnt/sales-management": "@dev"
+    }
 ```
 
 ## Usage

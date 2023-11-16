@@ -13,6 +13,17 @@
         <x-sales-management::icons.phone/>
         <span class="ms-2"> {{ $lead->contact->phone }}</span>
     </div>
+    <div class="d-flex align-items-center">
+        <x-sales-management::icons.tag/>
+        <ul class="list-unstyled d-flex flex-wrap gap-1 ms-2">
+            @foreach($lead->contact->tags as $tag)
+                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+            @endforeach
+            @foreach($lead->tags as $tag)
+                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+            @endforeach
+        </ul>
+    </div>
     @if($offCanvas)
         <span class="info-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight-{{ $lead->contact->id }}"
               aria-controls="offcanvasRight">
@@ -140,17 +151,33 @@
                     </dl>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
-                            <x-sales-management::icons.tag class="me-2"/> {{ __('Tags') }}
+                            <x-sales-management::icons.tag class="me-2"/> {{ __('Contact Tags') }}
                         </span>
                         <multi-select-list
                             name=tags[]
-                            label="Add tag to user"
+                            label="Add tag to contact"
                             placeholder="Choose tags..."
                             label-by="name"
                             track-by="name"
                             sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"
                             model-id="{{ $lead->contact->id }}"
                             :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"
+                            :options="{{ getAllTags() ?? '[]'}}">
+                        </multi-select-list>
+                    </div>
+                    <div class="mb-4">
+                        <span class="d-flex fw-bold align-items-center mb-2">
+                            <x-sales-management::icons.tag class="me-2"/> {{ __('Lead Tags') }}
+                        </span>
+                        <multi-select-list
+                            name=tags[]
+                            label="Add tag to lead"
+                            placeholder="Choose tags..."
+                            label-by="name"
+                            track-by="name"
+                            sync-tags-url="{{ route('leads.sync-tags', $lead->id) }}"
+                            model-id="{{ $lead->id }}"
+                            :selected="{{ $lead->tags->toJson() ?? '[]'}}"
                             :options="{{ getAllTags() ?? '[]'}}">
                         </multi-select-list>
                     </div>

@@ -14,7 +14,7 @@ class Lead extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'leads';
+        $this->table = config('sales-management.tablePrefix') . 'leads';
         parent::__construct($attributes);
     }
 
@@ -31,5 +31,10 @@ class Lead extends Model
     public function notes()
     {
         return $this->hasMany(LeadNotes::class, 'lead_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'lead_tag');
     }
 }

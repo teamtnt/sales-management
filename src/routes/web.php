@@ -6,6 +6,7 @@ use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\DealController;
 use Teamtnt\SalesManagement\Http\Controllers\LeadNotesController;
+use Teamtnt\SalesManagement\Http\Controllers\LeadTagsController;
 use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
 use Teamtnt\SalesManagement\Http\Controllers\TagsController;
@@ -68,6 +69,7 @@ Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->nam
 // Lead Notes
 Route::post('/lead-notes/{lead:id}/note/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
 Route::delete('/lead-notes/{lead:id}/note/{note:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
+Route::post('/lead-tags/{contact:id}/sync-tags', [LeadTagsController::class, 'syncTags'])->name('leads.sync-tags');
 
 // Pipelines
 Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');

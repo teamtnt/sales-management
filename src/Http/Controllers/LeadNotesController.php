@@ -15,17 +15,17 @@ class LeadNotesController extends Controller
     public function storeLeadNote(Request $request)
     {
 
-       $request->validate([
+        $request->validate([
             'note' => 'required|string|max:255'
         ]);
 
-        $leadNote             = new LeadNotes();
-        $leadNote->lead_id    = $request->get('lead_id');
+        $leadNote = new LeadNotes();
+        $leadNote->lead_id = $request->get('lead_id');
         $leadNote->created_by = auth()->id();
-        $leadNote->note       = $request->get('note');
+        $leadNote->note = $request->get('note');
         $leadNote->save();
 
-        return response()->json(['leadNote' => $leadNote]);
+        return response()->json(['leadNote' => $leadNote->load('user')]);
     }
 
     /**

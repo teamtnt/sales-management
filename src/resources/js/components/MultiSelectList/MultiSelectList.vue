@@ -44,7 +44,7 @@ onMounted(() => {
 function syncTags(option, id) {
     if (props.syncTagsUrl) {
         let formData = new FormData();
-        formData.append('contactId', props.modelId)
+        formData.append('modelId', props.modelId)
         for (let i = 0; i < selectedOptions.value.length; i++) {
             formData.append('tags[]', selectedOptions.value[i].id);
         }

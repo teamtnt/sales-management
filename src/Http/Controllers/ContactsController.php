@@ -169,7 +169,7 @@ class ContactsController extends Controller
 
     public function syncTags(Request $request)
     {
-        $contact = Contact::find($request->get('contactId'));
+        $contact = Contact::find($request->get('modelId'));
         $contact->tags()->sync($request->get('tags'));
 
         return response()->json(200);
