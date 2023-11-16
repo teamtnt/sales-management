@@ -38,4 +38,19 @@ class SalesManagementPolicy implements SalesManagementPolicyContract
     {
         return true;
     }
+
+    public function viewWorkflows()
+    {
+        return true;
+    }
+
+    public function viewMessages()
+    {
+        return true;
+    }
+
+    public function sendEmails()
+    {
+        return true;
+    }
 }

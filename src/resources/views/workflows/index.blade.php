@@ -12,11 +12,13 @@
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3">{{ __('Workflows') }}</h1>
         <div class="d-flex mb-3 justify-content-between align-items-center">
-            <a href="{{ route('messages.index', $campaign->id) }}" class="btn btn-info">
+            @can(config('sales-management.prefix').'.view-messages')
+                <a href="{{ route('messages.index', $campaign->id) }}" class="btn btn-info">
                  <span class="d-flex align-items-center">
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Messages") }}
                 </span>
-            </a>
+                </a>
+            @endcan
             <a href="{{ route('workflows.create', $campaign) }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> {{__("New Workflow")}}
             </a>

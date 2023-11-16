@@ -17,4 +17,10 @@ interface SalesManagementPolicyContract
     public function viewTags();
 
     public function viewDocs();
+
+    public function viewWorkflows();
+
+    public function viewMessages();
+
+    public function sendEmails();
 }
