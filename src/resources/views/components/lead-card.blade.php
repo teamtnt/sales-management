@@ -138,24 +138,22 @@
                             <p class="mb-1">{{ $lead->contact->country }}</p>
                         </dd>
                     </dl>
-                    @if(count($lead->contact->tags) > 0)
-                        <div class="mb-4">
-                            <span class="d-flex fw-bold align-items-center mb-2">
-                                <x-sales-management::icons.tag class="me-2"/> {{ __('Tags') }}
-                            </span>
-                            <multi-select-list
-                                name=tags[]
-                                label="Add tag to user"
-                                placeholder="Choose tags..."
-                                label-by="name"
-                                track-by="name"
-                                sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"
-                                model-id="{{ $lead->contact->id }}"
-                                :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"
-                                :options="{{ getAllTags() ?? '[]'}}">
-                            </multi-select-list>
-                        </div>
-                    @endif
+                    <div class="mb-4">
+                        <span class="d-flex fw-bold align-items-center mb-2">
+                            <x-sales-management::icons.tag class="me-2"/> {{ __('Tags') }}
+                        </span>
+                        <multi-select-list
+                            name=tags[]
+                            label="Add tag to user"
+                            placeholder="Choose tags..."
+                            label-by="name"
+                            track-by="name"
+                            sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"
+                            model-id="{{ $lead->contact->id }}"
+                            :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"
+                            :options="{{ getAllTags() ?? '[]'}}">
+                        </multi-select-list>
+                    </div>
                     <notes lead-id="{{ $lead->id }}" :lead-notes="{{ $lead->notes->toJson() }}"
                            url="{{route('store-lead-note', $lead->id)}}"
                            delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}">
