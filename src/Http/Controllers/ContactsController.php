@@ -19,7 +19,7 @@ class ContactsController extends Controller
 {
 
     /**
-     * @param  ContactDataTable  $contactDataTable
+     * @param ContactDataTable $contactDataTable
      * @return mixed
      */
     public function index(ContactDataTable $contactDataTable)
@@ -38,7 +38,7 @@ class ContactsController extends Controller
     }
 
     /**
-     * @param  ContactRequest  $request
+     * @param ContactRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ContactRequest $request)
@@ -52,7 +52,7 @@ class ContactsController extends Controller
     }
 
     /**
-     * @param  Contact  $contact
+     * @param Contact $contact
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Contact $contact)
@@ -61,8 +61,8 @@ class ContactsController extends Controller
     }
 
     /**
-     * @param  ContactRequest  $request
-     * @param  Contact  $contact
+     * @param ContactRequest $request
+     * @param Contact $contact
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ContactRequest $request, Contact $contact)
@@ -77,7 +77,7 @@ class ContactsController extends Controller
     }
 
     /**
-     * @param  Contact  $contact
+     * @param Contact $contact
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Contact $contact)
@@ -106,7 +106,7 @@ class ContactsController extends Controller
 
         //Create database table from ContactTemp model
         DB::statement('SET SESSION sql_require_primary_key=0');
-        DB::statement("CREATE TEMPORARY TABLE ".(new ContactTemp)->getTable()." SELECT * FROM ".(new Contact)->getTable()." LIMIT 0");
+        DB::statement("CREATE TEMPORARY TABLE " . (new ContactTemp)->getTable() . " SELECT * FROM " . (new Contact)->getTable() . " LIMIT 0");
         Excel::import(new ContactsImport($delimiter, $encoding), $request->csv);
 
         $batch = new Batch();
@@ -165,6 +165,14 @@ class ContactsController extends Controller
 
         arsort($delimiterCounts);
         return key($delimiterCounts);
+    }
+
+    public function syncTags(Request $request)
+    {
+        $contact = Contact::find($request->get('contactId'));
+        $contact->tags()->sync($request->get('tags'));
+
+        return response()->json(200);
     }
 }
 

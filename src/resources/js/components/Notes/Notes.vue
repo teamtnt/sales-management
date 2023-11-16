@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import {onMounted, ref} from "vue";
 
 
 const props = defineProps({
@@ -38,7 +38,7 @@ const handleFormSubmit = () => {
             "Content-Type": "application/json"
         }
     }).then((response) => {
-        if(response.status === 200) {
+        if (response.status === 200) {
             notes.value = [...notes.value, response.data.leadNote]
             note.value = "";
             submitting.value = false;
@@ -64,7 +64,7 @@ const handleFormSubmit = () => {
 
 const deleteNote = (id) => {
     axios.delete(props.deleteUrl.replace(":noteId", id)).then((response) => {
-        if(response.status === 200) {
+        if (response.status === 200) {
             notes.value = notes.value.filter((note) => note.id !== id);
 
             window.notyf.open({
@@ -104,7 +104,7 @@ const formatDate = (timestamp) => {
         minute: "numeric",
     });
 
-   return formatDate.format(date);
+    return formatDate.format(date);
 };
 
 </script>
@@ -114,16 +114,16 @@ const formatDate = (timestamp) => {
         <div>
             <label for="note" class="form-label fw-bold">
                 <span class="d-flex align-items-center">
-                    <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i>{{ $t("Notes")}}
+                    <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i>{{ $t("Notes") }}
                 </span>
             </label>
-            <div class="input-group d-flex align-items-center">
-                <input id="note" v-model="note" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}" name="note" :placeholder="$t('Note')"/>
-                <button type="submit" class="btn btn-success" :disabled="submitting">Add Note</button>
+            <textarea id="note" v-model="note" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
+                      name="note" :placeholder="$t('Note')"/>
+            <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Note</button>
+
             <small v-if="errors && errors.note" class="invalid-feedback">
-              {{ errors.note[0] }}
+                {{ errors.note[0] }}
             </small>
-            </div>
         </div>
     </form>
     <hr>

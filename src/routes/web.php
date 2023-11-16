@@ -24,6 +24,7 @@ Route::get('/contacts/create', [ContactsController::class, 'create'])->name('con
 Route::post('/contacts/store', [ContactsController::class, 'store'])->name('contacts.store');
 Route::get('/contacts/{contact:id}/edit', [ContactsController::class, 'edit'])->name('contacts.edit');
 Route::put('/contacts/{contact:id}/update', [ContactsController::class, 'update'])->name('contacts.update');
+Route::post('/contacts/{contact:id}/sync-tags', [ContactsController::class, 'syncTags'])->name('contacts.sync-tags');
 Route::delete('/contacts/{contact:id}/destroy', [ContactsController::class, 'destroy'])->name('contacts.destroy');
 
 // Companies
