@@ -67,7 +67,7 @@
             </div>
             @foreach($campaign->pipeline->stages as $stage)
                 <div class="campaign-card">
-                    <div class="card">
+                    <div class="card" style="border-top: 8px solid {{ $stage->color }}">
                         <div class="card-header">
                             <div class="card-actions float-end">
                                 <div class="dropdown position-relative">
