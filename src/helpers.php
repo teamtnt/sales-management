@@ -1,5 +1,6 @@
 <?php
 
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Contact;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 use Teamtnt\SalesManagement\Models\ContactTemp;
@@ -12,10 +13,10 @@ if (!function_exists('importTempContactsIntoContacts')) {
         \DB::table((new ContactTemp)->getTable())
             ->update(['batch_id' => $batchId]);
 
-        $select   = ContactTemp::select(['*']);
+        $select = ContactTemp::select(['*']);
         $bindings = $select->getBindings();
 
-        $insertQuery = "INSERT into ".(new Contact)->getTable()." ".$select->toSql();
+        $insertQuery = "INSERT into " . (new Contact)->getTable() . " " . $select->toSql();
 
         \DB::insert($insertQuery, $bindings);
     }
@@ -29,7 +30,31 @@ if (!function_exists('importContactsToContactList')) {
 
         $bindings = $select->getBindings();
 
-        $insertQuery = "INSERT into ".(new ContactListContact)->getTable()." (contact_id, contact_list_id) ".$select->toSql();
+        $insertQuery = "INSERT into " . (new ContactListContact)->getTable() . " (contact_id, contact_list_id) " . $select->toSql();
+
+        \DB::insert($insertQuery, $bindings);
+
+        //create leads on related campaigns
+        Campaign::whereContactListId($contactListId)->each(function (Campaign $campaign) use ($batchId) {
+            createLeadsFromContact($campaign->id, $campaign->pipeline_id, $batchId);
+        });
+
+
+    }
+}
+
+if (!function_exists('createLeadsFromContact')) {
+
+    function createLeadsFromContact($campaign_id, $pipeline_id, $batch_id)
+    {
+        $leadsTableName = (new Lead)->getTable();
+
+        $select = Contact::select(["id as id", \DB::raw("{$campaign_id} as campaign_id"), \DB::raw("{$pipeline_id} as pipeline_id"), \DB::raw("0 as pipeline_stage_id")])
+            ->where('batch_id', $batch_id);
+        $bindings = $select->getBindings();
+
+        $insertQuery = "INSERT into {$leadsTableName} (contact_id, campaign_id, pipeline_id, pipeline_stage_id) "
+            . $select->toSql();
 
         \DB::insert($insertQuery, $bindings);
     }
@@ -44,7 +69,7 @@ if (!function_exists('createListFromPipelineStage')) {
 
         $bindings = $select->getBindings();
 
-        $insertQuery = "INSERT into ".(new ContactListContact)->getTable()." (contact_id, contact_list_id) ".$select->toSql();
+        $insertQuery = "INSERT into " . (new ContactListContact)->getTable() . " (contact_id, contact_list_id) " . $select->toSql();
 
         \DB::insert($insertQuery, $bindings);
     }
@@ -61,7 +86,7 @@ if (!function_exists('createLeadsFromContacts')) {
         $bindings = $select->getBindings();
 
         $insertQuery = "INSERT into {$leadsTableName} (contact_id, campaign_id, pipeline_id, pipeline_stage_id) "
-        .$select->toSql();
+            . $select->toSql();
 
         \DB::insert($insertQuery, $bindings);
     }
@@ -79,7 +104,7 @@ if (!function_exists('isValidEmail')) {
 }
 
 if (!function_exists('getAllTags')) {
-    function getAllTags():  ? string
+    function getAllTags(): ?string
     {
         return Tag::all()->toJson();
     }

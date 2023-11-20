@@ -12,6 +12,13 @@ class Lead extends Model
     protected $table;
     public $timestamps = false;
 
+    protected $fillable = [
+        'campaign_id',
+        'pipeline_id',
+        'pipeline_stage_id',
+        'contact_id',
+    ];
+
     public function __construct(array $attributes = [])
     {
         $this->table = config('sales-management.tablePrefix') . 'leads';

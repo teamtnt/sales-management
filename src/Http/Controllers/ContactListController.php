@@ -7,8 +7,10 @@ use Teamtnt\SalesManagement\DataTables\AddContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListContactDataTable;
 use Teamtnt\SalesManagement\DataTables\ContactListDataTable;
 use Teamtnt\SalesManagement\Http\Requests\ContactListRequest;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
+use Teamtnt\SalesManagement\Models\Lead;
 
 class ContactListController extends Controller
 {
@@ -52,6 +54,11 @@ class ContactListController extends Controller
     {
         $contactListId = $contactListContact->contact_list_id;
         $contactListContact->delete();
+
+        // remove leads
+        $campaignIds = Campaign::whereContactListId($contactListId)->pluck('id')->toArray();
+        Lead::whereIn('campaign_id', $campaignIds)->whereContactId($contactListContact->contact_id)->delete();
+
         request()->session()->flash('message', __('Contact successfully removed!'));
 
         return redirect()->route('lists.edit', $contactListId);
@@ -82,6 +89,15 @@ class ContactListController extends Controller
     {
         $contactList->contacts()->attach(request()->contact_id);
         request()->session()->flash('message', __('Contact has been successfully added to list!'));
+        
+        $contactList->campaigns->each(function ($campaign) {
+            $campaign->leads()->create([
+                'campaign_id' => $campaign->id,
+                'pipeline_id' => $campaign->pipeline_id,
+                'pipeline_stage_id' => 0,
+                'contact_id' => request()->contact_id,
+            ]);
+        });
 
         return redirect()->back();
     }

@@ -25,13 +25,18 @@ class ContactList extends Model
 
     public function __construct(array $attributes = [])
     {
-        $this->table = config('sales-management.tablePrefix').'contact_lists';
+        $this->table = config('sales-management.tablePrefix') . 'contact_lists';
         parent::__construct($attributes);
     }
 
     public function contacts()
     {
-        return $this->belongsToMany(Contact::class, config('sales-management.tablePrefix').'contact_list_contacts', 'contact_list_id', 'contact_id');
+        return $this->belongsToMany(Contact::class, config('sales-management.tablePrefix') . 'contact_list_contacts', 'contact_list_id', 'contact_id');
+    }
+
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class);
     }
 
     public static function getContactListTexts()
