@@ -31,6 +31,23 @@ class WaitJob implements ShouldQueue
         info("Now waiting for {$this->waitHours} hours");
 
         NextTransitionJob::dispatch($this->leadId, $this->workflowId)
-            ->delay(now()->addHours($this->waitHours));
+            ->delay($this->addHours());
+    }
+
+    private function addHours()
+    {
+        $date = now();
+        if (is_array($this->waitHours)) {
+            $date->addHours($this->waitHours['hours']);
+            if ($this->waitHours['skipWeekends']) {
+                while ($date->isWeekend()) {
+                    $date->addDay();
+                }
+            }
+
+            return $date;
+        }
+
+        return $date->addHours($this->waitHours);
     }
 }

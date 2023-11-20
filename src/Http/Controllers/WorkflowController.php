@@ -24,7 +24,7 @@ class WorkflowController extends Controller
 {
 
     /**
-     * @param  WorkflowDataTable  $workflowDataTable
+     * @param WorkflowDataTable $workflowDataTable
      * @return mixed
      */
     public function index(Campaign $campaign, WorkflowDataTable $workflowDataTable)
@@ -48,7 +48,7 @@ class WorkflowController extends Controller
     }
 
     /**
-     * @param  WorkflowRequest  $request
+     * @param WorkflowRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Campaign $campaign, StateMachineBuilder $stateMachineBuilder)
@@ -62,7 +62,7 @@ class WorkflowController extends Controller
     }
 
     /**
-     * @param  Workflow  $workflow
+     * @param Workflow $workflow
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function getWorkflowView(Campaign $campaign, Workflow $workflow, string $view = 'edit')
@@ -70,33 +70,33 @@ class WorkflowController extends Controller
         $contactLists = ContactList::all()->transform(function ($contactList) {
             return [
                 'argument' => $contactList->id,
-                'action'   => MoveToListJob::class,
-                'title'    => $contactList->name,
-                'type'     => 'action',
+                'action' => MoveToListJob::class,
+                'title' => $contactList->name,
+                'type' => 'action',
             ];
         });
 
         $tags = Tag::all()->transform(function ($tag) {
             return [
                 'argument' => $tag->id,
-                'action'   => AddTagJob::class,
-                'title'    => $tag->name,
-                'type'     => 'action',
+                'action' => AddTagJob::class,
+                'title' => $tag->name,
+                'type' => 'action',
             ];
         });
         $stages = $stageActions = $messages = $messagesOpened = $messagesWithLinks = [];
         foreach ($campaign->messages as $message) {
             $messagesOpened[] = [
                 'argument' => $message->id,
-                'action'   => 'condition',
-                'title'    => $message->subject,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $message->subject,
+                'type' => 'condition',
             ];
             $messages[] = [
                 'argument' => $message->id,
-                'action'   => SendMailJob::class,
-                'title'    => $message->subject,
-                'type'     => 'action',
+                'action' => SendMailJob::class,
+                'title' => $message->subject,
+                'type' => 'action',
             ];
 
             $extractedLinks = $message->extractLinks();
@@ -104,10 +104,10 @@ class WorkflowController extends Controller
             if (!empty($extractedLinks)) {
                 $messagesWithLinks[] = [
                     'argument' => $message->id,
-                    'action'   => 'condition',
-                    'title'    => $message->subject,
-                    'links'    => $extractedLinks,
-                    'type'     => 'action',
+                    'action' => 'condition',
+                    'title' => $message->subject,
+                    'links' => $extractedLinks,
+                    'type' => 'action',
                 ];
             }
         }
@@ -115,23 +115,23 @@ class WorkflowController extends Controller
         foreach ($campaign->pipeline->stages as $stage) {
             $stages[] = [
                 'argument' => $stage->id,
-                'action'   => 'condition',
-                'title'    => $stage->name,
-                'type'     => 'condition',
+                'action' => 'condition',
+                'title' => $stage->name,
+                'type' => 'condition',
             ];
             $stageActions[] = [
                 'argument' => $stage->id,
-                'action'   => ChangeStageJob::class,
-                'title'    => $stage->name,
-                'type'     => 'action',
+                'action' => ChangeStageJob::class,
+                'title' => $stage->name,
+                'type' => 'action',
             ];
         }
 
         $abSplit[] = [
             'argument' => '50/50',
-            'action'   => ABSplitJob::class,
-            'title'    => '50/50',
-            'type'     => 'action',
+            'action' => ABSplitJob::class,
+            'title' => '50/50',
+            'type' => 'action',
         ];
 
         $waitOptions = [];
@@ -139,32 +139,42 @@ class WorkflowController extends Controller
         for ($i = 1; $i <= 48; $i++) {
             $waitOptions[] = [
                 'argument' => $i,
-                'action'   => WaitJob::class,
-                'title'    => $i.'h',
-                'type'     => 'action',
+                'action' => WaitJob::class,
+                'title' => $i . 'h',
+                'type' => 'action',
             ];
         }
+        if (config('sales-management.waitingTimes')) {
+            foreach (config('sales-management.waitingTimes') as $waitingTime) {
+                $waitOptions[] = [
+                    'argument' => $waitingTime,
+                    'action' => WaitJob::class,
+                    'title' => $waitingTime['label'],
+                    'type' => 'action',
+                ];
+            }
+        }
 
-        return view('sales-management::workflows.'.$view, compact('workflow',
+        return view('sales-management::workflows.' . $view, compact('workflow',
             'campaign', 'contactLists', 'waitOptions', 'messages',
             'tags', 'messagesOpened', 'messagesWithLinks', 'abSplit', 'stages', 'stageActions'));
     }
 
     /**
-     * @param  WorkflowRequest  $request
-     * @param  Workflow  $workflow
+     * @param WorkflowRequest $request
+     * @param Workflow $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Campaign $campaign, Workflow $workflow, StateMachineBuilder $stateMachineBuilder)
     {
         $workflow->name = request()->title;
         $workflow->elements = json_encode(request()->elements);
-        $workflow->state_machine_definition = $stateMachineBuilder->buildFromElements(request()->elements, 'workflow_'.$workflow->id);
+        $workflow->state_machine_definition = $stateMachineBuilder->buildFromElements(request()->elements, 'workflow_' . $workflow->id);
         $workflow->save();
     }
 
     /**
-     * @param  Workflow  $workflow
+     * @param Workflow $workflow
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Campaign $campaign, Workflow $workflow)
@@ -219,7 +229,7 @@ class WorkflowController extends Controller
     public function run(Campaign $campaign, Workflow $workflow)
     {
         foreach ($campaign->leads as $lead) {
-            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, "transition.run.".$workflow->id);
+            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, "transition.run." . $workflow->id);
         }
 
         request()->session()->flash('message', __('Workflow run was successfull!'));

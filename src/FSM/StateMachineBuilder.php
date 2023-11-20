@@ -20,11 +20,11 @@ class StateMachineBuilder
 
         $return = [
             $title => [
-                'type'          => 'state_machine',
-                'supports'      => ['Teamtnt\SalesManagement\Models\LeadJourney'],
+                'type' => 'state_machine',
+                'supports' => ['Teamtnt\SalesManagement\Models\LeadJourney'],
                 'initial_place' => 'start',
-                'places'        => $this->places,
-                'transitions'   => $this->transitions,
+                'places' => $this->places,
+                'transitions' => $this->transitions,
             ]
         ];
 
@@ -60,6 +60,9 @@ class StateMachineBuilder
         $parseName = explode('.', $transition['to']);
         $lastKey = array_key_last($parseName);
         $id = $transition['metadata']['argument'] ?? $parseName[$lastKey];
+        if (is_array($id)) {
+            $id = $id['id'];
+        }
         unset($parseName[$lastKey]);
         if ($parseName[0] === 'state') {
             unset($parseName[0]);
