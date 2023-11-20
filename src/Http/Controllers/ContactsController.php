@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\ContactDataTable;
 use Teamtnt\SalesManagement\Http\Requests\ContactRequest;
 use Teamtnt\SalesManagement\Http\Requests\CSVImportRequest;
+use Teamtnt\SalesManagement\Http\Requests\WebhookImportRequest;
+use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Contact;
 use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\Batch;
@@ -174,5 +176,62 @@ class ContactsController extends Controller
 
         return response()->json(200);
     }
+
+    public function importWebhook(WebhookImportRequest $request)
+    {
+        ini_set('max_execution_time', 0);
+
+        //Create database table from ContactTemp model
+        DB::statement('SET SESSION sql_require_primary_key=0');
+        DB::statement("CREATE TEMPORARY TABLE " . (new ContactTemp)->getTable() . " SELECT * FROM " . (new Contact)->getTable() . " LIMIT 0");
+
+        $importData = [];
+        foreach ($request->contacts as $contact) {
+            $importData[] = [
+                'salutation' => trim($contact['salutation']),
+                'firstname' => trim($contact['firstname']),
+                'lastname' => trim($contact['lastname']),
+                'job_title' => trim($contact['job_title']),
+                'email' => trim($contact['email']),
+                'phone' => trim($contact['phone']),
+                'company_name' => trim($contact['company_name']),
+                'vat' => trim($contact['vat']),
+                'url' => trim($contact['url']),
+                'company_email' => trim($contact['company_email']),
+                'address' => trim($contact['address']),
+                'postal' => trim($contact['postal']),
+                'city' => trim($contact['city']),
+                'country' => trim($contact['country']),
+                'uuid' => trim($contact['uuid']),
+            ];
+        }
+        ContactTemp::insert($importData);
+
+        $batch = new Batch();
+        if (auth()->check()) {
+            $batch->uploader_id = auth()->id();
+        }
+        $batch->save();
+
+        importTempContactsIntoContacts($batch->id);
+
+        if ($request->get('new_list')) {
+            $contactList = new ContactList;
+            $contactList->name = $request->get('new_list');
+            $contactList->save();
+
+            importContactsToContactList($contactList->id, $batch->id);
+        }
+
+        if ($request->get('contact_list_id')) {
+            importContactsToContactList($request->get('contact_list_id'), $batch->id);
+        } elseif ($request->get('campaign_id')) {
+            $campaign = Campaign::find($request->get('campaign_id'));
+            importContactsToContactList($campaign->contact_list_id, $batch->id);
+        }
+
+        return response()->json(200);
+    }
+
 }
 
