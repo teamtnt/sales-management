@@ -154,6 +154,14 @@
                         <dd class="col-8 col-xxl-9 mb-0">
                             <p class="mb-1">{{ $lead->contact->country }}</p>
                         </dd>
+                        @if($lead->contact->external_profile_url)
+                        <dt class="col-4 col-xxl-3 mb-0">
+                            <strong>{{ __('Profile URL') }}:</strong>
+                        </dt>
+                        <dd class="col-8 col-xxl-9 mb-0">
+                            <p class="mb-1"><a href="{{ $lead->contact->external_profile_url }}" target="_blank">{{ $lead->contact->external_profile_url }}</a></p>
+                        </dd>
+                        @endif
                     </dl>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
