@@ -53,10 +53,16 @@
                         aria-selected="true">{{ __('Profile details') }}</button>
             </li>
             <li class="nav-item" role="presentation">
+                <button class="nav-link text-uppercase" id="notes-tab" data-bs-toggle="tab"
+                        data-bs-target="#notes-tab-pane-{{ $lead->id }}" type="button" role="tab"
+                        aria-controls="notes-tab-pane"
+                        aria-selected="false">{{ __('Notes') }}</button>
+            </li>
+            <li class="nav-item" role="presentation">
                 <button class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab"
                         data-bs-target="#message-tab-pane-{{ $lead->id }}" type="button" role="tab"
                         aria-controls="message-tab-pane"
-                        aria-selected="false">{{ __('Send Message') }}</button>
+                        aria-selected="false">{{ __('Send E-Mail') }}</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -181,10 +187,16 @@
                             :options="{{ getAllTags() ?? '[]'}}">
                         </multi-select-list>
                     </div>
-                    <notes lead-id="{{ $lead->id }}" :lead-notes="{{ $lead->notes->toJson() }}"
-                           url="{{route('store-lead-note', $lead->id)}}"
-                           delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}">
-                    </notes>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="notes-tab-pane-{{ $lead->id }}" role="tabpanel"
+                 aria-labelledby="notes-tab" tabindex="0">
+                <div class="offcanvas-body">
+                <notes lead-id="{{ $lead->id }}" :lead-notes="{{ $lead->notes->toJson() }}"
+                       url="{{route('store-lead-note', $lead->id)}}"
+                       delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}">
+                </notes>
                 </div>
             </div>
 
