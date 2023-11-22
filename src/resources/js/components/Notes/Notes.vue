@@ -19,6 +19,7 @@ const props = defineProps({
 
 const notes = ref([]);
 const note = ref("");
+const note_type = ref("Note");
 const errors = ref({});
 const submitting = ref(false)
 
@@ -31,6 +32,7 @@ const handleFormSubmit = () => {
 
     let formData = new FormData();
     formData.append('note', note.value)
+    formData.append('note_type', note_type.value)
     formData.append('lead_id', props.leadId)
 
     axios.post(props.url, formData, {
@@ -119,6 +121,15 @@ const formatDate = (timestamp) => {
             </label>
             <textarea id="note" v-model="note" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
                       name="note" :placeholder="$t('Note')"/>
+
+
+            <select name="note_type" v-model="note_type" id="note_type" class="form-select mt-2">
+                <option value="Note">Note</option>
+                <option value="Call Accepted">Call Accepted</option>
+                <option value="Call Declined">Call Declined</option>
+                <option value="Meeting">Meeting</option>
+            </select>
+
             <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Note</button>
 
             <small v-if="errors && errors.note" class="invalid-feedback">
@@ -131,7 +142,8 @@ const formatDate = (timestamp) => {
         <div v-for="note in notes" :key="note.id" class="note mb-3">
             <div class="d-flex flex-column">
                 <p class="mb-1">{{ note.note }}</p>
-                <span style="font-size: 11px;"><em><strong>Created by: {{ note.user.full_name }}</strong></em></span>
+                <span :class="note.type == 'Call Declined' ? 'text-danger' : 'text-success'">{{ note.type }}</span>
+                <span style="font-size: 11px;"><em><strong>{{ note.user.full_name }}</strong></em></span>
                 <span style="font-size: 11px;"><strong><em>{{ formatDate(note.created_at) }}</em></strong></span>
             </div>
             <div class="d-flex gap-1">

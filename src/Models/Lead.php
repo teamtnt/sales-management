@@ -37,7 +37,7 @@ class Lead extends Model
 
     public function notes()
     {
-        return $this->hasMany(LeadNotes::class, 'lead_id');
+        return $this->hasMany(LeadNotes::class, 'lead_id')->orderBy('created_at', 'desc');
     }
 
     public function tags()
