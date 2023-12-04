@@ -33,6 +33,7 @@ class Contact extends Model
         'city',
         'country',
         'uuid',
+        'external_profile_url'
     ];
 
     public function __construct(array $attributes = [])
