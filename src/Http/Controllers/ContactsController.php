@@ -15,6 +15,7 @@ use Teamtnt\SalesManagement\Models\ContactTemp;
 use Maatwebsite\Excel\Facades\Excel;
 use Teamtnt\SalesManagement\Imports\ContactsImport;
 use DB;
+use Teamtnt\SalesManagement\Models\Lead;
 use Teamtnt\SalesManagement\Models\Tag;
 
 class ContactsController extends Controller
@@ -231,6 +232,42 @@ class ContactsController extends Controller
         }
 
         return response()->json(200);
+    }
+
+    public function addContact(): void
+    {
+        //wrap in transaction
+        DB::beginTransaction();
+
+        try {
+            $contact = Contact::create(request()->except('tags', 'campaign_id'));
+            //if tag does not exist create it
+            $tags = request()->get('tags');
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $contact->tags()->attach($tag->id);
+            }
+
+            //add contact to list, get list from campaign
+            $campaign = Campaign::find(request()->get('campaign_id'));
+            $contactList = ContactList::find($campaign->contact_list_id);
+
+            $contactList->contacts()->attach($contact->id);
+
+            //create lead
+            $lead = Lead::create([
+                'campaign_id' => $campaign->id,
+                'contact_id' => $contact->id,
+                'pipeline_id' => $campaign->pipeline_id,
+                'pipeline_stage_id' => 0
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        DB::commit();
+
     }
 
 }

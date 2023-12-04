@@ -11,3 +11,5 @@ Route::any('/webhook/postmark', [PostmarkWebhookController::class, 'handle'])->n
 Route::any('/webhook/change-stage', [LeadsController::class, 'stageChange'])->name('webhook.stageChange');
 
 Route::any('/webhook/import-contacts', [ContactsController::class, 'importWebhook'])->name('webhook.importContacts');
+
+Route::post('/webhook/add-contact', [ContactsController::class, 'addContact'])->name('webhook.addContact');
