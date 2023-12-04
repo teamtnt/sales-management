@@ -143,7 +143,7 @@ const formatDate = (timestamp) => {
             <div class="d-flex flex-column">
                 <p class="mb-1">{{ note.note }}</p>
                 <span :class="note.type == 'Call Declined' ? 'text-danger' : 'text-success'">{{ note.type }}</span>
-                <span style="font-size: 11px;"><em><strong>{{ note.user.full_name }}</strong></em></span>
+                <span style="font-size: 11px;" v-if="note.user"><em><strong>{{ note.user.full_name }}</strong></em></span>
                 <span style="font-size: 11px;"><strong><em>{{ formatDate(note.created_at) }}</em></strong></span>
             </div>
             <div class="d-flex gap-1">

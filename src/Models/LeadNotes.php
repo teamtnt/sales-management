@@ -11,6 +11,8 @@ class LeadNotes extends Model
 
     protected $table;
 
+    protected $guarded = ['id'];
+
     protected $casts = [
         'created_at' => 'timestamp'
     ];
