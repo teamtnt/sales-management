@@ -165,7 +165,7 @@ const formatDate = (timestamp) => {
                 <p class="mb-1">{{ activity.description }}</p>
                 <span>{{ activity.type }}</span>
                 <span style="font-size: 11px;" v-if="activity.user"><em><strong>{{ activity.user.full_name }}</strong></em></span>
-                <span style="font-size: 11px;"><strong><em>{{ formatDate(activity.created_at) }}</em></strong></span>
+                <span style="font-size: 11px;">Start Datum: <strong><em>{{ formatDate(activity.start_date) }}</em></strong></span>
             </div>
             <div class="d-flex gap-1">
                 <span class="delete-icon" @click="deleteActivity(activity.id)">
