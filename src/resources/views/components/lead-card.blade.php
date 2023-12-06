@@ -16,14 +16,20 @@
     <div class="d-flex align-items-center">
         <x-sales-management::icons.tag/>
         <ul class="list-unstyled d-flex flex-wrap gap-1 ms-2">
-{{--            @foreach($lead->contact->tags as $tag)--}}
-{{--                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>--}}
-{{--            @endforeach--}}
-{{--            @foreach($lead->tags as $tag)--}}
-{{--                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>--}}
-{{--            @endforeach--}}
+            @foreach($lead->contact->tags as $tag)
+                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+            @endforeach
+            @foreach($lead->tags as $tag)
+                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+            @endforeach
         </ul>
     </div>
+    @if($lead->nextCallActivity)
+    <div class="d-flex align-items-center">
+        <x-sales-management::icons.phone/>
+        <span class="ms-2"> {{ $lead->nextCallActivity->start_date->format('d.m.Y H:i') }}</span>
+    </div>
+    @endif
     @if($offCanvas)
         <span class="info-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight-{{ $lead->contact->id }}"
               aria-controls="offcanvasRight">

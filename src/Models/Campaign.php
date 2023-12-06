@@ -39,7 +39,15 @@ class Campaign extends Model
         return $this->leads()
             ->where('pipeline_id', $pipelineId)
             ->where('pipeline_stage_id', $stageId)
-            ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user')->limit($limit)->get();
+            ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
+            //order by next call activity date asc
+            ->orderBy(LeadActivity::select('start_date')
+                ->whereColumn(config('sales-management.tablePrefix') . 'lead_activities.lead_id', config('sales-management.tablePrefix') . 'leads.id')
+                ->where('type', LeadActivity::ACTIVITY_TYPE_CALL)
+                ->orderBy('start_date', 'asc')
+                ->limit(1)
+            )
+            ->limit($limit)->get();
     }
 
     public function getLeads($limit)

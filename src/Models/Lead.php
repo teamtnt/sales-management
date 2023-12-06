@@ -45,6 +45,15 @@ class Lead extends Model
         return $this->hasMany(LeadActivity::class, 'lead_id')->orderBy('created_at', 'desc');
     }
 
+    //get next Call activity in the future as a relation
+    public function nextCallActivity()
+    {
+        return $this->hasOne(LeadActivity::class, 'lead_id')
+            ->where('type', LeadActivity::ACTIVITY_TYPE_CALL)
+            ->whereNotNull('start_date')
+            ->orderBy('start_date', 'asc');
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'lead_tag');
