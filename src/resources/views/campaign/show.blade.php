@@ -43,7 +43,7 @@
             <div class="campaign-card">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title overf">{{ __("Leads") }}</h5>
+                        <h5 class="card-title">{{ __("Leads") }}</h5>
                         <div class="input-group">
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>

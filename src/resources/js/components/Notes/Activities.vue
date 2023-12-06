@@ -1,0 +1,178 @@
+<script setup>
+import {onMounted, ref} from "vue";
+
+
+const props = defineProps({
+    url: {
+        type: String
+    },
+    deleteUrl: {
+        type: String
+    },
+    leadId: {
+        type: String
+    },
+    leadActivities: {
+        type: Array
+    }
+})
+
+const activities = ref([]);
+const activity_description = ref("");
+const activity_type = ref("Call");
+const activity_start_date = ref("");
+const activity_end_date = ref("");
+const errors = ref({});
+const submitting = ref(false)
+
+onMounted(() => {
+    activities.value = [...props.leadActivities]
+});
+
+const handleFormSubmit = () => {
+    submitting.value = true;
+
+    let formData = new FormData();
+    formData.append('description', activity_description.value)
+    formData.append('activity_type', activity_type.value)
+    formData.append('activity_start_date', activity_start_date.value)
+    formData.append('activity_end_date', activity_end_date.value)
+    formData.append('lead_id', props.leadId)
+
+    console.log(formData)
+    axios.post(props.url, formData, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then((response) => {
+        if (response.status === 200) {
+            activities.value = [...activities.value, response.data.leadActivity]
+            activity_description.value = "";
+            submitting.value = false;
+            errors.value = {};
+
+            window.notyf.open({
+                type: "success",
+                message: "Activity saved!",
+                duration: "2500",
+                ripple: true,
+                position: "bottom right",
+                dismissible: true,
+            });
+        }
+    }).catch((error) => {
+        console.log(error.message)
+        if (error.response.status === 422) {
+            errors.value = error.response.data.errors
+            submitting.value = false;
+        }
+    });
+}
+
+const deleteActivity = (id) => {
+    axios.delete(props.deleteUrl.replace(":activityId", id)).then((response) => {
+        if (response.status === 200) {
+            activities.value = activities.value.filter((activity) => activity.id !== id);
+
+            window.notyf.open({
+                type: "success",
+                message: "Activity deleted!",
+                duration: "2500",
+                ripple: true,
+                position: "bottom right",
+                dismissible: true,
+            });
+        }
+    }).catch((error) => {
+        console.log(error.message);
+
+        window.notyf.open({
+            type: "danger",
+            message: error.message,
+            duration: "2500",
+            ripple: true,
+            position: "bottom right",
+            dismissible: true,
+        });
+    });
+};
+
+const isNotEmpty = (obj) => {
+    return Object.keys(obj).length !== 0;
+}
+
+const formatDate = (timestamp) => {
+    let date = new Date(timestamp * 1000);
+    const formatDate = new Intl.DateTimeFormat("default", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+
+    return formatDate.format(date);
+};
+
+</script>
+
+<template>
+    <form @submit.prevent="handleFormSubmit" id="activities-form" ref="activitiesForm">
+        <div>
+            <label for="note" class="form-label fw-bold">
+                <span class="d-flex align-items-center">
+                    <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i>{{ $t("Activities") }}
+                </span>
+            </label>
+
+
+            <div class="form-group">
+                <label for="start_date">Typ</label>
+            <select name="activity_type" v-model="activity_type" id="note_type" class="form-select mt-2">
+                <option value="Call">Call</option>
+                <option value="Recall">Recall</option>
+                <option value="Meeting">Meeting</option>
+                <option value="E-Mail">E-Mail</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_date">Start Datum</label>
+                <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date">
+            </div>
+            <div class="form-group">
+                <label for="end_date">Ende Datum</label>
+                <input type="datetime-local" class="form-control" id="activity_end_date" v-model="activity_end_date">
+            </div>
+
+            <div class="form-group">
+                <label for="start_date">Beschreibung</label>
+            <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
+                      name="activity" />
+
+            </div>
+            <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Activity</button>
+
+            <small v-if="errors && errors.activity" class="invalid-feedback">
+                {{ errors.activity[0] }}
+            </small>
+        </div>
+    </form>
+    <hr>
+    <div class="d-flex flex-column">
+        <div v-for="activity in activities" :key="activity.id" class="note mb-3">
+            <div class="d-flex flex-column">
+                <p class="mb-1">{{ activity.description }}</p>
+                <span>{{ activity.type }}</span>
+                <span style="font-size: 11px;" v-if="activity.user"><em><strong>{{ activity.user.full_name }}</strong></em></span>
+                <span style="font-size: 11px;"><strong><em>{{ formatDate(activity.created_at) }}</em></strong></span>
+            </div>
+            <div class="d-flex gap-1">
+                <span class="delete-icon" @click="deleteActivity(activity.id)">
+                    <i class="align-middle me-2 fas fa-fw fa-trash text-danger"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</template>
+

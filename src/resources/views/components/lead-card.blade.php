@@ -16,12 +16,12 @@
     <div class="d-flex align-items-center">
         <x-sales-management::icons.tag/>
         <ul class="list-unstyled d-flex flex-wrap gap-1 ms-2">
-            @foreach($lead->contact->tags as $tag)
-                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
-            @endforeach
-            @foreach($lead->tags as $tag)
-                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
-            @endforeach
+{{--            @foreach($lead->contact->tags as $tag)--}}
+{{--                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>--}}
+{{--            @endforeach--}}
+{{--            @foreach($lead->tags as $tag)--}}
+{{--                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>--}}
+{{--            @endforeach--}}
         </ul>
     </div>
     @if($offCanvas)
@@ -58,6 +58,14 @@
                         aria-controls="notes-tab-pane"
                         aria-selected="false">{{ __('Notes') }}</button>
             </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link text-uppercase" id="activities-tab" data-bs-toggle="tab"
+                        data-bs-target="#activities-tab-pane-{{ $lead->id }}" type="button" role="tab"
+                        aria-controls="activities-tab-pane"
+                        aria-selected="false">{{ __('Activities') }}</button>
+            </li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link text-uppercase" id="profile-tab" data-bs-toggle="tab"
                         data-bs-target="#message-tab-pane-{{ $lead->id }}" type="button" role="tab"
@@ -205,6 +213,16 @@
                        url="{{route('store-lead-note', $lead->id)}}"
                        delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}">
                 </notes>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="activities-tab-pane-{{ $lead->id }}" role="tabpanel"
+                 aria-labelledby="activities-tab" tabindex="0">
+                <div class="offcanvas-body">
+                    <activities lead-id="{{ $lead->id }}" :lead-activities="{{ $lead->activities->toJson() }}"
+                           url="{{route('store-lead-activity', $lead->id)}}"
+                           delete-url="{{ route('destroy-lead-activity', [$lead->id, " :activityId"]) }}">
+                    </activities>
                 </div>
             </div>
 
