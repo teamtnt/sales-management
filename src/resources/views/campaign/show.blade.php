@@ -144,11 +144,31 @@
                 stages.push(element)
             })
 
+            function handleMouseMove(e) {
+                // horizontal scroll by 80% from right
+                if (e.clientX > (window.innerWidth * 0.8)) {
+                    document.querySelector('.content').scrollBy({
+                        left: 12
+                    });
+                }
+
+                // vertical scroll by 10% from bottom
+                if (e.clientY > (window.innerHeight * 0.9)) {
+                    document.querySelector('.content').scrollBy({
+                        top: 12
+                    });
+                }
+            }
+
             dragula(stages)
                 .on('drag', function (el) {
                     el.className = el.className.replace('bg-light', 'bg-gray-400');
+
+                    document.addEventListener('mousemove', handleMouseMove, false);
+
                 })
                 .on('drop', function (el, target, source, sibling) {
+                    console.log('drop')
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
 
                     axios.post('{{ route('stage.change') }}', {
@@ -157,8 +177,11 @@
                         source_stage_id: source.dataset.stageId,
                         target_stage_id: target.dataset.stageId
                     })
+
+                   document.removeEventListener('mousemove', handleMouseMove, false);
                 })
                 .on('over', function (el, container) {
+                    console.log('over')
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
                 })
         });
