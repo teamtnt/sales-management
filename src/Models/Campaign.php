@@ -36,10 +36,10 @@ class Campaign extends Model
 
     public function getLeadsOnStage($pipelineId, $stageId, $limit = null)
     {
-        return $this->leads()->with('contact', 'contact.tags', 'tags', 'notes', 'notes.user', 'activities', 'activities.user')
+        return $this->leads()
             ->where('pipeline_id', $pipelineId)
             ->where('pipeline_stage_id', $stageId)
-            ->with('contact', 'notes.user')->limit($limit)->get();
+            ->with('contact', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user')->limit($limit)->get();
     }
 
     public function getLeads($limit)
