@@ -26,8 +26,8 @@ class LeadActivitiesController extends Controller
             'lead_id' => $request->get('lead_id'),
             'created_by' => auth()->id(),
             'description' => $request->get('description'),
-            'end_date' => $request->get('activity_end_date') ? Carbon::parse($request->get('activity_end_date')) : null,
             'start_date' => $request->get('activity_start_date') ? Carbon::parse($request->get('activity_start_date')) : null,
+            'end_date' => $request->get('activity_end_date') ? Carbon::parse($request->get('activity_end_date')) : null,
             'type' => $request->get('activity_type'),
         ]);
 
