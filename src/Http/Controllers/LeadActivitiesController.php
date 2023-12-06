@@ -19,7 +19,7 @@ class LeadActivitiesController extends Controller
         $request->validate([
 //            'description' => 'required|string',
             'activity_type' => 'required|string|max:255',
-            'start_date' => 'required',
+            'activity_start_date' => 'required',
             'lead_id'=>'required|integer'
         ]);
 
