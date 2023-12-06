@@ -15,7 +15,7 @@ class LeadNotesController extends Controller
     public function storeLeadNote(Request $request)
     {
         $request->validate([
-            'note' => 'required|string|max:1500',
+            'note' => 'required|string',
             'note_type' => 'nullable|string|max:255'
         ]);
 

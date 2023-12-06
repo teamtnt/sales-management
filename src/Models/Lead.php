@@ -40,6 +40,11 @@ class Lead extends Model
         return $this->hasMany(LeadNotes::class, 'lead_id')->orderBy('created_at', 'desc');
     }
 
+    public function activities()
+    {
+        return $this->hasMany(LeadActivity::class, 'lead_id')->orderBy('created_at', 'desc');
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'lead_tag');

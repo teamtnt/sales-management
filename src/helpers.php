@@ -106,6 +106,9 @@ if (!function_exists('isValidEmail')) {
 if (!function_exists('getAllTags')) {
     function getAllTags(): ?string
     {
-        return Tag::all()->toJson();
+        //cache response
+        return cache()->remember('all-tags', 60 * 60, function () {
+            return Tag::all()->toJson();
+        });
     }
 }
