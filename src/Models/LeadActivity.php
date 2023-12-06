@@ -9,6 +9,7 @@ class LeadActivity extends Model
 {
     use HasFactory;
 
+    const ACTIVITY_TYPE_CALL = 'Call';
     protected $table;
 
     protected $guarded = ['id'];

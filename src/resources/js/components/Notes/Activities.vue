@@ -130,9 +130,9 @@ const formatDate = (timestamp) => {
                 <label for="start_date">Typ</label>
             <select name="activity_type" v-model="activity_type" id="note_type" class="form-select mt-2">
                 <option value="Call">Call</option>
-                <option value="Recall">Recall</option>
                 <option value="Meeting">Meeting</option>
                 <option value="E-Mail">E-Mail</option>
+                <option value="Task">Task</option>
             </select>
             </div>
 
