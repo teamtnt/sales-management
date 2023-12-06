@@ -101,18 +101,17 @@ const isNotEmpty = (obj) => {
     return Object.keys(obj).length !== 0;
 }
 
-const formatDate = (timestamp) => {
-    let date = new Date(timestamp * 1000);
-    const formatDate = new Intl.DateTimeFormat("default", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-    });
+function formatDate(dateString) {
+    const date = new Date(dateString);
 
-    return formatDate.format(date);
-};
+    let day = date.getUTCDate().toString().padStart(2, '0');
+    let month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // getUTCMonth() returns 0-11
+    let year = date.getUTCFullYear();
+    let hours = date.getUTCHours().toString().padStart(2, '0');
+    let minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
+}
 
 </script>
 
