@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Teamtnt\SalesManagement\Models\LeadActivity;
 use Teamtnt\SalesManagement\Models\LeadNotes;
+use Teamtnt\SalesManagement\DataTables\LeadActivityDataTable;
 
 class LeadActivitiesController extends Controller
 {
+    public function index(LeadActivityDataTable $dataTable)
+    {
+        return $dataTable->render('sales-management::leadactivity.index');
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -49,5 +55,12 @@ class LeadActivitiesController extends Controller
         $leadActivity->delete();
 
         return response()->json(200);
+    }
+
+    public function toggleStatus(LeadActivity $leadActivity)
+    {
+        $leadActivity->update(['is_done' => !$leadActivity->is_done]);
+
+        return back();
     }
 }

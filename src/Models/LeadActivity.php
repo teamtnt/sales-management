@@ -15,10 +15,10 @@ class LeadActivity extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'created_at' => 'timestamp',
+        'is_done' => 'boolean',
     ];
-
     protected $dates = [
+        'created_at',
         'start_date',
         'end_date',
     ];
@@ -32,5 +32,15 @@ class LeadActivity extends Model
     public function user()
     {
         return $this->belongsTo(config('sales-management.userModel'), 'created_by', 'id');
+    }
+
+    public static function getDistinctTypes()
+    {
+        return self::select('type')->distinct()->pluck('type')->all();
+    }
+
+    public function lead()
+    {
+        return $this->belongsTo(Lead::class);
     }
 }

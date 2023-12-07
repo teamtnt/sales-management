@@ -41,6 +41,14 @@
                     </a>
                 </li>
             @endcan
+            @can(config('sales-management.prefix').'.view-activities')
+                <li class="sidebar-item {{ request()->is('activities*') ? 'active' : '' }}">
+                    <a class="sidebar-link" href="{{ route('lead-activities.index') }}">
+                        <i class="align-middle me-2 fas fa-fw fa-phone"></i> <span
+                            class="align-middle">{{ __("Activities")}}</span>
+                    </a>
+                </li>
+            @endcan
             @can(config('sales-management.prefix').'.view-pipelines')
                 <li class="sidebar-item {{ request()->is('pipelines*') ? 'active' : '' }}">
                     <a class="sidebar-link" href="{{ route('pipelines.index') }}">

@@ -67,13 +67,15 @@ Route::get('/tags/{tag:id}/edit', [TagsController::class, 'edit'])->name('tags.e
 Route::put('/tags/{tag:id}/update', [TagsController::class, 'update'])->name('tags.update');
 Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->name('tags.destroy');
 
-// Lead Notes
-Route::post('/lead-notes/{lead:id}/note/store', [LeadActivitiesController::class, 'store'])->name('store-lead-activity');
-Route::delete('/lead-notes/{lead:id}/note/{note:id}/destroy', [LeadActivitiesController::class, 'destroy'])->name('destroy-lead-activity');
-
 // Lead Activities
-Route::post('/lead-activities/{lead:id}/activity/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
-Route::delete('/lead-activities/{lead:id}/activity/{activity:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
+Route::get('/lead-activities', [LeadActivitiesController::class, 'index'])->name('lead-activities.index');
+Route::post('/lead-activities/{lead:id}/note/store', [LeadActivitiesController::class, 'store'])->name('store-lead-activity');
+Route::delete('/lead-activities/{lead:id}/note/{note:id}/destroy', [LeadActivitiesController::class, 'destroy'])->name('destroy-lead-activity');
+Route::get('/lead-activities/{leadActivity:id}/toggle-status', [LeadActivitiesController::class, 'toggleStatus'])->name('lead-activities.toggle-status');
+
+// Lead Notes
+Route::post('/lead-notes/{lead:id}/activity/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
+Route::delete('/lead-notes/{lead:id}/activity/{activity:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
 
 Route::post('/lead-tags/{contact:id}/sync-tags', [LeadsController::class, 'syncTags'])->name('leads.sync-tags');
 
