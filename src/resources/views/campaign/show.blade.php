@@ -163,12 +163,10 @@
             dragula(stages)
                 .on('drag', function (el) {
                     el.className = el.className.replace('bg-light', 'bg-gray-400');
-
                     document.addEventListener('mousemove', handleMouseMove, false);
 
                 })
                 .on('drop', function (el, target, source, sibling) {
-                    console.log('drop')
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
 
                     axios.post('{{ route('stage.change') }}', {
@@ -181,8 +179,13 @@
                    document.removeEventListener('mousemove', handleMouseMove, false);
                 })
                 .on('over', function (el, container) {
-                    console.log('over')
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
+
+                })
+                .on('cancel', function (el, container, source) {
+                    el.className = el.className.replace('bg-gray-400', 'bg-light');
+
+                    document.removeEventListener('mousemove', handleMouseMove, false);
                 })
         });
     </script>
