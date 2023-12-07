@@ -6,10 +6,10 @@
         </button>
 
         <div class="dropdown-menu dropdown-menu-end">
-            @can(config('sales-management.prefix').'.view-workflows')
+            @can(config('sales-management.permission_prefix').'.view-workflows')
                 <a href="{{ route('workflows.index', $id) }}" class="dropdown-item">{{__('Workflows')}}</a>
             @endcan
-            @can(config('sales-management.prefix').'.view-messages')
+            @can(config('sales-management.permission_prefix').'.view-messages')
                 <a href="{{ route('messages.index', $id) }}" class="dropdown-item">{{__('Messages')}}</a>
             @endcan
             <a href="{{ route('campaign.show', $id) }}" class="dropdown-item">{{__('Show')}}</a>

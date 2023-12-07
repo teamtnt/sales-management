@@ -6,6 +6,7 @@ return [
     'logoLink' => '/',
     'tablePrefix' => 'sales_management_',
     'prefix' => '',
+    'permission_prefix' => 'sales_management',
     'middleware' => ['web', 'auth'],
     'userModel' => \App\Models\User::class,
     'emails' => [

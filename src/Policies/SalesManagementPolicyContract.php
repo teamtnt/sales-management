@@ -23,4 +23,6 @@ interface SalesManagementPolicyContract
     public function viewMessages();
 
     public function sendEmails();
+
+    public function viewActivities();
 }

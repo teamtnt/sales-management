@@ -48,6 +48,10 @@ class SalesManagementPolicy implements SalesManagementPolicyContract
     {
         return true;
     }
+    public function viewActivities()
+    {
+        return true;
+    }
 
     public function sendEmails()
     {

@@ -74,15 +74,16 @@ class SalesManagementServiceProvider extends ServiceProvider
 
     public function defineAbilities()
     {
-        Gate::define(config('sales-management.prefix') . '.view-dashboard', [config('sales-management.policy'), 'viewDashboard']);
-        Gate::define(config('sales-management.prefix') . '.view-contacts', [config('sales-management.policy'), 'viewContacts']);
-        Gate::define(config('sales-management.prefix') . '.view-lists', [config('sales-management.policy'), 'viewLists']);
-        Gate::define(config('sales-management.prefix') . '.view-campaigns', [config('sales-management.policy'), 'viewCampaigns']);
-        Gate::define(config('sales-management.prefix') . '.view-pipelines', [config('sales-management.policy'), 'viewPipelines']);
-        Gate::define(config('sales-management.prefix') . '.view-tags', [config('sales-management.policy'), 'viewTags']);
-        Gate::define(config('sales-management.prefix') . '.view-docs', [config('sales-management.policy'), 'viewDocs']);
-        Gate::define(config('sales-management.prefix') . '.view-workflows', [config('sales-management.policy'), 'viewWorkflows']);
-        Gate::define(config('sales-management.prefix') . '.view-messages', [config('sales-management.policy'), 'viewMessages']);
-        Gate::define(config('sales-management.prefix') . '.send-emails', [config('sales-management.policy'), 'sendEmails']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-dashboard', [config('sales-management.policy'), 'viewDashboard']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-contacts', [config('sales-management.policy'), 'viewContacts']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-lists', [config('sales-management.policy'), 'viewLists']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-campaigns', [config('sales-management.policy'), 'viewCampaigns']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-pipelines', [config('sales-management.policy'), 'viewPipelines']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-tags', [config('sales-management.policy'), 'viewTags']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-docs', [config('sales-management.policy'), 'viewDocs']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-workflows', [config('sales-management.policy'), 'viewWorkflows']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-messages', [config('sales-management.policy'), 'viewMessages']);
+        Gate::define(config('sales-management.permission_prefix') . '.send-emails', [config('sales-management.policy'), 'sendEmails']);
+        Gate::define(config('sales-management.permission_prefix') . '.view-activities', [config('sales-management.policy'), 'viewActivities']);
     }
 }
