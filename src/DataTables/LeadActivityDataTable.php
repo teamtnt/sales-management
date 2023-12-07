@@ -89,7 +89,7 @@ class LeadActivityDataTable extends DataTable
             ->minifiedAjax()
             ->addTableClass('table-striped')
             ->pageLength(25)
-            ->orderBy(7, 'asc') // Set default order by 'start_date' asc
+            ->orderBy(8, 'asc') // Set default order by 'start_date' asc
             ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
     }
 
