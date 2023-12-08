@@ -116,7 +116,7 @@
 @push('scripts')
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
-
+            console.log('tu sam')
             // Lead search
             const searchInput = document.getElementById('lead-search');
 
@@ -145,20 +145,35 @@
             })
 
             function handleMouseMove(e) {
-                // horizontal scroll by 80% from right
+                // horizontal scroll
                 if (e.clientX > (window.innerWidth * 0.8)) {
                     document.querySelector('.content').scrollBy({
                         left: 12
                     });
                 }
 
-                // vertical scroll by 10% from bottom
-                if (e.clientY > (window.innerHeight * 0.9)) {
+                // vertical scroll
+                if (e.clientY > (window.innerHeight * 0.8)) {
                     document.querySelector('.content').scrollBy({
                         top: 12
                     });
                 }
+
+                // horizontal scroll to the left
+                if (e.clientX < (window.innerWidth * 0.5)) {
+                    document.querySelector('.content').scrollBy({
+                        left: -12
+                    });
+                }
+
+                // vertical scroll to the top
+                if (e.clientY < (window.innerHeight * 0.3)) {
+                    document.querySelector('.content').scrollBy({
+                        top: -12
+                    });
+                }
             }
+
 
             dragula(stages)
                 .on('drag', function (el) {
