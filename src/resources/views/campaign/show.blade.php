@@ -116,7 +116,6 @@
 @push('scripts')
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
-            console.log('tu sam')
             // Lead search
             const searchInput = document.getElementById('lead-search');
 
