@@ -48,7 +48,7 @@
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>
                              </span>
-                            <input id="lead-search" class="form-control" type="search" name="lead-search"
+                            <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search" type="search" name="lead-search"
                                    placeholder="Search leads by email...">
                         </div>
                     </div>
@@ -91,6 +91,14 @@
                             </div>
                             <h5 class="card-title">{{ $stage->name }}</h5>
                             <h6 class="card-subtitle text-muted">{{ $stage->description }}</h6>
+
+                            <div class="input-group">
+                             <span class="input-group-text">
+                                 <x-sales-management::icons.search width="15" height="15"/>
+                             </span>
+                                <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search" type="search" name="lead-search"
+                                       placeholder="Search leads by email...">
+                            </div>
                         </div>
                         <div class="card-body">
 
@@ -117,21 +125,24 @@
     <script type="module">
         document.addEventListener("DOMContentLoaded", function () {
             // Lead search
-            const searchInput = document.getElementById('lead-search');
+            const searchInputs = document.querySelectorAll('.lead-search');
 
-            searchInput.addEventListener('input', function (e) {
-                const searchValue = this.value.toLowerCase();
-                const leads = document.querySelectorAll('#leads .lead-item');
+            searchInputs.forEach(searchInput => {
+                searchInput.addEventListener('input', function (e) {
+                    const searchValue = this.value.toLowerCase();
+                    const leads = this.closest('.card').querySelectorAll('.lead-item');
 
-                leads.forEach(lead => {
-                    const email = lead.querySelector('.lead-email').textContent.toLowerCase();
-                    if (email.includes(searchValue)) {
-                        lead.style.display = '';
-                    } else {
-                        lead.style.display = 'none';
-                    }
+                    leads.forEach(lead => {
+                        const email = lead.querySelector('.lead-email').textContent.toLowerCase();
+                        if (email.includes(searchValue)) {
+                            lead.style.display = '';
+                        } else {
+                            lead.style.display = 'none';
+                        }
+                    })
                 })
             })
+
 
 
             const pipelineId = document.querySelector("#pipeline").dataset.pipelineId;
