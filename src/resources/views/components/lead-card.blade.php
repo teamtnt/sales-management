@@ -31,9 +31,9 @@
     </div>
     @endif
     @if($offCanvas)
-        <span class="info-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight-{{ $lead->contact->id }}"
+        <span class="info-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight-{{ $lead->contact->id }}" data-form-id="{{$lead->id}}"
               aria-controls="offcanvasRight">
-        <x-sales-management::icons.info/>
+        <x-sales-management::icons.info style="pointer-events: none;"/>
     </span>
     @endif
 </div>
@@ -217,7 +217,7 @@
                 <div class="offcanvas-body">
                 <notes lead-id="{{ $lead->id }}" :lead-notes="{{ $lead->notes->toJson() }}"
                        url="{{route('store-lead-note', $lead->id)}}"
-                       delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}">
+                       delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}" :key="{{ $lead->id }}">
                 </notes>
                 </div>
             </div>
@@ -227,7 +227,7 @@
                 <div class="offcanvas-body">
                     <activities lead-id="{{ $lead->id }}" :lead-activities="{{ $lead->activities->toJson() }}"
                            url="{{route('store-lead-activity', $lead->id)}}"
-                           delete-url="{{ route('destroy-lead-activity', [$lead->id, " :activityId"]) }}">
+                           delete-url="{{ route('destroy-lead-activity', [$lead->id, " :activityId"]) }}" :key="{{ $lead->id }}">
                     </activities>
                 </div>
             </div>
@@ -254,10 +254,10 @@
                     <div class="my-3">
                         <button type="submit" class="btn btn-success me-2 w-100">
                             <span class="d-flex align-items-center justify-content-center">
-                                <span id="spinner-loader"
-                                      class="d-none spinner-border spinner-border-sm text-light me-2" role="status">
+                                <span class="spinner d-none spinner-border spinner-border-sm text-light me-2" role="status">
                                     <span class="visually-hidden">Loading...</span>
-                                </span>{{__("Send Message")}} </span>
+                                </span>{{ __("Send Message")}}
+                            </span>
                         </button>
                     </div>
                     {{ Form::close() }}
@@ -267,65 +267,65 @@
     </div>
 @endif
 
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const leadMessageForm = document.getElementById('lead-message-form-{{ $lead->id }}');
-            const submitBtn = leadMessageForm.querySelector('button');
-            const spinner = document.getElementById('spinner-loader');
+{{--@push('scripts')--}}
+{{--    <script>--}}
+{{--        document.addEventListener("DOMContentLoaded", () => {--}}
+{{--            const leadMessageForm = document.getElementById('lead-message-form-{{ $lead->id }}');--}}
+{{--            const submitBtn = leadMessageForm.querySelector('button');--}}
+{{--            const spinner = document.getElementById('spinner-loader');--}}
 
-            leadMessageForm.addEventListener('submit', function (event) {
-                event.preventDefault();
+{{--            leadMessageForm.addEventListener('submit', function (event) {--}}
+{{--                event.preventDefault();--}}
 
-                // Remove validation classes from all fields
-                const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');
-                inputFields.forEach((inputField) => {
-                    inputField.classList.remove('is-invalid');
-                    inputField.classList.remove('is-valid');
-                    const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
-                    errorElement.innerText = '';
-                });
+{{--                // Remove validation classes from all fields--}}
+{{--                const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');--}}
+{{--                inputFields.forEach((inputField) => {--}}
+{{--                    inputField.classList.remove('is-invalid');--}}
+{{--                    inputField.classList.remove('is-valid');--}}
+{{--                    const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
+{{--                    errorElement.innerText = '';--}}
+{{--                });--}}
 
-                const formData = new FormData(this);
-                spinner.classList.remove('d-none');
-                submitBtn.disabled = true;
+{{--                const formData = new FormData(this);--}}
+{{--                spinner.classList.remove('d-none');--}}
+{{--                submitBtn.disabled = true;--}}
 
-                axios.post(leadMessageForm.action, formData, {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).then((response) => {
-                    if (response.status === 200) {
-                        spinner.classList.add('d-none');
-                        submitBtn.disabled = false;
+{{--                axios.post(leadMessageForm.action, formData, {--}}
+{{--                    headers: {--}}
+{{--                        "Content-Type": "application/json"--}}
+{{--                    }--}}
+{{--                }).then((response) => {--}}
+{{--                    if (response.status === 200) {--}}
+{{--                        spinner.classList.add('d-none');--}}
+{{--                        submitBtn.disabled = false;--}}
 
-                        window.notyf.open({
-                            type: "success",
-                            message: response.data.message,
-                            duration: "2500",
-                            ripple: true,
-                            position: "bottom right",
-                            dismissible: true,
-                        });
+{{--                        window.notyf.open({--}}
+{{--                            type: "success",--}}
+{{--                            message: response.data.message,--}}
+{{--                            duration: "2500",--}}
+{{--                            ripple: true,--}}
+{{--                            position: "bottom right",--}}
+{{--                            dismissible: true,--}}
+{{--                        });--}}
 
-                        leadMessageForm.reset();
-                    }
-                }).catch((error) => {
-                    if (error.response.status === 422) {
-                        spinner.classList.add('d-none');
-                        submitBtn.disabled = false;
-                        const errors = error.response.data.errors;
+{{--                        leadMessageForm.reset();--}}
+{{--                    }--}}
+{{--                }).catch((error) => {--}}
+{{--                    if (error.response.status === 422) {--}}
+{{--                        spinner.classList.add('d-none');--}}
+{{--                        submitBtn.disabled = false;--}}
+{{--                        const errors = error.response.data.errors;--}}
 
-                        Object.keys(errors).forEach((fieldName) => {
-                            const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);
-                            const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
+{{--                        Object.keys(errors).forEach((fieldName) => {--}}
+{{--                            const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);--}}
+{{--                            const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
 
-                            errorElement.innerText = errors[fieldName];
-                            inputField.classList.add('is-invalid');
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
+{{--                            errorElement.innerText = errors[fieldName];--}}
+{{--                            inputField.classList.add('is-invalid');--}}
+{{--                        });--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+{{--@endpush--}}
