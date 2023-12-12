@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <h5 class="card-title">{{ $stage->name }}</h5>
-                            <h6 class="card-subtitle text-muted">{{ $stage->description }}</h6>
+                            <h6 class="card-subtitle text-muted mb-2">{{ $stage->description }}</h6>
 
                             <div class="input-group">
                              <span class="input-group-text">
