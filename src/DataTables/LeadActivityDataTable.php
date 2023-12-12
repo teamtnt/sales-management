@@ -23,6 +23,7 @@ class LeadActivityDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->filter(function ($query) {
+                if(auth()->user()->hasRole('admin')) return;
                 $query->where('created_by', auth()->id());
             }, true)
             ->editColumn('is_done', function (LeadActivity $leadActivity) {
@@ -82,6 +83,10 @@ class LeadActivityDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
+        //select distinct created_by user
+        $users = LeadActivity::select('created_by')->distinct()->get()->pluck('user.full_name', 'created_by')->toArray();
+        $users = json_encode($users);
+
         return $this->builder()
             ->dom('lfrtip')
             ->setTableId('deal-table')
@@ -90,7 +95,44 @@ class LeadActivityDataTable extends DataTable
             ->addTableClass('table-striped')
             ->pageLength(25)
             ->orderBy(8, 'asc') // Set default order by 'start_date' asc
-            ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
+            ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json")
+            ->initComplete("
+
+               function (settings, json) {
+
+                this.api().columns([2]).every( function () {
+                  var column = this;
+                  // Use column title as label for select
+                  var title = $(column.header()).text();
+
+                  // Generate select
+                  var select = $('<select class=\"form-control\"><option value=\"\">Alle</option></select>').appendTo( $(column.footer()).empty() )
+                  // Search when selection is changed
+                 .on( 'change', function () {
+                    var val = $(this).val();
+                    column.search( this.value ).draw();
+                  } );
+                  // Capture the data from the JSON to populate the select boxes with all the options
+                  var extraData = (function(i) {
+
+                  switch(i) {
+                    case 2:
+                        return $users;
+                  }
+                  })(column.index());
+
+
+                  // Draw select options
+                  Object.entries(extraData).forEach( ([key, value]) => {
+                    if(column.search() === key){
+        select.append('<option value=\"' + key + '\" selected=\"selected\">' + value + '</option>');
+    } else {
+        select.append('<option value=\"' + key + '\">' + value + '</option>');
+    }
+                    } );
+                } );
+            }
+            ");
     }
 
     protected function getColumns(): array

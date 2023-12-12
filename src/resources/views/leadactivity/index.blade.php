@@ -1,7 +1,7 @@
 @extends('sales-management::layouts.app')
 
 @section('content')
-    {!! $dataTable->table() !!}
+    {!! $dataTable->table([], true) !!}
 
 @endsection
 
