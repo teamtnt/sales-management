@@ -48,7 +48,8 @@
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>
                              </span>
-                            <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search" type="search" name="lead-search"
+                            <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
+                                   type="search" name="lead-search"
                                    placeholder="Search leads by email...">
                         </div>
                     </div>
@@ -96,7 +97,8 @@
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>
                              </span>
-                                <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search" type="search" name="lead-search"
+                                <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
+                                       type="search" name="lead-search"
                                        placeholder="Search leads by email...">
                             </div>
                         </div>
@@ -253,7 +255,12 @@
             }
 
 
-            dragula(stages)
+            dragula(stages, {
+                moves: function (el, source, handle, sibling) {
+                     return handle.classList.contains('drag-handle');
+                },
+            })
+
                 .on('drag', function (el) {
                     el.className = el.className.replace('bg-light', 'bg-gray-400');
                     document.addEventListener('mousemove', handleMouseMove, false);
@@ -269,7 +276,7 @@
                         target_stage_id: target.dataset.stageId
                     })
 
-                   document.removeEventListener('mousemove', handleMouseMove, false);
+                    document.removeEventListener('mousemove', handleMouseMove, false);
                 })
                 .on('over', function (el, container) {
                     el.className = el.className.replace('bg-gray-400', 'bg-light');

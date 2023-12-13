@@ -1,6 +1,16 @@
 @props(['campaign' => $campaign, 'lead' => $lead, 'offCanvas' => false])
 
 <div class="lead-item card mb-3 p-2 bg-light border gap-1" data-lead-id="{{ $lead->id }}">
+
+    <!-- Drag Handle -->
+    <span class="drag-handle" style="padding: 0 5px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
+    cursor: move;
+    width: 20px;
+    color: white;
+    ">+</span>
+
     <div class="d-flex align-items-center">
         <x-sales-management::icons.user/>
         <span class="ms-2">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</span>
