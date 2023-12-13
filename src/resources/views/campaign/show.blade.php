@@ -127,7 +127,7 @@
     <script defer type="module">
         document.addEventListener("DOMContentLoaded", function () {
 
-            let formId = {{ $lead->id }};
+            let formId = {{ $lead->id ?? null }};
             document.addEventListener('click', function (event) {
                 // Check if the clicked element has the class 'info-icon'
                 const clickedInfoIcon = event.target.closest('.info-icon');
