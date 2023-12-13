@@ -119,7 +119,7 @@ const formatDate = (timestamp) => {
                     <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i>{{ $t("Notes") }}
                 </span>
             </label>
-            <textarea id="note" v-model="note" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
+            <textarea id="note" v-model="note" class="form-control mb-2" :class="{'is-invalid': isNotEmpty(errors)}"
                       name="note" :placeholder="$t('Note')"/>
 
 
@@ -138,7 +138,7 @@ const formatDate = (timestamp) => {
         </div>
     </form>
     <hr>
-    <div class="d-flex flex-column">
+    <div class="notes-container">
         <div v-for="note in notes" :key="note.id" class="note mb-3">
             <div class="d-flex flex-column">
                 <p class="mb-1">{{ note.note }}</p>
@@ -155,3 +155,10 @@ const formatDate = (timestamp) => {
     </div>
 </template>
 
+<style>
+.notes-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+</style>

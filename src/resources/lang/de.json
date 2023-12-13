@@ -18,7 +18,9 @@
     "Email": "Email",
     "Back": "Zurück",
     "VAT": "USt-ID",
-    "Notes": "Notes",
+    "Notes": "Anmerkungen",
     "Note": "Note",
-    "Activities": "Activities"
+    "Activities": "Activities",
+    "Profile": "Profil",
+    "Send E-Mail": "E-Mail senden"
 }

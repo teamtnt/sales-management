@@ -3,16 +3,16 @@
 <div class="lead-item card mb-3 p-2 bg-light border gap-1" data-lead-id="{{ $lead->id }}">
 
     <!-- Drag Handle -->
-    <span class="drag-handle" style="padding: 0 5px;
-    margin-right: 5px;
-    background-color: rgba(0, 0, 0, 0.4);
-    cursor: move;
-    width: 20px;
-    color: white;
-    ">+</span>
+    <span class="drag-handle" style="
+        display: block;
+        cursor: grab;
+        margin-bottom: 5px;
+        color: #a7a7a7;">
+        <i style="pointer-events: none;" class="align-middle" data-feather="move"></i>
+    </span>
 
     <div class="d-flex align-items-center">
-        <x-sales-management::icons.user/>
+        <x-sales-management::icons.user class="flex-shrink-0"/>
         <span class="ms-2">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</span>
     </div>
     <div class="d-flex align-items-center">
@@ -66,7 +66,7 @@
                 <button class="nav-link active text-uppercase" id="profile-tab" data-bs-toggle="tab"
                         data-bs-target="#profile-tab-pane-{{ $lead->id }}" type="button" role="tab"
                         aria-controls="profile-tab-pane"
-                        aria-selected="true">{{ __('Profile details') }}</button>
+                        aria-selected="true">{{ __('Profile') }}</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link text-uppercase" id="notes-tab" data-bs-toggle="tab"
@@ -89,7 +89,7 @@
                         aria-selected="false">{{ __('Send E-Mail') }}</button>
             </li>
         </ul>
-        <div class="tab-content" id="myTabContent">
+        <div class="tab-content" id="myTabContent" style="overflow-y: auto;">
             <div class="tab-pane fade show active" id="profile-tab-pane-{{ $lead->id }}" role="tabpanel"
                  aria-labelledby="profile-tab"
                  tabindex="0">
@@ -292,66 +292,3 @@
         </div>
     </div>
 @endif
-
-{{--@push('scripts')--}}
-{{--    <script>--}}
-{{--        document.addEventListener("DOMContentLoaded", () => {--}}
-{{--            const leadMessageForm = document.getElementById('lead-message-form-{{ $lead->id }}');--}}
-{{--            const submitBtn = leadMessageForm.querySelector('button');--}}
-{{--            const spinner = document.getElementById('spinner-loader');--}}
-
-{{--            leadMessageForm.addEventListener('submit', function (event) {--}}
-{{--                event.preventDefault();--}}
-
-{{--                // Remove validation classes from all fields--}}
-{{--                const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');--}}
-{{--                inputFields.forEach((inputField) => {--}}
-{{--                    inputField.classList.remove('is-invalid');--}}
-{{--                    inputField.classList.remove('is-valid');--}}
-{{--                    const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
-{{--                    errorElement.innerText = '';--}}
-{{--                });--}}
-
-{{--                const formData = new FormData(this);--}}
-{{--                spinner.classList.remove('d-none');--}}
-{{--                submitBtn.disabled = true;--}}
-
-{{--                axios.post(leadMessageForm.action, formData, {--}}
-{{--                    headers: {--}}
-{{--                        "Content-Type": "application/json"--}}
-{{--                    }--}}
-{{--                }).then((response) => {--}}
-{{--                    if (response.status === 200) {--}}
-{{--                        spinner.classList.add('d-none');--}}
-{{--                        submitBtn.disabled = false;--}}
-
-{{--                        window.notyf.open({--}}
-{{--                            type: "success",--}}
-{{--                            message: response.data.message,--}}
-{{--                            duration: "2500",--}}
-{{--                            ripple: true,--}}
-{{--                            position: "bottom right",--}}
-{{--                            dismissible: true,--}}
-{{--                        });--}}
-
-{{--                        leadMessageForm.reset();--}}
-{{--                    }--}}
-{{--                }).catch((error) => {--}}
-{{--                    if (error.response.status === 422) {--}}
-{{--                        spinner.classList.add('d-none');--}}
-{{--                        submitBtn.disabled = false;--}}
-{{--                        const errors = error.response.data.errors;--}}
-
-{{--                        Object.keys(errors).forEach((fieldName) => {--}}
-{{--                            const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);--}}
-{{--                            const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
-
-{{--                            errorElement.innerText = errors[fieldName];--}}
-{{--                            inputField.classList.add('is-invalid');--}}
-{{--                        });--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-{{--@endpush--}}

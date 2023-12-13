@@ -123,23 +123,20 @@ function formatDate(dateString) {
                     <i class="align-middle me-2 fas fa-fw fa-clipboard-list"></i>{{ $t("Activities") }}
                 </span>
             </label>
-
-
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="start_date">Typ</label>
-            <select name="activity_type" v-model="activity_type" id="note_type" class="form-select mt-2">
-                <option value="Call">Call</option>
-                <option value="Meeting">Meeting</option>
-                <option value="E-Mail">E-Mail</option>
-                <option value="Task">Task</option>
-            </select>
+                <select name="activity_type" v-model="activity_type" id="note_type" class="form-select mt-2">
+                    <option value="Call">Call</option>
+                    <option value="Meeting">Meeting</option>
+                    <option value="E-Mail">E-Mail</option>
+                    <option value="Task">Task</option>
+                </select>
             </div>
-
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="start_date">Start Datum</label>
                 <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date">
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="end_date">Ende Datum</label>
                 <input type="datetime-local" class="form-control" id="activity_end_date" v-model="activity_end_date">
             </div>
