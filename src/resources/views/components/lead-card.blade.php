@@ -205,6 +205,22 @@
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
+                            <x-sales-management::icons.tag class="me-2"/> {{ __('Lists') }}
+                        </span>
+                        <multi-select-list
+                            name=tags[]
+                            label="Add to Lists"
+                            placeholder="Choose list..."
+                            label-by="name"
+                            track-by="name"
+                            sync-tags-url="{{ route('contacts.sync-lists', $lead->contact->id) }}"
+                            model-id="{{ $lead->contact->id }}"
+                            :selected="{{ $lead->contact->lists->toJson() ?? '[]'}}"
+                            :options="{{ getAllLists() ?? '[]'}}">
+                        </multi-select-list>
+                    </div>
+                    <div class="mb-4">
+                        <span class="d-flex fw-bold align-items-center mb-2">
                             <x-sales-management::icons.tag class="me-2"/> {{ __('Lead Tags') }}
                         </span>
                         <multi-select-list

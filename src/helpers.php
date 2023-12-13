@@ -2,6 +2,7 @@
 
 use Teamtnt\SalesManagement\Models\Campaign;
 use Teamtnt\SalesManagement\Models\Contact;
+use Teamtnt\SalesManagement\Models\ContactList;
 use Teamtnt\SalesManagement\Models\ContactListContact;
 use Teamtnt\SalesManagement\Models\ContactTemp;
 use Teamtnt\SalesManagement\Models\Lead;
@@ -109,6 +110,16 @@ if (!function_exists('getAllTags')) {
         //cache response
         return cache()->remember('all-tags', 60 * 60, function () {
             return Tag::all()->toJson();
+        });
+    }
+}
+
+if (!function_exists('getAllLists')) {
+    function getAllLists(): ?string
+    {
+        //cache response
+        return cache()->remember('all-lists', 60 * 60, function () {
+            return ContactList::all()->toJson();
         });
     }
 }

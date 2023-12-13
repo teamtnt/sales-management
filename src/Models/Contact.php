@@ -47,6 +47,11 @@ class Contact extends Model
         return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'contact_tag');
     }
 
+    public function lists()
+    {
+        return $this->belongsToMany(ContactList::class, config('sales-management.tablePrefix') . 'contact_list_contacts');
+    }
+
     public function getFullnameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;

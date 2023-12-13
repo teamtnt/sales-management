@@ -178,6 +178,14 @@ class ContactsController extends Controller
         return response()->json(200);
     }
 
+    public function syncLists()
+    {
+        $contact = Contact::find(request('modelId'));
+        $contact->lists()->sync(request('tags'));
+
+        return response()->json(200);
+    }
+
     public function importWebhook(WebhookImportRequest $request)
     {
         ini_set('max_execution_time', 0);
