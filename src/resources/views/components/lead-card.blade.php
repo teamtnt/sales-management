@@ -4,7 +4,8 @@
 
     <!-- Drag Handle -->
     <span class="drag-handle" style="
-        display: block;
+        display: inline-block;
+        width: 20px;
         cursor: grab;
         margin-bottom: 5px;
         color: #a7a7a7;">
@@ -24,15 +25,17 @@
         <span class="ms-2"> {{ $lead->contact->phone }}</span>
     </div>
     <div class="d-flex align-items-center">
-        <x-sales-management::icons.tag/>
-        <ul class="list-unstyled d-flex flex-wrap gap-1 ms-2">
-            @foreach($lead->contact->tags as $tag)
-                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
-            @endforeach
-            @foreach($lead->tags as $tag)
-                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
-            @endforeach
-        </ul>
+        @if($lead->contact->tags->count() > 0 || $lead->tags->count() > 0)
+            <x-sales-management::icons.tag class="me-2 flex-shrink-0"/>
+            <ul class="list-unstyled d-flex flex-wrap m-0" style="gap: 2px 3px;">
+                @foreach($lead->contact->tags as $tag)
+                    <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+                @endforeach
+                @foreach($lead->tags as $tag)
+                    <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+                @endforeach
+            </ul>
+        @endif
     </div>
     @if($lead->nextCallActivity)
     <div class="d-flex align-items-center">
@@ -55,7 +58,7 @@
         <div class="offcanvas-header bg-light border-bottom">
             <h4 class="offcanvas-title" id="offcanvasRightLabel-{{$lead->contact->id}}">
             <span class="d-flex">
-                <x-sales-management::icons.user class="me-2" style="width: 24px; height: 24px;"/> {{ __('User') }}: {{
+                <x-sales-management::icons.user class="me-2 flex-shrink-0" style="width: 24px; height: 24px;"/> {{ __('User') }}: {{
                 $lead->contact->fullname }}
             </span>
             </h4>
