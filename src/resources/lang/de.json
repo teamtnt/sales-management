@@ -22,5 +22,16 @@
     "Note": "Note",
     "Activities": "Activities",
     "Profile": "Profil",
-    "Send E-Mail": "E-Mail senden"
+    "Send E-Mail": "E-Mail senden",
+    "Address": "Adresse",
+    "User": "Benutzer",
+    "User ID": "Bentuzer ID",
+    "Job title": "Arbeit",
+    "Phone": "Telefon",
+    "Company": "Firma",
+    "Contact": "Kontakt",
+    "Website": "Website",
+    "ZIP": "PLZ",
+    "City": "Stadt",
+    "Country": "Land"
 }

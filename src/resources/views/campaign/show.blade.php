@@ -127,73 +127,73 @@
     <script defer type="module">
         document.addEventListener("DOMContentLoaded", function () {
 
-            let formId = {{ $lead->id ?? null }};
-            document.addEventListener('click', function (event) {
-                // Check if the clicked element has the class 'info-icon'
-                const clickedInfoIcon = event.target.closest('.info-icon');
+            {{--let formId = {{ $lead->id ?? null }};--}}
+            {{--document.addEventListener('click', function (event) {--}}
+            {{--    // Check if the clicked element has the class 'info-icon'--}}
+            {{--    const clickedInfoIcon = event.target.closest('.info-icon');--}}
 
-                if (clickedInfoIcon) {
-                    formId = clickedInfoIcon.dataset.formId;
+            {{--    if (clickedInfoIcon) {--}}
+            {{--        formId = clickedInfoIcon.dataset.formId;--}}
 
-                    // Lead message form
-                    let leadMessageForm = document.getElementById(`lead-message-form-${formId}`);
-                    const submitBtn = leadMessageForm.querySelector('button');
-                    const spinner = submitBtn.querySelector('.spinner');
+            {{--        // Lead message form--}}
+            {{--        let leadMessageForm = document.getElementById(`lead-message-form-${formId}`);--}}
+            {{--        const submitBtn = leadMessageForm.querySelector('button');--}}
+            {{--        const spinner = submitBtn.querySelector('.spinner');--}}
 
-                    leadMessageForm.addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        console.log('Form submitted!')
-                        // Remove validation classes from all fields
-                        const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');
-                        inputFields.forEach((inputField) => {
-                            inputField.classList.remove('is-invalid');
-                            inputField.classList.remove('is-valid');
-                            const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
-                            errorElement.innerText = '';
-                        });
+            {{--        leadMessageForm.addEventListener('submit', function (event) {--}}
+            {{--            event.preventDefault();--}}
+            {{--            console.log('Form submitted!')--}}
+            {{--            // Remove validation classes from all fields--}}
+            {{--            const inputFields = leadMessageForm.querySelectorAll('input, select, textarea');--}}
+            {{--            inputFields.forEach((inputField) => {--}}
+            {{--                inputField.classList.remove('is-invalid');--}}
+            {{--                inputField.classList.remove('is-valid');--}}
+            {{--                const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
+            {{--                errorElement.innerText = '';--}}
+            {{--            });--}}
 
-                        const formData = new FormData(this);
-                        spinner.classList.remove('d-none');
-                        submitBtn.disabled = true;
+            {{--            const formData = new FormData(this);--}}
+            {{--            spinner.classList.remove('d-none');--}}
+            {{--            submitBtn.disabled = true;--}}
 
-                        axios.post(leadMessageForm.action, formData, {
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-                        }).then((response) => {
-                            if (response.status === 200) {
-                                spinner.classList.add('d-none');
-                                submitBtn.disabled = false;
+            {{--            axios.post(leadMessageForm.action, formData, {--}}
+            {{--                headers: {--}}
+            {{--                    "Content-Type": "application/json"--}}
+            {{--                }--}}
+            {{--            }).then((response) => {--}}
+            {{--                if (response.status === 200) {--}}
+            {{--                    spinner.classList.add('d-none');--}}
+            {{--                    submitBtn.disabled = false;--}}
 
-                                window.notyf.open({
-                                    type: "success",
-                                    message: response.data.message,
-                                    duration: "2500",
-                                    ripple: true,
-                                    position: "bottom right",
-                                    dismissible: true,
-                                });
+            {{--                    window.notyf.open({--}}
+            {{--                        type: "success",--}}
+            {{--                        message: response.data.message,--}}
+            {{--                        duration: "2500",--}}
+            {{--                        ripple: true,--}}
+            {{--                        position: "bottom right",--}}
+            {{--                        dismissible: true,--}}
+            {{--                    });--}}
 
-                                leadMessageForm.reset();
-                            }
-                        }).catch((error) => {
-                            if (error.response.status === 422) {
-                                spinner.classList.add('d-none');
-                                submitBtn.disabled = false;
-                                const errors = error.response.data.errors;
+            {{--                    leadMessageForm.reset();--}}
+            {{--                }--}}
+            {{--            }).catch((error) => {--}}
+            {{--                if (error.response.status === 422) {--}}
+            {{--                    spinner.classList.add('d-none');--}}
+            {{--                    submitBtn.disabled = false;--}}
+            {{--                    const errors = error.response.data.errors;--}}
 
-                                Object.keys(errors).forEach((fieldName) => {
-                                    const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);
-                                    const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
+            {{--                    Object.keys(errors).forEach((fieldName) => {--}}
+            {{--                        const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);--}}
+            {{--                        const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
 
-                                    errorElement.innerText = errors[fieldName];
-                                    inputField.classList.add('is-invalid');
-                                });
-                            }
-                        });
-                    });
-                }
-            });
+            {{--                        errorElement.innerText = errors[fieldName];--}}
+            {{--                        inputField.classList.add('is-invalid');--}}
+            {{--                    });--}}
+            {{--                }--}}
+            {{--            });--}}
+            {{--        });--}}
+            {{--    }--}}
+            {{--});--}}
 
 
             // Lead search
