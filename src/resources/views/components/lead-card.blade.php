@@ -14,7 +14,7 @@
 
     <div class="d-flex align-items-center">
         <x-sales-management::icons.user class="flex-shrink-0"/>
-        <span class="ms-2">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</span>
+        <span class="ms-2"><a target="_blank" href="{{ route('contacts.edit', $lead->contact)  }}">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</a></span>
     </div>
     <div class="d-flex align-items-center">
         <x-sales-management::icons.mail/>
@@ -58,8 +58,10 @@
         <div class="offcanvas-header bg-light border-bottom">
             <h4 class="offcanvas-title" id="offcanvasRightLabel-{{$lead->contact->id}}">
             <span class="d-flex">
-                <x-sales-management::icons.user class="me-2 flex-shrink-0" style="width: 24px; height: 24px;"/> {{ __('User') }}: {{
-                $lead->contact->fullname }}
+                <x-sales-management::icons.user class="me-2 flex-shrink-0" style="width: 24px; height: 24px;"/> {{ __('User') }}:
+                <a target="_blank" href="{{ route('contacts.edit', $lead->contact)  }}">{{$lead->contact->fullname }}</a>
+
+
             </span>
             </h4>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -194,49 +196,67 @@
                         <span class="d-flex fw-bold align-items-center mb-2">
                             <x-sales-management::icons.tag class="me-2"/> {{ __('Contact Tags') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add tag to contact"
-                            placeholder="Choose tags..."
-                            label-by="name"
-                            track-by="name"
-                            sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"
-                            model-id="{{ $lead->contact->id }}"
-                            :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"
-                            :options="{{ getAllTags() ?? '[]'}}">
-                        </multi-select-list>
+                        @if($lead->contact->tags->count() > 0)
+                            <ul class="list-unstyled d-flex flex-wrap m-0" style="gap: 2px 3px;">
+                                @foreach($lead->contact->tags as $tag)
+                                    <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+{{--                        <multi-select-list--}}
+{{--                            name=tags[]--}}
+{{--                            label="Add tag to contact"--}}
+{{--                            placeholder="Choose tags..."--}}
+{{--                            label-by="name"--}}
+{{--                            track-by="name"--}}
+{{--                            sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"--}}
+{{--                            model-id="{{ $lead->contact->id }}"--}}
+{{--                            :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"--}}
+{{--                            :options="{{ getAllTags() ?? '[]'}}">--}}
+{{--                        </multi-select-list>--}}
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
                             <x-sales-management::icons.tag class="me-2"/> {{ __('Lists') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add to Lists"
-                            placeholder="Choose list..."
-                            label-by="name"
-                            track-by="name"
-                            sync-tags-url="{{ route('contacts.sync-lists', $lead->contact->id) }}"
-                            model-id="{{ $lead->contact->id }}"
-                            :selected="{{ $lead->contact->lists->toJson() ?? '[]'}}"
-                            :options="{{ getAllLists() ?? '[]'}}">
-                        </multi-select-list>
+                        @if($lead->contact->lists->count() > 0)
+                            @foreach($lead->contact->lists as $list)
+                                <li class="badge rounded-pill bg-info fw-light">{{ $list->name }}</li>
+                            @endforeach
+                        @endif
+
+{{--                        <multi-select-list--}}
+{{--                            name=tags[]--}}
+{{--                            label="Add to Lists"--}}
+{{--                            placeholder="Choose list..."--}}
+{{--                            label-by="name"--}}
+{{--                            track-by="name"--}}
+{{--                            sync-tags-url="{{ route('contacts.sync-lists', $lead->contact->id) }}"--}}
+{{--                            model-id="{{ $lead->contact->id }}"--}}
+{{--                            :selected="{{ $lead->contact->lists->toJson() ?? '[]'}}"--}}
+{{--                            :options="{{ getAllLists() ?? '[]'}}">--}}
+{{--                        </multi-select-list>--}}
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
                             <x-sales-management::icons.tag class="me-2"/> {{ __('Lead Tags') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add tag to lead"
-                            placeholder="Choose tags..."
-                            label-by="name"
-                            track-by="name"
-                            sync-tags-url="{{ route('leads.sync-tags', $lead->id) }}"
-                            model-id="{{ $lead->id }}"
-                            :selected="{{ $lead->tags->toJson() ?? '[]'}}"
-                            :options="{{ getAllTags() ?? '[]'}}">
-                        </multi-select-list>
+                        @if($lead->tags->count() > 0)
+                            @foreach($lead->tags as $tag)
+                                <li class="badge rounded-pill bg-info fw-light">{{ $tag->name }}</li>
+                            @endforeach
+                        @endif
+{{--                        <multi-select-list--}}
+{{--                            name=tags[]--}}
+{{--                            label="Add tag to lead"--}}
+{{--                            placeholder="Choose tags..."--}}
+{{--                            label-by="name"--}}
+{{--                            track-by="name"--}}
+{{--                            sync-tags-url="{{ route('leads.sync-tags', $lead->id) }}"--}}
+{{--                            model-id="{{ $lead->id }}"--}}
+{{--                            :selected="{{ $lead->tags->toJson() ?? '[]'}}"--}}
+{{--                            :options="{{ getAllTags() ?? '[]'}}">--}}
+{{--                        </multi-select-list>--}}
                     </div>
                 </div>
             </div>
