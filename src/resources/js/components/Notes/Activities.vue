@@ -10,7 +10,7 @@ const props = defineProps({
         type: String
     },
     leadId: {
-        type: String
+        type: Number
     },
     leadActivities: {
         type: Array
@@ -64,6 +64,7 @@ const handleFormSubmit = () => {
         console.log(error.message)
         if (error.response.status === 422) {
             errors.value = error.response.data.errors
+            console.log(error.response.data.errors)
             submitting.value = false;
         }
     });
@@ -134,7 +135,10 @@ function formatDate(dateString) {
             </div>
             <div class="form-group mb-3">
                 <label for="start_date">Start Datum</label>
-                <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date">
+                <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date" :class="{'is-invalid': isNotEmpty(errors)}">
+                <small v-if="errors && errors.activity_start_date" class="invalid-feedback">
+                    {{ errors.activity_start_date[0] }}
+                </small>
             </div>
             <div class="form-group mb-3">
                 <label for="end_date">Ende Datum</label>
@@ -146,12 +150,12 @@ function formatDate(dateString) {
             <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
                       name="activity" />
 
-            </div>
-            <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Activity</button>
-
             <small v-if="errors && errors.activity" class="invalid-feedback">
                 {{ errors.activity[0] }}
             </small>
+            </div>
+            <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Activity</button>
+
         </div>
     </form>
     <hr>

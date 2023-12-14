@@ -29,7 +29,7 @@ const props = defineProps({
         type: String
     },
     modelId: {
-        type: String
+        type: Number || String
     }
 })
 

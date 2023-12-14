@@ -10,7 +10,7 @@
         </span>
 
         <template v-if="showOffCanvas">
-            <OffCanvas v-model="showOffCanvas" :lead="lead"/>
+            <OffCanvas v-model="showOffCanvas" :lead="lead" :tags="tags" :lists="lists" :routes="routes"/>
         </template>
     </div>
 </template>
@@ -22,6 +22,18 @@ import OffCanvas from "./OffCanvas.vue";
 const props = defineProps({
     lead: {
         type: Object,
+        required: true
+    },
+    routes: {
+        type: Object,
+        required: true
+    },
+    tags: {
+        type: Array,
+        required: true
+    },
+    lists: {
+        type: Array,
         required: true
     }
 })

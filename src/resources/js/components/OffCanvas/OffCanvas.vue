@@ -147,52 +147,63 @@
                     </dl>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
-<!--                            <x-sales-management::icons.tag class="me-2"/> {{ __('Contact Tags') }}-->
+                            <svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
+                            </svg>{{ $t('Contact Tags') }}
                         </span>
-<!--                        <multi-select-list-->
-<!--                            name=tags[]-->
-<!--                            label="Add tag to contact"-->
-<!--                            placeholder="Choose tags..."-->
-<!--                            label-by="name"-->
-<!--                            track-by="name"-->
-<!--                            sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"-->
-<!--                            model-id="{{ $lead->contact->id }}"-->
-<!--                            :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"-->
-<!--                            :options="{{ getAllTags() ?? '[]'}}">-->
-<!--                        </multi-select-list>-->
+                        <multi-select-list
+                            name=tags[]
+                            label="Add tag to contact"
+                            placeholder="Choose tags..."
+                            label-by="name"
+                            track-by="name"
+                            :sync-tags-url="routes.contacts.syncTags"
+                            :model-id="lead.contact.id"
+                            :selected="lead.contact.tags ?? []"
+                            :options="tags ?? []"
+                            :key="lead.contact.id"
+                            >
+                        </multi-select-list>
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
-<!--                            <x-sales-management::icons.tag class="me-2"/> {{ __('Lists') }}-->
+                            <svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
+                            </svg>{{ $t('Lists') }}
                         </span>
-<!--                        <multi-select-list-->
-<!--                            name=tags[]-->
-<!--                            label="Add to Lists"-->
-<!--                            placeholder="Choose list..."-->
-<!--                            label-by="name"-->
-<!--                            track-by="name"-->
-<!--                            sync-tags-url="{{ route('contacts.sync-lists', $lead->contact->id) }}"-->
-<!--                            model-id="{{ $lead->contact->id }}"-->
-<!--                            :selected="{{ $lead->contact->lists->toJson() ?? '[]'}}"-->
-<!--                            :options="{{ getAllLists() ?? '[]'}}">-->
-<!--                        </multi-select-list>-->
+                        <multi-select-list
+                            name=tags[]
+                            label="Add to Lists"
+                            placeholder="Choose list..."
+                            label-by="name"
+                            track-by="name"
+                            :sync-tags-url="routes.contacts.syncLists"
+                            :model-id="lead.contact.id"
+                            :selected="lead.contact.lists ?? []"
+                            :options="lists ?? []"
+                            :key="lead.contact.id">
+                        </multi-select-list>
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
-<!--                            <x-sales-management::icons.tag class="me-2"/> {{ __('Lead Tags') }}-->
+                             <svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
+                            </svg>{{ $t('Lead Tags') }}
                         </span>
-<!--                        <multi-select-list-->
-<!--                            name=tags[]-->
-<!--                            label="Add tag to lead"-->
-<!--                            placeholder="Choose tags..."-->
-<!--                            label-by="name"-->
-<!--                            track-by="name"-->
-<!--                            sync-tags-url="{{ route('leads.sync-tags', $lead->id) }}"-->
-<!--                            model-id="{{ $lead->id }}"-->
-<!--                            :selected="{{ $lead->tags->toJson() ?? '[]'}}"-->
-<!--                            :options="{{ getAllTags() ?? '[]'}}">-->
-<!--                        </multi-select-list>-->
+                        <multi-select-list
+                            name=tags[]
+                            label="Add tag to lead"
+                            placeholder="Choose tags..."
+                            label-by="name"
+                            track-by="name"
+                            :sync-tags-url="routes.leads.syncTags"
+                            :model-id="lead.id"
+                            :selected="lead.tags ?? []"
+                            :options="tags ?? []"
+                        :key="lead.id">
+                        </multi-select-list>
                     </div>
+                     <div style="height: 50px; margin-bottom: 50px;"></div>
                 </div>
             </div>
 
@@ -203,8 +214,10 @@
                  tabindex="0">
                 <div class="offcanvas-body">
                     <notes
-                        lead-id="lead.id"
+                        :lead-id="lead.id"
                         :lead-notes="lead.notes"
+                        :url="routes.notes.store"
+                        :delete-url="routes.notes.delete"
                         :key="lead.id">
                     </notes>
                 </div>
@@ -214,8 +227,10 @@
                  aria-labelledby="activities-tab" tabindex="0">
                 <div class="offcanvas-body">
                     <activities
-                        lead-id="lead.id"
+                        :lead-id="lead.id"
                         :lead-activities="lead.activities"
+                        :url="routes.activities.store"
+                        :delete-url="routes.activities.delete"
                         :key="lead.id">
                     </activities>
                 </div>
@@ -229,6 +244,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { onClickOutside } from '@vueuse/core'
 import Notes from "../Notes/Notes.vue";
 import Activities from "../Notes/Activities.vue";
+import MultiSelectList from "../MultiSelectList/MultiSelectList.vue";
 
 const props = defineProps({
     modelValue: {
@@ -237,6 +253,18 @@ const props = defineProps({
     },
     lead: {
         type: Object,
+        required: true
+    },
+    routes: {
+        type: Object,
+        required: true
+    },
+    tags: {
+        type: Array,
+        required: true
+    },
+    lists: {
+        type: Array,
         required: true
     }
 })

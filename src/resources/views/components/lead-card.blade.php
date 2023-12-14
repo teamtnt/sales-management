@@ -38,18 +38,40 @@
         @endif
     </div>
     @if($lead->nextCallActivity)
-    <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
         <x-sales-management::icons.phone/>
         <span class="ms-2"> {{ $lead->nextCallActivity->start_date->format('d.m.Y H:i') }}</span>
     </div>
     @endif
-    @if($offCanvas)
-        {{--        <span class="info-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight-{{ $lead->contact->id }}" data-form-id="{{$lead->id}}"--}}
-        {{--              aria-controls="offcanvasRight">--}}
-        {{--            <x-sales-management::icons.info style="pointer-events: none;"/>--}}
-        {{--        </span>--}}
 
-        <off-canvas-toggle :lead="{{ $lead->toJson() }}" :key="{{ $lead->id }}"/>
+    @if($offCanvas)
+        @php
+            $routes = collect([
+                'notes' => [
+                    'store' => route('store-lead-note', $lead->id),
+                    'delete' => route('destroy-lead-note', [$lead->id, ":noteId"]),
+                ],
+                'activities' => [
+                    'store' => route('store-lead-activity', $lead->id),
+                    'delete' => route('destroy-lead-activity', [$lead->id, ":activityId"]),
+                ],
+                'contacts' => [
+                    'syncTags' => route('contacts.sync-tags', $lead->contact->id),
+                    'syncLists' => route('contacts.sync-lists', $lead->contact->id),
+                ],
+                'leads' => [
+                    'syncTags' => route('leads.sync-tags', $lead->id),
+                ],
+            ]);
+        @endphp
+
+        <off-canvas-toggle
+            :lead="{{ $lead->toJson() }}"
+            :routes="{{ $routes->toJson() }}"
+            :tags="{{ getAllTags() }}"
+            :lists="{{ getAllLists() }}"
+            :key="{{ $lead->id }}"
+        />
     @endif
 </div>
 
