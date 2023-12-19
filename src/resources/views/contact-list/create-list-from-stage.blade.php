@@ -2,8 +2,8 @@
 
 @section('title', 'Contacts')
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Dashboard') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('contacts.index') }}">{{ __('Contacts') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('teamtnt.sales-management.dashboard') }}">{{ __('Dashboard') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('teamtnt.sales-management.contacts.index') }}">{{ __('Contacts') }}</a></li>
     <li class="breadcrumb-item active">{{ __('Create List From Stage') }}</li>
 @endsection
 
@@ -30,7 +30,7 @@
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary me-2">{{__("Create List CSV")}}</button>
-                            <a href="{{ route('campaign.show', $campaignId) }}"
+                            <a href="{{ route('teamtnt.sales-management.campaign.show', $campaignId) }}"
                                class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}

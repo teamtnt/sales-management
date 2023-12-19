@@ -31,7 +31,7 @@ class ContactListController extends Controller
 
         request()->session()->flash('message', __('List successfully created!'));
 
-        return redirect()->route('lists.index');
+        return redirect()->route('teamtnt.sales-management.lists.index');
     }
 
     public function edit(ContactList $contactList, ContactListContactDataTable $contactDataTable)
@@ -47,7 +47,7 @@ class ContactListController extends Controller
 
         request()->session()->flash('message', __('List successfully deleted!'));
 
-        return redirect()->route('lists.index');
+        return redirect()->route('teamtnt.sales-management.lists.index');
     }
 
     public function contactDestroy(ContactListContact $contactListContact)
@@ -61,7 +61,7 @@ class ContactListController extends Controller
 
         request()->session()->flash('message', __('Contact successfully removed!'));
 
-        return redirect()->route('lists.edit', $contactListId);
+        return redirect()->route('teamtnt.sales-management.lists.edit', $contactListId);
     }
 
     public function createListFromPipelineStage($campaignId, $pipelineStageId)
@@ -82,14 +82,14 @@ class ContactListController extends Controller
 
         request()->session()->flash('message', __('List has been successfully created!'));
 
-        return redirect()->route('campaign.show', $campaignId);
+        return redirect()->route('teamtnt.sales-management.campaign.show', $campaignId);
     }
 
     public function contactAdd(ContactList $contactList)
     {
         $contactList->contacts()->attach(request()->contact_id);
         request()->session()->flash('message', __('Contact has been successfully added to list!'));
-        
+
         $contactList->campaigns->each(function ($campaign) {
             $campaign->leads()->create([
                 'campaign_id' => $campaign->id,

@@ -53,7 +53,7 @@ class PipelineController extends Controller
 
         request()->session()->flash('message', __('Pipeline successfully created!'));
 
-        return redirect()->route('pipelines.index');
+        return redirect()->route('teamtnt.sales-management.pipelines.index');
     }
 
     /**
@@ -102,7 +102,7 @@ class PipelineController extends Controller
 
         request()->session()->flash('message', __('Pipeline successfully updated!'));
 
-        return redirect()->route('pipelines.index');
+        return redirect()->route('teamtnt.sales-management.pipelines.index');
     }
 
     /**
@@ -117,6 +117,6 @@ class PipelineController extends Controller
 
         request()->session()->flash('message', __('Pipeline successfully deleted!'));
 
-        return redirect()->route('pipelines.index');
+        return redirect()->route('teamtnt.sales-management.pipelines.index');
     }
 }

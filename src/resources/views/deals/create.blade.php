@@ -18,14 +18,14 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill deal details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'deals.store']) }}
+                        {{ Form::open(['method' => 'post', 'route' => 'teamtnt.sales-management.deals.store']) }}
 
                         @include('sales-management::deals.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Create Deal")}}</button>
-                             <a href="{{ route('deals.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                             <a href="{{ route('teamtnt.sales-management.deals.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>

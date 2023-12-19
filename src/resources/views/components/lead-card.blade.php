@@ -14,7 +14,7 @@
 
     <div class="d-flex align-items-center">
         <x-sales-management::icons.user class="flex-shrink-0"/>
-        <span class="ms-2"><a target="_blank" href="{{ route('contacts.edit', $lead->contact)  }}">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</a></span>
+        <span class="ms-2"><a target="_blank" href="{{ route('teamtnt.sales-management.contacts.edit', $lead->contact)  }}">{{ $lead->contact->firstname }} {{ $lead->contact->lastname }}</a></span>
     </div>
     <div class="d-flex align-items-center">
         <x-sales-management::icons.mail/>
@@ -59,7 +59,7 @@
             <h4 class="offcanvas-title" id="offcanvasRightLabel-{{$lead->contact->id}}">
             <span class="d-flex">
                 <x-sales-management::icons.user class="me-2 flex-shrink-0" style="width: 24px; height: 24px;"/> {{ __('User') }}:
-                <a target="_blank" href="{{ route('contacts.edit', $lead->contact)  }}">{{$lead->contact->fullname }}</a>
+                <a target="_blank" href="{{ route('teamtnt.sales-management.contacts.edit', $lead->contact)  }}">{{$lead->contact->fullname }}</a>
 
 
             </span>
@@ -209,7 +209,7 @@
 {{--                            placeholder="Choose tags..."--}}
 {{--                            label-by="name"--}}
 {{--                            track-by="name"--}}
-{{--                            sync-tags-url="{{ route('contacts.sync-tags', $lead->contact->id) }}"--}}
+{{--                            sync-tags-url="{{ route('teamtnt.sales-management.contacts.sync-tags', $lead->contact->id) }}"--}}
 {{--                            model-id="{{ $lead->contact->id }}"--}}
 {{--                            :selected="{{ $lead->contact->tags->toJson() ?? '[]'}}"--}}
 {{--                            :options="{{ getAllTags() ?? '[]'}}">--}}
@@ -231,7 +231,7 @@
 {{--                            placeholder="Choose list..."--}}
 {{--                            label-by="name"--}}
 {{--                            track-by="name"--}}
-{{--                            sync-tags-url="{{ route('contacts.sync-lists', $lead->contact->id) }}"--}}
+{{--                            sync-tags-url="{{ route('teamtnt.sales-management.contacts.sync-lists', $lead->contact->id) }}"--}}
 {{--                            model-id="{{ $lead->contact->id }}"--}}
 {{--                            :selected="{{ $lead->contact->lists->toJson() ?? '[]'}}"--}}
 {{--                            :options="{{ getAllLists() ?? '[]'}}">--}}
@@ -252,7 +252,7 @@
 {{--                            placeholder="Choose tags..."--}}
 {{--                            label-by="name"--}}
 {{--                            track-by="name"--}}
-{{--                            sync-tags-url="{{ route('leads.sync-tags', $lead->id) }}"--}}
+{{--                            sync-tags-url="{{ route('teamtnt.sales-management.leads.sync-tags', $lead->id) }}"--}}
 {{--                            model-id="{{ $lead->id }}"--}}
 {{--                            :selected="{{ $lead->tags->toJson() ?? '[]'}}"--}}
 {{--                            :options="{{ getAllTags() ?? '[]'}}">--}}
@@ -265,8 +265,8 @@
                  aria-labelledby="notes-tab" tabindex="0">
                 <div class="offcanvas-body">
                 <notes lead-id="{{ $lead->id }}" :lead-notes="{{ $lead->notes->toJson() }}"
-                       url="{{route('store-lead-note', $lead->id)}}"
-                       delete-url="{{ route('destroy-lead-note', [$lead->id, " :noteId"]) }}" :key="{{ $lead->id }}">
+                       url="{{route('teamtnt.sales-management.store-lead-note', $lead->id)}}"
+                       delete-url="{{ route('teamtnt.sales-management.destroy-lead-note', [$lead->id, " :noteId"]) }}" :key="{{ $lead->id }}">
                 </notes>
                 </div>
             </div>
@@ -275,8 +275,8 @@
                  aria-labelledby="activities-tab" tabindex="0">
                 <div class="offcanvas-body">
                     <activities lead-id="{{ $lead->id }}" :lead-activities="{{ $lead->activities->toJson() }}"
-                           url="{{route('store-lead-activity', $lead->id)}}"
-                           delete-url="{{ route('destroy-lead-activity', [$lead->id, " :activityId"]) }}" :key="{{ $lead->id }}">
+                           url="{{route('teamtnt.sales-management.store-lead-activity', $lead->id)}}"
+                           delete-url="{{ route('teamtnt.sales-management.destroy-lead-activity', [$lead->id, " :activityId"]) }}" :key="{{ $lead->id }}">
                     </activities>
                 </div>
             </div>

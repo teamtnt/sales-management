@@ -37,7 +37,7 @@ class DealController extends Controller
 
         request()->session()->flash('message', __('Deal successfully created!'));
 
-        return redirect()->route('deals.index');
+        return redirect()->route('teamtnt.sales-management.deals.index');
     }
 
     /**
@@ -86,7 +86,7 @@ class DealController extends Controller
 
         request()->session()->flash('message', __('Deal successfully updated!'));
 
-        return redirect()->route('deals.index');
+        return redirect()->route('teamtnt.sales-management.deals.index');
     }
 
     /**
@@ -99,6 +99,6 @@ class DealController extends Controller
 
         request()->session()->flash('message', __('Deal successfully deleted!'));
 
-        return redirect()->route('deals.index');
+        return redirect()->route('teamtnt.sales-management.deals.index');
     }
 }

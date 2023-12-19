@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="container-fluid p-0">
-        <a href="{{ route('lists.contact.showAdd', $contactList) }}" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> {{ __("Add Contact") }}</a>
+        <a href="{{ route('teamtnt.sales-management.lists.contact.showAdd', $contactList) }}" class="btn btn-primary float-end mt-n1"><i class="fas fa-plus"></i> {{ __("Add Contact") }}</a>
         <h1 class="h3 mb-3">{{ $contactList->name }}</h1>
         <div class="row">
             <div class="col-12">

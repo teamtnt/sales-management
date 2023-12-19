@@ -4,9 +4,9 @@
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
     <li class="breadcrumb-item">{{ __('Campaigns') }}</li>
-    <li class="breadcrumb-item"><a href="{{ route('campaign.show', $campaign->id) }}">{{ __($campaign->name) }}</a>
+    <li class="breadcrumb-item"><a href="{{ route('teamtnt.sales-management.campaign.show', $campaign->id) }}">{{ __($campaign->name) }}</a>
     </li>
-    <li class="breadcrumb-item"><a href="{{ route('messages.index', $campaign->id) }}">{{ __('Messages') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('teamtnt.sales-management.messages.index', $campaign->id) }}">{{ __('Messages') }}</a></li>
     <li class="breadcrumb-item active">{{ __('Edit Message') }}</li>
 @endsection
 
@@ -28,7 +28,7 @@
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Update Message")}}</button>
-                            <a href="{{ route('messages.index', $campaign) }}" class="btn btn-danger">{{__("Back")}}</a>
+                            <a href="{{ route('teamtnt.sales-management.messages.index', $campaign) }}" class="btn btn-danger">{{__("Back")}}</a>
                         </div>
                         {{ Form::close() }}
                     </div>

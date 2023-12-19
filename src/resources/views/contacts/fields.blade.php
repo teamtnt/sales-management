@@ -152,7 +152,7 @@
             placeholder="Choose list..."
             label-by="name"
             track-by="name"
-            sync-tags-url="{{ route('contacts.sync-lists', $contact->id) }}"
+            sync-tags-url="{{ route('teamtnt.sales-management.contacts.sync-lists', $contact->id) }}"
             model-id="{{ $contact->id }}"
             :selected="{{ $contact->lists->toJson() ?? '[]'}}"
             :options="{{ getAllLists() ?? '[]'}}">

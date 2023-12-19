@@ -28,7 +28,7 @@ class CampaignDataTable extends DataTable
                 return $campaign->assignees->implode('email', ', ');
             })
             ->editColumn('name', function (Campaign $campaign) {
-                return '<a href="'.route('campaign.show', $campaign).'">'.$campaign->name.'</a>';
+                return '<a href="'.route('teamtnt.sales-management.campaign.show', $campaign).'">'.$campaign->name.'</a>';
             })
             ->editColumn('updated_at', function (Campaign $campaign) {
                 return $campaign->updated_at->format('d.m.Y');
@@ -37,7 +37,7 @@ class CampaignDataTable extends DataTable
                 return Campaign::getCampaignStatusNames()[$campaign->status] ?? '--';
             })
             ->addColumn('contact_list.name', function (Campaign $campaign) {
-                return '<a href="'.route('lists.edit', $campaign->contactList->id).'">'.$campaign->contactList->name.'</a>' ?? '--';
+                return '<a href="'.route('teamtnt.sales-management.lists.edit', $campaign->contactList->id).'">'.$campaign->contactList->name.'</a>' ?? '--';
             })
             ->addColumn('action', 'sales-management::campaign.actions')
             ->rawColumns(['name', 'action','contact_list.name'])

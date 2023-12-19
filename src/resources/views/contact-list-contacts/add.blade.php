@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item">{{ __('Dashboard') }}</li>
     <li class="breadcrumb-item active">{{ __('List') }}</li>
-    <li class="breadcrumb-item active"><a href="{{ route('lists.edit', $contactList) }}"> {{ $contactList->name }}</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('teamtnt.sales-management.lists.edit', $contactList) }}"> {{ $contactList->name }}</a></li>
 @endsection
 
 @section('content')

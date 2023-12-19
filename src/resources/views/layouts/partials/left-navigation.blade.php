@@ -11,7 +11,7 @@
             </li>
             @can(config('sales-management.permission_prefix').'.view-dashboard')
                 <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('dashboard') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.dashboard') }}">
                         <i class="align-middle" data-feather="sliders"></i> <span
                             class="align-middle">{{ __("Dashboard")}}</span>
                     </a>
@@ -19,7 +19,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-contacts')
                 <li class="sidebar-item {{ request()->is('contacts*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('contacts.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.contacts.index') }}">
                         <i class="align-middle" data-feather="user"></i> <span
                             class="align-middle">{{ __("Contacts")}}</span>
                     </a>
@@ -27,7 +27,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-lists')
                 <li class="sidebar-item {{ request()->is('list*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('lists.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.lists.index') }}">
                         <i class="align-middle" data-feather="clipboard"></i> <span
                             class="align-middle">{{ __("Lists")}}</span>
                     </a>
@@ -35,7 +35,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-campaigns')
                 <li class="sidebar-item {{ request()->is('campaign*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('campaign.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.campaign.index') }}">
                         <i class="align-middle me-2 fas fa-fw fa-bullhorn"></i> <span
                             class="align-middle">{{ __("Campaigns")}}</span>
                     </a>
@@ -43,7 +43,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-activities')
                 <li class="sidebar-item {{ request()->is('activities*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('lead-activities.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.lead-activities.index') }}">
                         <i class="align-middle me-2 fas fa-fw fa-phone"></i> <span
                             class="align-middle">{{ __("Activities")}}</span>
                     </a>
@@ -51,7 +51,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-pipelines')
                 <li class="sidebar-item {{ request()->is('pipelines*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('pipelines.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.pipelines.index') }}">
                         <i class="align-middle" data-feather="list"></i> <span
                             class="align-middle">{{ __("Pipelines")}}</span>
                     </a>
@@ -59,7 +59,7 @@
             @endcan
             @can(config('sales-management.permission_prefix').'.view-tags')
                 <li class="sidebar-item {{ request()->is('tags*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route('tags.index') }}">
+                    <a class="sidebar-link" href="{{ route('teamtnt.sales-management.tags.index') }}">
                         <i class="align-middle" data-feather="tag"></i> <span
                             class="align-middle">{{ __("Tags")}}</span>
                     </a>
@@ -74,13 +74,13 @@
                         class="sidebar-dropdown list-unstyled collapse {{ request()->is('docs*') ? 'show' : '' }}"
                         data-bs-parent="#sidebar">
                         <li class="sidebar-item {{ request()->is('docs/markdown') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('docs.markdown') }}">Markdown</a>
+                            <a class="sidebar-link" href="{{ route('teamtnt.sales-management.docs.markdown') }}">Markdown</a>
                         </li>
                         <li class="sidebar-item {{ request()->is('docs/pipelines') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('docs.pipelines') }}">Pipelines</a>
+                            <a class="sidebar-link" href="{{ route('teamtnt.sales-management.docs.pipelines') }}">Pipelines</a>
                         </li>
                         <li class="sidebar-item {{ request()->is('docs/workflow') ? 'active' : '' }}">
-                            <a class="sidebar-link" href="{{ route('docs.workflow') }}">Workflow</a>
+                            <a class="sidebar-link" href="{{ route('teamtnt.sales-management.docs.workflow') }}">Workflow</a>
                         </li>
                     </ul>
                 </li>

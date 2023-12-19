@@ -14,11 +14,11 @@
                 <div class="card">
                      <div class="card-header d-flex flex-column flex-md-row justify-content-between">
                         <div>
-                             <a class="btn btn-info" href="{{ route('contacts.import.csv') }}">
+                             <a class="btn btn-info" href="{{ route('teamtnt.sales-management.contacts.import.csv') }}">
                                 <i class="align-middle me-2 fas fa-fw fa-file-excel"></i> {{__("Import from CSV")}}</a>
                         </div>
                         <div class="mt-2">
-                            <a class="btn btn-primary" href="{{ route('contacts.create') }}">
+                            <a class="btn btn-primary" href="{{ route('teamtnt.sales-management.contacts.create') }}">
                                 <i class="align-middle me-2 fas fa-fw fa-user-plus"></i> {{__("Create New Contact")}}</a>
                         </div>
                     </div>

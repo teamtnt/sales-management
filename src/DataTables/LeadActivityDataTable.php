@@ -27,13 +27,13 @@ class LeadActivityDataTable extends DataTable
                 $query->where('created_by', auth()->id());
             }, true)
             ->editColumn('is_done', function (LeadActivity $leadActivity) {
-                $toggleStatusUrl = route('lead-activities.toggle-status', $leadActivity);
+                $toggleStatusUrl = route('teamtnt.sales-management.lead-activities.toggle-status', $leadActivity);
                 $icon = $leadActivity->is_done ? '<i class="fas fa-check-circle" style="color: green;"></i>' : '<i class="fas fa-times-circle" style="color: red;"></i>';
                 return '<a href="' . $toggleStatusUrl . '">' . $icon . '</a>';
             })
             ->editColumn('lead.name', function (LeadActivity $leadActivity) {
                 if ($leadActivity->lead) {
-                    $url = route('contacts.edit', $leadActivity->lead->contact->id);
+                    $url = route('teamtnt.sales-management.contacts.edit', $leadActivity->lead->contact->id);
                     return '<a target="_blank" href="' . $url . '">' . $leadActivity->lead->contact->fullname . '</a>';
                 }
                 return '';

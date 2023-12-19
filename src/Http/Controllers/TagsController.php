@@ -38,7 +38,7 @@ class TagsController extends Controller
 
         request()->session()->flash('message', __('Tag successfully created!'));
 
-        return redirect()->route('tags.index');
+        return redirect()->route('teamtnt.sales-management.tags.index');
     }
 
     /**
@@ -61,7 +61,7 @@ class TagsController extends Controller
 
         request()->session()->flash('message', __('Tag successfully updated!'));
 
-        return redirect()->route('tags.index');
+        return redirect()->route('teamtnt.sales-management.tags.index');
     }
 
     /**
@@ -74,6 +74,6 @@ class TagsController extends Controller
 
         request()->session()->flash('message', __('Tag successfully deleted!'));
 
-        return redirect()->route('tags.index');
+        return redirect()->route('teamtnt.sales-management.tags.index');
     }
 }

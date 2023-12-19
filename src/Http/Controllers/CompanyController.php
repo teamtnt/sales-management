@@ -36,7 +36,7 @@ class CompanyController extends Controller
 
         request()->session()->flash('message', __('Company successfully created!'));
 
-        return redirect()->route('companies.index');
+        return redirect()->route('teamtnt.sales-management.companies.index');
     }
 
     /**
@@ -59,7 +59,7 @@ class CompanyController extends Controller
 
         request()->session()->flash('message', __('Company successfully updated!'));
 
-        return redirect()->route('companies.index');
+        return redirect()->route('teamtnt.sales-management.companies.index');
     }
 
     /**
@@ -72,6 +72,6 @@ class CompanyController extends Controller
 
         request()->session()->flash('message', __('Company successfully deleted!'));
 
-        return redirect()->route('companies.index');
+        return redirect()->route('teamtnt.sales-management.companies.index');
     }
 }

@@ -31,7 +31,7 @@ class CampaignController extends Controller
 
         request()->session()->flash('message', __('Campaign successfully created!'));
 
-        return redirect()->route('campaign.index');
+        return redirect()->route('teamtnt.sales-management.campaign.index');
     }
 
     public function edit(Campaign $campaign)
@@ -45,7 +45,7 @@ class CampaignController extends Controller
         $campaign->assignees()->sync($campaignRequest->get('assignees'));
         request()->session()->flash('message', __('Campaign successfully updated!'));
 
-        return redirect()->route('campaign.index');
+        return redirect()->route('teamtnt.sales-management.campaign.index');
     }
 
     public function show(Campaign $campaign)
@@ -81,6 +81,6 @@ class CampaignController extends Controller
 
         request()->session()->flash('message', __('Campaign successfully deleted!'));
 
-        return redirect()->route('campaign.index');
+        return redirect()->route('teamtnt.sales-management.campaign.index');
     }
 }
