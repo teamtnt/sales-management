@@ -14,7 +14,7 @@
                 <div class="card">
                      <div class="card-header d-flex flex-column flex-md-row">
                         <div class="mt-2">
-                            <a class="btn btn-primary" href="{{ route('companies.create') }}">
+                            <a class="btn btn-primary" href="{{ route('teamtnt.sales-management.companies.create') }}">
                                 <i class="align-middle me-2 fas fa-fw fa-building"></i> {{__("Create New Company")}}</a>
                         </div>
                     </div>

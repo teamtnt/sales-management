@@ -11,7 +11,7 @@
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
             <h1 class="h3 mb-0">{{ __('All Tags') }}</h1>
 
-                <a class="btn btn-primary" href="{{ route('tags.create') }}">
+                <a class="btn btn-primary" href="{{ route('teamtnt.sales-management.tags.create') }}">
                     <i class="align-middle fas fa-fw fa-plus"></i> {{__("Create New Tag")}}</a>
 
         </div>

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container-fluid p-0">
-        <a href="{{ route('campaign.create') }}" class="btn btn-primary float-end mt-n1">
+        <a href="{{ route('teamtnt.sales-management.campaign.create') }}" class="btn btn-primary float-end mt-n1">
             <i class="fas fa-plus me-1"></i>New campaign
         </a>
         <h1 class="h3 mb-3">Campaigns</h1>

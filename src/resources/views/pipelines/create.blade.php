@@ -18,14 +18,14 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill pipeline details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'pipelines.store']) }}
+                        {{ Form::open(['method' => 'post', 'route' => 'teamtnt.sales-management.pipelines.store']) }}
 
                         @include('sales-management::pipelines.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Create Pipeline")}}</button>
-                             <a href="{{ route('pipelines.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                             <a href="{{ route('teamtnt.sales-management.pipelines.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>

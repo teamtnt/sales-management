@@ -51,7 +51,7 @@ class ContactsController extends Controller
 
         request()->session()->flash('message', __('Contact successfully created!'));
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('teamtnt.sales-management.contacts.index');
     }
 
     /**
@@ -76,7 +76,7 @@ class ContactsController extends Controller
 
         request()->session()->flash('message', __('Contact successfully updated!'));
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('teamtnt.sales-management.contacts.index');
     }
 
     /**
@@ -89,7 +89,7 @@ class ContactsController extends Controller
 
         request()->session()->flash('message', __('Contact successfully deleted!'));
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('teamtnt.sales-management.contacts.index');
     }
 
     /**
@@ -134,7 +134,7 @@ class ContactsController extends Controller
 
         request()->session()->flash('message', __('Contact successfully imported!'));
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('teamtnt.sales-management.contacts.index');
     }
 
     private function guessEncoding($request)

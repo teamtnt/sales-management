@@ -18,14 +18,14 @@
                         <h6 class="card-subtitle text-muted">{{__("Add campaign details bellow")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'campaign.store']) }}
+                        {{ Form::open(['method' => 'post', 'route' => 'teamtnt.sales-management.campaign.store']) }}
 
                         @include('sales-management::campaign.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Create Campaign")}}</button>
-                            <a href="{{ route('campaign.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                            <a href="{{ route('teamtnt.sales-management.campaign.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}
                     </div>

@@ -44,7 +44,7 @@ class WorkflowController extends Controller
         $workflow->campaign_id = $campaign->id;
         $workflow->save();
 
-        return redirect()->route('workflows.edit', [$campaign->id, $workflow->id]);
+        return redirect()->route('teamtnt.sales-management.workflows.edit', [$campaign->id, $workflow->id]);
     }
 
     /**
@@ -173,7 +173,7 @@ class WorkflowController extends Controller
 
         request()->session()->flash('message', __('Workflow successfully deleted!'));
 
-        return redirect()->route('workflows.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.workflows.index', $campaign);
     }
 
     public function debug(Campaign $campaign, Workflow $workflow)
@@ -202,7 +202,7 @@ class WorkflowController extends Controller
 
         request()->session()->flash('message', __('Workflow successfully published!'));
 
-        return redirect()->route('workflows.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.workflows.index', $campaign);
     }
 
     public function unpublish(Campaign $campaign, Workflow $workflow)
@@ -213,7 +213,7 @@ class WorkflowController extends Controller
 
         request()->session()->flash('message', __('Workflow successfully unpublished!'));
 
-        return redirect()->route('workflows.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.workflows.index', $campaign);
     }
 
     public function run(Campaign $campaign, Workflow $workflow)
@@ -224,7 +224,7 @@ class WorkflowController extends Controller
 
         request()->session()->flash('message', __('Workflow run was successfull!'));
 
-        return redirect()->route('workflows.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.workflows.index', $campaign);
     }
 
     public function show(Campaign $campaign, Workflow $workflow)

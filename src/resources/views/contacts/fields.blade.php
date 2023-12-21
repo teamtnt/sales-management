@@ -144,7 +144,21 @@
     </div>
 </div>
 
-
+<div class="row">
+    <div class="col-md-12">
+        <multi-select-list
+            name=tags[]
+            label="Add to Lists"
+            placeholder="Choose list..."
+            label-by="name"
+            track-by="name"
+            sync-tags-url="{{ route('teamtnt.sales-management.contacts.sync-lists', $contact->id) }}"
+            model-id="{{ $contact->id }}"
+            :selected="{{ $contact->lists->toJson() ?? '[]'}}"
+            :options="{{ getAllLists() ?? '[]'}}">
+        </multi-select-list>
+    </div>
+</div>
 
 
 

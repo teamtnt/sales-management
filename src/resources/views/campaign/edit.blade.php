@@ -25,7 +25,7 @@
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Update Campaign")}}</button>
-                            <a href="{{ route('campaign.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                            <a href="{{ route('teamtnt.sales-management.campaign.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                         </div>
                         {{ Form::close() }}
                     </div>

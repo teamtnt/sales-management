@@ -6,7 +6,7 @@
 
 @section('content')
     <show-work-flow
-            back-url="{{ route('workflows.index', [$campaign->id]) }}"
+            back-url="{{ route('teamtnt.sales-management.workflows.index', [$campaign->id]) }}"
             workflow-name="{{ $workflow->name }}"
             :workflow-id="{{ $workflow->id }}"
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"

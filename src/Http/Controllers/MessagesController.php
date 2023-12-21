@@ -46,7 +46,7 @@ class MessagesController extends Controller
 
         request()->session()->flash('message', __('Message successfully created!'));
 
-        return redirect()->route('messages.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.messages.index', $campaign);
     }
 
     /**
@@ -96,7 +96,7 @@ class MessagesController extends Controller
 
         request()->session()->flash('message', __('Message successfully updated!'));
 
-        return redirect()->route('messages.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.messages.index', $campaign);
     }
 
     /**
@@ -109,7 +109,7 @@ class MessagesController extends Controller
 
         request()->session()->flash('message', __('Message successfully deleted!'));
 
-        return redirect()->route('messages.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.messages.index', $campaign);
     }
 
     public function sendToAllLeads(Campaign $campaign, Message $message)
@@ -123,7 +123,7 @@ class MessagesController extends Controller
         }
         request()->session()->flash('message', __('Message has been sent to all leads!'));
 
-        return redirect()->route('messages.index', $campaign);
+        return redirect()->route('teamtnt.sales-management.messages.index', $campaign);
     }
 
     public function sendMessageToLead(Campaign $campaign, Lead $lead, Request $request)

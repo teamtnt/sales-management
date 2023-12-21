@@ -18,14 +18,14 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill tag details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::open(['method' => 'post', 'route' => 'tags.store']) }}
+                        {{ Form::open(['method' => 'post', 'route' => 'teamtnt.sales-management.tags.store']) }}
 
                         @include('sales-management::tags.fields')
 
                         <div class="my-3">
                             <button type="submit" class="btn btn-success me-2"
                                     id="notyf-show">{{__("Create Tag")}}</button>
-                             <a href="{{ route('tags.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
+                             <a href="{{ route('teamtnt.sales-management.tags.index') }}" class="btn btn-danger">{{__("Cancel")}}</a>
                          </div>
                         {{ Form::close() }}
                     </div>

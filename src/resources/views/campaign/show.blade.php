@@ -16,21 +16,21 @@
         <h6 class="mb-3">{{ $campaign->description }}</h6>
         <div class="d-flex gap-2">
             @can(config('sales-management.permission_prefix').'.send-emails')
-                <a href="{{ route('messages.create', $campaign->id) }}" class="btn btn-warning mb-3">
+                <a href="{{ route('teamtnt.sales-management.messages.create', $campaign->id) }}" class="btn btn-warning mb-3">
                 <span class="d-flex align-items-center">
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Send email to leads") }}
                 </span>
                 </a>
             @endcan
             @can(config('sales-management.permission_prefix').'.view-workflows')
-                <a href="{{ route('workflows.index', $campaign->id) }}" class="btn btn-info mb-3">
+                <a href="{{ route('teamtnt.sales-management.workflows.index', $campaign->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
                     <x-sales-management::icons.workflow class="me-1"/> {{ __("Workflows") }}
                 </span>
                 </a>
             @endcan
             @can(config('sales-management.permission_prefix').'.view-messages')
-                <a href="{{ route('messages.index', $campaign->id) }}" class="btn btn-info mb-3">
+                <a href="{{ route('teamtnt.sales-management.messages.index', $campaign->id) }}" class="btn btn-info mb-3">
                  <span class="d-flex align-items-center">
                     <x-sales-management::icons.mail class="me-1"/> {{ __("Messages") }}
                 </span>
@@ -86,7 +86,7 @@
 
                                     <div class="dropdown-menu dropdown-menu-end">
                                         <a class="dropdown-item"
-                                           href="{{ route('lists.create.from.stage', [$campaign->id, $stage->id]) }}">{{__("Create New List")}}</a>
+                                           href="{{ route('teamtnt.sales-management.lists.create.from.stage', [$campaign->id, $stage->id]) }}">{{__("Create New List")}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +269,7 @@
                 .on('drop', function (el, target, source, sibling) {
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
 
-                    axios.post('{{ route('stage.change') }}', {
+                    axios.post('{{ route('teamtnt.sales-management.stage.change') }}', {
                         lead_id: el.dataset.leadId,
                         pipeline_id: pipelineId,
                         source_stage_id: source.dataset.stageId,

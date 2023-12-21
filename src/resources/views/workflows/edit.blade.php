@@ -6,8 +6,8 @@
 
 @section('content')
     <work-flow
-            save-url="{{ route('workflows.update', [$campaign->id, $workflow->id]) }}"
-            back-url="{{ route('workflows.index', [$campaign->id]) }}"
+            save-url="{{ route('teamtnt.sales-management.workflows.update', [$campaign->id, $workflow->id]) }}"
+            back-url="{{ route('teamtnt.sales-management.workflows.index', [$campaign->id]) }}"
             workflow-name="{{ $workflow->name }}"
             :workflow-id="{{ $workflow->id }}"
             :elements-data="{{ $workflow->elements ?? json_encode([]) }}"

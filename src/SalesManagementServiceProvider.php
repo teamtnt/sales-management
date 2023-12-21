@@ -29,7 +29,6 @@ class SalesManagementServiceProvider extends ServiceProvider
         }
 
         $this->defineAbilities();
-
     }
 
     public function register()
@@ -51,6 +50,7 @@ class SalesManagementServiceProvider extends ServiceProvider
     {
         return [
             'prefix' => config('sales-management.prefix'),
+            'as' => 'teamtnt.sales-management.',
             'middleware' => config('sales-management.middleware'),
         ];
     }
