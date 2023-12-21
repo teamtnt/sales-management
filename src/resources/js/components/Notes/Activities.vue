@@ -61,7 +61,6 @@ const handleFormSubmit = () => {
             });
         }
     }).catch((error) => {
-        console.log(error.message)
         if (error.response.status === 422) {
             errors.value = error.response.data.errors
             console.log(error.response.data.errors)
@@ -98,10 +97,6 @@ const deleteActivity = (id) => {
     });
 };
 
-const isNotEmpty = (obj) => {
-    return Object.keys(obj).length !== 0;
-}
-
 function formatDate(dateString) {
     const date = new Date(dateString);
 
@@ -135,7 +130,7 @@ function formatDate(dateString) {
             </div>
             <div class="form-group mb-3">
                 <label for="start_date">Start Datum</label>
-                <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date" :class="{'is-invalid': isNotEmpty(errors)}">
+                <input type="datetime-local" class="form-control" id="activity_start_date" v-model="activity_start_date" :class="{'is-invalid': errors?.activity_start_date}">
                 <small v-if="errors && errors.activity_start_date" class="invalid-feedback">
                     {{ errors.activity_start_date[0] }}
                 </small>
@@ -147,7 +142,7 @@ function formatDate(dateString) {
 
             <div class="form-group">
                 <label for="start_date">Beschreibung</label>
-            <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': isNotEmpty(errors)}"
+            <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': errors?.activity}"
                       name="activity" />
 
             <small v-if="errors && errors.activity" class="invalid-feedback">

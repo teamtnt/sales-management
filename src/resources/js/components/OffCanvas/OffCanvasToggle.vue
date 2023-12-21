@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref  } from "vue";
+import { ref, provide, reactive } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
@@ -35,10 +35,19 @@ const props = defineProps({
     lists: {
         type: Array,
         required: true
+    },
+    emails: {
+        type: Object,
+        required: true
     }
 })
 
 const showOffCanvas = ref(false);
+const data = reactive({
+    route: props.routes.messages.send,
+    emails: props.emails
+});
 
+provide('data', data);
 </script>
 

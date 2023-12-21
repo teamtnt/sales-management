@@ -156,41 +156,41 @@
             {{--            spinner.classList.remove('d-none');--}}
             {{--            submitBtn.disabled = true;--}}
 
-            {{--            axios.post(leadMessageForm.action, formData, {--}}
-            {{--                headers: {--}}
-            {{--                    "Content-Type": "application/json"--}}
-            {{--                }--}}
-            {{--            }).then((response) => {--}}
-            {{--                if (response.status === 200) {--}}
-            {{--                    spinner.classList.add('d-none');--}}
-            {{--                    submitBtn.disabled = false;--}}
-
-            {{--                    window.notyf.open({--}}
-            {{--                        type: "success",--}}
-            {{--                        message: response.data.message,--}}
-            {{--                        duration: "2500",--}}
-            {{--                        ripple: true,--}}
-            {{--                        position: "bottom right",--}}
-            {{--                        dismissible: true,--}}
-            {{--                    });--}}
-
-            {{--                    leadMessageForm.reset();--}}
-            {{--                }--}}
-            {{--            }).catch((error) => {--}}
-            {{--                if (error.response.status === 422) {--}}
-            {{--                    spinner.classList.add('d-none');--}}
-            {{--                    submitBtn.disabled = false;--}}
-            {{--                    const errors = error.response.data.errors;--}}
-
-            {{--                    Object.keys(errors).forEach((fieldName) => {--}}
-            {{--                        const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);--}}
-            {{--                        const errorElement = inputField.parentNode.querySelector('.invalid-feedback');--}}
-
-            {{--                        errorElement.innerText = errors[fieldName];--}}
-            {{--                        inputField.classList.add('is-invalid');--}}
-            {{--                    });--}}
-            {{--                }--}}
-            {{--            });--}}
+                        // axios.post(leadMessageForm.action, formData, {
+                        //     headers: {
+                        //         "Content-Type": "application/json"
+                        //     }
+                        // }).then((response) => {
+                        //     if (response.status === 200) {
+                        //         spinner.classList.add('d-none');
+                        //         submitBtn.disabled = false;
+                        //
+                        //         window.notyf.open({
+                        //             type: "success",
+                        //             message: response.data.message,
+                        //             duration: "2500",
+                        //             ripple: true,
+                        //             position: "bottom right",
+                        //             dismissible: true,
+                        //         });
+                        //
+                        //         leadMessageForm.reset();
+                        //     }
+                        // }).catch((error) => {
+                        //     if (error.response.status === 422) {
+                        //         spinner.classList.add('d-none');
+                        //         submitBtn.disabled = false;
+                        //         const errors = error.response.data.errors;
+                        //
+                        //         Object.keys(errors).forEach((fieldName) => {
+                        //             const inputField = leadMessageForm.querySelector(`[name="${fieldName}"]`);
+                        //             const errorElement = inputField.parentNode.querySelector('.invalid-feedback');
+                        //
+                        //             errorElement.innerText = errors[fieldName];
+                        //             inputField.classList.add('is-invalid');
+                        //         });
+                        //     }
+                        // });
             {{--        });--}}
             {{--    }--}}
             {{--});--}}

@@ -235,7 +235,13 @@
                     </activities>
                 </div>
             </div>
-        </div>
+             <div class="tab-pane fade" id="message-tab-pane" role="tabpanel"
+                  aria-labelledby="message-tab" tabindex="0">
+                 <div class="offcanvas-body">
+                     <send-email-form />
+                 </div>
+             </div>
+         </div>
      </div>
 </template>
 
@@ -245,6 +251,7 @@ import { onClickOutside } from '@vueuse/core'
 import Notes from "../Notes/Notes.vue";
 import Activities from "../Notes/Activities.vue";
 import MultiSelectList from "../MultiSelectList/MultiSelectList.vue";
+import SendEmailForm from "./SendEmailForm.vue";
 
 const props = defineProps({
     modelValue: {
@@ -304,6 +311,6 @@ const leadFullName = computed(() => {
     padding: 8px 15px;
 }
 .data-list dt, .data-list dd {
-    font-size: 12px;
+    font-size: 11px;
 }
 </style>
