@@ -142,11 +142,11 @@ function formatDate(dateString) {
 
             <div class="form-group">
                 <label for="start_date">Beschreibung</label>
-            <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': errors?.activity}"
+            <textarea id="activity" v-model="activity_description" class="form-control" :class="{'is-invalid': errors?.description}"
                       name="activity" />
 
-            <small v-if="errors && errors.activity" class="invalid-feedback">
-                {{ errors.activity[0] }}
+            <small v-if="errors && errors.description" class="invalid-feedback">
+                {{ errors.description[0] }}
             </small>
             </div>
             <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Activity</button>

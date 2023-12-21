@@ -23,12 +23,12 @@ class LeadActivitiesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'activity' => 'required|string',
+            'description' => 'nullable|string',
             'activity_type' => 'required|string|max:255',
             'activity_start_date' => 'required',
             'lead_id'=>'required|integer'
         ],[],[
-            'activity'=>'Activity',
+            'description'=>'Beschreibung',
             'activity_type'=>'Activity Type',
             'activity_start_date'=>'Activity Start Date',
             'lead_id'=>'Lead'
