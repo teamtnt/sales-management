@@ -18,7 +18,7 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill contacts details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::model($contact, ['method' => 'PUT', 'route' => ['contacts.update', $contact->id]]) }}
+                        {{ Form::model($contact, ['method' => 'PUT', 'route' => ['teamtnt.sales-management.contacts.update', $contact->id]]) }}
 
                         @include('sales-management::contacts.fields')
 
