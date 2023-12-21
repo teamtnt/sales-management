@@ -51,22 +51,22 @@
         @php
             $routes = collect([
                 'notes' => [
-                    'store' => route('store-lead-note', $lead->id),
-                    'delete' => route('destroy-lead-note', [$lead->id, ':noteId']),
+                    'store' => route('teamtnt.sales-management.store-lead-note', $lead->id),
+                    'delete' => route('teamtnt.sales-management.destroy-lead-note', [$lead->id, ':noteId']),
                 ],
                 'activities' => [
-                    'store' => route('store-lead-activity', $lead->id),
-                    'delete' => route('destroy-lead-activity', [$lead->id, ':activityId']),
+                    'store' => route('teamtnt.sales-management.store-lead-activity', $lead->id),
+                    'delete' => route('teamtnt.sales-management.destroy-lead-activity', [$lead->id, ':activityId']),
                 ],
                 'contacts' => [
-                    'syncTags' => route('contacts.sync-tags', $lead->contact->id),
-                    'syncLists' => route('contacts.sync-lists', $lead->contact->id),
+                    'syncTags' => route('teamtnt.sales-management.contacts.sync-tags', $lead->contact->id),
+                    'syncLists' => route('teamtnt.sales-management.contacts.sync-lists', $lead->contact->id),
                 ],
                 'leads' => [
-                    'syncTags' => route('leads.sync-tags', $lead->id),
+                    'syncTags' => route('teamtnt.sales-management.leads.sync-tags', $lead->id),
                 ],
                 'messages' => [
-                    'send' => route('send.message', [$campaign, $lead]),
+                    'send' => route('teamtnt.sales-management.send.message', [$campaign, $lead]),
                 ],
             ]);
         @endphp
