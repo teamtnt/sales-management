@@ -44,7 +44,6 @@ const errors = ref({});
 const submitting = ref(false);
 const data = inject('data');
 
-console.log(data.route)
 const handleFormSubmit = () => {
     let formData = new FormData(form.value)
 

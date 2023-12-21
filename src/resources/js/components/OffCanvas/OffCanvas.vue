@@ -301,7 +301,7 @@ onClickOutside(offCanvasRef, () => {
 );
 
 const leadFullName = computed(() => {
-    return `${props.lead.contact?.firstname} ${props.lead.contact?.lastname}`
+    return `${props.lead.contact?.firstname ?? ''} ${props.lead.contact?.lastname ?? ''}`
 })
 
 </script>
