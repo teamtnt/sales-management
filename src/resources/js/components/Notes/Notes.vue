@@ -10,7 +10,7 @@ const props = defineProps({
         type: String
     },
     leadId: {
-        type: String
+        type: Number
     },
     leadNotes: {
         type: Array
@@ -121,7 +121,9 @@ const formatDate = (timestamp) => {
             </label>
             <textarea id="note" v-model="note" class="form-control mb-2" :class="{'is-invalid': isNotEmpty(errors)}"
                       name="note" :placeholder="$t('Note')"/>
-
+            <small v-if="errors && errors.note" class="invalid-feedback">
+                {{ errors.note[0] }}
+            </small>
 
             <select name="note_type" v-model="note_type" id="note_type" class="form-select mt-2">
                 <option value="Note">Note</option>
@@ -131,10 +133,6 @@ const formatDate = (timestamp) => {
             </select>
 
             <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Note</button>
-
-            <small v-if="errors && errors.note" class="invalid-feedback">
-                {{ errors.note[0] }}
-            </small>
         </div>
     </form>
     <hr>

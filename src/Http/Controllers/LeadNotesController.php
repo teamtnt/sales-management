@@ -17,6 +17,9 @@ class LeadNotesController extends Controller
         $request->validate([
             'note' => 'required|string',
             'note_type' => 'nullable|string|max:255'
+        ],[],[
+            'note'=>'Note',
+            'note_type'=>'Note Type'
         ]);
 
         $leadNote = new LeadNotes();

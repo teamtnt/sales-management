@@ -33,6 +33,7 @@ import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
 import Notes from "./components/Notes/Notes.vue";
 import Activities from "./components/Notes/Activities.vue";
 import OpenClicksChart from "./components/Dashboard/OpenClicksChart.vue";
+import OffCanvasToggle from "./components/OffCanvas/OffCanvasToggle.vue";
 
 
 const emitter = mitt();
@@ -45,7 +46,8 @@ const app = createApp({
         MultiSelectList,
         Notes,
         Activities,
-        OpenClicksChart
+        OpenClicksChart,
+        OffCanvasToggle
     }
 })
 

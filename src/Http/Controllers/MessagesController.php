@@ -132,6 +132,10 @@ class MessagesController extends Controller
             'from_email' => 'required|string',
             'subject'    => 'required|string',
             'body'       => 'required|string'
+        ],[],[
+            'from_email' => __('From'),
+            'subject'    => __('Subject'),
+            'body'       => __('Message')
         ]);
 
         $leadEmail = $lead->contact->email;
