@@ -43,7 +43,7 @@
             <div class="campaign-card">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">{{ __("Leads") }}</h5>
+                        <h5 class="card-title">{{ __("Leads") }} ({{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0) }})</h5>
                         <div class="input-group">
                              <span class="input-group-text">
                                  <x-sales-management::icons.search width="15" height="15"/>
@@ -53,7 +53,7 @@
                                    placeholder="Search leads by email...">
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body scroll">
                         <div id="leads" data-stage-id="0">
                             @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 100) as $lead)
                                 <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title">{{ $stage->name }}</h5>
+                            <h5 class="card-title">{{ $stage->name }} ({{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, $stage->id) }})</h5>
                             <h6 class="card-subtitle text-muted mb-2">{{ $stage->description }}</h6>
 
                             <div class="input-group">
@@ -102,7 +102,7 @@
                                        placeholder="Search leads by email...">
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body scroll">
 
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 

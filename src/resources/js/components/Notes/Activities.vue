@@ -20,7 +20,8 @@ const props = defineProps({
 const activities = ref([]);
 const activity_description = ref("");
 const activity_type = ref("Call");
-const activity_start_date = ref("");
+//set default date to tomorrow at 00:00
+const activity_start_date = ref(new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16).slice(0, 11) + "00:00");
 const activity_end_date = ref("");
 const errors = ref({});
 const submitting = ref(false)

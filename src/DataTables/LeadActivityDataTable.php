@@ -44,6 +44,9 @@ class LeadActivityDataTable extends DataTable
             ->editColumn('lead.contact.email', function (LeadActivity $leadActivity) {
                 return $leadActivity->lead ? '<a href="mailto:' . $leadActivity->lead->contact->email . '">' . $leadActivity->lead->contact->email . '</a>' : '';
             })
+            ->editColumn('lead.contact.external_profile_url', function (LeadActivity $leadActivity) {
+                return $leadActivity->lead ? '<a target="_blank" href="' . $leadActivity->lead->contact->external_profile_url . '">' . $leadActivity->lead->contact->external_profile_url . '</a>' : '';
+            })
             ->editColumn('campaign.name', function (LeadActivity $leadActivity) {
                 return $leadActivity->lead->campaign ? $leadActivity->lead->campaign->name : '';
             })
@@ -62,7 +65,7 @@ class LeadActivityDataTable extends DataTable
             ->filterColumn('type', function($query, $keyword) {
                 $query->whereRaw("type like ?", ["%{$keyword}%"]);
             })
-            ->rawColumns(['is_done', 'lead.name', 'lead.contact.phone', 'lead.contact.email', 'action']); // Add 'lead.contact.phone' and 'lead.contact.email' to rawColumns to render HTML
+            ->rawColumns(['is_done', 'lead.name', 'lead.contact.phone', 'lead.contact.email', 'action', 'lead.contact.external_profile_url']); // Add 'lead.contact.phone' and 'lead.contact.email' to rawColumns to render HTML
     }
 
     /**
@@ -159,6 +162,7 @@ class LeadActivityDataTable extends DataTable
                 'orderable' => true,
             ],
             'type',
+            'lead.contact.external_profile_url'
         ];
     }
 

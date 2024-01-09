@@ -54,6 +54,11 @@
             color: red;
         }
 
+        .scroll {
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
     </style>
 
     @stack('styles')

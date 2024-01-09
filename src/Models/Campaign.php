@@ -50,6 +50,15 @@ class Campaign extends Model
             ->limit($limit)->get();
     }
 
+    public function getLeadsOnStageCount($pipelineId, $stageId, $limit = null)
+    {
+        return $this->leads()
+            ->where('pipeline_id', $pipelineId)
+            ->where('pipeline_stage_id', $stageId)
+            ->limit($limit)
+            ->count();
+    }
+
     public function getLeads($limit)
     {
         return $this->leads()->with('contact')->limit(100)->get();
