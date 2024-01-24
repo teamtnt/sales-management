@@ -50,12 +50,12 @@
                              </span>
                             <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
                                    type="search" name="lead-search"
-                                   placeholder="Search leads by email...">
+                                   placeholder="Search leads by name or email...">
                         </div>
                     </div>
                     <div class="card-body scroll">
                         <div id="leads" data-stage-id="0">
-                            @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 100) as $lead)
+                            @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 300) as $lead)
                                 <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                             @endforeach
 
@@ -99,14 +99,14 @@
                              </span>
                                 <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
                                        type="search" name="lead-search"
-                                       placeholder="Search leads by email...">
+                                       placeholder="Search leads by name or email...">
                             </div>
                         </div>
                         <div class="card-body scroll">
 
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
-                                @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 100) as $lead)
+                                @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 300) as $lead)
                                     <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                                 @endforeach
 
@@ -136,7 +136,10 @@
 
                     leads.forEach(lead => {
                         const email = lead.querySelector('.lead-email').textContent.toLowerCase();
+                        const name = lead.querySelector('.lead-name').textContent.toLowerCase();
                         if (email.includes(searchValue)) {
+                            lead.style.display = '';
+                        } else if (name.includes(searchValue)) {
                             lead.style.display = '';
                         } else {
                             lead.style.display = 'none';

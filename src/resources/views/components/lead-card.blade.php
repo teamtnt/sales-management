@@ -15,7 +15,7 @@
 
     <div class="d-flex align-items-center">
         <x-sales-management::icons.user class="flex-shrink-0" />
-        <span class="ms-2"><a target="_blank"
+        <span class="ms-2 lead-name"><a target="_blank"
                 href="{{ route('teamtnt.sales-management.contacts.edit', $lead->contact) }}">{{ $lead->contact->firstname }}
                 {{ $lead->contact->lastname }}</a></span>
     </div>
