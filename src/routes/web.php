@@ -10,6 +10,7 @@ use Teamtnt\SalesManagement\Http\Controllers\LeadNotesController;
 use Teamtnt\SalesManagement\Http\Controllers\LeadsController;
 use Teamtnt\SalesManagement\Http\Controllers\MessagesController;
 use Teamtnt\SalesManagement\Http\Controllers\PipelineController;
+use Teamtnt\SalesManagement\Http\Controllers\SearchController;
 use Teamtnt\SalesManagement\Http\Controllers\TagsController;
 use Teamtnt\SalesManagement\Http\Controllers\CampaignController;
 use Teamtnt\SalesManagement\Http\Controllers\WorkflowController;
@@ -113,6 +114,8 @@ Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix
     Route::put('/campaign/{campaign}/update', [CampaignController::class, 'update'])->name('campaign.update');
     Route::delete('/campaign/{campaign:id}/destroy', [CampaignController::class, 'destroy'])->name('campaign.destroy');
     Route::post('/stage/chage', [CampaignController::class, 'stageChange'])->name('stage.change');
+
+    Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/search', [SearchController::class, 'search']);
 });
 
 Route::group(['prefix' => 'campaign/{campaign}'], function () {

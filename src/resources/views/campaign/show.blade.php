@@ -50,12 +50,15 @@
                              </span>
                             <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
                                    type="search" name="lead-search"
+                                   data-stage-id="0"
+                                   data-campaign-id="{{$campaign->id}}"
+                                   data-pipeline-id="{{$campaign->pipeline_id}}"
                                    placeholder="Search leads by name or email...">
                         </div>
                     </div>
                     <div class="card-body scroll">
                         <div id="leads" data-stage-id="0">
-                            @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 300) as $lead)
+                            @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, 0, 50) as $lead)
                                 <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                             @endforeach
 
@@ -99,6 +102,9 @@
                              </span>
                                 <input id="lead-search-{{$campaign->pipeline_id}}" class="form-control lead-search"
                                        type="search" name="lead-search"
+                                       data-stage-id="{{$stage->id}}"
+                                       data-campaign-id="{{$campaign->id}}"
+                                       data-pipeline-id="{{$campaign->pipeline_id}}"
                                        placeholder="Search leads by name or email...">
                             </div>
                         </div>
@@ -106,7 +112,7 @@
 
                             <div id="stage-{{$stage->id}}" data-stage-id="{{$stage->id}}">
 
-                                @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 300) as $lead)
+                                @foreach($campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, 50) as $lead)
                                     <x-sales-management::lead-card :lead="$lead" off-canvas :campaign="$campaign"/>
                                 @endforeach
 
@@ -132,21 +138,50 @@
             searchInputs.forEach(searchInput => {
                 searchInput.addEventListener('input', function (e) {
                     const searchValue = this.value.toLowerCase();
-                    const leads = this.closest('.card').querySelectorAll('.lead-item');
 
-                    leads.forEach(lead => {
-                        const email = lead.querySelector('.lead-email').textContent.toLowerCase();
-                        const name = lead.querySelector('.lead-name').textContent.toLowerCase();
-                        if (email.includes(searchValue)) {
-                            lead.style.display = '';
-                        } else if (name.includes(searchValue)) {
-                            lead.style.display = '';
-                        } else {
-                            lead.style.display = 'none';
+                    const campaignID = this.dataset.campaignId;
+                    const pipelineID = this.dataset.pipelineId;
+                    const stageID = this.dataset.stageId;
+
+                    axios.get(`/sales/campaign/${campaignID}/pipeline/${pipelineID}/stage/${stageID}/search`, {
+                        params: {
+                            query: searchValue
                         }
                     })
+                        .then(response => {
+                            // Get the stage id from the search input's data-stage-id attribute
+                            const stageId = searchInput.dataset.stageId;
+
+                            // Pass the stage id to updateUIWithSearchResults
+                            updateUIWithSearchResults(response, stageId);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                 })
             })
+
+            function updateUIWithSearchResults(response, stageId) {
+                // Get the leads div for the correct stage
+                const leadsDiv = document.querySelector(`div[data-stage-id="${stageId}"]`);
+
+                // Remove the old stage from the Dragula containers
+                const oldStageIndex = drake.containers.indexOf(leadsDiv);
+
+                if (oldStageIndex > -1) {
+                    drake.containers.splice(oldStageIndex, 1);
+                }
+
+                // Clear the current results
+                leadsDiv.innerHTML = '';
+
+                // Insert the returned HTML
+                leadsDiv.innerHTML = response.data.html;
+
+                // Add the updated stage to the Dragula containers
+                drake.containers.push(leadsDiv);
+
+            }
 
             const pipelineId = document.querySelector("#pipeline").dataset.pipelineId;
 
@@ -188,13 +223,11 @@
             }
 
 
-            dragula(stages, {
+            let drake = dragula({
                 moves: function (el, source, handle, sibling) {
                      return handle.classList.contains('drag-handle');
                 },
-            })
-
-                .on('drag', function (el) {
+            }).on('drag', function (el) {
                     el.className = el.className.replace('bg-light', 'bg-gray-400');
                     document.addEventListener('mousemove', handleMouseMove, false);
 
@@ -219,7 +252,9 @@
                     el.className = el.className.replace('bg-gray-400', 'bg-light');
 
                     document.removeEventListener('mousemove', handleMouseMove, false);
-                })
+                });
+
+            drake.containers.push(...stages);
         });
     </script>
 @endpush
