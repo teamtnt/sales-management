@@ -13,7 +13,6 @@ class SearchController extends Controller
     {
         $query = $request->get('query');
 
-        //TODO: handle empty query, return default leads
         if(!$request->has('query') or $request->get('query') == '')  {
             $leads = $campaign->getLeadsOnStage($pipelineID, $stageID, 50);
         }
