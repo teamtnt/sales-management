@@ -51,10 +51,12 @@
         @php
             $routes = collect([
                 'notes' => [
+                    'fetch' => route('teamtnt.sales-management.fetch-lead-notes', $lead->id),
                     'store' => route('teamtnt.sales-management.store-lead-note', $lead->id),
                     'delete' => route('teamtnt.sales-management.destroy-lead-note', [$lead->id, ':noteId']),
                 ],
                 'activities' => [
+                    'fetch' => route('teamtnt.sales-management.fetch-lead-activities', $lead->id),
                     'store' => route('teamtnt.sales-management.store-lead-activity', $lead->id),
                     'delete' => route('teamtnt.sales-management.destroy-lead-activity', [$lead->id, ':activityId']),
                 ],

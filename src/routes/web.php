@@ -84,12 +84,14 @@ Route::delete('/tags/{tag:id}/destroy', [TagsController::class, 'destroy'])->nam
 // Lead Activities
 Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix').'.view-activities'  ]], function () {
 Route::get('/lead-activities', [LeadActivitiesController::class, 'index'])->name('lead-activities.index');
+Route::get('/lead-activities/{lead:id}/activities', [LeadActivitiesController::class, 'fetchLeadActivities'])->name('fetch-lead-activities');
 Route::post('/lead-activities/{lead:id}/activity/store', [LeadActivitiesController::class, 'store'])->name('store-lead-activity');
 Route::delete('/lead-activities/{lead:id}/activity/{activity:id}/destroy', [LeadActivitiesController::class, 'destroy'])->name('destroy-lead-activity');
 Route::get('/lead-activities/{leadActivity:id}/toggle-status', [LeadActivitiesController::class, 'toggleStatus'])->name('lead-activities.toggle-status');
 });
 
 // Lead Notes
+Route::get('/lead-notes/{lead:id}/notes', [LeadNotesController::class, 'fetchLeadNotes'])->name('fetch-lead-notes');
 Route::post('/lead-notes/{lead:id}/note/store', [LeadNotesController::class, 'storeLeadNote'])->name('store-lead-note');
 Route::delete('/lead-notes/{lead:id}/note/{note:id}/destroy', [LeadNotesController::class, 'destroyLeadNote'])->name('destroy-lead-note');
 

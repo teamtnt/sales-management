@@ -68,4 +68,18 @@ class LeadActivitiesController extends Controller
 
         return back();
     }
+
+    /**
+     * @param $lead
+     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchLeadActivities($lead)
+    {
+        $leadActivities = LeadActivity::where('lead_id', $lead)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response()->json(['leadActivities' => $leadActivities->load('user')]);
+    }
 }

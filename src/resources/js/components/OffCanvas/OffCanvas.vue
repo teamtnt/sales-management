@@ -215,7 +215,7 @@
                 <div class="offcanvas-body">
                     <notes
                         :lead-id="lead.id"
-                        :lead-notes="lead.notes"
+                        :fetch-url="routes.notes.fetch"
                         :url="routes.notes.store"
                         :delete-url="routes.notes.delete"
                         :key="lead.id">
@@ -228,7 +228,7 @@
                 <div class="offcanvas-body">
                     <activities
                         :lead-id="lead.id"
-                        :lead-activities="lead.activities"
+                        :fetch-url="routes.activities.fetch"
                         :url="routes.activities.store"
                         :delete-url="routes.activities.delete"
                         :key="lead.id">

@@ -6,6 +6,9 @@ const props = defineProps({
     url: {
         type: String
     },
+    fetchUrl: {
+        type: String
+    },
     deleteUrl: {
         type: String
     },
@@ -27,8 +30,22 @@ const errors = ref({});
 const submitting = ref(false)
 
 onMounted(() => {
-    activities.value = [...props.leadActivities]
+    fetchActivities()
 });
+
+function fetchActivities() {
+    axios.get(props.fetchUrl, {
+        params: {
+            lead_id: props.leadId
+        }
+    }).then((response) => {
+        if (response.status === 200) {
+            activities.value = [...response.data.leadActivities]
+        }
+    }).catch((error) => {
+        console.log(error.message)
+    })
+}
 
 const handleFormSubmit = () => {
     submitting.value = true;
@@ -40,7 +57,6 @@ const handleFormSubmit = () => {
     formData.append('activity_end_date', activity_end_date.value)
     formData.append('lead_id', props.leadId)
 
-    console.log(formData)
     axios.post(props.url, formData, {
         headers: {
             "Content-Type": "application/json"

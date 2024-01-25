@@ -9,11 +9,11 @@ const props = defineProps({
     deleteUrl: {
         type: String
     },
+    fetchUrl: {
+        type: String
+    },
     leadId: {
         type: Number
-    },
-    leadNotes: {
-        type: Array
     }
 })
 
@@ -24,8 +24,22 @@ const errors = ref({});
 const submitting = ref(false)
 
 onMounted(() => {
-    notes.value = [...props.leadNotes]
+    fetchNotes()
 });
+
+function fetchNotes() {
+    axios.get(props.fetchUrl, {
+        params: {
+            lead_id: props.leadId
+        }
+    }).then((response) => {
+        if (response.status === 200) {
+            notes.value = [...response.data.leadNotes]
+        }
+    }).catch((error) => {
+        console.log(error.message)
+    })
+}
 
 const handleFormSubmit = () => {
     submitting.value = true;

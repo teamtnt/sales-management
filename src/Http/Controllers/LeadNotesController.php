@@ -3,6 +3,7 @@
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
 
+use http\Client\Response;
 use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\Models\LeadNotes;
 
@@ -46,5 +47,20 @@ class LeadNotesController extends Controller
         $leadNote->delete();
 
         return response()->json(200);
+    }
+
+
+    /**
+     * @param $lead
+     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function fetchLeadNotes($lead)
+    {
+        $leadNotes = LeadNotes::where('lead_id', $lead)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        return response()->json(['leadNotes' => $leadNotes->load('user')]);
     }
 }
