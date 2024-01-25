@@ -22,7 +22,7 @@ class SearchController extends Controller
                 ->whereHas('contact', function ($q) use ($query) {
                     $q->where(function($q) use ($query) {
                         $q->whereFullText('lastname', $query)
-                            ->orWhereFullText('lastname', $query)
+                            ->orWhereFullText('firstname', $query)
                             ->orWhereFullText('email', $query)
                             ->orWhere('lastname', 'LIKE', '%' . $query . '%')
                             ->orWhere('firstname', 'LIKE', '%' . $query . '%')
