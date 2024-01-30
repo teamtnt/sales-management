@@ -16,11 +16,9 @@ class LeadActivity extends Model
 
     protected $casts = [
         'is_done' => 'boolean',
-    ];
-    protected $dates = [
-        'created_at',
-        'start_date',
-        'end_date',
+        'created_at' => 'datetime',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime'
     ];
 
     public function __construct(array $attributes = [])
