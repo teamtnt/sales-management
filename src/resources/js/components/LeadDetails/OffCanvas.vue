@@ -285,6 +285,7 @@ onMounted(() => {
     offcanvas.show()
 })
 
+
 onBeforeUnmount(() => {
     const offCanvasElement = document.getElementById('offcanvasRight')
     const offcanvas = new bootstrap.Offcanvas(offCanvasElement)

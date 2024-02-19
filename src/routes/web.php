@@ -118,6 +118,7 @@ Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix
     Route::post('/stage/chage', [CampaignController::class, 'stageChange'])->name('stage.change');
 
     Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/search', [SearchController::class, 'search']);
+
 });
 
 Route::group(['prefix' => 'campaign/{campaign}'], function () {
@@ -131,6 +132,7 @@ Route::group(['prefix' => 'campaign/{campaign}'], function () {
         Route::delete('/messages/{message:id}/destroy', [MessagesController::class, 'destroy'])->name('messages.destroy');
         Route::post('/messages/{message:id}/send', [MessagesController::class, 'sendToAllLeads'])->name('messages.send');
         Route::post('/message/{lead:id}/send', [MessagesController::class, 'sendMessageToLead'])->name('send.message');
+        Route::get('/lead/{lead}', [LeadsController::class, 'getLeadData'])->name('lead.data');
     });
 
     // Workflows

@@ -47,34 +47,35 @@
         </div>
     @endif
 
-    @if ($offCanvas)
-        @php
-            $routes = collect([
-                'notes' => [
-                    'fetch' => route('teamtnt.sales-management.fetch-lead-notes', $lead->id),
-                    'store' => route('teamtnt.sales-management.store-lead-note', $lead->id),
-                    'delete' => route('teamtnt.sales-management.destroy-lead-note', [$lead->id, ':noteId']),
-                ],
-                'activities' => [
-                    'fetch' => route('teamtnt.sales-management.fetch-lead-activities', $lead->id),
-                    'store' => route('teamtnt.sales-management.store-lead-activity', $lead->id),
-                    'delete' => route('teamtnt.sales-management.destroy-lead-activity', [$lead->id, ':activityId']),
-                ],
-                'contacts' => [
-                    'syncTags' => route('teamtnt.sales-management.contacts.sync-tags', $lead->contact->id),
-                    'syncLists' => route('teamtnt.sales-management.contacts.sync-lists', $lead->contact->id),
-                ],
-                'leads' => [
-                    'syncTags' => route('teamtnt.sales-management.leads.sync-tags', $lead->id),
-                ],
-                'messages' => [
-                    'send' => route('teamtnt.sales-management.send.message', [$campaign, $lead]),
-                ],
-            ]);
-        @endphp
+    @php
+        $routes = collect([
+            'notes' => [
+                'fetch' => route('teamtnt.sales-management.fetch-lead-notes', $lead->id),
+                'store' => route('teamtnt.sales-management.store-lead-note', $lead->id),
+                'delete' => route('teamtnt.sales-management.destroy-lead-note', [$lead->id, ':noteId']),
+            ],
+            'activities' => [
+                'fetch' => route('teamtnt.sales-management.fetch-lead-activities', $lead->id),
+                'store' => route('teamtnt.sales-management.store-lead-activity', $lead->id),
+                'delete' => route('teamtnt.sales-management.destroy-lead-activity', [$lead->id, ':activityId']),
+            ],
+            'contacts' => [
+                'syncTags' => route('teamtnt.sales-management.contacts.sync-tags', $lead->contact->id),
+                'syncLists' => route('teamtnt.sales-management.contacts.sync-lists', $lead->contact->id),
+            ],
+            'leads' => [
+                'syncTags' => route('teamtnt.sales-management.leads.sync-tags', $lead->id),
+                'leadData' => route('teamtnt.sales-management.lead.data', [$campaign->id, $lead->id]),
+            ],
+            'messages' => [
+                'send' => route('teamtnt.sales-management.send.message', [$campaign, $lead]),
+            ],
+        ]);
+    @endphp
 
-        <off-canvas-toggle :lead="{{ $lead->toJson() }}" :routes="{{ $routes->toJson() }}" :tags="{{ getAllTags() }}"
-            :lists="{{ getAllLists() }}" :emails="{{ json_encode(config('sales-management.emails')) }}"
-            :key="{{ $lead->id }}" />
-    @endif
+    <lead-details
+        :routes="{{ $routes->toJson() }}"
+        :emails="{{ json_encode(config('sales-management.emails')) }}"
+        :key="{{ $lead->id }}"
+    />
 </div>

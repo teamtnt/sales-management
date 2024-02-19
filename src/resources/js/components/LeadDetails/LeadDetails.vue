@@ -1,7 +1,7 @@
 <template>
     <div>
         <span
-            @click="showOffCanvas = true"
+            @click="toggleOffCanvas"
             class="info-icon"
             aria-controls="offcanvasRight">
             <svg width="26" height="26" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="pointer-events: none;">
@@ -10,7 +10,13 @@
         </span>
 
         <template v-if="showOffCanvas">
-            <OffCanvas v-model="showOffCanvas" :lead="lead" :tags="tags" :lists="lists" :routes="routes"/>
+            <OffCanvas
+                v-model="showOffCanvas"
+                :lead="lead"
+                :tags="tags"
+                :lists="lists"
+                :routes="routes"
+            />
         </template>
     </div>
 </template>
@@ -20,20 +26,8 @@ import { ref, provide, reactive } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
-    lead: {
-        type: Object,
-        required: true
-    },
     routes: {
         type: Object,
-        required: true
-    },
-    tags: {
-        type: Array,
-        required: true
-    },
-    lists: {
-        type: Array,
         required: true
     },
     emails: {
@@ -43,10 +37,30 @@ const props = defineProps({
 })
 
 const showOffCanvas = ref(false);
+const lead = ref(null);
+const tags = ref([]);
+const lists = ref([]);
 const data = reactive({
     route: props.routes.messages.send,
     emails: props.emails
 });
+
+async function fetchLeadData() {
+    try {
+        const response = await axios.get(props.routes.leads.leadData);
+
+        lead.value = response.data.lead;
+        tags.value = JSON.parse(response.data.tags);
+        lists.value = JSON.parse(response.data.lists);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const toggleOffCanvas = async () => {
+    await fetchLeadData();
+    showOffCanvas.value = true;
+}
 
 provide('data', data);
 </script>
