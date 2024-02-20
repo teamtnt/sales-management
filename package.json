@@ -1,48 +1,49 @@
 {
-  "name": "sales-management",
-  "version": "1.0.0",
-  "description": "A package for sales management",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/teamtnt/sales-management.git"
-  },
-  "author": "TNT Studio",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/teamtnt/sales-management/issues"
-  },
-  "homepage": "https://github.com/teamtnt/sales-management#readme",
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "@vue-flow/background": "^1.0.3",
-    "laravel-vite-plugin": "^0.7.3",
-    "mitt": "^3.0.0",
-    "sass": "^1.57.1",
-    "vite": "^4.0.4",
-    "vue": "^3.2.45"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.2.1",
-    "@intlify/unplugin-vue-i18n": "^0.8.1",
-    "@popperjs/core": "^2.11.6",
-    "@vue-flow/core": "^1.12.7",
-    "@vue-flow/node-toolbar": "^1.0.6",
-    "axios": "^1.2.3",
-    "bootstrap": "^5.2.3",
-    "chart.js": "^4.2.1",
-    "datatables.net-bs5": "^1.13.1",
-    "datatables.net-buttons-bs5": "^2.3.3",
-    "datatables.net-select-bs5": "^1.5.0",
-    "dragula": "^3.7.3",
-    "feather-icons": "^4.29.0",
-    "jquery": "^3.6.3",
-    "notyf": "^3.10.0",
-    "simplebar": "^6.2.0",
-    "vue-i18n": "^9.2.2",
-    "vue-multiselect": "^3.0.0-beta.1"
-  }
+    "name": "sales-management",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "A package for sales management",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/teamtnt/sales-management.git"
+    },
+    "author": "TNT Studio",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/teamtnt/sales-management/issues"
+    },
+    "homepage": "https://github.com/teamtnt/sales-management#readme",
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.3",
+        "@vue-flow/background": "^1.3.0",
+        "laravel-vite-plugin": "^1.0.1",
+        "mitt": "^3.0.1",
+        "sass": "^1.51.0",
+        "vite": "^5.0.12",
+        "vue": "^3.4.19"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^6.2.1",
+        "@intlify/unplugin-vue-i18n": "^2.0.0",
+        "@popperjs/core": "^2.11.6",
+        "@vue-flow/core": "^1.32.1",
+        "@vue-flow/node-toolbar": "^1.1.0",
+        "axios": "^1.6.7",
+        "bootstrap": "^5.2.3",
+        "chart.js": "^4.4.1",
+        "datatables.net-bs5": "^1.13.1",
+        "datatables.net-buttons-bs5": "^2.3.3",
+        "datatables.net-select-bs5": "^1.5.0",
+        "dragula": "^3.7.3",
+        "feather-icons": "^4.29.1",
+        "jquery": "^3.7.1",
+        "notyf": "^3.10.0",
+        "simplebar": "^6.2.5",
+        "vue-i18n": "^9.9.1",
+        "vue-multiselect": "^3.0.0-beta.3"
+    }
 }
