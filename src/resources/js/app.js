@@ -52,6 +52,8 @@ const app = createApp({
 })
 
 app.config.globalProperties.emitter = emitter;
+app.config.compilerOptions.whitespace = 'preserve';
+
 app.use(i18n);
 
 if (document.querySelector("#app") !== null) {
