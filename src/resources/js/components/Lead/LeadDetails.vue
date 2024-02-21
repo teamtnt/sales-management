@@ -26,42 +26,42 @@ import { ref, provide, reactive } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
-    routes: {
-        type: Object,
-        required: true
-    },
-    emails: {
-        type: Object,
-        required: true
-    }
+    // routes: {
+    //     type: Object,
+    //     required: true
+    // },
+    // emails: {
+    //     type: Object,
+    //     required: true
+    // }
 })
 
 const showOffCanvas = ref(false);
 const lead = ref(null);
 const tags = ref([]);
 const lists = ref([]);
-const data = reactive({
-    route: props.routes.messages.send,
-    emails: props.emails
-});
+// const data = reactive({
+//     route: props.routes.messages.send,
+//     emails: props.emails
+// });
 
-async function fetchLeadData() {
-    try {
-        const response = await axios.get(props.routes.leads.leadData);
-
-        lead.value = response.data.lead;
-        tags.value = JSON.parse(response.data.tags);
-        lists.value = JSON.parse(response.data.lists);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// async function fetchLeadData() {
+//     try {
+//         const response = await axios.get(props.routes.leads.leadData);
+//
+//         lead.value = response.data.lead;
+//         tags.value = JSON.parse(response.data.tags);
+//         lists.value = JSON.parse(response.data.lists);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 const toggleOffCanvas = async () => {
-    await fetchLeadData();
+    // await fetchLeadData();
     showOffCanvas.value = true;
 }
 
-provide('data', data);
+// provide('data', data);
 </script>
 

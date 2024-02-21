@@ -138,7 +138,7 @@
                              <p class="mb-1">{{ lead.contact.country }}</p>
                          </dd>
                          <dt v-if="lead.contact.external_profile_url" class="col-4 col-xxl-3 mb-0">
-                             <strong>{{ $t('Profile URL') }}:</strong>
+                             <strong>{{ $t('Profile') }} URL:</strong>
                          </dt>
                          <dd v-if="lead.contact.external_profile_url" class="col-8 col-xxl-9 mb-0">
                              <p class="mb-1"><a :href="lead.contact.external_profile_url" target="_blank">{{ lead.contact.external_profile_url }}</a></p>
