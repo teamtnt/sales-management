@@ -38,11 +38,12 @@
             @endcan
         </div>
 
-
         <lead-campaign
             :campaign="{{ $campaign }}"
-            :lead-initial-stages="{{ $campaign->getLeadsOnStage($campaign->pipeline_id, 0) }}"
-            :lead-initial-count="{{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0) }}"
+            :initial-leads="{{ $campaign->getLeadsOnStage($campaign->pipeline_id, 0) }}"
+            :initial-leads-count="{{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0) }}"
+            :leads-count="{{ json_encode($leadsCount) }}"
+            :leads="{{ json_encode($leads) }}"
             :stages="{{ $campaign->pipeline->stages }}"
         />
 {{--        <div class="row" style="flex-wrap: unset;" id="pipeline" data-pipeline-id="{{$campaign->pipeline_id}}">--}}
@@ -139,55 +140,55 @@
     <script defer type="module">
         document.addEventListener("DOMContentLoaded", function () {
             // Lead search
-            const searchInputs = document.querySelectorAll('.lead-search');
+            // const searchInputs = document.querySelectorAll('.lead-search');
+            //
+            // searchInputs.forEach(searchInput => {
+            //     searchInput.addEventListener('input', function (e) {
+            //         const searchValue = this.value.toLowerCase();
+            //
+            //         const campaignID = this.dataset.campaignId;
+            //         const pipelineID = this.dataset.pipelineId;
+            //         const stageID = this.dataset.stageId;
+            //
+            //         axios.get(`/sales/campaign/${campaignID}/pipeline/${pipelineID}/stage/${stageID}/search`, {
+            //             params: {
+            //                 query: searchValue
+            //             }
+            //         })
+            //             .then(response => {
+            //                 // Get the stage id from the search input's data-stage-id attribute
+            //                 const stageId = searchInput.dataset.stageId;
+            //
+            //                 // Pass the stage id to updateUIWithSearchResults
+            //                 updateUIWithSearchResults(response, stageId);
+            //             })
+            //             .catch(error => {
+            //                 console.error(error);
+            //             });
+            //     })
+            // })
 
-            searchInputs.forEach(searchInput => {
-                searchInput.addEventListener('input', function (e) {
-                    const searchValue = this.value.toLowerCase();
-
-                    const campaignID = this.dataset.campaignId;
-                    const pipelineID = this.dataset.pipelineId;
-                    const stageID = this.dataset.stageId;
-
-                    axios.get(`/sales/campaign/${campaignID}/pipeline/${pipelineID}/stage/${stageID}/search`, {
-                        params: {
-                            query: searchValue
-                        }
-                    })
-                        .then(response => {
-                            // Get the stage id from the search input's data-stage-id attribute
-                            const stageId = searchInput.dataset.stageId;
-
-                            // Pass the stage id to updateUIWithSearchResults
-                            updateUIWithSearchResults(response, stageId);
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                })
-            })
-
-            function updateUIWithSearchResults(response, stageId) {
-                // Get the leads div for the correct stage
-                const leadsDiv = document.querySelector(`div[data-stage-id="${stageId}"]`);
-
-                // Remove the old stage from the Dragula containers
-                const oldStageIndex = drake.containers.indexOf(leadsDiv);
-
-                if (oldStageIndex > -1) {
-                    drake.containers.splice(oldStageIndex, 1);
-                }
-
-                // Clear the current results
-                leadsDiv.innerHTML = '';
-
-                // Insert the returned HTML
-                leadsDiv.innerHTML = response.data.html;
-
-                // Add the updated stage to the Dragula containers
-                drake.containers.push(leadsDiv);
-
-            }
+            // function updateUIWithSearchResults(response, stageId) {
+            //     // Get the leads div for the correct stage
+            //     const leadsDiv = document.querySelector(`div[data-stage-id="${stageId}"]`);
+            //
+            //     // Remove the old stage from the Dragula containers
+            //     const oldStageIndex = drake.containers.indexOf(leadsDiv);
+            //
+            //     if (oldStageIndex > -1) {
+            //         drake.containers.splice(oldStageIndex, 1);
+            //     }
+            //
+            //     // Clear the current results
+            //     leadsDiv.innerHTML = '';
+            //
+            //     // Insert the returned HTML
+            //     leadsDiv.innerHTML = response.data.html;
+            //
+            //     // Add the updated stage to the Dragula containers
+            //     drake.containers.push(leadsDiv);
+            //
+            // }
 
             const pipelineId = document.querySelector("#pipeline").dataset.pipelineId;
 

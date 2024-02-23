@@ -50,7 +50,17 @@ class CampaignController extends Controller
 
     public function show(Campaign $campaign)
     {
-        return view('sales-management::campaign.show', compact('campaign'));
+
+        $stages = $campaign->pipeline->stages;
+        $leadsCount = [];
+        $leads = [];
+
+        foreach($stages as $stage) {
+            $leadsCount[$stage->id] = $campaign->getLeadsOnStageCount($campaign->pipeline_id, $stage->id);
+            $leads[$stage->id] = $campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id)->toArray();
+        }
+
+        return view('sales-management::campaign.show', compact('campaign', 'leadsCount', 'leads'));
     }
 
     public function stageChange(Request $request)

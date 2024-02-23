@@ -15,14 +15,14 @@
                 :lead="lead"
                 :tags="tags"
                 :lists="lists"
-                :routes="routes"
+                :routes="[]"
             />
         </template>
     </div>
 </template>
 
 <script setup>
-import { ref, provide, reactive } from "vue";
+import { ref, provide, reactive, inject } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
@@ -34,6 +34,14 @@ const props = defineProps({
     //     type: Object,
     //     required: true
     // }
+    leadId: {
+        type: Number,
+        required: true
+    },
+    campaignId: {
+        type: Number,
+        required: true
+    }
 })
 
 const showOffCanvas = ref(false);
@@ -44,21 +52,22 @@ const lists = ref([]);
 //     route: props.routes.messages.send,
 //     emails: props.emails
 // });
+const routes = inject('routes');
 
-// async function fetchLeadData() {
-//     try {
-//         const response = await axios.get(props.routes.leads.leadData);
-//
-//         lead.value = response.data.lead;
-//         tags.value = JSON.parse(response.data.tags);
-//         lists.value = JSON.parse(response.data.lists);
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
+async function fetchLeadData() {
+    try {
+        const response = await axios.get(`/sales/campaign/${props.campaignId}/lead/${props.leadId}`);
+
+        lead.value = response.data.lead;
+        tags.value = JSON.parse(response.data.tags);
+        lists.value = JSON.parse(response.data.lists);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 const toggleOffCanvas = async () => {
-    // await fetchLeadData();
+    await fetchLeadData();
     showOffCanvas.value = true;
 }
 

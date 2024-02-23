@@ -34,11 +34,6 @@ class SearchController extends Controller
                 ->limit(10)->get();
         }
 
-        $html = '';
-        foreach ($leads as $lead) {
-            $html .= view('sales-management::components.lead-card', ['lead' => $lead, 'campaign' => $campaign])->render();
-        }
-
-        return response()->json(['html' => $html]);
+        return response()->json(['searchResults' => $leads]);
     }
 }

@@ -18,7 +18,7 @@
                         <h6 class="card-subtitle text-muted">{{__("Fill pipeline details below")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::model($pipeline, ['method' => 'PUT', 'route' => ['pipelines.update', $pipeline->id]]) }}
+                        {{ Form::model($pipeline, ['method' => 'PUT', 'route' => ['teamtnt.sales-management.pipelines.update', $pipeline->id]]) }}
 
                         @include('sales-management::pipelines.fields')
 

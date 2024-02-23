@@ -18,7 +18,7 @@
                         <h6 class="card-subtitle text-muted">{{__("Add campaign details bellow")}}</h6>
                     </div>
                     <div class="card-body">
-                        {{ Form::model($campaign, ['method' => 'put', 'route' => ['campaign.update', $campaign->id]]) }}
+                        {{ Form::model($campaign, ['method' => 'put', 'route' => ['teamtnt.sales-management.campaign.update', $campaign->id]]) }}
 
                         @include('sales-management::campaign.fields')
 

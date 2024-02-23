@@ -42,7 +42,7 @@ import { ref, inject } from "vue";
 const form = ref(null);
 const errors = ref({});
 const submitting = ref(false);
-const data = inject('data');
+const routes = inject('routes');
 
 const handleFormSubmit = () => {
     let formData = new FormData(form.value)

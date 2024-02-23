@@ -151,19 +151,19 @@
                                 <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
                             </svg>{{ $t('Contact Tags') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add tag to contact"
-                            placeholder="Choose tags..."
-                            label-by="name"
-                            track-by="name"
-                            :sync-tags-url="routes.contacts.syncTags"
-                            :model-id="lead.contact.id"
-                            :selected="lead.contact.tags ?? []"
-                            :options="tags ?? []"
-                            :key="lead.contact.id"
-                            >
-                        </multi-select-list>
+<!--                        <multi-select-list-->
+<!--                            name=tags[]-->
+<!--                            label="Add tag to contact"-->
+<!--                            placeholder="Choose tags..."-->
+<!--                            label-by="name"-->
+<!--                            track-by="name"-->
+<!--                            :sync-tags-url="routes.contacts.syncTags"-->
+<!--                            :model-id="lead.contact.id"-->
+<!--                            :selected="lead.contact.tags ?? []"-->
+<!--                            :options="tags ?? []"-->
+<!--                            :key="lead.contact.id"-->
+<!--                            >-->
+<!--                        </multi-select-list>-->
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
@@ -171,18 +171,18 @@
                                 <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
                             </svg>{{ $t('Lists') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add to Lists"
-                            placeholder="Choose list..."
-                            label-by="name"
-                            track-by="name"
-                            :sync-tags-url="routes.contacts.syncLists"
-                            :model-id="lead.contact.id"
-                            :selected="lead.contact.lists ?? []"
-                            :options="lists ?? []"
-                            :key="lead.contact.id">
-                        </multi-select-list>
+<!--                        <multi-select-list-->
+<!--                            name=tags[]-->
+<!--                            label="Add to Lists"-->
+<!--                            placeholder="Choose list..."-->
+<!--                            label-by="name"-->
+<!--                            track-by="name"-->
+<!--                            :sync-tags-url="routes.contacts.syncLists"-->
+<!--                            :model-id="lead.contact.id"-->
+<!--                            :selected="lead.contact.lists ?? []"-->
+<!--                            :options="lists ?? []"-->
+<!--                            :key="lead.contact.id">-->
+<!--                        </multi-select-list>-->
                     </div>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
@@ -190,18 +190,18 @@
                                 <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 00-3 3v4.318a3 3 0 00.879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 005.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 00-2.122-.879H5.25zM6.375 7.5a1.125 1.125 0 100-2.25 1.125 1.125 0 000 2.25z" clip-rule="evenodd" />
                             </svg>{{ $t('Lead Tags') }}
                         </span>
-                        <multi-select-list
-                            name=tags[]
-                            label="Add tag to lead"
-                            placeholder="Choose tags..."
-                            label-by="name"
-                            track-by="name"
-                            :sync-tags-url="routes.leads.syncTags"
-                            :model-id="lead.id"
-                            :selected="lead.tags ?? []"
-                            :options="tags ?? []"
-                        :key="lead.id">
-                        </multi-select-list>
+<!--                        <multi-select-list-->
+<!--                            name=tags[]-->
+<!--                            label="Add tag to lead"-->
+<!--                            placeholder="Choose tags..."-->
+<!--                            label-by="name"-->
+<!--                            track-by="name"-->
+<!--                            :sync-tags-url="routes.leads.syncTags"-->
+<!--                            :model-id="lead.id"-->
+<!--                            :selected="lead.tags ?? []"-->
+<!--                            :options="tags ?? []"-->
+<!--                        :key="lead.id">-->
+<!--                        </multi-select-list>-->
                     </div>
                      <div style="height: 50px; margin-bottom: 50px;"></div>
                 </div>
@@ -213,32 +213,32 @@
                  aria-labelledby="notes-tab"
                  tabindex="0">
                 <div class="offcanvas-body">
-                    <notes
-                        :lead-id="lead.id"
-                        :fetch-url="routes.notes.fetch"
-                        :url="routes.notes.store"
-                        :delete-url="routes.notes.delete"
-                        :key="lead.id">
-                    </notes>
+<!--                    <notes-->
+<!--                        :lead-id="lead.id"-->
+<!--                        :fetch-url="routes.notes.fetch"-->
+<!--                        :url="routes.notes.store"-->
+<!--                        :delete-url="routes.notes.delete"-->
+<!--                        :key="lead.id">-->
+<!--                    </notes>-->
                 </div>
             </div>
 
             <div class="tab-pane fade" id="activities-tab-pane" role="tabpanel"
                  aria-labelledby="activities-tab" tabindex="0">
                 <div class="offcanvas-body">
-                    <activities
-                        :lead-id="lead.id"
-                        :fetch-url="routes.activities.fetch"
-                        :url="routes.activities.store"
-                        :delete-url="routes.activities.delete"
-                        :key="lead.id">
-                    </activities>
+<!--                    <activities-->
+<!--                        :lead-id="lead.id"-->
+<!--                        :fetch-url="routes.activities.fetch"-->
+<!--                        :url="routes.activities.store"-->
+<!--                        :delete-url="routes.activities.delete"-->
+<!--                        :key="lead.id">-->
+<!--                    </activities>-->
                 </div>
             </div>
              <div class="tab-pane fade" id="message-tab-pane" role="tabpanel"
                   aria-labelledby="message-tab" tabindex="0">
                  <div class="offcanvas-body">
-                     <send-email-form />
+<!--                     <send-email-form />-->
                  </div>
              </div>
          </div>
