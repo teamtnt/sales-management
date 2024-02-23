@@ -40,7 +40,7 @@
 
         <lead-campaign
             :campaign="{{ $campaign }}"
-            :initial-leads="{{ $campaign->getLeadsOnStage($campaign->pipeline_id, 0) }}"
+            :initial-leads="{{ $campaign->getInitialLeadsOnStage($campaign->pipeline_id, 0) }}"
             :initial-leads-count="{{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0) }}"
             :leads-count="{{ json_encode($leadsCount) }}"
             :leads="{{ json_encode($leads) }}"

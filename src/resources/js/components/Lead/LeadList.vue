@@ -3,7 +3,7 @@ import Search from "../SVG/Search.vue";
 import LeadItem from "./LeadItem.vue";
 
 import { useI18n } from 'vue-i18n';
-import { useLeadList } from '@/composables/useLeadList.js';
+import { useLeadListProperties } from '@/composables/useLeadListProperties.js';
 
 const props = defineProps({
     campaign: {
@@ -28,7 +28,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n();
-const { cardStyle, stageTitle, stageIdAttributes, getLeads, handleSearch } = useLeadList(props, t);
+const { cardStyle, stageTitle, stageIdAttributes, getLeads, handleSearch } = useLeadListProperties(props, t);
 
 </script>
 

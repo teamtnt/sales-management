@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import axios from 'axios';
-export function useLeadList(props, t) {
+export function useLeadListProperties(props, t) {
     const filteredLeads = ref([]);
 
     const cardStyle = computed(() => {
