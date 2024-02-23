@@ -14,7 +14,7 @@ class SearchController extends Controller
         $query = $request->get('query');
 
         if(!$request->has('query') or $request->get('query') == '')  {
-            $leads = $campaign->getLeadsOnStage($pipelineID, $stageID, 50);
+            $leads = $campaign->getLeadsOnStage($pipelineID, $stageID);
         }
         else {
             // find lead contact by name
