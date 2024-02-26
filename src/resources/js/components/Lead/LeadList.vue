@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref} from "vue";
+import { computed, inject, ref } from "vue";
 import { useLeadListProperties } from '@/composables/useLeadListProperties.js';
 import { useI18n } from 'vue-i18n';
 import { useInfiniteScroll } from '@vueuse/core'
@@ -34,7 +34,6 @@ const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handl
 const { route: {list}} = inject('data');
 
 const scrollContainer = ref(null);
-
 useInfiniteScroll(
     scrollContainer,
     () => {

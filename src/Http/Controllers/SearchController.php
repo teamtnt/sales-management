@@ -13,8 +13,10 @@ class SearchController extends Controller
     {
         $query = $request->get('query');
 
+        $methodName = $stageID == 0 ? 'getInitialLeadsOnStage' : 'getLeadsOnStage';
+
         if(!$request->has('query') or $request->get('query') == '')  {
-            $leads = $campaign->getLeadsOnStage($pipelineID, $stageID);
+            $leads = $campaign->$methodName($pipelineID, $stageID);
         }
         else {
             // find lead contact by name

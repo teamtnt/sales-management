@@ -49,10 +49,14 @@ export function useLeadListProperties(props, t) {
     };
 
     const handleSearch = async (event) => {
+        if (event.target.value.length === 0) {
+            loadedLeads.value = 20;
+        }
+
         const campaignId = props.campaign.id;
         const pipelineId = props.campaign.pipeline.id;
         const stageId = props.stage.id || 0;
-        const lowercaseQuery = event.target.value.toLowerCase();
+        const lowercaseQuery = event.target.value.toLowerCase().trim();
 
         try {
             const {data: {searchResults}} = await axios.get(`/sales/campaign/${campaignId}/pipeline/${pipelineId}/stage/${stageId}/search`, {
