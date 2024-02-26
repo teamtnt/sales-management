@@ -45,7 +45,6 @@ export function useLeadListProperties(props, t) {
     });
 
     const loadMoreLeads = () => {
-        console.log('load more leads')
         loadedLeads.value += 10;
     };
 
