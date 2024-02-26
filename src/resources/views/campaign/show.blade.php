@@ -40,11 +40,11 @@
 
         <lead-campaign
             :campaign="{{ $campaign }}"
-            :initial-leads="{{ $campaign->getInitialLeadsOnStage($campaign->pipeline_id, 0) }}"
-            :initial-leads-count="{{ $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0) }}"
+            :initial-leads="{{ json_encode($initialLeads) }}"
+            :initial-leads-count="{{ $initialLeadsCount }}"
             :leads-count="{{ json_encode($leadsCount) }}"
             :leads="{{ json_encode($leads) }}"
-            :stages="{{ $campaign->pipeline->stages }}"
+            :stages="{{ $stages }}"
             :emails="{{ json_encode(config('sales-management.emails')) }}"
             :routes="{{ json_encode($routes) }}"
         />

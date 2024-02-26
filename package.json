@@ -32,6 +32,7 @@
         "@popperjs/core": "^2.11.6",
         "@vue-flow/core": "^1.32.1",
         "@vue-flow/node-toolbar": "^1.1.0",
+        "@vueuse/core": "^10.8.0",
         "axios": "^1.6.7",
         "bootstrap": "^5.2.3",
         "chart.js": "^4.4.1",
@@ -44,6 +45,7 @@
         "notyf": "^3.10.0",
         "simplebar": "^6.2.5",
         "vue-i18n": "^9.9.1",
-        "vue-multiselect": "^3.0.0-beta.3"
+        "vue-multiselect": "^3.0.0-beta.3",
+        "vuedraggable": "^4.1.0"
     }
 }

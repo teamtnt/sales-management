@@ -1,10 +1,11 @@
 <script setup>
+import { inject, ref} from "vue";
+import { useLeadListProperties } from '@/composables/useLeadListProperties.js';
+import { useI18n } from 'vue-i18n';
+import { useInfiniteScroll } from '@vueuse/core'
+
 import Search from "../SVG/Search.vue";
 import LeadItem from "./LeadItem.vue";
-
-import { useI18n } from 'vue-i18n';
-import { useLeadListProperties } from '@/composables/useLeadListProperties.js';
-import { inject } from "vue";
 
 const props = defineProps({
     campaign: {
@@ -29,12 +30,31 @@ const props = defineProps({
 })
 
 const { t } = useI18n();
-const { cardStyle, stageTitle, stageIdAttributes, getLeads, handleSearch } = useLeadListProperties(props, t);
+const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handleSearch } = useLeadListProperties(props, t);
 const { route: {list}} = inject('data');
+
+const el = ref(null);
+const scrollContainer = ref(null);
+
+useInfiniteScroll(
+    scrollContainer,
+    () => {
+        loadMoreLeads()
+    },
+    {
+        distance: 20,
+        direction: 'bottom',
+        canLoadMore: () => {
+            return Object.keys(props.stage).length === 0 ?
+                getLeads.value.length < props.leadsCount :
+                getLeads.value.length < props.leadsCount[props.stage.id];
+        }
+    }
+)
 </script>
 
 <template>
-<div class="campaign-card">
+<div class="campaign-card" >
     <div class="card" :style="cardStyle">
         <div class="card-header">
             <div v-if="Object.keys(props.stage).length !== 0" class="card-actions float-end">
@@ -73,7 +93,7 @@ const { route: {list}} = inject('data');
             </div>
         </div>
 
-        <div class="card-body scroll">
+        <div class="card-body scroll" ref="scrollContainer">
             <div :id="stageIdAttributes.id" :data-stage-id="stageIdAttributes.dataStageId">
                 <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign"/>
                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">

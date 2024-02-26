@@ -1,7 +1,9 @@
 import { computed, ref } from 'vue';
 import axios from 'axios';
+
 export function useLeadListProperties(props, t) {
     const filteredLeads = ref([]);
+    const loadedLeads = ref(20);
 
     const cardStyle = computed(() => {
         if (props.stage && props.stage.color) {
@@ -26,8 +28,7 @@ export function useLeadListProperties(props, t) {
         const dataStageId = Object.keys(props.stage).length !== 0 ? props.stage.id : 0;
 
         return {
-            id,
-            dataStageId
+            id, dataStageId
         };
     });
 
@@ -39,8 +40,14 @@ export function useLeadListProperties(props, t) {
     });
 
     const getLeads = computed(() => {
-        return filteredLeads.value.length > 0 ? filteredLeads.value : leadsData.value;
+        const leads = filteredLeads.value.length > 0 ? filteredLeads.value : leadsData.value;
+        return leads.slice(0, loadedLeads.value);
     });
+
+    const loadMoreLeads = () => {
+        console.log('load more leads')
+        loadedLeads.value += 10;
+    };
 
     const handleSearch = async (event) => {
         const campaignId = props.campaign.id;
@@ -49,7 +56,7 @@ export function useLeadListProperties(props, t) {
         const lowercaseQuery = event.target.value.toLowerCase();
 
         try {
-            const { data: { searchResults } } = await axios.get(`/sales/campaign/${campaignId}/pipeline/${pipelineId}/stage/${stageId}/search`, {
+            const {data: {searchResults}} = await axios.get(`/sales/campaign/${campaignId}/pipeline/${pipelineId}/stage/${stageId}/search`, {
                 params: {
                     query: lowercaseQuery,
                 },
@@ -66,6 +73,7 @@ export function useLeadListProperties(props, t) {
         stageTitle,
         stageIdAttributes,
         getLeads,
-        handleSearch,
+        loadMoreLeads,
+        handleSearch
     };
 }

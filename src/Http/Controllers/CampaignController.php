@@ -60,6 +60,9 @@ class CampaignController extends Controller
             $leads[$stage->id] = $campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id)->toArray();
         }
 
+        $initialLeads = $campaign->getInitialLeadsOnStage($campaign->pipeline_id, 0)->toArray();
+        $initialLeadsCount=$campaign->getLeadsOnStageCount($campaign->pipeline_id, 0);
+
         $routes = [
             'list' => [
                 'newList' => route('teamtnt.sales-management.lists.create.from.stage', [$campaign, ':stageId'])
@@ -89,7 +92,9 @@ class CampaignController extends Controller
         ];
 
 
-        return view('sales-management::campaign.show', compact('campaign', 'leadsCount', 'leads', 'routes'));
+        return view('sales-management::campaign.show',
+            compact('campaign', 'stages',
+                'leadsCount', 'leads', 'routes', 'initialLeads', 'initialLeadsCount'));
     }
 
     public function stageChange(Request $request)
