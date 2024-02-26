@@ -33,7 +33,6 @@ const { t } = useI18n();
 const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handleSearch } = useLeadListProperties(props, t);
 const { route: {list}} = inject('data');
 
-const el = ref(null);
 const scrollContainer = ref(null);
 
 useInfiniteScroll(
