@@ -22,18 +22,10 @@
 </template>
 
 <script setup>
-import { ref, provide, reactive, inject } from "vue";
+import { ref } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
-    // routes: {
-    //     type: Object,
-    //     required: true
-    // },
-    // emails: {
-    //     type: Object,
-    //     required: true
-    // }
     leadId: {
         type: Number,
         required: true
@@ -48,11 +40,6 @@ const showOffCanvas = ref(false);
 const lead = ref(null);
 const tags = ref([]);
 const lists = ref([]);
-// const data = reactive({
-//     route: props.routes.messages.send,
-//     emails: props.emails
-// });
-const routes = inject('routes');
 
 async function fetchLeadData() {
     try {
@@ -71,6 +58,5 @@ const toggleOffCanvas = async () => {
     showOffCanvas.value = true;
 }
 
-// provide('data', data);
 </script>
 

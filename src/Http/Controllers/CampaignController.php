@@ -60,7 +60,36 @@ class CampaignController extends Controller
             $leads[$stage->id] = $campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id)->toArray();
         }
 
-        return view('sales-management::campaign.show', compact('campaign', 'leadsCount', 'leads'));
+        $routes = [
+            'list' => [
+                'newList' => route('teamtnt.sales-management.lists.create.from.stage', [$campaign, ':stageId'])
+            ],
+            'notes' => [
+                'fetch' => route('teamtnt.sales-management.fetch-lead-notes', ':leadId'),
+                'store' => route('teamtnt.sales-management.store-lead-note', ':leadId'),
+                'delete' => route('teamtnt.sales-management.destroy-lead-note', [':leadId', ':noteId']),
+            ],
+            'activities' => [
+                'fetch' => route('teamtnt.sales-management.fetch-lead-activities', ':leadId'),
+                'store' => route('teamtnt.sales-management.store-lead-activity', ':leadId'),
+                'delete' => route('teamtnt.sales-management.destroy-lead-activity', [':leadId', ':activityId']),
+            ],
+            'contacts' => [
+                'edit' => route('teamtnt.sales-management.contacts.edit', ':contactId'),
+                'syncTags' => route('teamtnt.sales-management.contacts.sync-tags', ':contactId'),
+                'syncLists' => route('teamtnt.sales-management.contacts.sync-lists', ':contactId'),
+            ],
+            'leads' => [
+                'syncTags' => route('teamtnt.sales-management.leads.sync-tags', ':leadId'),
+                'leadData' => route('teamtnt.sales-management.lead.data', [$campaign, ':leadId']),
+            ],
+            'messages' => [
+                'send' => route('teamtnt.sales-management.send.message', [$campaign, ':leadId']),
+            ],
+        ];
+
+
+        return view('sales-management::campaign.show', compact('campaign', 'leadsCount', 'leads', 'routes'));
     }
 
     public function stageChange(Request $request)

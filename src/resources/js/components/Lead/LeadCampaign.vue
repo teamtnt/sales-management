@@ -30,13 +30,20 @@ const props = defineProps({
     routes: {
         type: Object,
         required: false
-    }
+    },
+    emails: {
+        type: Object,
+        required: false
+    },
 })
 
-const routes = reactive({
+
+const data = reactive({
     route: props.routes,
+    emails: props.emails
 });
-provide('routes', routes);
+
+provide('data', data);
 </script>
 
 <template>
@@ -56,6 +63,7 @@ provide('routes', routes);
                   :stage="stage"
                   :leads="leads"
             />
+
         </div>
     </transition>
 </template>

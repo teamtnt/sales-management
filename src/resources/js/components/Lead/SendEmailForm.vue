@@ -4,7 +4,7 @@
             <label for="from_email" class="form-label">{{ $t('From')}}</label>
             <select id="from_email" name="from_email" class="form-control" :class="{'is-invalid': errors?.from_email}">
                 <option value="" selected>{{ $t('Select')}}</option>
-                <option v-for="(option, email) in data.emails" :value="email" :key="email">{{ option }}</option>
+                <option v-for="(option, email) in emails" :value="email" :key="email">{{ option }}</option>
             </select>
             <small v-if="errors && errors.from_email" class="invalid-feedback">
                 {{ errors.from_email[0] }}
@@ -39,16 +39,23 @@
 <script setup>
 import { ref, inject } from "vue";
 
+const props = defineProps({
+    leadId: {
+        type: Number,
+        required: true
+    }
+});
+
 const form = ref(null);
 const errors = ref({});
 const submitting = ref(false);
-const routes = inject('routes');
+const {emails, route: { messages } } = inject('data')
 
 const handleFormSubmit = () => {
     let formData = new FormData(form.value)
 
     submitting.value = true;
-    axios.post(data.route, formData, {
+    axios.post(messages.send.replace(':leadId', props.leadId), formData, {
         headers: {
             "Content-Type": "application/json"
         }

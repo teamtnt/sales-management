@@ -4,6 +4,7 @@ import LeadItem from "./LeadItem.vue";
 
 import { useI18n } from 'vue-i18n';
 import { useLeadListProperties } from '@/composables/useLeadListProperties.js';
+import { inject } from "vue";
 
 const props = defineProps({
     campaign: {
@@ -29,7 +30,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const { cardStyle, stageTitle, stageIdAttributes, getLeads, handleSearch } = useLeadListProperties(props, t);
-
+const { route: {list}} = inject('data');
 </script>
 
 <template>
@@ -51,8 +52,7 @@ const { cardStyle, stageTitle, stageIdAttributes, getLeads, handleSearch } = use
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                <!-- href="{{ route('teamtnt.sales-management.lists.create.from.stage', [$campaign->id, $stage->id]) }}"-->
-                        <a href="#" class="dropdown-item"
+                        <a :href="list.newList.replace(':stageId', stage.id)" class="dropdown-item"
                           >{{ $t("Create New List") }}</a>
                     </div>
                 </div>

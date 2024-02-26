@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from "vue";
 import LeadDetails from "./LeadDetails.vue";
+import { inject } from "vue";
 
 //SVG Icons
 import User from "../SVG/User.vue";
@@ -36,6 +37,8 @@ const nextCallActivityDate = computed(() => {
     return formatter.format(date);
 });
 
+const data = inject('data');
+
 </script>
 
 <template>
@@ -54,8 +57,7 @@ const nextCallActivityDate = computed(() => {
         <div class="d-flex align-items-center">
             <User class="flex-shrink-0"/>
             <span class="ms-2 lead-name">
-    <!--            href="{{ route('teamtnt.sales-management.contacts.edit', $lead->contact) }}"-->
-                <a target="_blank" href="#">
+                <a target="_blank" :href="data.route.contacts.edit.replace(':contactId', lead.contact.id)">
                     {{ lead.contact?.firstname }} {{ lead.contact?.lastname }}
                 </a>
             </span>
@@ -81,16 +83,11 @@ const nextCallActivityDate = computed(() => {
                 {{ nextCallActivityDate }}
             </span>
         </div>
-
-<!--For details-->
-<!-- :routes="{{ $routes->toJson() }}"-->
-<!--        :emails="{{ json_encode(config('sales-management.emails')) }}"-->
-<!--        :key="{{ $lead->id }}"-->
-        <LeadDetails :lead-id="lead.id" :campaign-id="campaign.id"/>
+        <LeadDetails :lead-id="lead.id" :campaign-id="campaign.id" :key="lead.contact.id"/>
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .drag-handle {
         color: #a7a7a7;
         &:hover {

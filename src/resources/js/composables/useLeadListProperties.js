@@ -18,7 +18,7 @@ export function useLeadListProperties(props, t) {
             return `${props.stage.name} (${props.leadsCount[props.stage.id]})`;
         }
 
-        return `${t('Leads')} (${props.leadsCount})`;// ... (your existing logic for stageTitle)
+        return `${t('Leads')} (${props.leadsCount})`;
     });
 
     const stageIdAttributes = computed(() => {
