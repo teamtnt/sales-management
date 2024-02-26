@@ -40,6 +40,7 @@
             </ul>
         @endif
     </div>
+
     @if ($lead->nextCallActivity)
         <div class="d-flex align-items-center">
             <x-sales-management::icons.phone />

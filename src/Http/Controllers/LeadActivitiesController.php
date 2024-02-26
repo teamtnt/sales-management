@@ -51,9 +51,9 @@ class LeadActivitiesController extends Controller
      * @param $note
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($lead, $note)
+    public function destroy($lead, $activity)
     {
-        $leadActivity = LeadActivity::where('id', $note)
+        $leadActivity = LeadActivity::where('id', $activity)
             ->where('lead_id', $lead)
             ->first();
 

@@ -2,6 +2,7 @@
 
 namespace Teamtnt\SalesManagement\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,6 +33,28 @@ class Campaign extends Model
     public function pipeline()
     {
         return $this->belongsTo(Pipeline::class);
+    }
+
+    /**
+     * Get initial leads on stage sorted by created_at
+     *
+     * @param $pipelineId
+     * @param $stageId
+     * @param $limit
+     * @return Collection
+     */
+    public function getInitialLeadsOnStage($pipelineId, $stageId, $limit = null): Collection
+    {
+        return $this->leads()
+            ->where('pipeline_id', $pipelineId)
+            ->where('pipeline_stage_id', $stageId)
+            ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
+            ->orderByDesc(Contact::select('created_at')
+                ->whereColumn(config('sales-management.tablePrefix') . 'leads.contact_id', config('sales-management.tablePrefix') . 'contacts.id')
+                ->orderBy('created_at', 'DESC')
+                ->limit(1)
+            )
+            ->limit($limit)->get();
     }
 
     public function getLeadsOnStage($pipelineId, $stageId, $limit = null)

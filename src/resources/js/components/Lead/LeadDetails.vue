@@ -15,23 +15,23 @@
                 :lead="lead"
                 :tags="tags"
                 :lists="lists"
-                :routes="routes"
+                :routes="[]"
             />
         </template>
     </div>
 </template>
 
 <script setup>
-import { ref, provide, reactive } from "vue";
+import { ref } from "vue";
 import OffCanvas from "./OffCanvas.vue";
 
 const props = defineProps({
-    routes: {
-        type: Object,
+    leadId: {
+        type: Number,
         required: true
     },
-    emails: {
-        type: Object,
+    campaignId: {
+        type: Number,
         required: true
     }
 })
@@ -40,14 +40,10 @@ const showOffCanvas = ref(false);
 const lead = ref(null);
 const tags = ref([]);
 const lists = ref([]);
-const data = reactive({
-    route: props.routes.messages.send,
-    emails: props.emails
-});
 
 async function fetchLeadData() {
     try {
-        const response = await axios.get(props.routes.leads.leadData);
+        const response = await axios.get(`/sales/campaign/${props.campaignId}/lead/${props.leadId}`);
 
         lead.value = response.data.lead;
         tags.value = JSON.parse(response.data.tags);
@@ -62,6 +58,5 @@ const toggleOffCanvas = async () => {
     showOffCanvas.value = true;
 }
 
-provide('data', data);
 </script>
 

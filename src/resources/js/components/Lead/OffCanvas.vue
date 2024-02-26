@@ -138,7 +138,7 @@
                              <p class="mb-1">{{ lead.contact.country }}</p>
                          </dd>
                          <dt v-if="lead.contact.external_profile_url" class="col-4 col-xxl-3 mb-0">
-                             <strong>{{ $t('Profile URL') }}:</strong>
+                             <strong>{{ $t('Profile') }} URL:</strong>
                          </dt>
                          <dd v-if="lead.contact.external_profile_url" class="col-8 col-xxl-9 mb-0">
                              <p class="mb-1"><a :href="lead.contact.external_profile_url" target="_blank">{{ lead.contact.external_profile_url }}</a></p>
@@ -157,7 +157,7 @@
                             placeholder="Choose tags..."
                             label-by="name"
                             track-by="name"
-                            :sync-tags-url="routes.contacts.syncTags"
+                            :sync-tags-url="data.route.contacts.syncTags.replace(':contactId', lead.contact.id)"
                             :model-id="lead.contact.id"
                             :selected="lead.contact.tags ?? []"
                             :options="tags ?? []"
@@ -177,7 +177,7 @@
                             placeholder="Choose list..."
                             label-by="name"
                             track-by="name"
-                            :sync-tags-url="routes.contacts.syncLists"
+                            :sync-tags-url="data.route.contacts.syncLists.replace(':contactId', lead.contact.id)"
                             :model-id="lead.contact.id"
                             :selected="lead.contact.lists ?? []"
                             :options="lists ?? []"
@@ -196,7 +196,7 @@
                             placeholder="Choose tags..."
                             label-by="name"
                             track-by="name"
-                            :sync-tags-url="routes.leads.syncTags"
+                            :sync-tags-url="data.route.leads.syncTags.replace(':contactId', lead.contact.id)"
                             :model-id="lead.id"
                             :selected="lead.tags ?? []"
                             :options="tags ?? []"
@@ -215,9 +215,9 @@
                 <div class="offcanvas-body">
                     <notes
                         :lead-id="lead.id"
-                        :fetch-url="routes.notes.fetch"
-                        :url="routes.notes.store"
-                        :delete-url="routes.notes.delete"
+                        :fetch-url="data.route.notes.fetch.replace(':leadId', lead.id)"
+                        :url="data.route.notes.store.replace(':leadId', lead.id)"
+                        :delete-url="data.route.notes.delete.replace(':leadId', lead.id)"
                         :key="lead.id">
                     </notes>
                 </div>
@@ -228,9 +228,9 @@
                 <div class="offcanvas-body">
                     <activities
                         :lead-id="lead.id"
-                        :fetch-url="routes.activities.fetch"
-                        :url="routes.activities.store"
-                        :delete-url="routes.activities.delete"
+                        :fetch-url="data.route.activities.fetch.replace(':leadId', lead.id)"
+                        :url="data.route.activities.store.replace(':leadId', lead.id)"
+                        :delete-url="data.route.activities.delete.replace(':leadId', lead.id)"
                         :key="lead.id">
                     </activities>
                 </div>
@@ -238,7 +238,7 @@
              <div class="tab-pane fade" id="message-tab-pane" role="tabpanel"
                   aria-labelledby="message-tab" tabindex="0">
                  <div class="offcanvas-body">
-                     <send-email-form />
+                     <send-email-form :lead-id="lead.id"/>
                  </div>
              </div>
          </div>
@@ -246,7 +246,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue';
 import { onClickOutside } from '@vueuse/core'
 import Notes from "../Notes/Notes.vue";
 import Activities from "../Notes/Activities.vue";
@@ -304,6 +304,8 @@ onClickOutside(offCanvasRef, () => {
 const leadFullName = computed(() => {
     return `${props.lead.contact?.firstname ?? ''} ${props.lead.contact?.lastname ?? ''}`
 })
+
+const data = inject('data')
 
 </script>
 

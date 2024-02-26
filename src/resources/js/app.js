@@ -33,8 +33,7 @@ import MultiSelectList from "./components/MultiSelectList/MultiSelectList.vue";
 import Notes from "./components/Notes/Notes.vue";
 import Activities from "./components/Notes/Activities.vue";
 import OpenClicksChart from "./components/Dashboard/OpenClicksChart.vue";
-import LeadDetails from "./components/LeadDetails/LeadDetails.vue";
-
+import LeadCampaign from "./components/Lead/LeadCampaign.vue";
 
 const emitter = mitt();
 const app = createApp({
@@ -47,11 +46,13 @@ const app = createApp({
         Notes,
         Activities,
         OpenClicksChart,
-        LeadDetails
+        LeadCampaign,
     }
 })
 
 app.config.globalProperties.emitter = emitter;
+app.config.compilerOptions.whitespace = 'preserve';
+
 app.use(i18n);
 
 if (document.querySelector("#app") !== null) {

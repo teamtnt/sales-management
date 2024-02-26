@@ -14,7 +14,7 @@ class SearchController extends Controller
         $query = $request->get('query');
 
         if(!$request->has('query') or $request->get('query') == '')  {
-            $leads = $campaign->getLeadsOnStage($pipelineID, $stageID, 50);
+            $leads = $campaign->getLeadsOnStage($pipelineID, $stageID);
         }
         else {
             // find lead contact by name
@@ -34,11 +34,6 @@ class SearchController extends Controller
                 ->limit(10)->get();
         }
 
-        $html = '';
-        foreach ($leads as $lead) {
-            $html .= view('sales-management::components.lead-card', ['lead' => $lead, 'campaign' => $campaign])->render();
-        }
-
-        return response()->json(['html' => $html]);
+        return response()->json(['searchResults' => $leads]);
     }
 }

@@ -21,7 +21,7 @@ let config = {
         },
     }), VueI18nPlugin({ /* options */}),], resolve: {
         alias: {
-            // '@': '/src/resources/js'
+            '@': '/src/resources/js',
             '~bootstrap': 'bootstrap',
             '~@fortawesome': '@fortawesome',
             '~simplebar': 'simplebar',
