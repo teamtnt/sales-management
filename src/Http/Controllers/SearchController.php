@@ -9,35 +9,36 @@ use Teamtnt\SalesManagement\Models\Lead;
 
 class SearchController extends Controller
 {
-    public function search( Request $request, Campaign $campaign, $pipelineID, $stageID)
+    public function search(Request $request, Campaign $campaign, $pipelineID, $stageID)
     {
         $query = $request->get('query');
 
         $methodName = $stageID == 0 ? 'getInitialLeadsOnStage' : 'getLeadsOnStage';
 
-        if(!$request->has('query') or $request->get('query') == '')  {
+        if (!$request->has('query') or $request->get('query') == '') {
             $leads = $campaign->$methodName($pipelineID, $stageID);
-        }
-        else {
+        } else {
             //try to find a lead by contact last name directly
             $leads = Lead::with('notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
                 ->whereHas('contact', function ($q) use ($query) {
-                    $q->where('lastname', 'LIKE', '%' . $query . '%');
+                    $q->where('lastname', 'LIKE', '%' . $query . '%')
+                        ->orWhere('firstname', 'LIKE', '%' . $query . '%')
+                        ->orWhere('email', 'LIKE', '%' . $query . '%')
+                        ->orWhere('company_name', 'LIKE', '%' . $query . '%')
+                        ->orWhereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ['%' . $query . '%']);
                 })
                 ->where('pipeline_stage_id', $stageID)
                 ->where('pipeline_id', $pipelineID)
                 ->limit(5)->get();
 
-            // find lead contact by name
+            // find lead contact by fulltext search
             $leadsWithFullText = Lead::with('notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
                 ->whereHas('contact', function ($q) use ($query) {
-                    $q->where(function($q) use ($query) {
+                    $q->where(function ($q) use ($query) {
                         $q->whereFullText('lastname', $query)
                             ->orWhereFullText('firstname', $query)
-                            ->orWhereFullText('email', $query)
-                            ->orWhere('lastname', 'LIKE', '%' . $query . '%')
-                            ->orWhere('firstname', 'LIKE', '%' . $query . '%')
-                            ->orWhere('email', 'LIKE', '%' . $query . '%');
+                            ->orWhereFullText('email', $query);
+
                     });
                 })
                 ->where('pipeline_stage_id', $stageID)
