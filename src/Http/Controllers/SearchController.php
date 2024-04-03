@@ -17,8 +17,17 @@ class SearchController extends Controller
             $leads = $campaign->getLeadsOnStage($pipelineID, $stageID);
         }
         else {
-            // find lead contact by name
+            //try to find a lead by contact last name directly
             $leads = Lead::with('notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
+                ->whereHas('contact', function ($q) use ($query) {
+                    $q->where('lastname', 'LIKE', '%' . $query . '%');
+                })
+                ->where('pipeline_stage_id', $stageID)
+                ->where('pipeline_id', $pipelineID)
+                ->limit(5)->get();
+
+            // find lead contact by name
+            $leadsWithFullText = Lead::with('notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
                 ->whereHas('contact', function ($q) use ($query) {
                     $q->where(function($q) use ($query) {
                         $q->whereFullText('lastname', $query)
@@ -32,6 +41,11 @@ class SearchController extends Controller
                 ->where('pipeline_stage_id', $stageID)
                 ->where('pipeline_id', $pipelineID)
                 ->limit(10)->get();
+
+            $leads = $leads->merge($leadsWithFullText);
+
+            //make sure we don't have duplicates
+            $leads = $leads->unique('id');
         }
 
         return response()->json(['searchResults' => $leads]);

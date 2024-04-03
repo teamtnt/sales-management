@@ -56,4 +56,9 @@ class Contact extends Model
     {
         return $this->firstname . ' ' . $this->lastname;
     }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
+    }
 }
