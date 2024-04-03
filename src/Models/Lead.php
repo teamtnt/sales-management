@@ -45,6 +45,16 @@ class Lead extends Model
         return $this->hasMany(LeadActivity::class, 'lead_id')->orderBy('created_at', 'desc');
     }
 
+    public function pipeline()
+    {
+        return $this->belongsTo(Pipeline::class);
+    }
+
+    public function stage()
+    {
+        return $this->belongsTo(PipelineStage::class, 'pipeline_stage_id');
+    }
+
     //get next Call activity in the future as a relation
     public function nextCallActivity()
     {

@@ -60,6 +60,8 @@ class ContactsController extends Controller
      */
     public function edit(Contact $contact)
     {
+        $contact->load('tags', 'lists', 'leads', 'leads.campaign', 'leads.pipeline', 'leads.stage');
+
         return view('sales-management::contacts.edit', compact('contact'));
     }
 
