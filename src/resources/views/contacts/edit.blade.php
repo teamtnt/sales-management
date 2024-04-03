@@ -52,7 +52,7 @@
                                 @foreach($contact->leads as $lead)
                                     <td>
                                         @if($lead->campaign)
-                                            <a href="{{ route('teamtnt.sales-management.campaign.edit', $lead->campaign->id) }}">{{ $lead->campaign->name }}</a>
+                                            <a href="{{ route('teamtnt.sales-management.campaign.show', $lead->campaign->id) }}">{{ $lead->campaign->name }}</a>
                                         @endif
                                     </td>
                                     <td>
