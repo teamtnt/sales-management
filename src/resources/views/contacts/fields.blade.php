@@ -144,6 +144,7 @@
     </div>
 </div>
 
+@if($contact->id)
 <div class="row">
     <div class="col-md-12">
         <multi-select-list
@@ -159,6 +160,7 @@
         </multi-select-list>
     </div>
 </div>
+@endif
 
 
 
