@@ -38,6 +38,8 @@ class TagsController extends Controller
 
         request()->session()->flash('message', __('Tag successfully created!'));
 
+        cache()->forget('all-tags');
+
         return redirect()->route('teamtnt.sales-management.tags.index');
     }
 

@@ -31,6 +31,9 @@ class ContactListController extends Controller
 
         request()->session()->flash('message', __('List successfully created!'));
 
+        //invalidate all-lists cache
+        cache()->forget('all-lists');
+
         return redirect()->route('teamtnt.sales-management.lists.index');
     }
 
