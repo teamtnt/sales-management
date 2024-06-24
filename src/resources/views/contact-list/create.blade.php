@@ -14,7 +14,7 @@
             <div class="col-md-12 col-lg-10 col-xl-8">
                 <div class="card">
                     <div class="card-body">
-                        {!! Form::model(null, ['route' => ['lists.store'], 'method' => 'POST',  'enctype'=>'multipart/form-data']) !!}
+                        {!! Form::model(null, ['route' => ['teamtnt.sales-management.lists.store'], 'method' => 'POST',  'enctype'=>'multipart/form-data']) !!}
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-3">
