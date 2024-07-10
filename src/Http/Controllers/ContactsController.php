@@ -76,6 +76,21 @@ class ContactsController extends Controller
 
         $contact->tags()->sync($request->get('tags'));
 
+        //create as lead in all lists the contacts is added to unless he is already a lead
+        $contact->lists->each(function ($list) use ($contact) {
+            $campaignIds = $list->campaigns->pluck('id')->toArray();
+            $lead = Lead::whereIn('campaign_id', $campaignIds)->whereContactId($contact->id)->first();
+            if (!$lead) {
+                $campaign = $list->campaigns->first();
+                $lead = Lead::create([
+                    'campaign_id' => $campaign->id,
+                    'contact_id' => $contact->id,
+                    'pipeline_id' => $campaign->pipeline_id,
+                    'pipeline_stage_id' => 0
+                ]);
+            }
+        });
+
         request()->session()->flash('message', __('Contact successfully updated!'));
 
         return redirect()->route('teamtnt.sales-management.contacts.index');

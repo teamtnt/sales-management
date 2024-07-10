@@ -48,8 +48,8 @@
                                 <th>Stage</th>
                             </tr>
                             </thead>
-                            <tr>
                                 @foreach($contact->leads as $lead)
+                                <tr>
                                     <td>
                                         @if($lead->campaign)
                                             <a href="{{ route('teamtnt.sales-management.campaign.show', $lead->campaign->id) }}">{{ $lead->campaign->name }}</a>
@@ -62,8 +62,8 @@
                                         {{ $lead->stage->name ?? 'Leads' }}
                                     </td>
 
+                                </tr>
                                 @endforeach
-                            </tr>
                         </table>
 
                     </div>
