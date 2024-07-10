@@ -148,7 +148,7 @@
 <div class="row">
     <div class="col-md-12">
         <multi-select-list
-            name=tags[]
+            name=lists[]
             label="Add to Lists"
             placeholder="Choose list..."
             label-by="name"
