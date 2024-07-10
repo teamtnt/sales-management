@@ -46,7 +46,7 @@ function syncTags(option, id) {
         let formData = new FormData();
         formData.append('modelId', props.modelId)
         for (let i = 0; i < selectedOptions.value.length; i++) {
-            formData.append(props.name, selectedOptions.value[i].id);
+            formData.append('tags[]', selectedOptions.value[i].id);
         }
 
         axios.post(props.syncTagsUrl, formData, {
