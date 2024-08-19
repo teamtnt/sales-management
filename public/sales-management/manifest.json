@@ -1,6 +1,6 @@
 {
-  "_vendor-DNhVQl4-.js": {
-    "file": "assets/vendor-DNhVQl4-.js"
+  "_vendor-DVxmtyTD.js": {
+    "file": "assets/vendor-DVxmtyTD.js"
   },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": {
     "file": "assets/fa-solid-900-Dysk51tl.ttf",
@@ -11,14 +11,14 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-WSCBhD4b.js",
+    "file": "assets/app-CwD4ouxf.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_vendor-DNhVQl4-.js"
+      "_vendor-DVxmtyTD.js"
     ],
     "css": [
-      "assets/app-CkQYKksc.css"
+      "assets/app-hzKx2hB6.css"
     ]
   },
   "src/resources/scss/light.scss": {
