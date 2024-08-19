@@ -145,6 +145,18 @@
                          </dd>
 
                     </dl>
+                     <div class="mb-4">
+                        <span class="d-flex fw-bold align-items-center mb-1">
+                            <i class="align-middle me-2 fas fa-fw fa-random"></i>
+                            {{ $t('Stages') }}
+                        </span>
+                         <regular-select
+                             :model-id="lead.id"
+                             :options="data.stages"
+                             :selected-option="lead.pipeline_stage_id"
+                             transform-options/>
+                    </div>
+                     <hr>
                     <div class="mb-4">
                         <span class="d-flex fw-bold align-items-center mb-2">
                             <svg class="me-2" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -252,6 +264,7 @@ import Notes from "../Notes/Notes.vue";
 import Activities from "../Notes/Activities.vue";
 import MultiSelectList from "../MultiSelectList/MultiSelectList.vue";
 import SendEmailForm from "./SendEmailForm.vue";
+import RegularSelect from "../RegularSelect/RegularSelect.vue";
 
 const props = defineProps({
     modelValue: {

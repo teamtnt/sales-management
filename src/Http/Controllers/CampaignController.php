@@ -85,6 +85,7 @@ class CampaignController extends Controller
             'leads' => [
                 'syncTags' => route('teamtnt.sales-management.leads.sync-tags', ':leadId'),
                 'leadData' => route('teamtnt.sales-management.lead.data', [$campaign, ':leadId']),
+                'leadStageChange' => route('teamtnt.sales-management.lead.stage.change', [$campaign, ':leadId']),
             ],
             'messages' => [
                 'send' => route('teamtnt.sales-management.send.message', [$campaign, ':leadId']),

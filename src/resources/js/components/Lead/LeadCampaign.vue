@@ -40,7 +40,8 @@ const props = defineProps({
 
 const data = reactive({
     route: props.routes,
-    emails: props.emails
+    emails: props.emails,
+    stages: props.stages
 });
 
 provide('data', data);

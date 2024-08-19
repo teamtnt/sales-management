@@ -60,4 +60,16 @@ class LeadsController extends Controller
         ]);
     }
 
+    public function leadStageChange(Campaign $campaign, Lead $lead, Request $request)
+    {
+        if (!$lead) {
+            return response()->json(404);
+        }
+
+        $lead->pipeline_stage_id = request('stage_id');
+        $lead->save();
+
+        return response()->json(200);
+    }
+
 }

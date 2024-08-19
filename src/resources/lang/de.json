@@ -44,5 +44,7 @@
     "Message": "Nachricht",
     "Send Message": "Nachricht senden",
     "Leads": "Leads",
-    "Create New List": "Neue Liste erstellen"
+    "Create New List": "Neue Liste erstellen",
+    "Stages": "Stages",
+    "Lead moved to another stage!": "Lead in neue Stage verschoben!"
 }

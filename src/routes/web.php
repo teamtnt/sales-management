@@ -119,6 +119,7 @@ Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix
 
     Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/search', [SearchController::class, 'search']);
     Route::get('/campaign/{campaign}/lead/{lead}', [LeadsController::class, 'getLeadData'])->name('lead.data');
+    Route::post('/campaign/{campaign}/lead/{lead}/stage-change', [LeadsController::class, 'leadStageChange'])->name('lead.stage.change');
 
 });
 

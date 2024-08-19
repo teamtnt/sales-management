@@ -37,7 +37,6 @@
                 </a>
             @endcan
         </div>
-
         <lead-campaign
             :campaign="{{ $campaign }}"
             :initial-leads="{{ json_encode($initialLeads) }}"
