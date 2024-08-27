@@ -70,10 +70,15 @@ const data = inject('data');
             <Phone />
             <span class="ms-2">{{ lead.contact?.phone}}</span>
         </div>
-        <div v-if="lead.contact?.tags.length > 0 || lead?.tags.length > 0" class="d-flex align-items-center">
+        <div v-if="lead.contact?.tags.length > 0" class="d-flex align-items-center">
             <Tag class="me-2 flex-shrink-0" />
             <ul class="list-unstyled d-flex flex-wrap m-0" style="gap: 2px 3px;">
                 <li v-for="tag in lead.contact.tags" :key="tag.id" class="badge rounded-pill bg-info fw-light">{{ tag.name }}</li>
+            </ul>
+        </div>
+        <div v-if="lead?.tags.length > 0 " class="d-flex align-items-center">
+            <Tag class="me-2 flex-shrink-0" />
+            <ul class="list-unstyled d-flex flex-wrap m-0 lead-tags mt-3" style="gap: 2px 3px;">
                 <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill bg-info fw-light">{{ tag.name }}</li>
             </ul>
         </div>

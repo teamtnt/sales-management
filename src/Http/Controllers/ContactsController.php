@@ -265,7 +265,9 @@ class ContactsController extends Controller
         DB::beginTransaction();
 
         try {
-            $contact = Contact::create(request()->except('tags', 'campaign_id', 'notes'));
+            $contact = Contact::updateOrCreate(
+                ['uuid' => request('uuid')],
+                request()->except('tags', 'campaign_id', 'notes'));
             //if tag does not exist create it
             $tags = request()->get('tags');
             foreach ($tags as $tag) {
@@ -286,6 +288,13 @@ class ContactsController extends Controller
                 'pipeline_id' => $campaign->pipeline_id,
                 'pipeline_stage_id' => 0
             ]);
+
+            //if tag does not exist create it
+            $tags = request()->get('lead_tags');
+            foreach ($tags as $tag) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $lead->tags()->attach($tag->id);
+            }
 
             //create notes from request, map keys add to note as text
             $noteKeys = ['additional_info' => 'weitere Informationen', 'number_of_attendees' => 'vorauss. TN-Anzahl', 'preferred_date' => 'Wunschtermin'];
