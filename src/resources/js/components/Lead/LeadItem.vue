@@ -79,7 +79,7 @@ const data = inject('data');
         <div v-if="lead?.tags.length > 0 " class="d-flex align-items-center">
             <Tag class="me-2 flex-shrink-0" />
             <ul class="list-unstyled d-flex flex-wrap m-0 lead-tags mt-3" style="gap: 2px 3px;">
-                <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill bg-info fw-light">{{ tag.name }}</li>
+                <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill bg-success fw-light">{{ tag.name }}</li>
             </ul>
         </div>
         <div v-if="lead.next_call_activity" class="d-flex align-items-center">

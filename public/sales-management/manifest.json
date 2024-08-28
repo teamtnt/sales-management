@@ -11,7 +11,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-CRFLJ3kP.js",
+    "file": "assets/app-BbxoRyZX.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
