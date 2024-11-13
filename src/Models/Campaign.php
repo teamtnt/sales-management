@@ -45,7 +45,7 @@ class Campaign extends Model
      */
     public function getInitialLeadsOnStage($pipelineId, $stageId, $limit = null): Collection
     {
-        return $this->leads()
+        $leads = $this->leads()
             ->where('pipeline_id', $pipelineId)
             ->where('pipeline_stage_id', $stageId)
             ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
@@ -55,6 +55,37 @@ class Campaign extends Model
                 ->limit(1)
             )
             ->limit($limit)->get();
+
+        if($this->name != 'Bestandskunden') return $leads;
+        
+        // Sort by tags that are valid dates
+        $sortedLeads = $leads->sort(function ($leadA, $leadB) {
+            $dateA = $this->getEarliestTagDate($leadA->tags);
+            $dateB = $this->getEarliestTagDate($leadB->tags);
+
+            // Handle cases where one or both dates might be null
+            if ($dateA === null && $dateB === null) return 0;
+            if ($dateA === null) return 1;
+            if ($dateB === null) return -1;
+
+            return $dateB <=> $dateA;
+        });
+
+        return $sortedLeads->values(); // Re-index the collection
+    }
+
+    /**
+     * Helper function to get the earliest date from a collection of tags.
+     */
+    private function getEarliestTagDate($tags)
+    {
+        // Filter tags to find those that match the date format 'dd.mm.yyyy'
+        $dates = $tags->map(function ($tag) {
+            return \DateTime::createFromFormat('d.m.Y', $tag->name) ?: null;
+        })->filter(); // Filter out null values (non-date strings)
+
+        // Return the earliest date if there are valid dates, or null if none
+        return $dates->isNotEmpty() ? $dates->min() : null;
     }
 
     public function getLeadsOnStage($pipelineId, $stageId, $limit = null)
@@ -70,6 +101,7 @@ class Campaign extends Model
                 ->orderBy('start_date', 'asc')
                 ->limit(1)
             )
+
             ->limit($limit)->get();
     }
 
