@@ -57,7 +57,7 @@ class Campaign extends Model
             ->limit($limit)->get();
 
         if($this->name != 'Bestandskunden') return $leads;
-        
+
         // Sort by tags that are valid dates
         $sortedLeads = $leads->sort(function ($leadA, $leadB) {
             $dateA = $this->getEarliestTagDate($leadA->tags);
@@ -68,7 +68,7 @@ class Campaign extends Model
             if ($dateA === null) return 1;
             if ($dateB === null) return -1;
 
-            return $dateB <=> $dateA;
+            return $dateA <=> $dateB;
         });
 
         return $sortedLeads->values(); // Re-index the collection
