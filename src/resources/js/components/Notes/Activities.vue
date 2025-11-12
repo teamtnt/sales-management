@@ -47,6 +47,48 @@ function fetchActivities() {
     })
 }
 
+const createReminderIn3Days = () => {
+    submitting.value = true;
+
+    // Calculate date 72 hours from now
+    const reminderDate = new Date();
+    reminderDate.setTime(reminderDate.getTime() + (72 * 60 * 60 * 1000));
+    const formattedDate = reminderDate.toISOString().slice(0, 16);
+
+    let formData = new FormData();
+    formData.append('description', 'Wiedervorlage')
+    formData.append('activity_type', 'Call')
+    formData.append('activity_start_date', formattedDate)
+    formData.append('activity_end_date', '')
+    formData.append('lead_id', props.leadId)
+
+    axios.post(props.url, formData, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then((response) => {
+        if (response.status === 200) {
+            activities.value = [...activities.value, response.data.leadActivity]
+            submitting.value = false;
+
+            window.notyf.open({
+                type: "success",
+                message: "Wiedervorlage in 3 Tagen erstellt!",
+                duration: "2500",
+                ripple: true,
+                position: "bottom right",
+                dismissible: true,
+            });
+        }
+    }).catch((error) => {
+        if (error.response.status === 422) {
+            errors.value = error.response.data.errors
+            console.log(error.response.data.errors)
+        }
+        submitting.value = false;
+    });
+}
+
 const handleFormSubmit = () => {
     submitting.value = true;
 
@@ -166,7 +208,12 @@ function formatDate(dateString) {
                 {{ errors.description[0] }}
             </small>
             </div>
-            <button type="submit" class="btn btn-success mt-2" :disabled="submitting">Add Activity</button>
+            <div class="d-flex gap-2 mt-2">
+                <button type="submit" class="btn btn-success" :disabled="submitting">Add Activity</button>
+                <button type="button" class="btn btn-warning" @click="createReminderIn3Days" :disabled="submitting">
+                    <i class="align-middle me-1 fas fa-fw fa-clock"></i>Auf Wiedervorlage legen
+                </button>
+            </div>
 
         </div>
     </form>

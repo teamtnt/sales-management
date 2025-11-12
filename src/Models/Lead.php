@@ -10,7 +10,6 @@ class Lead extends Model
     use HasFactory;
 
     protected $table;
-    public $timestamps = false;
 
     protected $fillable = [
         'campaign_id',

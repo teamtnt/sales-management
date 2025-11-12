@@ -39,6 +39,10 @@ class CampaignDataTable extends DataTable
             ->addColumn('contact_list.name', function (Campaign $campaign) {
                 return '<a href="'.route('teamtnt.sales-management.lists.edit', $campaign->contactList->id).'">'.$campaign->contactList->name.'</a>' ?? '--';
             })
+            ->addColumn('first_stage_leads', function (Campaign $campaign) {
+                // Stage 0 represents the initial stage before any pipeline stages
+                return $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0);
+            })
             ->addColumn('action', 'sales-management::campaign.actions')
             ->rawColumns(['name', 'action','contact_list.name'])
             ->setRowId('id');
@@ -87,6 +91,7 @@ class CampaignDataTable extends DataTable
             Column::make('status')->title(__('Status')),
             Column::make('assignee')->title(__('Assignee')),
             Column::make('contact_list.name')->title(__('Contact List')),
+            Column::computed('first_stage_leads')->title(__('Leads')),
             Column::computed('action')->title(__('Action'))
                 ->exportable(false)
                 ->printable(false)
