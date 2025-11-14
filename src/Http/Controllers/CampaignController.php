@@ -95,7 +95,8 @@ class CampaignController extends Controller
 
         return view('sales-management::campaign.show',
             compact('campaign', 'stages',
-                'leadsCount', 'leads', 'routes', 'initialLeads', 'initialLeadsCount'));
+                'leadsCount', 'leads', 'routes', 'initialLeads', 'initialLeadsCount'))
+            ->with('globalSearch', session('globalSearch', ''));
     }
 
     public function stageChange(Request $request)

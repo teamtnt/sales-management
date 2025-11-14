@@ -31,7 +31,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handleSearch } = useLeadListProperties(props, t);
-const { route: {list}} = inject('data');
+const { route: {list}, isGlobalSearching, globalSearchQuery } = inject('data');
 
 const scrollContainer = ref(null);
 useInfiniteScroll(
@@ -49,6 +49,18 @@ useInfiniteScroll(
         }
     }
 )
+
+const localSearchInput = ref(null);
+
+// Clear local search when global search is active
+const handleLocalSearchInput = (event) => {
+    if (isGlobalSearching.value && globalSearchQuery.value) {
+        // Prevent local search when global search is active
+        event.target.value = '';
+        return;
+    }
+    handleSearch(event);
+};
 </script>
 
 <template>
@@ -78,16 +90,27 @@ useInfiniteScroll(
             <h5 class="card-title">{{ stageTitle }}</h5>
             <h6 v-if="stage.description" class="card-subtitle text-muted mb-2">{{ stage.description }}</h6>
 
-            <div class="input-group">
+            <div class="input-group" :class="{ 'opacity-50': isGlobalSearching && globalSearchQuery }">
                  <span class="input-group-text">
                      <Search />
                  </span>
 
-                <input class="form-control lead-search"
-                       id=""
-                       type="search" name="lead-search"
-                       placeholder="Search leads by name or email..."
-                       @input="handleSearch">
+                <input 
+                    ref="localSearchInput"
+                    class="form-control lead-search"
+                    type="search" 
+                    name="lead-search"
+                    :placeholder="isGlobalSearching && globalSearchQuery ? 'Global search active...' : 'Search in this stage...'"
+                    :disabled="isGlobalSearching && globalSearchQuery"
+                    @input="handleLocalSearchInput">
+            </div>
+            
+            <!-- Global search indicator -->
+            <div v-if="isGlobalSearching && globalSearchQuery && getLeads.length > 0" 
+                 class="mt-2 alert alert-info py-1 px-2 mb-0" 
+                 style="font-size: 0.85rem;">
+                <i class="fas fa-filter me-1"></i>
+                Showing {{ getLeads.length }} result(s) from global search
             </div>
         </div>
 

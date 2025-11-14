@@ -5,6 +5,7 @@ use Teamtnt\SalesManagement\Http\Controllers\CompanyController;
 use Teamtnt\SalesManagement\Http\Controllers\ContactsController;
 use Teamtnt\SalesManagement\Http\Controllers\DashboardController;
 use Teamtnt\SalesManagement\Http\Controllers\DealController;
+use Teamtnt\SalesManagement\Http\Controllers\ExternalLinkController;
 use Teamtnt\SalesManagement\Http\Controllers\LeadActivitiesController;
 use Teamtnt\SalesManagement\Http\Controllers\LeadNotesController;
 use Teamtnt\SalesManagement\Http\Controllers\LeadsController;
@@ -19,6 +20,9 @@ use Teamtnt\SalesManagement\Http\Controllers\DocsController;
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->can(config('sales-management.permission_prefix').'.view-dashboard');
+
+// External link - find contact by UUID and redirect intelligently
+Route::get('/find/{uuid}', [ExternalLinkController::class, 'findByUuid'])->name('find.uuid')->middleware('auth');;
 
 // Contacts
 Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix').'.view-contacts'  ]], function () {
@@ -118,6 +122,7 @@ Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix
     Route::post('/stage/chage', [CampaignController::class, 'stageChange'])->name('stage.change');
 
     Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/search', [SearchController::class, 'search']);
+    Route::get('/campaign/{campaign}/pipeline/{pipelineID}/search-all', [SearchController::class, 'searchAll']);
     Route::get('/campaign/{campaign}/lead/{lead}', [LeadsController::class, 'getLeadData'])->name('lead.data');
     Route::post('/campaign/{campaign}/lead/{lead}/stage-change', [LeadsController::class, 'leadStageChange'])->name('lead.stage.change');
 

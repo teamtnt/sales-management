@@ -46,5 +46,10 @@
     "Leads": "Leads",
     "Create New List": "Neue Liste erstellen",
     "Stages": "Stages",
-    "Lead moved to another stage!": "Lead in neue Stage verschoben!"
+    "Lead moved to another stage!": "Lead in neue Stage verschoben!",
+    "Search all stages": "Alle Stages durchsuchen",
+    "Search by name, email, company...": "Nach Name, E-Mail, Firma suchen...",
+    "Searching across all stages": "Suche über alle Stages",
+    "results found": "Ergebnisse gefunden",
+    "Clear search": "Suche löschen"
 }
