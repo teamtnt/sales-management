@@ -2,22 +2,33 @@
 
 namespace Teamtnt\SalesManagement\Http\Controllers;
 
-
-use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Teamtnt\SalesManagement\Models\LeadActivity;
-use Teamtnt\SalesManagement\Models\LeadNotes;
+use Illuminate\Http\Request;
 use Teamtnt\SalesManagement\DataTables\LeadActivityDataTable;
+use Teamtnt\SalesManagement\Models\LeadActivity;
 
 class LeadActivitiesController extends Controller
 {
     public function index(LeadActivityDataTable $dataTable)
     {
-        return $dataTable->render('sales-management::leadactivity.index');
+        // Get all users who created activities for the filter dropdown
+        $users = LeadActivity::select('created_by')
+            ->distinct()
+            ->with('user')
+            ->get()
+            ->pluck('user.full_name', 'created_by')
+            ->toArray();
+
+        // Check if user can view all activities
+        $canViewAllActivities = auth()->user()->can(config('sales-management.permission_prefix').'.view-all-activities');
+
+        return $dataTable->render('sales-management::leadactivity.index', [
+            'users' => $users,
+            'canViewAllActivities' => $canViewAllActivities,
+        ]);
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -26,12 +37,12 @@ class LeadActivitiesController extends Controller
             'description' => 'nullable|string',
             'activity_type' => 'required|string|max:255',
             'activity_start_date' => 'required',
-            'lead_id'=>'required|integer'
-        ],[],[
-            'description'=>'Beschreibung',
-            'activity_type'=>'Activity Type',
-            'activity_start_date'=>'Activity Start Date',
-            'lead_id'=>'Lead'
+            'lead_id' => 'required|integer',
+        ], [], [
+            'description' => 'Beschreibung',
+            'activity_type' => 'Activity Type',
+            'activity_start_date' => 'Activity Start Date',
+            'lead_id' => 'Lead',
         ]);
 
         $leadActivity = LeadActivity::create([
@@ -47,8 +58,7 @@ class LeadActivitiesController extends Controller
     }
 
     /**
-     * @param $lead
-     * @param $note
+     * @param  $note
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($lead, $activity)
@@ -64,13 +74,12 @@ class LeadActivitiesController extends Controller
 
     public function toggleStatus(LeadActivity $leadActivity)
     {
-        $leadActivity->update(['is_done' => !$leadActivity->is_done]);
+        $leadActivity->update(['is_done' => ! $leadActivity->is_done]);
 
         return back();
     }
 
     /**
-     * @param $lead
      * @return mixed
      * @return \Illuminate\Http\JsonResponse
      */

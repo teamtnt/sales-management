@@ -11,6 +11,8 @@ class Lead extends Model
 
     protected $table;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'campaign_id',
         'pipeline_id',

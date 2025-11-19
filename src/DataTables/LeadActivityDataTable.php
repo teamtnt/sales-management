@@ -2,50 +2,83 @@
 
 namespace Teamtnt\SalesManagement\DataTables;
 
-use Teamtnt\SalesManagement\Models\Deal;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Teamtnt\SalesManagement\Models\LeadActivity;
-use Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
-use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class LeadActivityDataTable extends DataTable
 {
     /**
      * Build DataTable class.
      *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
+     * @param  QueryBuilder  $query  Results from query() method.
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
             ->filter(function ($query) {
-                if(auth()->user()->hasRole('admin')) return;
-                $query->where('created_by', auth()->id());
+                // Debug: Log all request parameters
+                \Log::info('Lead Activities Filter', [
+                    'owner_filter' => request('owner_filter'),
+                    'date_from' => request('date_from'),
+                    'date_to' => request('date_to'),
+                    'my_today' => request('my_today'),
+                    'all_params' => request()->all(),
+                ]);
+
+                // Check if user has permission to view all activities
+                $canViewAllActivities = auth()->user()->can(config('sales-management.permission_prefix').'.view-all-activities');
+
+                // If user doesn't have view-all permission, only show their own activities
+                if (! $canViewAllActivities) {
+                    $query->where('created_by', auth()->id());
+                }
+
+                // Filter by owner if specified
+                if (request()->has('owner_filter') && request('owner_filter') !== '') {
+                    $query->where('created_by', request('owner_filter'));
+                }
+
+                // Filter by date range
+                if (request()->has('date_from') && request('date_from') !== '') {
+                    $query->whereDate('start_date', '>=', request('date_from'));
+                }
+
+                if (request()->has('date_to') && request('date_to') !== '') {
+                    $query->whereDate('start_date', '<=', request('date_to'));
+                }
+
+                // Quick filter: my activities for today
+                if (request()->has('my_today') && request('my_today') === '1') {
+                    $query->where('created_by', auth()->id())
+                        ->whereDate('start_date', today());
+                }
             }, true)
             ->editColumn('is_done', function (LeadActivity $leadActivity) {
                 $toggleStatusUrl = route('teamtnt.sales-management.lead-activities.toggle-status', $leadActivity);
                 $icon = $leadActivity->is_done ? '<i class="fas fa-check-circle" style="color: green;"></i>' : '<i class="fas fa-times-circle" style="color: red;"></i>';
-                return '<a href="' . $toggleStatusUrl . '">' . $icon . '</a>';
+
+                return '<a href="'.$toggleStatusUrl.'">'.$icon.'</a>';
             })
             ->editColumn('lead.name', function (LeadActivity $leadActivity) {
                 if ($leadActivity->lead) {
                     $url = route('teamtnt.sales-management.contacts.edit', $leadActivity->lead->contact->id);
-                    return '<a target="_blank" href="' . $url . '">' . $leadActivity->lead->contact->fullname . '</a>';
+
+                    return '<a target="_blank" href="'.$url.'">'.$leadActivity->lead->contact->fullname.'</a>';
                 }
+
                 return '';
             })
             ->editColumn('lead.contact.phone', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a href="tel:' . $leadActivity->lead->contact->phone . '">' . $leadActivity->lead->contact->phone . '</a>' : '';
+                return $leadActivity->lead ? '<a href="tel:'.$leadActivity->lead->contact->phone.'">'.$leadActivity->lead->contact->phone.'</a>' : '';
             })
             ->editColumn('lead.contact.email', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a href="mailto:' . $leadActivity->lead->contact->email . '">' . $leadActivity->lead->contact->email . '</a>' : '';
+                return $leadActivity->lead ? '<a href="mailto:'.$leadActivity->lead->contact->email.'">'.$leadActivity->lead->contact->email.'</a>' : '';
             })
             ->editColumn('lead.contact.external_profile_url', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a target="_blank" href="' . $leadActivity->lead->contact->external_profile_url . '">' . $leadActivity->lead->contact->external_profile_url . '</a>' : '';
+                return $leadActivity->lead ? '<a target="_blank" href="'.$leadActivity->lead->contact->external_profile_url.'">'.$leadActivity->lead->contact->external_profile_url.'</a>' : '';
             })
             ->editColumn('campaign.name', function (LeadActivity $leadActivity) {
                 return $leadActivity->lead->campaign ? $leadActivity->lead->campaign->name : '';
@@ -62,17 +95,14 @@ class LeadActivityDataTable extends DataTable
             ->editColumn('end_date', function (LeadActivity $leadActivity) {
                 return $leadActivity->end_date ? $leadActivity->end_date->format('d.m.Y H:i') : '';
             })
-            ->filterColumn('type', function($query, $keyword) {
-                $query->whereRaw("type like ?", ["%{$keyword}%"]);
+            ->filterColumn('type', function ($query, $keyword) {
+                $query->whereRaw('type like ?', ["%{$keyword}%"]);
             })
             ->rawColumns(['is_done', 'lead.name', 'lead.contact.phone', 'lead.contact.email', 'action', 'lead.contact.external_profile_url']); // Add 'lead.contact.phone' and 'lead.contact.email' to rawColumns to render HTML
     }
 
     /**
      * Get query source of dataTable.
-     *
-     * @param LeadActivity $model
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(LeadActivity $model): QueryBuilder
     {
@@ -81,24 +111,25 @@ class LeadActivityDataTable extends DataTable
 
     /**
      * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
      */
     public function html(): HtmlBuilder
     {
-        //select distinct created_by user
-        $users = LeadActivity::select('created_by')->distinct()->get()->pluck('user.full_name', 'created_by')->toArray();
-        $users = json_encode($users);
+        // Get all users who created activities
+        $users = LeadActivity::select('created_by')->distinct()->with('user')->get()->pluck('user.full_name', 'created_by')->toArray();
+        $usersJson = json_encode($users);
 
         return $this->builder()
             ->dom('lfrtip')
-            ->setTableId('deal-table')
+            ->setTableId('lead-activity-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
+            ->parameters([
+                'drawCallback' => 'function() { console.log("Table drawn"); }',
+            ])
             ->addTableClass('table-striped')
             ->pageLength(25)
             ->orderBy(8, 'asc') // Set default order by 'start_date' asc
-            ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json")
+            ->language('https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json')
             ->initComplete("
 
                function (settings, json) {
@@ -120,7 +151,7 @@ class LeadActivityDataTable extends DataTable
 
                   switch(i) {
                     case 2:
-                        return $users;
+                        return $usersJson;
                   }
                   })(column.index());
 
@@ -162,12 +193,12 @@ class LeadActivityDataTable extends DataTable
                 'orderable' => true,
             ],
             'type',
-            'lead.contact.external_profile_url'
+            'lead.contact.external_profile_url',
         ];
     }
 
     protected function filename(): string
     {
-        return 'LeadActivity_' . date('YmdHis');
+        return 'LeadActivity_'.date('YmdHis');
     }
 }
