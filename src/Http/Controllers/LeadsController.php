@@ -46,6 +46,37 @@ class LeadsController extends Controller
         return response()->json(200);
     }
 
+    public function transitionStage(Request $request)
+    {
+        $contactId = Contact::whereUuid($request->uuid)->first()?->id;
+        if (is_null($contactId)) {
+            return response()->json(['status' => 'contact_not_found'], 200);
+        }
+
+        $lead = Lead::where('contact_id', $contactId)
+            ->where('campaign_id', $request->campaign_id)
+            ->first();
+
+        if (!$lead) {
+            return response()->json(['status' => 'lead_not_found'], 200);
+        }
+
+        if ((int) $lead->pipeline_stage_id !== 0) {
+            return response()->json(['status' => 'already_processed'], 200);
+        }
+
+        $lead->pipeline_stage_id = 13;
+        $lead->save();
+
+        $transitionName = "transition.stage.changed." . $lead->pipeline_stage_id;
+
+        foreach ($lead->campaign->publishedWorkflows() as $workflow) {
+            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, $transitionName);
+        }
+
+        return response()->json(['status' => 'ok'], 200);
+    }
+
     public function getLeadData(Campaign $campaign, Lead $lead)
     {
         $lead->load('contact', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity');
