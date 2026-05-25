@@ -44,6 +44,11 @@ const props = defineProps({
         type: String,
         required: false,
         default: ''
+    },
+    createOfferUrl: {
+        type: String,
+        required: false,
+        default: ''
     }
 })
 
@@ -62,6 +67,7 @@ const data = reactive({
     route: props.routes,
     emails: props.emails,
     stages: props.stages,
+    createOfferUrl: props.createOfferUrl,
     globalSearchQuery,
     globalSearchResults,
     isGlobalSearching

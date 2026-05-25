@@ -47,6 +47,7 @@
             :emails="{{ json_encode(config('sales-management.emails')) }}"
             :routes="{{ json_encode($routes) }}"
             initial-search="{{ $globalSearch }}"
+            create-offer-url="{{ config('services.primeros.OFFER_URL') }}"
         />
     </div>
 @stop

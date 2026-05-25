@@ -57,6 +57,16 @@ const leadCreatedDate = computed(() => {
 
 const data = inject('data');
 
+const createOfferUrl = computed(() => {
+    if (!data?.createOfferUrl) return null;
+    const params = new URLSearchParams({
+        company_id: props.lead.contact?.uuid ?? '',
+        bsha_lead_id: props.lead.id,
+        bsha_campaign_id: props.campaign.id,
+    });
+    return `${data.createOfferUrl}?${params.toString()}`;
+});
+
 </script>
 
 <template>
@@ -117,6 +127,15 @@ const data = inject('data');
                 Created: {{ leadCreatedDate }}
             </span>
         </div>
+        <a
+            v-if="createOfferUrl"
+            :href="createOfferUrl"
+            target="_blank"
+            class="btn btn-sm btn-outline-primary mt-2"
+            title="Neues Angebot erstellen"
+        >
+            + Neues Angebot
+        </a>
         <LeadDetails :lead-id="lead.id" :campaign-id="campaign.id" :key="lead.contact.id"/>
     </div>
 </template>

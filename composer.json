@@ -1,6 +1,7 @@
 {
     "name": "teamtnt/sales-management",
     "description": "A minimalistic approach to sales management",
+    "version": "1.1.49",
     "keywords": [
         "teamtnt",
         "laravel",

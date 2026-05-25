@@ -77,6 +77,28 @@ class LeadsController extends Controller
         return response()->json(['status' => 'ok'], 200);
     }
 
+    public function moveLead(Request $request)
+    {
+        $lead = Lead::find($request->lead_id);
+        if (!$lead) {
+            return response()->json([
+                'ignored' => true,
+                'reason'  => 'lead_not_found',
+            ]);
+        }
+
+        $lead->pipeline_stage_id = $request->stage_id;
+        $lead->save();
+
+        $transitionName = "transition.stage.changed." . $lead->pipeline_stage_id;
+
+        foreach ($lead->campaign->publishedWorkflows() as $workflow) {
+            ApplyTransitionByNameJob::dispatch($lead->id, $workflow->id, $transitionName);
+        }
+
+        return response()->json(['ok' => true, 'lead_id' => $lead->id, 'stage_id' => $lead->pipeline_stage_id]);
+    }
+
     public function getLeadData(Campaign $campaign, Lead $lead)
     {
         $lead->load('contact', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity');

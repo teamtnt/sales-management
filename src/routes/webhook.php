@@ -12,6 +12,8 @@ Route::any('/webhook/change-stage', [LeadsController::class, 'stageChange'])->na
 
 Route::any('/webhook/transition-stage', [LeadsController::class, 'transitionStage'])->name('webhook.transitionStage');
 
+Route::post('/webhook/move-lead', [LeadsController::class, 'moveLead'])->name('webhook.moveLead');
+
 Route::any('/webhook/import-contacts', [ContactsController::class, 'importWebhook'])->name('webhook.importContacts');
 
 Route::post('/webhook/add-contact', [ContactsController::class, 'addContact'])->name('webhook.addContact');

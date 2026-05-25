@@ -259,7 +259,7 @@ class ContactsController extends Controller
         return response()->json(200);
     }
 
-    public function addContact(): void
+    public function addContact()
     {
         //wrap in transaction
         DB::beginTransaction();
@@ -311,6 +311,10 @@ class ContactsController extends Controller
 
         DB::commit();
 
+        return response()->json([
+            'contact_id' => $contact->id,
+            'lead_id'    => $lead->id,
+        ]);
     }
 
 }

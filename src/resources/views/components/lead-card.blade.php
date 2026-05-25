@@ -48,6 +48,17 @@
         </div>
     @endif
 
+    @if (config('services.primeros.OFFER_URL'))
+        <a
+            href="{{ config('services.primeros.OFFER_URL') }}?company_id={{ $lead->contact->uuid }}&bsha_lead_id={{ $lead->id }}&bsha_campaign_id={{ $lead->campaign_id }}"
+            target="_blank"
+            class="btn btn-sm btn-outline-primary mt-1"
+            title="Neues Angebot erstellen"
+        >
+            + Neues Angebot
+        </a>
+    @endif
+
     @php
         $routes = collect([
             'notes' => [
