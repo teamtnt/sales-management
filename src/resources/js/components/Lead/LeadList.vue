@@ -36,9 +36,7 @@ const { route: {list}, isGlobalSearching, globalSearchQuery } = inject('data');
 const scrollContainer = ref(null);
 useInfiniteScroll(
     scrollContainer,
-    () => {
-        loadMoreLeads()
-    },
+    () => loadMoreLeads(),
     {
         distance: 20,
         direction: 'bottom',
