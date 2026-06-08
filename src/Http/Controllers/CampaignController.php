@@ -13,6 +13,13 @@ use Teamtnt\SalesManagement\Models\Lead;
 
 class CampaignController extends Controller
 {
+    /**
+     * Number of leads loaded per stage on the initial page render and per
+     * "load more" request. Keeping this small prevents the campaign board from
+     * serializing every lead (tens of thousands) into the page at once.
+     */
+    public const LEADS_PER_PAGE = 20;
+
     public function index(CampaignDataTable $CampaignDataTable)
     {
         return $CampaignDataTable->render('sales-management::campaign.index');
@@ -57,10 +64,10 @@ class CampaignController extends Controller
 
         foreach($stages as $stage) {
             $leadsCount[$stage->id] = $campaign->getLeadsOnStageCount($campaign->pipeline_id, $stage->id);
-            $leads[$stage->id] = $campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id)->toArray();
+            $leads[$stage->id] = $campaign->getLeadsOnStage($campaign->pipeline_id, $stage->id, self::LEADS_PER_PAGE)->toArray();
         }
 
-        $initialLeads = $campaign->getInitialLeadsOnStage($campaign->pipeline_id, 0)->toArray();
+        $initialLeads = $campaign->getInitialLeadsOnStage($campaign->pipeline_id, 0, self::LEADS_PER_PAGE)->toArray();
         $initialLeadsCount=$campaign->getLeadsOnStageCount($campaign->pipeline_id, 0);
 
         $routes = [
@@ -97,6 +104,22 @@ class CampaignController extends Controller
             compact('campaign', 'stages',
                 'leadsCount', 'leads', 'routes', 'initialLeads', 'initialLeadsCount'))
             ->with('globalSearch', session('globalSearch', ''));
+    }
+
+    /**
+     * Return a paginated chunk of leads for a single stage so the board can
+     * lazy-load additional leads as the user scrolls instead of fetching the
+     * entire stage up front.
+     */
+    public function loadLeads(Request $request, Campaign $campaign, $pipelineID, $stageID)
+    {
+        $limit  = (int) $request->get('limit', self::LEADS_PER_PAGE);
+        $offset = (int) $request->get('offset', 0);
+
+        $methodName = $stageID == 0 ? 'getInitialLeadsOnStage' : 'getLeadsOnStage';
+        $leads = $campaign->$methodName($pipelineID, $stageID, $limit, $offset);
+
+        return response()->json(['leads' => $leads]);
     }
 
     public function stageChange(Request $request)

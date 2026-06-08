@@ -121,6 +121,7 @@ Route::group(['middleware' => ['can:'.config('sales-management.permission_prefix
     Route::delete('/campaign/{campaign:id}/destroy', [CampaignController::class, 'destroy'])->name('campaign.destroy');
     Route::post('/stage/chage', [CampaignController::class, 'stageChange'])->name('stage.change');
 
+    Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/leads', [CampaignController::class, 'loadLeads'])->name('campaign.leads.load');
     Route::get('/campaign/{campaign}/pipeline/{pipelineID}/stage/{stageID}/search', [SearchController::class, 'search']);
     Route::get('/campaign/{campaign}/pipeline/{pipelineID}/search-all', [SearchController::class, 'searchAll']);
     Route::get('/campaign/{campaign}/lead/{lead}', [LeadsController::class, 'getLeadData'])->name('lead.data');
