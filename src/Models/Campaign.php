@@ -43,52 +43,52 @@ class Campaign extends Model
      * @param $limit
      * @return Collection
      */
-    public function getInitialLeadsOnStage($pipelineId, $stageId, $limit = null): Collection
+    public function getInitialLeadsOnStage($pipelineId, $stageId, $limit = null, $offset = 0): Collection
     {
-        $leads = $this->leads()
+        $query = $this->leads()
             ->where('pipeline_id', $pipelineId)
             ->where('pipeline_stage_id', $stageId)
-            ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity')
-            ->orderByDesc(Contact::select('created_at')
+            ->with('contact', 'notes', 'notes.user', 'contact.tags', 'tags', 'activities', 'activities.user', 'nextCallActivity');
+
+        if ($this->name === 'Bestandskunden') {
+            // Order by the earliest tag whose name is a valid "dd.mm.yyyy" date,
+            // with leads that have no such tag pushed to the end. Done in SQL so
+            // the ordering stays correct across paginated requests.
+            $minTagDate = $this->earliestTagDateSubquerySql();
+
+            $query->orderByRaw('COALESCE(' . $minTagDate . ', \'9999-12-31\') ASC');
+        } else {
+            $query->orderByDesc(Contact::select('created_at')
                 ->whereColumn(config('sales-management.tablePrefix') . 'leads.contact_id', config('sales-management.tablePrefix') . 'contacts.id')
                 ->orderBy('created_at', 'DESC')
                 ->limit(1)
-            )
+            );
+        }
+
+        return $query
+            ->when($offset, fn ($query) => $query->offset($offset))
             ->limit($limit)->get();
-
-        if($this->name != 'Bestandskunden') return $leads;
-
-        // Sort by tags that are valid dates
-        $sortedLeads = $leads->sort(function ($leadA, $leadB) {
-            $dateA = $this->getEarliestTagDate($leadA->tags);
-            $dateB = $this->getEarliestTagDate($leadB->tags);
-
-            // Handle cases where one or both dates might be null
-            if ($dateA === null && $dateB === null) return 0;
-            if ($dateA === null) return 1;
-            if ($dateB === null) return -1;
-
-            return $dateA <=> $dateB;
-        });
-
-        return $sortedLeads->values(); // Re-index the collection
     }
 
     /**
-     * Helper function to get the earliest date from a collection of tags.
+     * Correlated subquery returning the earliest tag date for a lead, parsing
+     * tag names in the "dd.mm.yyyy" format. Non-date tag names yield NULL and
+     * are ignored by MIN(), so leads with no date tag resolve to NULL.
      */
-    private function getEarliestTagDate($tags)
+    private function earliestTagDateSubquerySql(): string
     {
-        // Filter tags to find those that match the date format 'dd.mm.yyyy'
-        $dates = $tags->map(function ($tag) {
-            return \DateTime::createFromFormat('d.m.Y', $tag->name) ?: null;
-        })->filter(); // Filter out null values (non-date strings)
+        $prefix       = config('sales-management.tablePrefix');
+        $leadsTable   = $prefix . 'leads';
+        $tagsTable    = $prefix . 'tags';
+        $leadTagTable = $prefix . 'lead_tag';
 
-        // Return the earliest date if there are valid dates, or null if none
-        return $dates->isNotEmpty() ? $dates->min() : null;
+        return '(SELECT MIN(STR_TO_DATE(' . $tagsTable . '.name, \'%d.%m.%Y\')) '
+            . 'FROM ' . $tagsTable . ' '
+            . 'INNER JOIN ' . $leadTagTable . ' ON ' . $leadTagTable . '.tag_id = ' . $tagsTable . '.id '
+            . 'WHERE ' . $leadTagTable . '.lead_id = ' . $leadsTable . '.id)';
     }
 
-    public function getLeadsOnStage($pipelineId, $stageId, $limit = null)
+    public function getLeadsOnStage($pipelineId, $stageId, $limit = null, $offset = 0)
     {
         return $this->leads()
             ->where('pipeline_id', $pipelineId)
@@ -102,6 +102,7 @@ class Campaign extends Model
                 ->limit(1)
             )
 
+            ->when($offset, fn ($query) => $query->offset($offset))
             ->limit($limit)->get();
     }
 
