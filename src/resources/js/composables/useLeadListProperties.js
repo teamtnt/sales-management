@@ -8,6 +8,7 @@ export function useLeadListProperties(props, t) {
     const loadedLeads = ref(PAGE_SIZE);
     const isLoadingMore = ref(false);
     const data = inject('data', {});
+    const deletedCount = ref(0);
 
     const stageId = computed(() => (props.stage && props.stage.id) ? props.stage.id : 0);
 
@@ -36,11 +37,12 @@ export function useLeadListProperties(props, t) {
     });
 
     const stageTitle = computed(() => {
+        const count = totalCount.value - deletedCount.value;
         if (props.stage && props.stage.name) {
-            return `${props.stage.name} (${props.leadsCount[props.stage.id]})`;
+            return `${props.stage.name} (${count})`;
         }
 
-        return `${t('Leads')} (${props.leadsCount})`;
+        return `${t('Leads')} (${count})`;
     });
 
     const stageIdAttributes = computed(() => {
@@ -135,12 +137,27 @@ export function useLeadListProperties(props, t) {
         }
     });
 
+    const removeLead = (leadId) => {
+        serverLeads.value = serverLeads.value.filter(lead => lead.id !== leadId);
+        filteredLeads.value = filteredLeads.value.filter(lead => lead.id !== leadId);
+        if (data.isGlobalSearching && data.globalSearchResults) {
+            const currentStageId = stageId.value;
+            if (data.globalSearchResults[currentStageId]) {
+                data.globalSearchResults[currentStageId] = data.globalSearchResults[currentStageId].filter(lead => lead.id !== leadId);
+            }
+        }
+        deletedCount.value += 1;
+    };
+
     return {
         cardStyle,
         stageTitle,
         stageIdAttributes,
         getLeads,
         loadMoreLeads,
-        handleSearch
+        handleSearch,
+        removeLead,
+        totalCount,
+        deletedCount
     };
 }

@@ -69,4 +69,10 @@ class Lead extends Model
     {
         return $this->belongsToMany(Tag::class, config('sales-management.tablePrefix') . 'lead_tag');
     }
+
+    public function journeys()
+    {
+        return $this->hasMany(LeadJourney::class, 'lead_id');
+    }
 }
+

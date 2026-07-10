@@ -30,7 +30,7 @@ const props = defineProps({
 })
 
 const { t } = useI18n();
-const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handleSearch } = useLeadListProperties(props, t);
+const { cardStyle, stageTitle, stageIdAttributes, getLeads, loadMoreLeads, handleSearch, removeLead, totalCount, deletedCount } = useLeadListProperties(props, t);
 const { route: {list}, isGlobalSearching, globalSearchQuery } = inject('data');
 
 const scrollContainer = ref(null);
@@ -43,9 +43,7 @@ useInfiniteScroll(
         distance: 20,
         direction: 'bottom',
         canLoadMore: () => {
-            return Object.keys(props.stage).length === 0 ?
-                getLeads.value.length < props.leadsCount :
-                getLeads.value.length < props.leadsCount[props.stage.id];
+            return getLeads.value.length < (totalCount.value - deletedCount.value);
         }
     }
 )
@@ -116,7 +114,7 @@ const handleLocalSearchInput = (event) => {
 
         <div class="card-body scroll" ref="scrollContainer">
             <div :id="stageIdAttributes.id" :data-stage-id="stageIdAttributes.dataStageId">
-                <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign"/>
+                <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign" @lead-deleted="removeLead"/>
                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
                     <span style="font-size: 10px;"><i>Drag / drop area</i></span>
                 </div>

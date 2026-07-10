@@ -57,6 +57,10 @@ const leadCreatedDate = computed(() => {
 
 const data = inject('data');
 
+import axios from "axios";
+
+const emit = defineEmits(['lead-deleted']);
+
 const createOfferUrl = computed(() => {
     if (!data?.createOfferUrl) return null;
     const params = new URLSearchParams({
@@ -67,11 +71,41 @@ const createOfferUrl = computed(() => {
     return `${data.createOfferUrl}?${params.toString()}`;
 });
 
+const deleteLead = async () => {
+    if (!confirm('Sind Sie sicher, dass Sie diesen Lead löschen möchten?')) {
+        return;
+    }
+    try {
+        const url = data.route.leads.destroy.replace(':leadId', props.lead.id);
+        const response = await axios.delete(url);
+        if (response.status === 200) {
+            window.notyf.open({
+                type: 'success',
+                message: 'Lead deleted successfully!',
+                duration: '2500',
+                ripple: true,
+                position: 'bottom right',
+                dismissible: true
+            });
+            emit('lead-deleted', props.lead.id);
+        }
+    } catch (error) {
+        console.error('Error deleting lead:', error);
+        window.notyf.open({
+            type: 'danger',
+            message: 'Failed to delete lead.',
+            duration: '2500',
+            ripple: true,
+            position: 'bottom right',
+            dismissible: true
+        });
+    }
+};
+
 </script>
 
 <template>
     <div class="lead-item card mb-3 p-2 bg-light border gap-1" :data-lead-id="lead.id">
-
         <!-- Drag Handle -->
         <span class="drag-handle"
               style="
@@ -136,6 +170,9 @@ const createOfferUrl = computed(() => {
         >
             + Neues Angebot
         </a>
+        <span class="delete-icon" @click="deleteLead" title="Lead löschen">
+            <i class="fas fa-trash text-danger" style="font-size: 1.1rem; vertical-align: middle;"></i>
+        </span>
         <LeadDetails :lead-id="lead.id" :campaign-id="campaign.id" :key="lead.contact.id"/>
     </div>
 </template>

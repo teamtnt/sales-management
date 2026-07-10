@@ -125,4 +125,16 @@ class LeadsController extends Controller
         return response()->json(200);
     }
 
+    public function destroy(Campaign $campaign, Lead $lead)
+    {
+        $lead->journeys()->delete();
+        $lead->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Lead deleted successfully'
+        ]);
+    }
+
 }
+

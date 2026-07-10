@@ -14,8 +14,24 @@
         opacity: 0;
     }
 
+    .delete-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 32px;
+        width: 26px;
+        height: 26px;
+        margin: 5px;
+        cursor: pointer;
+        transform: translateX(30px);
+        transition: opacity .25s ease, transform .15s ease;
+        opacity: 0;
+    }
+
     &:hover {
-        .info-icon {
+        .info-icon, .delete-icon {
             transform: translateX(0);
             opacity: 1;
         }
