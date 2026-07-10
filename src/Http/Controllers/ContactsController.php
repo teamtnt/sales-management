@@ -282,9 +282,11 @@ class ContactsController extends Controller
             $contactList->contacts()->attach($contact->id);
 
             //create lead
-            $lead = Lead::create([
+            $lead = Lead::firstOrCreate([
                 'campaign_id' => $campaign->id,
-                'contact_id' => $contact->id,
+                'contact_id'  => $contact->id,
+              ],
+              [
                 'pipeline_id' => $campaign->pipeline_id,
                 'pipeline_stage_id' => 0
             ]);
