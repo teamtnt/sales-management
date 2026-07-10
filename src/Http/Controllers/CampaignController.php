@@ -83,6 +83,7 @@ class CampaignController extends Controller
                 'fetch' => route('teamtnt.sales-management.fetch-lead-activities', ':leadId'),
                 'store' => route('teamtnt.sales-management.store-lead-activity', ':leadId'),
                 'delete' => route('teamtnt.sales-management.destroy-lead-activity', [':leadId', ':activityId']),
+                'update' => route('teamtnt.sales-management.update-lead-activity', [':leadId', ':activityId']),
             ],
             'contacts' => [
                 'edit' => route('teamtnt.sales-management.contacts.edit', ':contactId'),

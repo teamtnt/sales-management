@@ -114,7 +114,7 @@ const handleLocalSearchInput = (event) => {
 
         <div class="card-body scroll" ref="scrollContainer">
             <div :id="stageIdAttributes.id" :data-stage-id="stageIdAttributes.dataStageId">
-                <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign" @lead-deleted="removeLead"/>
+                <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign" :stage="stage" @lead-deleted="removeLead"/>
                 <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
                     <span style="font-size: 10px;"><i>Drag / drop area</i></span>
                 </div>

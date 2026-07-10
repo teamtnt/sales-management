@@ -47,6 +47,7 @@ class PipelineController extends Controller
                     'name' => $pipelineStage['name'],
                     'description' => $pipelineStage['description'],
                     'color' => $pipelineStage['color'],
+                    'properties' => $pipelineStage['properties'] ?? null,
                 ]);
             }
         }
@@ -94,6 +95,7 @@ class PipelineController extends Controller
                         'name' => $pipelineStage['name'],
                         'description' => $pipelineStage['description'],
                         'color' => $pipelineStage['color'],
+                        'properties' => $pipelineStage['properties'] ?? null,
                     ]
                 );
             }

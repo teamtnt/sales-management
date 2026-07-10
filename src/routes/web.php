@@ -91,6 +91,7 @@ Route::get('/lead-activities', [LeadActivitiesController::class, 'index'])->name
 Route::get('/lead-activities/{lead:id}/activities', [LeadActivitiesController::class, 'fetchLeadActivities'])->name('fetch-lead-activities');
 Route::post('/lead-activities/{lead:id}/activity/store', [LeadActivitiesController::class, 'store'])->name('store-lead-activity');
 Route::delete('/lead-activities/{lead:id}/activity/{activity:id}/destroy', [LeadActivitiesController::class, 'destroy'])->name('destroy-lead-activity');
+Route::put('/lead-activities/{lead:id}/activity/{activity:id}/update', [LeadActivitiesController::class, 'update'])->name('update-lead-activity');
 Route::get('/lead-activities/{leadActivity:id}/toggle-status', [LeadActivitiesController::class, 'toggleStatus'])->name('lead-activities.toggle-status');
 });
 

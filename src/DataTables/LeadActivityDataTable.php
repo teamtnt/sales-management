@@ -179,7 +179,7 @@ class LeadActivityDataTable extends DataTable
             'lead.contact.phone', // Add lead contact phone
             'lead.contact.email', // Add lead contact email
             'campaign.name', // Add campaign name
-            'description',
+
             [
                 'name' => 'start_date',
                 'data' => 'start_date',

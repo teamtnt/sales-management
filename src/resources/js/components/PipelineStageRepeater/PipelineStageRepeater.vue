@@ -3,21 +3,36 @@
         <div class="d-flex flex-column bg-light mb-3 rounded-3" v-for="(pipelineStage, index) in pipelineStages"
              :key="index">
             <div class="row p-3">
-                <div class="d-flex justify-content-between">
-                    <h6>#{{ index + 1 }} - {{ pipelineStage.name }}</h6>
-                    <div>
-                        <button class="btn text-danger btn-lg border-0 p-0"
-                                @click.prevent="removeStage(pipelineStage)"
-                                title="Remove Stage"
-                                v-show="index || (!index && pipelineStages.length > 1)">
-                            <i class="align-middle fas fa-fw fa-minus-circle"></i>
-                        </button>
-                        <button class="btn text-info btn-lg border-0 p-0"
-                                title="Add New Stage"
-                                @click.prevent="addStage"
-                                v-show="index === pipelineStages.length - 1">
-                            <i class="align-middle ms-2 fas fa-fw fa-plus-circle"></i>
-                        </button>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">#{{ index + 1 }} - {{ pipelineStage.name }}</h6>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="form-check form-switch mb-0">
+                            <input type="hidden" :name="`pipeline_stages[${index}][properties][phone_call]`" value="0">
+                            <input class="form-check-input" type="checkbox" :id="`phone_call_${index}`"
+                                   :name="`pipeline_stages[${index}][properties][phone_call]`"
+                                   v-model="pipelineStage.properties.phone_call"
+                                   :true-value="1"
+                                   :false-value="0"
+                                   value="1"
+                                   style="cursor: pointer;">
+                            <label class="form-check-label text-muted" :for="`phone_call_${index}`" style="font-size: 0.85rem; cursor: pointer;">
+                                Phone Call Stage
+                            </label>
+                        </div>
+                        <div>
+                            <button class="btn text-danger btn-lg border-0 p-0"
+                                    @click.prevent="removeStage(pipelineStage)"
+                                    title="Remove Stage"
+                                    v-show="index || (!index && pipelineStages.length > 1)">
+                                <i class="align-middle fas fa-fw fa-minus-circle"></i>
+                            </button>
+                            <button class="btn text-info btn-lg border-0 p-0"
+                                    title="Add New Stage"
+                                    @click.prevent="addStage"
+                                    v-show="index === pipelineStages.length - 1">
+                                <i class="align-middle ms-2 fas fa-fw fa-plus-circle"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -64,17 +79,27 @@ const props = defineProps({
 })
 
 const pipelineStages = ref([
-    {name: "Default", description: "This is some description", color: "#366dc7"}
+    {name: "Default", description: "This is some description", color: "#366dc7", properties: { phone_call: false }}
 ]);
 
 onMounted(() => {
     if(props.stages.length) {
-        pipelineStages.value = props.stages
+        pipelineStages.value = props.stages.map(stage => {
+            return {
+                ...stage,
+                properties: stage.properties || { phone_call: false }
+            }
+        });
     }
 })
 
 const addStage = () => {
-    pipelineStages.value.push({name: "", description: "", color: "#366dc7"});
+    pipelineStages.value.push({
+        name: "", 
+        description: "", 
+        color: "#366dc7", 
+        properties: { phone_call: false }
+    });
 }
 
 const removeStage = (stage) => {

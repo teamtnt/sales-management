@@ -17,6 +17,11 @@ const props = defineProps({
     campaign: {
         type: Object,
         required: true
+    },
+    stage: {
+        type: Object,
+        required: false,
+        default: () => ({})
     }
 })
 
@@ -102,6 +107,94 @@ const deleteLead = async () => {
     }
 };
 
+const isPhoneCallStage = computed(() => {
+    const val = props.stage?.properties?.phone_call;
+    return val == 1 || val === true || val === 'on';
+});
+
+const phoneCallStatus = computed(() => {
+    if (!props.lead.activities || !props.lead.activities.length) {
+        return null;
+    }
+    const callActivity = props.lead.activities.find(
+        activity => activity.type === 'Call' &&
+        (activity.is_done == 1 || activity.is_done === true) &&
+        (activity.description === 'Telefonat erfolgreich' || activity.description === 'Telefonat nicht erfolgreich')
+    );
+    return callActivity ? callActivity.description : null;
+});
+
+const existingCallActivity = computed(() => {
+    if (!props.lead.activities || !props.lead.activities.length) {
+        return null;
+    }
+    return props.lead.activities.find(
+        activity => activity.type === 'Call' &&
+        (activity.description === 'Telefonat erfolgreich' || activity.description === 'Telefonat nicht erfolgreich')
+    );
+});
+
+const logCallActivity = async (isSuccessful) => {
+    const description = isSuccessful ? 'Telefonat erfolgreich' : 'Telefonat nicht erfolgreich';
+    try {
+        let response;
+        if (existingCallActivity.value) {
+            const url = data.route.activities.update
+                .replace(':leadId', props.lead.id)
+                .replace(':activityId', existingCallActivity.value.id);
+            response = await axios.put(url, {
+                description: description,
+                is_done: 1
+            });
+        } else {
+            const url = data.route.activities.store.replace(':leadId', props.lead.id);
+            response = await axios.post(url, {
+                lead_id: props.lead.id,
+                activity_type: 'Call',
+                activity_start_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                description: description,
+                is_done: 1
+            });
+        }
+
+        if (response.status === 200) {
+            if (!props.lead.activities) {
+                props.lead.activities = [];
+            }
+
+            if (existingCallActivity.value) {
+                const idx = props.lead.activities.findIndex(act => act.id === response.data.leadActivity.id);
+                if (idx !== -1) {
+                    props.lead.activities[idx] = response.data.leadActivity;
+                }
+            } else {
+                props.lead.activities.unshift(response.data.leadActivity);
+            }
+
+            props.lead.activities = [...props.lead.activities];
+
+            window.notyf.open({
+                type: 'success',
+                message: 'Aktivität gespeichert!',
+                duration: '2500',
+                ripple: true,
+                position: 'bottom right',
+                dismissible: true
+            });
+        }
+    } catch (error) {
+        console.error('Error logging call activity:', error);
+        window.notyf.open({
+            type: 'danger',
+            message: 'Aktivität konnte nicht gespeichert werden.',
+            duration: '2500',
+            ripple: true,
+            position: 'bottom right',
+            dismissible: true
+        });
+    }
+};
+
 </script>
 
 <template>
@@ -170,6 +263,25 @@ const deleteLead = async () => {
         >
             + Neues Angebot
         </a>
+
+        <!-- Phone Call Stage UI -->
+        <div v-if="isPhoneCallStage" class="mt-2 border-top pt-2">
+            <div v-if="phoneCallStatus" class="d-flex align-items-center">
+                <span class="badge w-100 py-2 fs-7" :class="phoneCallStatus === 'Telefonat erfolgreich' ? 'bg-success' : 'bg-danger'">
+                    <i class="fas me-1" :class="phoneCallStatus === 'Telefonat erfolgreich' ? 'fa-phone-alt' : 'fa-phone-slash'"></i>
+                    {{ phoneCallStatus }}
+                </span>
+            </div>
+            <div v-else class="d-flex gap-2">
+                <button @click="logCallActivity(true)" class="btn btn-sm btn-success w-50 py-1" style="font-size: 0.65rem;" title="Telefonat erfolgreich">
+                    <i class="fas fa-phone-alt me-1"></i> Erfolgreich
+                </button>
+                <button @click="logCallActivity(false)" class="btn btn-sm btn-outline-danger w-50 py-1" style="font-size: 0.65rem;" title="Telefonat nicht erfolgreich">
+                    <i class="fas fa-phone-slash me-1"></i> Nicht erfolgreich
+                </button>
+            </div>
+        </div>
+
         <span class="delete-icon" @click="deleteLead" title="Lead löschen">
             <i class="fas fa-trash text-danger" style="font-size: 1.1rem; vertical-align: middle;"></i>
         </span>

@@ -52,15 +52,12 @@ class LeadActivitiesController extends Controller
             'start_date' => $request->get('activity_start_date') ? Carbon::parse($request->get('activity_start_date')) : null,
             'end_date' => $request->get('activity_end_date') ? Carbon::parse($request->get('activity_end_date')) : null,
             'type' => $request->get('activity_type'),
+            'is_done' => $request->get('is_done', 0),
         ]);
 
         return response()->json(['leadActivity' => $leadActivity->load('user')]);
     }
 
-    /**
-     * @param  $note
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function destroy($lead, $activity)
     {
         $leadActivity = LeadActivity::where('id', $activity)
@@ -71,6 +68,26 @@ class LeadActivitiesController extends Controller
 
         return response()->json(200);
     }
+
+    public function update(Request $request, $lead, $activity)
+    {
+        $leadActivity = LeadActivity::where('id', $activity)
+            ->where('lead_id', $lead)
+            ->first();
+
+        if (!$leadActivity) {
+            return response()->json(404);
+        }
+
+        $leadActivity->update([
+            'description' => $request->get('description'),
+            'is_done' => $request->get('is_done', 1),
+            'start_date' => Carbon::now(),
+        ]);
+
+        return response()->json(['leadActivity' => $leadActivity->load('user')]);
+    }
+
 
     public function toggleStatus(LeadActivity $leadActivity)
     {

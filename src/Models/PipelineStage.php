@@ -19,6 +19,10 @@ class PipelineStage extends Model
         'properties'
     ];
 
+    protected $casts = [
+        'properties' => 'array'
+    ];
+
     public function __construct(array $attributes = [])
     {
         $this->table = config('sales-management.tablePrefix').'pipeline_stages';

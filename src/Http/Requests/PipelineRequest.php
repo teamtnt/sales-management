@@ -29,6 +29,7 @@ class PipelineRequest extends FormRequest
             'pipeline_stages.*.name'        => 'nullable|string',
             'pipeline_stages.*.description' => 'nullable|string',
             'pipeline_stages.*.color'       => 'nullable|string',
+            'pipeline_stages.*.properties'  => 'nullable|array',
         ];
     }
 }
