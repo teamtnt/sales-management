@@ -270,16 +270,18 @@ class ContactsController extends Controller
                 request()->except('tags', 'campaign_id', 'notes'));
             //if tag does not exist create it
             $tags = request()->get('tags');
-            foreach ($tags as $tag) {
-                $tag = Tag::firstOrCreate(['name' => $tag]);
-                $contact->tags()->attach($tag->id);
+            if (is_array($tags)) {
+                foreach ($tags as $tagName) {
+                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $contact->tags()->syncWithoutDetaching([$tag->id]);
+                }
             }
 
             //add contact to list, get list from campaign
             $campaign = Campaign::find(request()->get('campaign_id'));
             $contactList = ContactList::find($campaign->contact_list_id);
 
-            $contactList->contacts()->attach($contact->id);
+            $contactList->contacts()->syncWithoutDetaching([$contact->id]);
 
             //create lead
             $lead = Lead::firstOrCreate([
@@ -293,17 +295,26 @@ class ContactsController extends Controller
 
             //if tag does not exist create it
             $tags = request()->get('lead_tags');
-            foreach ($tags as $tag) {
-                $tag = Tag::firstOrCreate(['name' => $tag]);
-                $lead->tags()->attach($tag->id);
+            if (is_array($tags)) {
+                foreach ($tags as $tagName) {
+                    $tag = Tag::firstOrCreate(['name' => $tagName]);
+                    $lead->tags()->syncWithoutDetaching([$tag->id]);
+                }
             }
 
             //create notes from request, map keys add to note as text
             $noteKeys = ['additional_info' => 'weitere Informationen', 'number_of_attendees' => 'vorauss. TN-Anzahl', 'preferred_date' => 'Wunschtermin'];
 
             $notes = request()->get('notes');
-            foreach ($notes as $key => $note) {
-                $lead->notes()->create(['note' => $noteKeys[$key] . ': ' . $note]);
+            if (is_array($notes)) {
+                foreach ($notes as $key => $note) {
+                    if (isset($noteKeys[$key])) {
+                        $noteText = $noteKeys[$key] . ': ' . $note;
+                        if (!$lead->notes()->where('note', $noteText)->exists()) {
+                            $lead->notes()->create(['note' => $noteText]);
+                        }
+                    }
+                }
             }
 
         } catch (\Exception $e) {
