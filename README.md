@@ -47,43 +47,71 @@ Publishing assets
 php artisan vendor:publish --tag="sales-management-assets"
 ```
 
-## Building Assets
+## Local Development Setup
 
-We use Vite to build assets. First install all dependencies.
+To develop this package locally and see your changes immediately in a Laravel host application:
 
-```js
-npm install
-```
+### 1. Symlink the PHP Package (Composer)
 
-If there is no **public** folder in project root run first production build which will build needed folders:
+In your host application's `composer.json` file:
 
-```js
-npm run build
-```
+1. Add the local path repository pointing to this package's directory:
+   ```json
+   "repositories": [
+       {
+           "type": "path",
+           "url": "../sales-management",
+           "options": {
+               "symlink": true
+           }
+       }
+   ]
+   ```
+2. Update the package version requirement to target your active branch (e.g. `dev-main`):
+   ```json
+   "require": {
+       "teamtnt/sales-management": "dev-main"
+   }
+   ```
+3. Run the update command to symlink the package:
+   - **For local environments (Valet, Herd, Native PHP):**
+     ```bash
+     composer update teamtnt/sales-management
+     ```
+   - **For Docker environments:**
+     Run the composer update command *inside* the container to ensure the relative symlink resolves correctly within the container's virtualized filesystem:
+     ```bash
+     docker exec <container_name> composer update teamtnt/sales-management
+     ```
 
-Development build:
+### 2. Symlink the Public Assets (Vite)
 
-```js
-npm run dev
-```
+This package compiles frontend assets into its own `public/sales-management` directory. To see JS/CSS changes immediately in the host app without repeatedly running `php artisan vendor:publish`:
 
-For local development to have hot reloading create a symlink
+- **For local environments (Valet, Herd, Native PHP):**
+  From the host application's root directory, run:
+  ```bash
+  rm -rf public/sales-management
+  ln -s ../vendor/teamtnt/sales-management/public/sales-management public/sales-management
+  ```
+- **For Docker environments:**
+  Because Docker virtualization layers (like VirtioFS or gRPC FUSE) isolate mounts and restrict relative symlinks that traverse outside of the project volume, you should create an **absolute container-internal symlink** instead:
+  ```bash
+  docker exec <container_name> rm -rf /var/www/<host_app>/public/sales-management
+  docker exec <container_name> ln -s /var/www/sales-management/public/sales-management /var/www/<host_app>/public/sales-management
+  ```
 
-```bash 
-ln -s ../vendor/teamtnt/sales-management/public/sales-management public/sales-management
-```
+### 3. Building & Compiling Assets
 
-Add to composer.json
-
-```
-    "repositories": [{
-        "type": "path",
-        "url": "../sales-management"
-    }],
-    "require": {
-        "teamtnt/sales-management": "@dev"
-    }
-```
+When editing JS/CSS files within the package:
+1. Make sure npm dependencies are installed in the package directory:
+   ```bash
+   npm install
+   ```
+2. Run Vite build to compile changes:
+   ```bash
+   npm run build
+   ```
 
 ## Usage
 
