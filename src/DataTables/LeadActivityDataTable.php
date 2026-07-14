@@ -63,7 +63,7 @@ class LeadActivityDataTable extends DataTable
                 return '<a href="'.$toggleStatusUrl.'">'.$icon.'</a>';
             })
             ->editColumn('lead.name', function (LeadActivity $leadActivity) {
-                if ($leadActivity->lead) {
+                if ($leadActivity->lead && $leadActivity->lead->contact) {
                     $url = route('teamtnt.sales-management.contacts.edit', $leadActivity->lead->contact->id);
 
                     return '<a target="_blank" href="'.$url.'">'.$leadActivity->lead->contact->fullname.'</a>';
@@ -72,19 +72,19 @@ class LeadActivityDataTable extends DataTable
                 return '';
             })
             ->editColumn('lead.contact.phone', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a href="tel:'.$leadActivity->lead->contact->phone.'">'.$leadActivity->lead->contact->phone.'</a>' : '';
+                return ($leadActivity->lead && $leadActivity->lead->contact) ? '<a href="tel:'.$leadActivity->lead->contact->phone.'">'.$leadActivity->lead->contact->phone.'</a>' : '';
             })
             ->editColumn('lead.contact.email', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a href="mailto:'.$leadActivity->lead->contact->email.'">'.$leadActivity->lead->contact->email.'</a>' : '';
+                return ($leadActivity->lead && $leadActivity->lead->contact) ? '<a href="mailto:'.$leadActivity->lead->contact->email.'">'.$leadActivity->lead->contact->email.'</a>' : '';
             })
             ->editColumn('lead.contact.external_profile_url', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead ? '<a target="_blank" href="'.$leadActivity->lead->contact->external_profile_url.'">'.$leadActivity->lead->contact->external_profile_url.'</a>' : '';
+                return ($leadActivity->lead && $leadActivity->lead->contact) ? '<a target="_blank" href="'.$leadActivity->lead->contact->external_profile_url.'">'.$leadActivity->lead->contact->external_profile_url.'</a>' : '';
             })
             ->editColumn('campaign.name', function (LeadActivity $leadActivity) {
-                return $leadActivity->lead->campaign ? $leadActivity->lead->campaign->name : '';
+                return ($leadActivity->lead && $leadActivity->lead->campaign) ? $leadActivity->lead->campaign->name : '';
             })
             ->editColumn('created_by', function (LeadActivity $leadActivity) {
-                return $leadActivity->user->full_name;
+                return $leadActivity->user ? $leadActivity->user->full_name : '';
             })
             ->editColumn('created_at', function (LeadActivity $leadActivity) {
                 return $leadActivity->created_at ? $leadActivity->created_at->format('d.m.Y H:i') : '';

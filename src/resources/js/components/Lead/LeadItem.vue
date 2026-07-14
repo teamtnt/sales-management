@@ -206,12 +206,56 @@ const isEmailMissing = computed(() => {
     return !props.lead.contact?.email;
 });
 
+const isPhoneCallCompleted = computed(() => {
+    return isPhoneCallStage.value && !!phoneCallStatus.value;
+});
+
+const phoneCallCompletedDate = computed(() => {
+    if (!props.lead.activities || !props.lead.activities.length) {
+        return null;
+    }
+    const callActivity = props.lead.activities.find(
+        activity => activity.type === 'Call' &&
+        (activity.is_done == 1 || activity.is_done === true) &&
+        (activity.description === 'Telefonat erfolgreich' || activity.description === 'Telefonat nicht erfolgreich')
+    );
+    if (!callActivity || !callActivity.start_date) {
+        return null;
+    }
+    const date = new Date(callActivity.start_date);
+    const formatter = new Intl.DateTimeFormat('de-DE', {
+        day: 'numeric',
+        month: '2-digit',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+    });
+    return formatter.format(date);
+});
+
+const cardStyle = computed(() => {
+    if (isEmailMissing.value) {
+        return 'border: 1px solid var(--bs-red) !important; background-color: #d9534f0a !important;';
+    }
+    if (isPhoneCallCompleted.value) {
+        return 'border: 1px solid var(--bs-green) !important; background-color: #4bbf730f !important;';
+    }
+    return '';
+});
+
+const cardClass = computed(() => {
+    if (isEmailMissing.value || isPhoneCallCompleted.value) {
+        return '';
+    }
+    return 'bg-light';
+});
+
 </script>
 
 <template>
     <div class="lead-item card mb-3 p-2 border gap-1"
-         :class="isEmailMissing ? '' : 'bg-light'"
-         :style="isEmailMissing ? 'border: 1px solid var(--bs-red) !important; background-color: #d9534f0a !important;' : ''"
+         :class="cardClass"
+         :style="cardStyle"
          :data-lead-id="lead.id">
         <!-- Drag Handle -->
         <span v-if="enableDragDrop"
@@ -282,18 +326,18 @@ const isEmailMissing = computed(() => {
 
         <!-- Phone Call Stage UI -->
         <div v-if="isPhoneCallStage" class="mt-2 border-top pt-2">
-            <div v-if="phoneCallStatus" class="d-flex align-items-center">
-                <span class="badge w-100 py-2 fs-7" :class="phoneCallStatus === 'Telefonat erfolgreich' ? 'bg-success' : 'bg-danger'">
-                    <i class="fas me-1" :class="phoneCallStatus === 'Telefonat erfolgreich' ? 'fa-phone-alt' : 'fa-phone-slash'"></i>
+            <div v-if="phoneCallStatus" class="d-flex flex-column align-items-center gap-1">
+                <span class="text-success fw-bold" style="font-size: 0.85rem;">
+                    Completed: {{ phoneCallCompletedDate }}
+                </span>
+                <span class="badge w-100 py-2 fs-7 bg-success">
+                    <i class="fas me-1 fa-phone-alt"></i>
                     {{ phoneCallStatus }}
                 </span>
             </div>
             <div v-else class="d-flex gap-2">
-                <button @click="logCallActivity(true)" class="btn btn-sm btn-success w-50 py-1" style="font-size: 0.65rem;" title="Telefonat erfolgreich">
+                <button @click="logCallActivity(true)" class="btn btn-sm btn-success w-100 py-1" title="Telefonat erfolgreich">
                     <i class="fas fa-phone-alt me-1"></i> Erfolgreich
-                </button>
-                <button @click="logCallActivity(false)" class="btn btn-sm btn-outline-danger w-50 py-1" style="font-size: 0.65rem;" title="Telefonat nicht erfolgreich">
-                    <i class="fas fa-phone-slash me-1"></i> Nicht erfolgreich
                 </button>
             </div>
         </div>
