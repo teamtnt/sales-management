@@ -194,13 +194,21 @@ const logCallActivity = async (isSuccessful) => {
         });
     }
 };
+const enableDragDrop = computed(() => {
+    const val = props.campaign.settings?.enable_drag_drop;
+    if (val === undefined || val === null) {
+        return true;
+    }
+    return val == 1 || val === true || val === '1' || val === 'on';
+});
 
 </script>
 
 <template>
     <div class="lead-item card mb-3 p-2 bg-light border gap-1" :data-lead-id="lead.id">
         <!-- Drag Handle -->
-        <span class="drag-handle"
+        <span v-if="enableDragDrop"
+              class="drag-handle"
               style="
             display: inline-block;
             width: 20px;

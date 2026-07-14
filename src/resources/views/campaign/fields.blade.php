@@ -53,10 +53,22 @@
     <div class="col-md-6">
         <div class="mb-3">
             {{ Form::label('status', __('Status'), ['class' => 'form-label']) }}
-            {{ Form::select('status', \Teamtnt\SalesManagement\Models\Campaign::getCampaignStatusNames(), \Teamtnt\SalesManagement\Models\Campaign::CAMPAIGN_STATUS_NEW, ['class' => 'form-control ' .($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Select status']) }}
+            {{ Form::select('status', \Teamtnt\SalesManagement\Models\Campaign::getCampaignStatusNames(), null, ['class' => 'form-control ' .($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Select status']) }}
             @error('status')
             <small class="invalid-feedback">{{ $message }}</small>
             @enderror
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="mb-3">
+            <div class="form-check form-switch">
+                {{ Form::hidden('settings[enable_drag_drop]', 0) }}
+                {{ Form::checkbox('settings[enable_drag_drop]', 1, isset($campaign) ? ($campaign->settings['enable_drag_drop'] ?? true) : true, ['class' => 'form-check-input', 'id' => 'enable_drag_drop']) }}
+                {{ Form::label('enable_drag_drop', __('Enable Drag&Drop'), ['class' => 'form-check-label cursor-pointer']) }}
+            </div>
         </div>
     </div>
 </div>

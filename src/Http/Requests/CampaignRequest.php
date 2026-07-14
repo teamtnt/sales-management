@@ -35,6 +35,8 @@ class CampaignRequest extends FormRequest
             'status' => 'nullable|integer',
             'pipeline_id' => "required|exists:{$pipelineTable},id",
             'contact_list_id' => "nullable|exists:{$contactListTable},id",
+            'settings' => 'nullable|array',
+            'settings.enable_drag_drop' => 'nullable|boolean',
         ];
     }
 }

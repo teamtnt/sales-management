@@ -98,9 +98,11 @@
             }
 
 
+            const enableDragDrop = {{ ($campaign->settings['enable_drag_drop'] ?? true) ? 'true' : 'false' }};
+
             let drake = dragula({
                 moves: function (el, source, handle, sibling) {
-                     return handle.classList.contains('drag-handle');
+                     return enableDragDrop && handle.classList.contains('drag-handle');
                 },
             }).on('drag', function (el) {
                     el.className = el.className.replace('bg-light', 'bg-gray-400');

@@ -59,6 +59,14 @@ const handleLocalSearchInput = (event) => {
     }
     handleSearch(event);
 };
+
+const enableDragDrop = computed(() => {
+    const val = props.campaign.settings?.enable_drag_drop;
+    if (val === undefined || val === null) {
+        return true;
+    }
+    return val == 1 || val === true || val === '1' || val === 'on';
+});
 </script>
 
 <template>
@@ -115,7 +123,7 @@ const handleLocalSearchInput = (event) => {
         <div class="card-body scroll" ref="scrollContainer">
             <div :id="stageIdAttributes.id" :data-stage-id="stageIdAttributes.dataStageId">
                 <lead-item v-for="lead in getLeads" :key="lead.id" :lead="lead" :campaign="campaign" :stage="stage" @lead-deleted="removeLead"/>
-                <div class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
+                <div v-if="enableDragDrop" class="card mb-3 px-2 py-4 cursor-grab border-dashed align-items-center">
                     <span style="font-size: 10px;"><i>Drag / drop area</i></span>
                 </div>
             </div>

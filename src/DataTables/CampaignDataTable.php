@@ -34,7 +34,19 @@ class CampaignDataTable extends DataTable
                 return $campaign->updated_at->format('d.m.Y');
             })
             ->editColumn('status', function (Campaign $campaign) {
-                return Campaign::getCampaignStatusNames()[$campaign->status] ?? '--';
+                $statusName = Campaign::getCampaignStatusNames()[$campaign->status] ?? null;
+                if (is_null($statusName)) {
+                    return '--';
+                }
+
+                $badgeClass = match ($campaign->status) {
+                    Campaign::CAMPAIGN_STATUS_NEW => 'bg-success',
+                    Campaign::CAMPAIGN_STATUS_IN_PROGRESS => 'bg-warning',
+                    Campaign::CAMPAIGN_STATUS_CLOSED => 'bg-danger',
+                    default => 'bg-secondary',
+                };
+
+                return sprintf('<span class="badge %s">%s</span>', $badgeClass, $statusName);
             })
             ->addColumn('contact_list.name', function (Campaign $campaign) {
                 return '<a href="'.route('teamtnt.sales-management.lists.edit', $campaign->contactList->id).'">'.$campaign->contactList->name.'</a>' ?? '--';
@@ -44,7 +56,7 @@ class CampaignDataTable extends DataTable
                 return $campaign->getLeadsOnStageCount($campaign->pipeline_id, 0);
             })
             ->addColumn('action', 'sales-management::campaign.actions')
-            ->rawColumns(['name', 'action','contact_list.name'])
+            ->rawColumns(['name', 'action', 'contact_list.name', 'status'])
             ->setRowId('id');
     }
 
@@ -72,7 +84,7 @@ class CampaignDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table-striped')
-            ->orderBy(2)
+            ->orderBy(0, 'asc')
             ->language("https://cdn.datatables.net/plug-ins/1.13.1/i18n/de-DE.json");
     }
 

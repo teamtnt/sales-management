@@ -22,6 +22,11 @@ class Campaign extends Model
         'pipeline_id',
         'contact_list_id',
         'status',
+        'settings',
+    ];
+
+    protected $casts = [
+        'settings' => 'array',
     ];
 
     public function __construct(array $attributes = [])
