@@ -202,10 +202,17 @@ const enableDragDrop = computed(() => {
     return val == 1 || val === true || val === '1' || val === 'on';
 });
 
+const isEmailMissing = computed(() => {
+    return !props.lead.contact?.email;
+});
+
 </script>
 
 <template>
-    <div class="lead-item card mb-3 p-2 bg-light border gap-1" :data-lead-id="lead.id">
+    <div class="lead-item card mb-3 p-2 border gap-1"
+         :class="isEmailMissing ? '' : 'bg-light'"
+         :style="isEmailMissing ? 'border: 1px solid var(--bs-red) !important; background-color: #d9534f0a !important;' : ''"
+         :data-lead-id="lead.id">
         <!-- Drag Handle -->
         <span v-if="enableDragDrop"
               class="drag-handle"
@@ -225,9 +232,10 @@ const enableDragDrop = computed(() => {
                 </a>
             </span>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" :class="isEmailMissing ? 'text-danger' : ''">
             <Mail />
-            <span class="ms-2 lead-email">{{ lead.contact?.email }}</span>
+            <span v-if="!isEmailMissing" class="ms-2 lead-email">{{ lead.contact?.email }}</span>
+            <span v-else class="ms-2 lead-email">E-Mail fehlt</span>
         </div>
         <div class="d-flex align-items-center">
             <Phone />
