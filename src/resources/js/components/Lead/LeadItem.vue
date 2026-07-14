@@ -25,12 +25,20 @@ const props = defineProps({
     }
 })
 
+const parseDate = (dateString) => {
+    if (!dateString) return null;
+    if (typeof dateString === 'string' && !dateString.includes('T') && !dateString.includes('Z') && !dateString.includes('+')) {
+        return new Date(dateString.trim().replace(' ', 'T') + 'Z');
+    }
+    return new Date(dateString);
+};
+
 const nextCallActivityDate = computed(() => {
     const dateString = props.lead?.next_call_activity?.start_date;
 
     if (!dateString) return null;
 
-    const date = new Date(dateString);
+    const date = parseDate(dateString);
     const formatter = new Intl.DateTimeFormat('de-DE', {
         day: 'numeric',
         month: '2-digit',
@@ -50,7 +58,7 @@ const leadCreatedDate = computed(() => {
 
     if (!dateString) return null;
 
-    const date = new Date(dateString);
+    const date = parseDate(dateString);
     const formatter = new Intl.DateTimeFormat('de-DE', {
         day: 'numeric',
         month: '2-digit',
@@ -222,7 +230,7 @@ const phoneCallCompletedDate = computed(() => {
     if (!callActivity || !callActivity.start_date) {
         return null;
     }
-    const date = new Date(callActivity.start_date);
+    const date = parseDate(callActivity.start_date);
     const formatter = new Intl.DateTimeFormat('de-DE', {
         day: 'numeric',
         month: '2-digit',
@@ -328,7 +336,7 @@ const cardClass = computed(() => {
         <div v-if="isPhoneCallStage" class="mt-2 border-top pt-2">
             <div v-if="phoneCallStatus" class="d-flex flex-column align-items-center gap-1">
                 <span class="text-success fw-bold" style="font-size: 0.85rem;">
-                    Completed: {{ phoneCallCompletedDate }}
+                    Vollendet: {{ phoneCallCompletedDate }}
                 </span>
                 <span class="badge w-100 py-2 fs-7 bg-success">
                     <i class="fas me-1 fa-phone-alt"></i>
