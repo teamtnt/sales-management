@@ -2,6 +2,10 @@
     position: relative;
     overflow: hidden;
 
+    > .d-flex {
+        padding-right: 60px;
+    }
+
     .info-icon {
         display: block;
         position: absolute;
