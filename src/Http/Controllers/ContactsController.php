@@ -283,15 +283,21 @@ class ContactsController extends Controller
 
             $contactList->contacts()->syncWithoutDetaching([$contact->id]);
 
-            //create lead
-            $lead = Lead::firstOrCreate([
-                'campaign_id' => $campaign->id,
-                'contact_id'  => $contact->id,
-              ],
-              [
-                'pipeline_id' => $campaign->pipeline_id,
-                'pipeline_stage_id' => 0
-            ]);
+            $closedStageIds = request('closed_stage_ids', []);
+
+            $lead = Lead::where('campaign_id', $campaign->id)
+                ->where('contact_id', $contact->id)
+                ->whereNotIn('pipeline_stage_id', $closedStageIds)
+                ->first();
+
+            if (!$lead) {
+                $lead = Lead::create([
+                    'campaign_id' => $campaign->id,
+                    'contact_id'  => $contact->id,
+                    'pipeline_id' => $campaign->pipeline_id,
+                    'pipeline_stage_id' => 0
+                ]);
+            }
 
             //if tag does not exist create it
             $tags = request()->get('lead_tags');

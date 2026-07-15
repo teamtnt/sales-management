@@ -53,9 +53,19 @@ class LeadsController extends Controller
             return response()->json(['status' => 'contact_not_found'], 200);
         }
 
+        $closedStageIds = $request->get('closed_stage_ids', []);
+
         $lead = Lead::where('contact_id', $contactId)
             ->where('campaign_id', $request->campaign_id)
+            ->whereNotIn('pipeline_stage_id', $closedStageIds)
             ->first();
+
+        if (!$lead) {
+            $lead = Lead::where('contact_id', $contactId)
+                ->where('campaign_id', $request->campaign_id)
+                ->orderBy('updated_at', 'desc')
+                ->first();
+        }
 
         if (!$lead) {
             return response()->json(['status' => 'lead_not_found'], 200);
@@ -85,6 +95,19 @@ class LeadsController extends Controller
                 'ignored' => true,
                 'reason'  => 'lead_not_found',
             ]);
+        }
+
+        $closedStageIds = $request->get('closed_stage_ids', []);
+
+        if (in_array((int) $lead->pipeline_stage_id, $closedStageIds)) {
+            $activeLead = Lead::where('campaign_id', $lead->campaign_id)
+                ->where('contact_id', $lead->contact_id)
+                ->whereNotIn('pipeline_stage_id', $closedStageIds)
+                ->first();
+
+            if ($activeLead) {
+                $lead = $activeLead;
+            }
         }
 
         $lead->pipeline_stage_id = $request->stage_id;
