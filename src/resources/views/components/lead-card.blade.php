@@ -1,5 +1,18 @@
 @props(['campaign' => $campaign, 'lead' => $lead, 'offCanvas' => false])
 
+@php
+    $isPhoneCallStage = $lead->stage && (
+        ($lead->stage->properties['phone_call'] ?? 0) == 1 || 
+        ($lead->stage->properties['phone_call'] ?? false) === true || 
+        ($lead->stage->properties['phone_call'] ?? '') === 'on'
+    );
+    $completedCallActivity = $lead->activities->first(function ($activity) {
+        return $activity->type === 'Call' && 
+               ($activity->is_done == 1 || $activity->is_done === true) && 
+               ($activity->description === 'Telefonat erfolgreich' || $activity->description === 'Telefonat nicht erfolgreich');
+    });
+@endphp
+
 <div class="lead-item card mb-3 p-2 bg-light border gap-1" data-lead-id="{{ $lead->id }}">
 
     <!-- Drag Handle -->
@@ -42,9 +55,18 @@
     </div>
 
     @if ($lead->nextCallActivity)
-        <div class="d-flex align-items-center">
-            <x-sales-management::icons.phone />
-            <span class="ms-2"> {{ $lead->nextCallActivity->start_date->format('d.m.Y H:i') }}</span>
+        <div class="d-flex align-items-center text-nowrap text-muted" style="font-size: 0.8rem; gap: 4px;">
+            <span class="{{ (!$isPhoneCallStage && $completedCallActivity) ? 'text-success' : '' }} d-flex align-items-center">
+                <x-sales-management::icons.phone width="14" height="14" />
+            </span>
+            <span>{{ $lead->nextCallActivity->start_date->format('d.m.Y H:i') }}</span>
+            @if (!$isPhoneCallStage && $completedCallActivity)
+                <span>•</span>
+                <span class="text-success d-inline-flex align-items-center">
+                    <i class="fas fa-check me-1" style="font-size: 0.75rem;"></i>
+                    Telefonat geführt
+                </span>
+            @endif
         </div>
     @endif
 

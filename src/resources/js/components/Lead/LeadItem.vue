@@ -305,11 +305,18 @@ const cardClass = computed(() => {
                 <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill bg-success fw-light">{{ tag.name }}</li>
             </ul>
         </div>
-        <div v-if="lead.next_call_activity" class="d-flex align-items-center">
-            <Phone />
-            <span class="ms-2">
-                {{ nextCallActivityDate }}
+        <div v-if="lead.next_call_activity" class="d-flex align-items-center text-nowrap text-muted" style="font-size: 0.8rem; gap: 4px;">
+            <span :class="(!isPhoneCallStage && phoneCallCompletedDate) ? 'text-success' : ''" class="d-flex align-items-center">
+                <Phone :width="14" :height="14" />
             </span>
+            <span>{{ nextCallActivityDate }}</span>
+            <template v-if="!isPhoneCallStage && phoneCallCompletedDate">
+                <span>•</span>
+                <span class="text-success d-inline-flex align-items-center">
+                    <i class="fas fa-check me-1" style="font-size: 0.75rem;"></i>
+                    Telefonat geführt
+                </span>
+            </template>
         </div>
         <div v-if="leadCreatedDate" class="d-flex align-items-center mt-2 pt-2 border-top">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
