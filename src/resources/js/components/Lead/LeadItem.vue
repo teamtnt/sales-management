@@ -53,8 +53,8 @@ const nextCallActivityDate = computed(() => {
 const leadCreatedDate = computed(() => {
     const dateString = props.lead?.created_at;
 
-    console.log('Lead data:', props.lead); // Debug log
-    console.log('Created at:', dateString); // Debug log
+    // console.log('Lead data:', props.lead); // Debug log
+    // console.log('Created at:', dateString); // Debug log
 
     if (!dateString) return null;
 
@@ -214,6 +214,13 @@ const isEmailMissing = computed(() => {
     return !props.lead.contact?.email;
 });
 
+const isUnsubscribed = computed(() => {
+    const contactTags = props.lead.contact?.tags || [];
+    const leadTags = props.lead.tags || [];
+    const allTags = [...contactTags, ...leadTags];
+    return allTags.some(tag => tag.name && tag.name.toLowerCase() === 'unsubscribed');
+});
+
 const isPhoneCallCompleted = computed(() => {
     return isPhoneCallStage.value && !!phoneCallStatus.value;
 });
@@ -242,6 +249,9 @@ const phoneCallCompletedDate = computed(() => {
 });
 
 const cardStyle = computed(() => {
+    if (isUnsubscribed.value) {
+        return 'border-left: 5px solid var(--bs-danger, #ef4444) !important; background-color: #fef2f2 !important; opacity: 0.85;';
+    }
     if (isEmailMissing.value) {
         return 'border: 1px solid var(--bs-red) !important; background-color: #d9534f0a !important;';
     }
@@ -252,6 +262,9 @@ const cardStyle = computed(() => {
 });
 
 const cardClass = computed(() => {
+    if (isUnsubscribed.value) {
+        return 'is-unsubscribed';
+    }
     if (isEmailMissing.value || isPhoneCallCompleted.value) {
         return '';
     }
@@ -296,13 +309,13 @@ const cardClass = computed(() => {
         <div v-if="lead.contact?.tags.length > 0" class="d-flex align-items-center">
             <Tag class="me-2 flex-shrink-0" />
             <ul class="list-unstyled d-flex flex-wrap m-0" style="gap: 2px 3px;">
-                <li v-for="tag in lead.contact.tags" :key="tag.id" class="badge rounded-pill bg-info fw-light">{{ tag.name }}</li>
+                <li v-for="tag in lead.contact.tags" :key="tag.id" class="badge rounded-pill fw-light" :class="tag.name && tag.name.toLowerCase() === 'unsubscribed' ? 'bg-danger' : 'bg-info'">{{ tag.name }}</li>
             </ul>
         </div>
         <div v-if="lead?.tags.length > 0 " class="d-flex align-items-center">
             <Tag class="me-2 flex-shrink-0" />
             <ul class="list-unstyled d-flex flex-wrap m-0 lead-tags mt-3" style="gap: 2px 3px;">
-                <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill bg-success fw-light">{{ tag.name }}</li>
+                <li v-for="tag in lead.tags" :key="tag.id" class="badge rounded-pill fw-light" :class="tag.name && tag.name.toLowerCase() === 'unsubscribed' ? 'bg-danger' : 'bg-success'">{{ tag.name }}</li>
             </ul>
         </div>
         <div v-if="lead.next_call_activity" class="d-flex align-items-center text-nowrap text-muted" style="font-size: 0.8rem; gap: 4px;">
@@ -365,6 +378,12 @@ const cardClass = computed(() => {
 </template>
 
 <style lang="scss">
+    .lead-item {
+        transition: opacity 0.2s ease, border-color 0.2s ease;
+        &.is-unsubscribed:hover {
+            opacity: 1 !important;
+        }
+    }
     .drag-handle {
         color: #a7a7a7;
         &:hover {
