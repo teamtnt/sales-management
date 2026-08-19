@@ -16,6 +16,7 @@ class LeadActivitiesController extends Controller
             ->distinct()
             ->with('user')
             ->get()
+            ->filter(fn ($leadActivity) => $leadActivity->user)
             ->pluck('user.full_name', 'created_by')
             ->toArray();
 

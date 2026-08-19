@@ -115,7 +115,7 @@ class LeadActivityDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         // Get all users who created activities
-        $users = LeadActivity::select('created_by')->distinct()->with('user')->get()->pluck('user.full_name', 'created_by')->toArray();
+        $users = LeadActivity::select('created_by')->distinct()->with('user')->get()->filter(fn ($leadActivity) => $leadActivity->user)->pluck('user.full_name', 'created_by')->toArray();
         $usersJson = json_encode($users);
 
         return $this->builder()
