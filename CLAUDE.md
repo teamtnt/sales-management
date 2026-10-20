@@ -38,9 +38,45 @@ Three of these are booby-trapped — know before you burn time:
 - **Every `composer` script fails.** `config.allow-plugins` in `composer.json` is `{}`, so composer aborts with *"pestphp/pest-plugin contains a Composer plugin which is blocked by your allow-plugins config"* — that kills `composer install`, `composer test` and `composer analyse` alike. Call the binaries in `vendor/bin/` directly, or fix `allow-plugins`.
 - **`composer analyse` is broken twice over.** Past the allow-plugins block, `vendor/bin/phpstan analyse` exits with *"At least one path must be specified to analyse."* — no `phpstan.neon` is committed (it's gitignored), and phpstan isn't in `require-dev`; the binary only exists transitively via `rector/rector` ← `spatie/laravel-ray`.
 
-Built assets in `public/sales-management/` (including `manifest.json`) **are committed to git** — after `npm run build`, commit the output. `node_modules/` is committed too, and both `package-lock.json` and `yarn.lock` are tracked.
+Built assets in `public/sales-management/` (including `manifest.json`) **are committed to git** — after `npm run build`, commit the output. `node_modules/` is *not* tracked, but both `package-lock.json` and `yarn.lock` are.
 
 There is no CI (`.github/` does not exist).
+
+## Releases and versioning
+
+No version lives in `composer.json` — the git tag *is* the version. Host apps install this package by tag (83 annotated `vX.Y.Z` tags so far, currently `v1.1.59`), so **a commit only reaches a host app once a new tag is pushed.**
+
+The rule:
+
+- **Tag** whenever the commit changes something a host app consumes: anything in `src/`, `config/`, `database/`, `src/resources/`, or the built assets in `public/sales-management/` (including `manifest.json`), or `composer.json` dependencies.
+- **Don't tag** for repo-only changes — `CLAUDE.md`, `README.md`, `.gitignore`, test-only edits, editor config. Push to `main` and stop there; a tag would only create a release that changes nothing downstream.
+- Tag only commits already pushed to `origin/main`, and push the tag explicitly — `git push origin main && git tag -a v1.1.60 -m "..." && git push origin v1.1.60`. A tag that exists only locally releases nothing.
+- Never move or delete an existing tag to "re-release" — host apps cache by tag name. Cut a new patch instead.
+- If the change touches the frontend, run `npm run build` and commit `public/sales-management/` **before** tagging, otherwise the tag ships stale assets.
+
+### Which number to bump — semver
+
+Follow [semver](https://semver.org/) from `v1.1.59` onward. The history before that does **not** — 60 of 83 tags sit on `v1.1.x`, features included — so don't copy it: a feature now bumps the minor, not the patch.
+
+The package's public API is what a host app can depend on, which for a package that ships UI is wider than PHP classes:
+
+- config keys in `config/sales-management.php` (`tablePrefix`, `middleware`, `policy`, `permission_prefix`, mail/sender settings)
+- route names under `teamtnt.sales-management.`, the webhook routes in `src/routes/webhook.php`, and gate names built from `permission_prefix`
+- `SalesManagementPolicyContract`, the facade, public methods on models, and the globally-autoloaded functions in `src/helpers.php`
+- Blade view names (host apps override them) and the published asset path `public/sales-management`
+- the database schema the migrations produce
+
+Then:
+
+- **MAJOR** (`v2.0.0`) — removing or renaming anything in that list; a migration that drops or renames an existing column; changing a config default that silently changes behaviour (e.g. `tablePrefix`, or the shipped policy no longer returning `true`); dropping a PHP or Laravel version. Any Laravel 11+ / `laravelcollective/html` work lands here.
+- **MINOR** (`v1.2.0`) — a new feature, a new workflow node type, a new route, a new config key that has a default, an additive-only migration. Anything a host app gets for free without changing its code.
+- **PATCH** (`v1.1.60`) — bugfix, copy or style tweak, an asset rebuild with no behaviour change.
+
+Two practical caveats, because host apps pin with `^1.1`: a minor reaches them on the next `composer update` without review, and **every tag that touches `database/migrations/` is a deploy step, not just a version bump** — say so in the tag message. When in doubt between patch and minor, take the minor; it costs nothing.
+
+Commit messages are conventional-commit style only in recent history (19 of 498), but the recent ones are consistent — keep `feat:` / `fix:` / `refactor:` up, and use `feat!:` or a `BREAKING CHANGE:` footer so the major is visible in the log.
+
+Tag format is `vX.Y.Z`, annotated, no exceptions — `v.1.1.18` and `v.1.1.54` are typos composer cannot parse. Leave them (rewriting tags breaks host caches), just never repeat the shape.
 
 ## Architecture
 
@@ -108,5 +144,5 @@ SCSS follows a numbered-layer convention (`1-variables` … `5-vendor`) with `li
 - **`phpunit.xml.dist` targets PHPUnit 9** and uses attributes removed in 10+ (`backupStaticAttributes`, `convertErrorsToExceptions`, `convertNoticesToExceptions`, `convertWarningsToExceptions`, `verbose`). It also sets `failOnWarning`, `failOnRisky` and `beStrictAboutOutputDuringTests`, so stray `dump()`/`info()` output fails tests.
 - **The permission tests are stubs.** `tests/Feature/LeadActivitiesFilterTest.php:149-166` — `createUser()` needs `\App\Models\User` (absent under testbench) and `grantPermission()` silently no-ops without a Spatie-style `givePermissionTo`. They don't actually assert authorization.
 - **Tenant-specific values are hardcoded.** `config/sales-management.php` defaults to `primeros.de` sender addresses and PRIMEROS mail branding; `Campaign::getInitialLeadsOnStage()` special-cases a campaign literally named `Bestandskunden` with a `STR_TO_DATE(..., '%d.%m.%Y')` tag-ordering subquery. Much of the UI copy is German.
-- **`src/helpers.php` builds raw SQL by string concatenation** (`importTempContactsIntoContacts`, `createLeadsFromContact`, `createListFromPipelineStage`, …), interpolating IDs directly rather than binding them.
+- **`src/helpers.php` hand-builds `INSERT ... SELECT` statements** (`importTempContactsIntoContacts`, `createLeadsFromContact`, `createListFromPipelineStage`, …). The `WHERE` bindings *are* passed through (`->getBindings()`), but IDs are interpolated into `DB::raw("{$id} as col")` at `src/helpers.php:29,53,67,85` — safe only as long as those stay integers.
 - `vite.config.js` uses `splitVendorChunkPlugin`, deprecated in Vite 5 and removed in Vite 6.

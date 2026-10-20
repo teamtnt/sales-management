@@ -248,6 +248,23 @@ const phoneCallCompletedDate = computed(() => {
     return formatter.format(date);
 });
 
+// Contact channel the customer picked on the web inquiry form
+const prefersEmail = computed(() => {
+    return ['email', 'email_and_phone'].includes(props.lead.preferred_contact_method);
+});
+
+const prefersPhone = computed(() => {
+    return ['phone', 'email_and_phone'].includes(props.lead.preferred_contact_method);
+});
+
+const preferredContactLabel = computed(() => {
+    return {
+        email: 'E-Mail',
+        phone: 'Telefon',
+        email_and_phone: 'E-Mail oder Telefon',
+    }[props.lead.preferred_contact_method] ?? null;
+});
+
 const cardStyle = computed(() => {
     if (isUnsubscribed.value) {
         return 'border-left: 5px solid var(--bs-danger, #ef4444) !important; background-color: #fef2f2 !important; opacity: 0.85;';
@@ -298,13 +315,23 @@ const cardClass = computed(() => {
             </span>
         </div>
         <div class="d-flex align-items-center" :class="isEmailMissing ? 'text-danger' : ''">
-            <Mail />
+            <Mail class="flex-shrink-0" :class="{ 'text-success': prefersEmail && !isEmailMissing }" />
             <span v-if="!isEmailMissing" class="ms-2 lead-email">{{ lead.contact?.email }}</span>
             <span v-else class="ms-2 lead-email">E-Mail fehlt</span>
         </div>
         <div class="d-flex align-items-center">
-            <Phone />
+            <Phone class="flex-shrink-0" :class="{ 'text-success': prefersPhone }" />
             <span class="ms-2">{{ lead.contact?.phone}}</span>
+        </div>
+        <div v-if="preferredContactLabel" class="lead-contact-preference">
+            <div class="d-flex align-items-center" style="gap: 6px;">
+                <Mail v-if="prefersEmail" :width="14" :height="14" class="flex-shrink-0" />
+                <Phone v-if="prefersPhone" :width="14" :height="14" class="flex-shrink-0" />
+                <span>Bevorzugt: <strong>{{ preferredContactLabel }}</strong></span>
+            </div>
+            <div v-if="prefersPhone && lead.preferred_contact_time" class="lead-contact-preference__time">
+                Erreichbar: {{ lead.preferred_contact_time }}
+            </div>
         </div>
         <div v-if="lead.contact?.tags.length > 0" class="d-flex align-items-center">
             <Tag class="me-2 flex-shrink-0" />
@@ -383,6 +410,21 @@ const cardClass = computed(() => {
         &.is-unsubscribed:hover {
             opacity: 1 !important;
         }
+    }
+    .lead-contact-preference {
+        margin-top: 2px;
+        padding: 6px 8px;
+        border-left: 3px solid #4bbf73;
+        border-radius: 4px;
+        background-color: #4bbf731a;
+        color: #1f6b3d;
+        font-size: 0.8rem;
+        line-height: 1.35;
+    }
+    .lead-contact-preference__time {
+        padding-left: 20px;
+        color: #3f5f4b;
+        overflow-wrap: anywhere;
     }
     .drag-handle {
         color: #a7a7a7;

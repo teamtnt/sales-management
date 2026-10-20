@@ -299,6 +299,14 @@ class ContactsController extends Controller
                 ]);
             }
 
+            //remember how the contact wants to be reached, shown on the lead card
+            if (in_array(request('preferred_contact_method'), Lead::CONTACT_METHODS)) {
+                $lead->update([
+                    'preferred_contact_method' => request('preferred_contact_method'),
+                    'preferred_contact_time' => request('preferred_contact_time'),
+                ]);
+            }
+
             //if tag does not exist create it
             $tags = request()->get('lead_tags');
             if (is_array($tags)) {
@@ -309,12 +317,18 @@ class ContactsController extends Controller
             }
 
             //create notes from request, map keys add to note as text
-            $noteKeys = ['additional_info' => 'weitere Informationen', 'number_of_attendees' => 'vorauss. TN-Anzahl', 'preferred_date' => 'Wunschtermin'];
+            $noteKeys = [
+                'additional_info' => 'weitere Informationen',
+                'number_of_attendees' => 'vorauss. TN-Anzahl',
+                'preferred_date' => 'Wunschtermin',
+                'preferred_contact_method' => 'Kontakt per',
+                'preferred_contact_time' => 'Erreichbarkeit',
+            ];
 
             $notes = request()->get('notes');
             if (is_array($notes)) {
                 foreach ($notes as $key => $note) {
-                    if (isset($noteKeys[$key])) {
+                    if (isset($noteKeys[$key]) && filled($note)) {
                         $noteText = $noteKeys[$key] . ': ' . $note;
                         if (!$lead->notes()->where('note', $noteText)->exists()) {
                             $lead->notes()->create(['note' => $noteText]);
