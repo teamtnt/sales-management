@@ -11,14 +11,14 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
   },
   "src/resources/js/app.js": {
-    "file": "assets/app-BZ94lD0I.js",
+    "file": "assets/app-dmDrtdKC.js",
     "src": "src/resources/js/app.js",
     "isEntry": true,
     "imports": [
       "_vendor-CVu25Wxi.js"
     ],
     "css": [
-      "assets/app-C-JujD_T.css"
+      "assets/app-DTfZ4sZE.css"
     ]
   },
   "src/resources/scss/light.scss": {

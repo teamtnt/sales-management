@@ -18,6 +18,18 @@ class Lead extends Model
         'pipeline_id',
         'pipeline_stage_id',
         'contact_id',
+        'preferred_contact_method',
+        'preferred_contact_time',
+    ];
+
+    const CONTACT_METHOD_EMAIL = 'email';
+    const CONTACT_METHOD_PHONE = 'phone';
+    const CONTACT_METHOD_EMAIL_AND_PHONE = 'email_and_phone';
+
+    const CONTACT_METHODS = [
+        self::CONTACT_METHOD_EMAIL,
+        self::CONTACT_METHOD_PHONE,
+        self::CONTACT_METHOD_EMAIL_AND_PHONE,
     ];
 
     public function __construct(array $attributes = [])
